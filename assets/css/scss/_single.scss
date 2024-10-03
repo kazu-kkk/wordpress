@@ -1,0 +1,53 @@
+/* stylelint-disable-next-line indentation */
+.article-title {
+    color: #000;
+    font-size: 36px ;
+    line-height: 1.25;
+}
+
+.article-sub {
+    display: flex;
+    margin-top: 36px;
+}
+
+.article-date {
+    color: #000;
+    margin-top: 15px;
+}
+
+
+.article-fv {
+    height: 400px;
+    margin-top: 112px;
+    width: 100%;
+}
+
+.article-text {
+    h2 {
+        border-bottom: solid 3px #E8E8E8;
+        font-size: 28px;
+        line-height: 36px;
+        margin: 20px 0 18pxpx;
+        padding-bottom: 12px;
+        position: relative;
+
+
+        &::after {
+            border-bottom: solid 3px #072AC8;
+            bottom: 0;
+            content: " ";
+            display: block;
+            position: absolute;
+            width: 30%;
+        }
+    }
+
+    p {
+        color: #000;
+        font-size: 20px;
+        line-height: 1.75;
+        margin-top: 32px;
+    }
+
+}
+
