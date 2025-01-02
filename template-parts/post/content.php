@@ -59,7 +59,6 @@
 
 		</div><!-- .entry-wrapper -->
 
-		<div class="clear"></div>
 
 	<?php endif ?>
 

@@ -3,6 +3,8 @@
 @use "single.scss";
 
 @use "category.scss";
+@use "footer.scss";
+@use "blogcard.scss";
 
 * {
   box-sizing: border-box;
@@ -25,7 +27,42 @@ img {
   object-fit: cover;
 }
 
+.entry-meta span {
+  display: none;
+}
+
+
+
+
+
+
 @media screen and (width >=767px) {
+/* Heroエリアのスタイル */
+.hero-background {
+  background-color: #2B53EC;  /* 青色の背景 */
+  text-align: center;
+  padding: 50px 0;  /* 上下の余白を確保 */
+  min-height: 100vh;  /* ビューポート全体の高さ */
+  display: flex;
+  align-items: center;  /* 縦方向に中央揃え */
+  justify-content: center;  /* 横方向に中央揃え */
+  position: relative;  /* positionはrelativeに設定 */
+  width: 100%;
+}
+
+.hero-text {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* ロゴ画像のスタイル */
+.hero-background img {
+  max-width: 100%;  /* ロゴ画像の最大幅を100%に */
+  height: auto;  /* 高さは自動調整 */
+}
+
+
   .title-h2__text {
     position: relative;
     padding-left: 40px;
@@ -245,7 +282,7 @@ img {
 
   .content-wrapper {
     width: 100%;
-    padding: 90px 0;
+    padding: 90px 100px 0;
     background-color: #e6e6e6;
   }
 
@@ -363,10 +400,12 @@ img {
     }
   }
 
+
   .contents {
-    width: 1100px;
+    width: 100%;
     padding-bottom: 120px;
     margin: 80px auto 0;
+    max-width: 1100px;
   }
 
   .contents-inner {
@@ -483,7 +522,7 @@ img {
   }
 
   .content {
-    width: 1100px;
+    width: 100%;
     height: auto;
     padding: 130px 190px;
     margin: 110px auto 0;
@@ -502,6 +541,33 @@ img {
 }
 
 @media screen and (width <=767px) {
+/* Heroエリアのスタイル */
+.hero-background {
+  background-color: #2B53EC;  /* 青色の背景 */
+  text-align: center;
+  padding: 50px 0;  /* 上下の余白を確保 */
+  min-height: 100vh;  /* ビューポート全体の高さ */
+  display: flex;
+  align-items: center;  /* 縦方向に中央揃え */
+  justify-content: center;  /* 横方向に中央揃え */
+  position: relative;  /* positionはrelativeに設定 */
+  width: 100%;
+  padding: 0 24px;
+}
+
+.hero-text {
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* ロゴ画像のスタイル */
+.hero-background img {
+  max-width: 100%;  /* ロゴ画像の最大幅を100%に */
+  height: auto;  /* 高さは自動調整 */
+}
+
+
   h3 {
     margin-bottom: 16px;
     font-size: 24px;
@@ -581,6 +647,7 @@ img {
   .content-wrapper {
     width: 100%;
     background-color: #9a9593;
+    padding: 48px 20px;
   }
 
   .fv {
@@ -688,6 +755,7 @@ img {
     width: 350px;
     padding-bottom: 120px;
     margin: 0 auto;
+    background-color: #fff;
   }
 
   .contents-inner {
@@ -781,5 +849,23 @@ img {
 
   .works-link {
     margin-top: 46px;
+  }
+
+  .content {
+    width: 100%;
+    height: auto;
+    padding: 12px;
+    margin: 40px auto 0;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 8px gray;
+
+    &-category {
+      padding: 0;
+      margin: 0 auto;
+      background-color: transparent;
+      border-radius: 0%;
+      box-shadow: none;
+    }
   }
 }

@@ -1,0 +1,144 @@
+//PC
+@media screen and (width >=767px) {
+    .blogcard {
+        max-width: 400px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        overflow: hidden;
+    }
+    
+    .blogcard a {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+    
+    .blogcard_thumbnail {
+        overflow: hidden;
+    }
+    
+    .blogcard_thumbnail img {
+        width: 100%;
+        height: auto;
+        transition: transform 0.2s ease;
+    }
+    
+    .blogcard:hover .blogcard_thumbnail img {
+        transform: scale(1.05);
+    }
+    
+    .blogcard_content {
+        padding: 16px;
+    }
+    
+    .blogcard_title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #222;
+        margin-bottom: 8px;
+    }
+    
+    .blogcard_excerpt {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 10px;
+    }
+    
+    .blogcard_link {
+        font-size: 0.8rem;
+        color: #007BFF;
+    }
+    
+    .blogcard:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    
+}
+
+//SP
+@media screen and (width <=767px) {
+    .blogcard {
+        max-width: 100%; /* スマホ画面幅にフィット */
+        margin: 8px auto; /* 各カードの間隔を調整 */
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        overflow: hidden;
+    }
+    
+    .blogcard a {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+    
+    .blogcard_thumbnail {
+        overflow: hidden;
+    }
+    
+    .blogcard_thumbnail img {
+        width: 100%; /* サムネイル画像を画面幅に合わせる */
+        height: auto;
+        transition: transform 0.2s ease;
+    }
+    
+    .blogcard:hover .blogcard_thumbnail img {
+        transform: scale(1.05); /* ホバーで少し拡大 */
+    }
+    
+    .blogcard_content {
+        padding: 12px; /* スマホ向けに少し余白を減らす */
+    }
+    
+    .blogcard_title {
+        font-size: 1rem; /* スマホ向けにフォントサイズ調整 */
+        font-weight: 600;
+        color: #222;
+        margin-bottom: 6px;
+    }
+    
+    .blogcard_excerpt {
+        font-size: 0.85rem;
+        color: #666;
+        margin-bottom: 8px;
+    }
+    
+    .blogcard_link {
+        font-size: 0.75rem;
+        color: #007BFF;
+        word-break: break-word; /* URLが長い場合でも崩れないように */
+    }
+    
+    .blogcard:hover {
+        transform: translateY(-3px); /* ホバー時の浮き上がりを少し控えめに */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* レスポンシブブレイクポイント */
+    @media (max-width: 768px) {
+        .blogcard {
+            border-radius: 8px; /* 角丸を少し控えめに */
+        }
+    
+        .blogcard_content {
+            padding: 10px; /* コンテンツ余白をさらに調整 */
+        }
+    
+        .blogcard_title {
+            font-size: 0.95rem; /* タイトルフォントサイズを調整 */
+        }
+    
+        .blogcard_excerpt {
+            font-size: 0.8rem; /* 説明文のフォントサイズを調整 */
+        }
+    
+        .blogcard_link {
+            font-size: 0.7rem; /* URLフォントサイズを小さめに */
+        }
+    }
+    
+}

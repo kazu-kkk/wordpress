@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The template for displaying all single posts
  *
@@ -14,7 +15,7 @@ get_header(); ?>
 
 <main id="main" class="site-main container-fluid" role="main">
 
-<?php
+    <?php
     if (have_posts()) :
         while (have_posts()) : the_post();
     ?>
@@ -30,7 +31,6 @@ get_header(); ?>
                         </div>
                     </div>
 
-                    <div class="article-fv"><?php the_post_thumbnail('full'); ?></div>
                     <div class="article-text">
                         <?php the_content(); ?>
                     </div>
@@ -48,4 +48,4 @@ get_header(); ?>
 </main><!-- #main -->
 
 <?php
-get_footer();
+get_footer(); ?>

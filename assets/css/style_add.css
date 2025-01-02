@@ -1,156 +1,205 @@
+@charset "UTF-8";
 /* stylelint-disable-next-line indentation */
-@media screen and (width >= 767px) {
-  .article-title {
-    color: #000;
-    font-size: 36px;
-    line-height: 1.25;
-  }
-  .article-sub {
-    display: flex;
-    margin-top: 36px;
-  }
-  .article-date {
-    color: #000;
-    margin-top: 15px;
-  }
-  .article-fv {
-    height: 400px;
-    margin-top: 112px;
-    width: 100%;
-  }
-  .article-text h2 {
-    border-bottom: solid 3px #E8E8E8;
-    font-size: 28px;
-    line-height: 36px;
-    margin: 20px 0 18pxpx;
-    padding-bottom: 12px;
-    position: relative;
-  }
-  .article-text h2::after {
-    border-bottom: solid 3px #072AC8;
-    bottom: 0;
-    content: " ";
-    display: block;
-    position: absolute;
-    width: 30%;
-  }
-  .article-text p {
-    color: #000;
-    font-size: 20px;
-    line-height: 1.75;
-    margin-top: 32px;
-  }
+.article-title {
+  color: #000;
+  font-size: 36px;
+  line-height: 1.25;
 }
-@media screen and (width <= 767px) {
-  .article-title {
-    color: #000;
-    font-size: 24px;
-    line-height: 1.25;
-  }
-  .article-sub {
-    display: flex;
-    margin-top: 36px;
-  }
-  .article-date {
-    color: #000;
-    margin-top: 15px;
-  }
-  .article-fv {
-    margin-top: 40px;
-    width: 100%;
-  }
-  .article-text h2 {
-    border-bottom: solid 3px #E8E8E8;
-    font-size: 20px;
-    line-height: 36px;
-    margin: 20px 0 18pxpx;
-    padding-bottom: 12px;
-    position: relative;
-  }
-  .article-text h2::after {
-    border-bottom: solid 3px #072AC8;
-    bottom: 0;
-    content: " ";
-    display: block;
-    position: absolute;
-    width: 30%;
-  }
-  .article-text h3 {
-    font-size: 18px;
-    color: #333333;
-    line-height: 1.25;
-  }
-  .article-text p {
-    color: #000;
-    font-size: 16px;
-    line-height: 1.75;
-    margin-top: 32px;
-  }
+
+.article-sub {
+  display: flex;
+  margin-top: 36px;
 }
-.category-article-title {
+
+.article-date {
+  color: #000;
+  margin-top: 15px;
+}
+
+.article-fv {
+  height: 400px;
+  margin-top: 112px;
+  width: 100%;
+}
+
+.article-text h2 {
+  border-bottom: solid 3px #E8E8E8;
+  font-size: 28px;
+  line-height: 36px;
+  margin: 20px 0 18pxpx;
+  padding-bottom: 12px;
+  position: relative;
+}
+.article-text h2::after {
+  border-bottom: solid 3px #072AC8;
+  bottom: 0;
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 30%;
+}
+.article-text p {
+  color: #000;
+  font-size: 20px;
+  line-height: 1.75;
+  margin-top: 32px;
+}
+
+.article-title {
   font-size: 36px;
   line-height: 1.25;
   color: #000;
 }
 
-.category-article-sub {
+.article-sub {
   display: flex;
   margin-top: 36px;
 }
 
-.category-article-date {
+.article-date {
   margin-top: 15px;
   color: #000;
 }
 
-.category-article-fv {
+.article-fv {
   width: 100%;
   height: 400px;
   margin-top: 112px;
 }
 
-.category-article-text p {
+.article-text p {
   margin-top: 32px;
   font-size: 20px;
   line-height: 1.75;
   color: #000;
 }
 
-.site-footer {
-  width: 100%;
-  padding-bottom: 200px;
-  background-color: #333;
+#colophon {
+  background-color: #f8f9fa; /* 背景色を設定 */
+  padding: 20px; /* 内側の余白 */
+  min-height: 50px; /* 最小の高さ */
 }
 
-.footer__wrapper {
-  display: flex;
-  justify-content: space-between;
-  width: 1100px;
-  margin: 0 auto;
+.inner-wrap {
+  text-align: center; /* テキストを中央揃え */
 }
 
-.footer-logo__image {
-  width: 260px;
+@media screen and (width >= 767px) {
+  .blogcard {
+    max-width: 400px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+  }
+  .blogcard a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .blogcard_thumbnail {
+    overflow: hidden;
+  }
+  .blogcard_thumbnail img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.2s ease;
+  }
+  .blogcard:hover .blogcard_thumbnail img {
+    transform: scale(1.05);
+  }
+  .blogcard_content {
+    padding: 16px;
+  }
+  .blogcard_title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 8px;
+  }
+  .blogcard_excerpt {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  .blogcard_link {
+    font-size: 0.8rem;
+    color: #007BFF;
+  }
+  .blogcard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
 }
-.footer-logo__image img {
-  object-fit: contain;
+@media screen and (width <= 767px) {
+  .blogcard {
+    max-width: 100%; /* スマホ画面幅にフィット */
+    margin: 8px auto; /* 各カードの間隔を調整 */
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+  }
+  .blogcard a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .blogcard_thumbnail {
+    overflow: hidden;
+  }
+  .blogcard_thumbnail img {
+    width: 100%; /* サムネイル画像を画面幅に合わせる */
+    height: auto;
+    transition: transform 0.2s ease;
+  }
+  .blogcard:hover .blogcard_thumbnail img {
+    transform: scale(1.05); /* ホバーで少し拡大 */
+  }
+  .blogcard_content {
+    padding: 12px; /* スマホ向けに少し余白を減らす */
+  }
+  .blogcard_title {
+    font-size: 1rem; /* スマホ向けにフォントサイズ調整 */
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 6px;
+  }
+  .blogcard_excerpt {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 8px;
+  }
+  .blogcard_link {
+    font-size: 0.75rem;
+    color: #007BFF;
+    word-break: break-word; /* URLが長い場合でも崩れないように */
+  }
+  .blogcard:hover {
+    transform: translateY(-3px); /* ホバー時の浮き上がりを少し控えめに */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  /* レスポンシブブレイクポイント */
 }
-
-.footer-menu {
-  margin-left: 166px;
+@media screen and (width <= 767px) and (max-width: 768px) {
+  .blogcard {
+    border-radius: 8px; /* 角丸を少し控えめに */
+  }
+  .blogcard_content {
+    padding: 10px; /* コンテンツ余白をさらに調整 */
+  }
+  .blogcard_title {
+    font-size: 0.95rem; /* タイトルフォントサイズを調整 */
+  }
+  .blogcard_excerpt {
+    font-size: 0.8rem; /* 説明文のフォントサイズを調整 */
+  }
+  .blogcard_link {
+    font-size: 0.7rem; /* URLフォントサイズを小さめに */
+  }
 }
-
-.footer-menu-list {
-  display: flex;
-  gap: 40px;
-}
-
-.footer-menu-link {
-  font-size: 16px;
-  font-weight: bold;
-  color: #fff;
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
@@ -167,12 +216,38 @@ body {
 }
 
 img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
   object-fit: cover;
 }
 
+.entry-meta span {
+  display: none;
+}
+
 @media screen and (width >= 767px) {
+  /* Heroエリアのスタイル */
+  .hero-background {
+    background-color: #2B53EC; /* 青色の背景 */
+    text-align: center;
+    padding: 50px 0; /* 上下の余白を確保 */
+    min-height: 100vh; /* ビューポート全体の高さ */
+    display: flex;
+    align-items: center; /* 縦方向に中央揃え */
+    justify-content: center; /* 横方向に中央揃え */
+    position: relative; /* positionはrelativeに設定 */
+    width: 100%;
+  }
+  .hero-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+  }
+  /* ロゴ画像のスタイル */
+  .hero-background img {
+    max-width: 100%; /* ロゴ画像の最大幅を100%に */
+    height: auto; /* 高さは自動調整 */
+  }
   .title-h2__text {
     position: relative;
     padding-left: 40px;
@@ -324,9 +399,38 @@ img {
     color: #2b53ec;
     transition: color 0.4s ease-out;
   }
-  .content-wrapper {
+  .footer {
     width: 100%;
     padding: 90px 0;
+    background-color: #333;
+  }
+  .footer__wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 1100px;
+    margin: 0 auto;
+  }
+  .footer-logo__image {
+    width: 260px;
+  }
+  .footer-logo__image img {
+    object-fit: contain;
+  }
+  .footer-menu {
+    margin-left: 166px;
+  }
+  .footer-menu-list {
+    display: flex;
+    gap: 40px;
+  }
+  .footer-menu-link {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+  }
+  .content-wrapper {
+    width: 100%;
+    padding: 90px 100px 0;
     background-color: #e6e6e6;
   }
   .fv {
@@ -425,9 +529,10 @@ img {
     margin-top: 16px;
   }
   .contents {
-    width: 1100px;
+    width: 100%;
     padding-bottom: 120px;
     margin: 80px auto 0;
+    max-width: 1100px;
   }
   .contents-inner {
     display: flex;
@@ -518,7 +623,7 @@ img {
     margin-top: 46px;
   }
   .content {
-    width: 1100px;
+    width: 100%;
     height: auto;
     padding: 130px 190px;
     margin: 110px auto 0;
@@ -535,21 +640,40 @@ img {
   }
 }
 @media screen and (width <= 767px) {
+  /* Heroエリアのスタイル */
+  .hero-background {
+    background-color: #2B53EC; /* 青色の背景 */
+    text-align: center;
+    padding: 50px 0; /* 上下の余白を確保 */
+    min-height: 100vh; /* ビューポート全体の高さ */
+    display: flex;
+    align-items: center; /* 縦方向に中央揃え */
+    justify-content: center; /* 横方向に中央揃え */
+    position: relative; /* positionはrelativeに設定 */
+    width: 100%;
+    padding: 0 24px;
+  }
+  .hero-text {
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+  }
+  /* ロゴ画像のスタイル */
+  .hero-background img {
+    max-width: 100%; /* ロゴ画像の最大幅を100%に */
+    height: auto; /* 高さは自動調整 */
+  }
   h3 {
     margin-bottom: 16px;
-    font-size: 36px;
-    color: #333333;
-    text-align: left;
+    font-size: 24px;
+    color: #ebff40;
+    text-align: center;
   }
   .button {
-    display: block;
     width: 228px;
     padding: 10px 74px;
     margin: 47px auto 0;
-    font-weight: bold;
-    color: #fff;
-    text-align: center;
-    background-color: #2b53ec;
+    background-color: #ebff40;
     border-radius: 8px;
   }
   .tag {
@@ -573,6 +697,9 @@ img {
   }
   .header-logo__image {
     width: 70px;
+  }
+  nav {
+    display: none;
   }
   .footer {
     width: 100%;
@@ -601,8 +728,8 @@ img {
   }
   .content-wrapper {
     width: 100%;
-    background-color: #fafafa;
-    padding: 80px 15px 100px;
+    background-color: #9a9593;
+    padding: 48px 20px;
   }
   .fv {
     width: 100%;
@@ -692,6 +819,7 @@ img {
     width: 350px;
     padding-bottom: 120px;
     margin: 0 auto;
+    background-color: #fff;
   }
   .contents-inner {
     width: 100%;
@@ -767,5 +895,21 @@ img {
   }
   .works-link {
     margin-top: 46px;
+  }
+  .content {
+    width: 100%;
+    height: auto;
+    padding: 12px;
+    margin: 40px auto 0;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 8px gray;
+  }
+  .content-category {
+    padding: 0;
+    margin: 0 auto;
+    background-color: transparent;
+    border-radius: 0%;
+    box-shadow: none;
   }
 }/*# sourceMappingURL=style_add.css.map */
