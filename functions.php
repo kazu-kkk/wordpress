@@ -1,28 +1,31 @@
 <?php
+
 /**
  * Enqueue parent and child theme stylesheets
  */
 
-function inspiro_child_enqueue_styles() {
+function inspiro_child_enqueue_styles()
+{
     // Enqueue parent theme stylesheet
     wp_enqueue_style('parent-style', get_template_directory_uri() . '/assets/css/minified/style.min.css');
-    
+
     // Enqueue child theme stylesheet
     wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/style.css', array('parent-style'));
-    
+
     // Enqueue additional stylesheet
     wp_enqueue_style('additional-style', get_stylesheet_directory_uri() . '/assets/css/style_add.css', array('child-style'));
 }
 
 add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_styles', 11);
 
-if ( ! function_exists( 'inspiro_child_theme_setup' ) ) {
-    function inspiro_child_theme_setup() {
+if (! function_exists('inspiro_child_theme_setup')) {
+    function inspiro_child_theme_setup()
+    {
         // クラスファイルを読み込む
         require_once get_stylesheet_directory() . '/inc/classes/class-inspiro-after-setup-theme.php';
 
         // クラスのインスタンスを作成
-        if ( class_exists( 'Inspiro_After_Setup_Theme' ) ) {
+        if (class_exists('Inspiro_After_Setup_Theme')) {
             new Inspiro_After_Setup_Theme();
         }
 
@@ -30,7 +33,7 @@ if ( ! function_exists( 'inspiro_child_theme_setup' ) ) {
         add_image_size('inspiro-custom-size', 600, 0, true); // 幅600px、高さ400px、トリミング（true）
     }
 }
-add_action( 'after_setup_theme', 'inspiro_child_theme_setup' );
+add_action('after_setup_theme', 'inspiro_child_theme_setup');
 
 /**
  * Enable support for Post Thumbnails on posts and pages.
@@ -40,7 +43,8 @@ add_theme_support('post-thumbnails');
 /**
  * Display post thumbnails
  */
-function display_post_thumbnails() {
+function display_post_thumbnails()
+{
     if (has_post_thumbnail()) {
         the_post_thumbnail('thumbnail'); // Thumbnail size
         the_post_thumbnail('medium'); // Medium size
@@ -53,7 +57,8 @@ function display_post_thumbnails() {
 /**
  * Function to display a link as a card
  */
-function show_Linkcard($atts) {
+function show_Linkcard($atts)
+{
     $atts = shortcode_atts(array(
         'url' => '',
         'title' => '',
@@ -61,7 +66,7 @@ function show_Linkcard($atts) {
     ), $atts);
 
     // Fetch OpenGraph data
-    require_once get_stylesheet_directory() . '/path/to/OpenGraph.php'; // Adjust path as necessary
+    require_once get_stylesheet_directory() . '/OpenGraph.php'; // Adjust path as necessary
     $graph = OpenGraph::fetch($atts['url']);
 
     // Get title and description from OGP tags
@@ -93,8 +98,8 @@ add_shortcode('sc_Linkcard', 'show_Linkcard');
 /**
  * Include content-excerpt template part
  */
-function include_content_excerpt() {
+function include_content_excerpt()
+{
     get_template_part('content', 'excerpt');
 }
 add_action('wp_footer', 'include_content_excerpt');
-?>
