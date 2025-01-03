@@ -24,7 +24,7 @@
 		<p>&copy; <?php echo date('Y'); ?> Designpedia. All Rights Reserved.</p>
 		<nav class="footer-navigation">
 			<ul style="list-style: none; padding: 0; margin: 0; display: inline-flex; gap: 15px;">
-				<li><a href="https://bento.me/hk1203" style="text-decoration: none; color: #007bff;">About</a></li>
+				<li><a href="/about" style="text-decoration: none; color: #007bff;">About</a></li>
 				<li><a href="/privacy" style="text-decoration: none; color: #007bff;">Privacy Policy</a></li>
 				<li><a href="/contact" style="text-decoration: none; color: #007bff;">Contact</a></li>
 			</ul>
