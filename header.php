@@ -21,6 +21,8 @@
 	<meta charset="<?php bloginfo('charset'); ?>" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<?php wp_head(); ?>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2216753629127219"
+		crossorigin="anonymous"></script>
 </head>
 
 <body <?php body_class(); ?>>
@@ -56,7 +58,7 @@
 								<div>
 									<p class="hero-text">デザイン・Web・ガジェットの総合メディア</p>
 									<a href="<?php echo esc_url(home_url('/')); ?>" rel="home">
-										<img src="https://www.ds-pedia.com/wp-content/uploads/2025/01/logo.png" alt="Default Logo">
+										<img src="/wp-content/uploads/2025/01/ブログロゴ.png" alt="Default Logo">
 									</a>
 								</div>
 							<?php endif; ?>

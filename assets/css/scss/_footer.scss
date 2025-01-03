@@ -1,9 +1,71 @@
-#colophon {
-    background-color: #f8f9fa; /* 背景色を設定 */
-    padding: 20px; /* 内側の余白 */
-    min-height: 50px; /* 最小の高さ */
-}
-
-.inner-wrap {
-    text-align: center; /* テキストを中央揃え */
-}
+/* デフォルトスタイル（全画面サイズ共通） */
+.site-footer {
+    background-color: #f8f9fa; /* 明るいグレーの背景 */
+    text-align: center; /* 中央揃え */
+    border-top: 1px solid #e9ecef; /* 上部に薄い線 */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* 上部に軽い影 */
+  }
+  
+  .inner-wrap {
+    max-width: 1200px; /* 最大幅 */
+    margin: 0 auto; /* 水平方向の中央揃え */
+    font-family: 'Arial', sans-serif; /* シンプルなフォント */
+  }
+  
+  .site-footer p {
+    font-size: 14px; /* 小さめのフォント */
+    color: #6c757d; /* グレーの文字色 */
+    margin-bottom: 15px; /* 下に余白 */
+  }
+  
+  .footer-navigation ul {
+    list-style: none; /* リストマーカーを非表示 */
+    padding: 0; /* 内側の余白をリセット */
+    margin: 0; /* 外側の余白をリセット */
+    display: flex; /* デフォルトで横並び */
+    gap: 15px; /* リンク間のスペース */
+  }
+  
+  .footer-navigation a {
+    text-decoration: none; /* 下線を非表示 */
+    color: #000; /* 黒に設定 */
+    font-size: 16px; /* フォントサイズ */
+    transition: color 0.3s ease; /* カラーのスムーズな切り替え */
+  }
+  
+  .footer-navigation a:hover {
+    color: #555; /* 少し明るい黒 (ダークグレー) */
+  }
+  
+  .footer-navigation a:active {
+    color: #333; /* 中間の黒 */
+  }
+  
+  /* タブレット以上の画面幅 (768px以上) */
+  @media screen and (min-width: 768px) {
+    .site-footer {
+      padding: 20px; /* 内側の余白 */
+    }
+  }
+  
+  /* スマートフォン向けのスタイル (768px以下) */
+  @media screen and (max-width: 767px) {
+    .site-footer {
+      padding: 15px; /* 内側の余白を少し狭く */
+    }
+  
+    .inner-wrap {
+      padding: 0 10px; /* 左右に余白を追加 */
+    }
+  
+    .footer-navigation ul {
+      flex-direction: column; /* リンクを縦並びに変更 */
+      align-items: center; /* 中央揃え */
+      gap: 10px; /* リンク間のスペースを狭く */
+    }
+  
+    .footer-navigation a {
+      font-size: 14px; /* フォントサイズを少し小さく */
+    }
+  }
+  
