@@ -1,0 +1,34 @@
+
+
+@media screen and (width >=767px)  {
+    .top-page-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 32px;
+
+
+    }
+    
+    .top-page-article {
+        width: 40%;
+
+        .entry-title a {
+            font-size: 20px;
+            line-height: 20px;
+        }
+    }
+
+    .inner-wrap--top-page {
+        padding: 90px 100px;
+    }
+    
+}
+
+
+@media screen and (width <=767px)  {
+    .top-page-content {
+        display: block;
+    }
+
+}

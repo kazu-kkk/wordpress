@@ -5,7 +5,9 @@
 @use "category.scss";
 @use "footer.scss";
 @use "blogcard.scss";
+@use "content.scss";
 
+//リセットcss
 * {
   box-sizing: border-box;
   padding: 0;

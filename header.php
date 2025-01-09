@@ -20,6 +20,7 @@
 <head>
 	<meta charset="<?php bloginfo('charset'); ?>" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="デザペディアは、デザイナーやクリエイターのための情報メディアサイトです。最新のデザインニュース、クリエイティブなインスピレーション、業界のトレンド、役立つツールやチュートリアルを提供し、あなたのクリエイティブな活動をサポートします。">
 	<?php wp_head(); ?>
 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2216753629127219"
 		crossorigin="anonymous"></script>
