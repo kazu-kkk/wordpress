@@ -1,0 +1,41 @@
+/* サイドナビの全体スタイル */
+#custom-side-nav {
+    background-color: #f5f5f5; /* 背景色 */
+    padding: 20px; /* 内側の余白 */
+    border: 1px solid #ddd; /* 枠線 */
+    border-radius: 5px; /* 角を丸く */
+    flex-shrink: 3;
+
+    /* サイドナビのリストスタイル */
+    ul {
+        list-style: none; /* リストマーカーを消す */
+        padding: 0; /* 内側の余白をリセット */
+        margin: 0; /* 外側の余白をリセット */
+    
+        LI {
+            margin-bottom: 10px; /* 下の余白 */
+    
+            a {
+                text-decoration: none; /* 下線を消す */
+                color: #0073aa; /* リンク色 */
+                transition: color 0.3s; /* 色の変化にアニメーションを追加 */
+                white-space: nowrap;
+    
+    
+                /* リンクのホバースタイル */
+                &:hover {
+                    color: #005177; /* ホバー時の色 */
+                }
+            }
+        }
+
+    }
+}
+
+/* サイドナビのタイトルスタイル */
+#custom-side-nav .widget-title {
+    font-size: 1.5em; /* フォントサイズ */
+    margin-bottom: 15px; /* 下の余白 */
+    color: #333; /* 文字色 */
+}
+

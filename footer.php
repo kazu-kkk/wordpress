@@ -21,14 +21,14 @@
 
 <footer id="colophon" class="site-footer" role="contentinfo">
 	<div class="inner-wrap">
-		<p>&copy; <?php echo date('Y'); ?> Designpedia. All Rights Reserved.</p>
 		<nav class="footer-navigation">
 			<ul>
-				<li><a href="/about">About</a></li>
+				<li><a href="https://bento.me/hk1203">About</a></li>
 				<li><a href="/privacy">Privacy Policy</a></li>
 				<li><a href="/contact">Contact</a></li>
 			</ul>
 		</nav>
+		<p>&copy; <?php echo date('Y'); ?> Designpedia. All Rights Reserved.</p>
 	</div><!-- .inner-wrap -->
 </footer>
 

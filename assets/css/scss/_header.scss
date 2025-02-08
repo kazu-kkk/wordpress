@@ -1,0 +1,15 @@
+@media screen and (width >=767px)  {
+    .custom-logo-link img {
+        display: inline-block;
+        max-height: 80px;
+        width: 60%;
+    }
+
+}
+
+@media screen and (width <=767px)  {
+    .custom-logo-link img {
+        display: inline-block;
+        max-width: 140px;
+    }
+}

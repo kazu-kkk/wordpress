@@ -103,3 +103,17 @@ function include_content_excerpt()
     get_template_part('content', 'excerpt');
 }
 add_action('wp_footer', 'include_content_excerpt');
+
+
+//20250203_チェックマークリストパーツ追加
+function checklist_shortcode($atts, $content = null)
+{
+    return '<ul class="checklist">' . do_shortcode($content) . '</ul>';
+}
+add_shortcode('checklist', 'checklist_shortcode');
+
+function checklist_item_shortcode($atts, $content = null)
+{
+    return '<li>' . $content . '</li>';
+}
+add_shortcode('check', 'checklist_item_shortcode');

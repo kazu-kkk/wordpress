@@ -6,12 +6,6 @@
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* 上部に軽い影 */
   }
   
-  .inner-wrap {
-    max-width: 1200px; /* 最大幅 */
-    margin: 0 auto; /* 水平方向の中央揃え */
-    font-family: 'Arial', sans-serif; /* シンプルなフォント */
-  }
-  
   .site-footer p {
     font-size: 14px; /* 小さめのフォント */
     color: #6c757d; /* グレーの文字色 */
@@ -52,10 +46,6 @@
   @media screen and (max-width: 767px) {
     .site-footer {
       padding: 15px; /* 内側の余白を少し狭く */
-    }
-  
-    .inner-wrap {
-      padding: 0 10px; /* 左右に余白を追加 */
     }
   
     .footer-navigation ul {
