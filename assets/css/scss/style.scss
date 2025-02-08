@@ -5,7 +5,9 @@
 @use "category.scss";
 @use "footer.scss";
 @use "blogcard.scss";
+@use "content.scss";
 
+//リセットcss
 * {
   box-sizing: border-box;
   padding: 0;
@@ -30,6 +32,27 @@ img {
 .entry-meta span {
   display: none;
 }
+
+.button {
+  display: block;
+  width: 228px;
+  height: 42px;
+  padding: 12px 10px 10px;
+  margin: 47px auto 0;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  background-color: #2b53ec;
+  border-radius: 8px;
+  transition: all 0.5s ease;
+}
+
+.button:hover {
+  color: #2b53ec;
+  background-color: #fff;
+  border: 2px solid #2b53ec; /* 枠線を明示的に指定 */
+}
+
 
 
 
@@ -58,7 +81,8 @@ img {
 
 /* ロゴ画像のスタイル */
 .hero-background img {
-  max-width: 100%;  /* ロゴ画像の最大幅を100%に */
+  max-width: 800px;  /* ロゴ画像の最大幅を100%に */
+  margin: 0 100px;
   height: auto;  /* 高さは自動調整 */
 }
 
@@ -163,25 +187,9 @@ img {
   }
 
   .button {
-    display: block;
-    width: 228px;
-    height: 42px;
-    padding: 12px 10px 10px;
-    margin: 47px auto 0;
-    margin-top: 50px;
-    font-weight: bold;
-    color: #fff;
-    text-align: center;
-    background-color: #2b53ec;
-    border-radius: 8px;
-    transition: all 0.5s 0s ease;
-
-    &:hover {
-      color: #2b53ec;
-      background-color: #fff;
-      border-color: #2b53ec;
-      border-width: 2px;
-    }
+    width: 228px; /* PC向けの幅 */
+    margin-top: 50px; /* 上のマージンを調整 */
+    font-size: 16px; /* フォントサイズ */
   }
 
   .tag {
@@ -244,45 +252,10 @@ img {
     transition: color 0.4s ease-out;
   }
 
-  .footer {
-    width: 100%;
-    padding: 90px 0;
-    background-color: #333;
-  }
-
-  .footer__wrapper {
-    display: flex;
-    justify-content: space-between;
-    width: 1100px;
-    margin: 0 auto;
-  }
-
-  .footer-logo__image {
-    width: 260px;
-
-    img {
-      object-fit: contain;
-    }
-  }
-
-  .footer-menu {
-    margin-left: 166px;
-  }
-
-  .footer-menu-list {
-    display: flex;
-    gap: 40px;
-  }
-
-  .footer-menu-link {
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
-  }
-
+  
   .content-wrapper {
     width: 100%;
-    padding: 90px 100px 0;
+    padding: 90px 100px;
     background-color: #e6e6e6;
   }
 
@@ -522,7 +495,7 @@ img {
   }
 
   .content {
-    width: 100%;
+    max-width: 1100px;
     height: auto;
     padding: 130px 190px;
     margin: 110px auto 0;
@@ -568,19 +541,14 @@ img {
 }
 
 
-  h3 {
-    margin-bottom: 16px;
-    font-size: 24px;
-    color: #ebff40;
-    text-align: center;
-  }
+
 
   .button {
-    width: 228px;
-    padding: 10px 74px;
-    margin: 47px auto 0;
-    background-color: #ebff40;
-    border-radius: 8px;
+    width: 180px; /* SP向けの幅 */
+    height: auto; /* 高さを自動調整 */
+    padding: 8px; /* パディングを調整 */
+    margin-top: 20px; /* 上のマージンを短縮 */
+    font-size: 12px; /* フォントサイズを小さく */
   }
 
   .tag {
@@ -609,40 +577,11 @@ img {
     width: 70px;
   }
 
-  nav {
+  .header-navigation-wrapper nav {
     display: none;
   }
 
-  .footer {
-    width: 100%;
-    padding: 60px 0;
-    background-color: #333;
-  }
-
-  .footer__wrapper {
-    width: 100%;
-    margin: 0 auto;
-  }
-
-  .footer-logo__image {
-    width: 160px;
-    margin: 0 auto;
-  }
-
-  .footer-menu {
-    width: 80%;
-    margin: 0 auto;
-  }
-
-  .footer-menu-list {
-    display: flex;
-    gap: 20px;
-  }
-
-  .footer-menu-link {
-    font-size: 16px;
-    color: #fff;
-  }
+ 
 
   .content-wrapper {
     width: 100%;
