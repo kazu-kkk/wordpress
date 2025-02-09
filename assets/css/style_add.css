@@ -366,11 +366,17 @@
     max-height: 80px;
     width: 60%;
   }
+  #site-navigation .inner-wrap {
+    padding-top: 0;
+  }
 }
 @media screen and (width <= 767px) {
   .custom-logo-link img {
     display: inline-block;
     max-width: 140px;
+  }
+  #site-navigation .inner-wrap {
+    padding: 0 16px;
   }
 }
 /* --- 共通部分（PC・SP共通のスタイル） --- */
@@ -415,6 +421,92 @@
     top: 1px; /* 位置を微調整 */
   }
 }
+/* contact-page.php専用のスタイル */
+.page-id-138 .instagram-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 320px;
+  text-align: left;
+  text-decoration: none !important; /* リンクの下線を強制的に消す */
+  color: inherit; /* リンクの色を継承 */
+}
+
+.page-id-138 .instagram-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.page-id-138 .instagram-avatar img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #e6683c;
+}
+
+.page-id-138 .instagram-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.page-id-138 .instagram-username {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.page-id-138 .instagram-button {
+  display: inline-block;
+  padding: 8px 15px;
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 20px;
+  text-decoration: none;
+}
+
+.page-id-138 .container-fluid {
+  width: 100%;
+  max-width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.page-id-138 .instagram-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px; /* 上部に少しスペースを追加 */
+}
+
+.page-id-138 body {
+  padding-bottom: 200px;
+}
+
+.page-id-138 .entry-content {
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.page-id-138 .entry-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.page-id-138 a, .page-id-138 .instagram-card, .page-id-138 .instagram-card span {
+  text-decoration: none !important;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

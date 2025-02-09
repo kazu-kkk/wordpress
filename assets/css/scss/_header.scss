@@ -5,6 +5,10 @@
         width: 60%;
     }
 
+    #site-navigation .inner-wrap {
+        padding-top: 0;
+    }
+
 }
 
 @media screen and (width <=767px)  {
@@ -12,4 +16,9 @@
         display: inline-block;
         max-width: 140px;
     }
+
+    #site-navigation .inner-wrap {
+        padding: 0 16px;
+    }
+    
 }
