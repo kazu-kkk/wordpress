@@ -65,6 +65,10 @@ img {
   font-family: 'Arial', sans-serif; /* シンプルなフォント */
 }
 
+.site-content-contain {
+  background-color: #F5F7FF;
+}
+
 
 
 
@@ -476,8 +480,8 @@ img {
       display: flex;
       margin-top: 15px;
 
-      li {
-      }
+      // li {
+      // }
     }
   }
 
@@ -829,7 +833,7 @@ img {
   .content {
     width: 100%;
     height: auto;
-    padding: 12px;
+    padding: 20px 12px;
     margin: 40px auto 0;
     background-color: #fff;
     border-radius: 15px;

@@ -13,7 +13,7 @@ function inspiro_child_enqueue_styles()
     wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/style.css', array('parent-style'));
 
     // Enqueue additional stylesheet
-    wp_enqueue_style('additional-style', get_stylesheet_directory_uri() . '/assets/css/style_add.css', array('child-style'));
+    wp_enqueue_style('additional-style', get_stylesheet_directory_uri() . '/assets/css/style_add.css', array('child-style'), filemtime(get_stylesheet_directory() . '/assets/css/style_add.css'));
 }
 
 add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_styles', 11);
@@ -104,16 +104,9 @@ function include_content_excerpt()
 }
 add_action('wp_footer', 'include_content_excerpt');
 
-
-//20250203_チェックマークリストパーツ追加
-function checklist_shortcode($atts, $content = null)
+// Googleフォントを追加
+function inspiro_child_enqueue_google_fonts()
 {
-    return '<ul class="checklist">' . do_shortcode($content) . '</ul>';
+    wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap', [], null);
 }
-add_shortcode('checklist', 'checklist_shortcode');
-
-function checklist_item_shortcode($atts, $content = null)
-{
-    return '<li>' . $content . '</li>';
-}
-add_shortcode('check', 'checklist_item_shortcode');
+add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_google_fonts');
