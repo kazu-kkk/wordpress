@@ -27,9 +27,16 @@ get_header(); ?>
                         <p class="article-sub-date"><?php the_time('Y年m月d日'); ?></p>
                         <div>
                             <?php the_tags('<ul><li>', '</li><li>', '</li></ul>'); ?>
-                            <!-- <p class="article-sub-text-category__text tag">RESORT</p> -->
                         </div>
                     </div>
+
+                    <!-- ここにサムネイルを追加 -->
+                    <?php if (has_post_thumbnail()) : ?>
+                        <div class="article-sub-thumbnail">
+                            <?php the_post_thumbnail('large'); ?>
+                        </div>
+                    <?php endif; ?>
+                    <!-- 追加ここまで -->
 
                     <div class="article-text">
                         <?php the_content(); ?>
@@ -44,8 +51,8 @@ get_header(); ?>
     endif;
     ?>
 
-
 </main><!-- #main -->
+
 
 <?php
 get_footer(); ?>

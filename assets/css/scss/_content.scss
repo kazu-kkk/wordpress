@@ -2,25 +2,48 @@
 
 @media screen and (width >=767px)  {
     .top-page-content {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 32px;
-
 
     }
+
+    .top-page-content-article {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        column-gap: 20px;
+        row-gap: 32px;
+
+        .category-article{
+            width: calc((100% - 20px) / 2);
     
-    .top-page-article {
-        width: 40%;
+            .entry-title a {
+                font-size: 20px;
+                line-height: 20px;
+            }
+        }
+    }
+
+
+    
+    .top-page-article{
+        width: calc((100% - 20px) / 2);
 
         .entry-title a {
             font-size: 20px;
             line-height: 20px;
         }
     }
+    
+
+    
+
+
+
+    .inner-wrap {
+        padding-top: 56px;
+    }
 
     .inner-wrap--top-page {
-        padding: 90px 100px;
+        padding: 90px 30px;
     }
     
 }
@@ -30,5 +53,23 @@
     .top-page-content {
         display: block;
     }
+
+
+
+    .top-page-article {
+
+        margin-bottom: 48px;
+
+        .entry-title a {
+            font-size: 20px;
+            line-height: 20px;
+        }
+    }
+
+    .post-thumbnail {
+        margin-bottom: 4px;
+    }
+
+
 
 }

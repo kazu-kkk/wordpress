@@ -1,0 +1,24 @@
+@media screen and (width >=767px)  {
+    .custom-logo-link img {
+        display: inline-block;
+        max-height: 80px;
+        width: 60%;
+    }
+
+    #site-navigation .inner-wrap {
+        padding-top: 0;
+    }
+
+}
+
+@media screen and (width <=767px)  {
+    .custom-logo-link img {
+        display: inline-block;
+        max-width: 140px;
+    }
+
+    #site-navigation .inner-wrap {
+        padding: 0 16px;
+    }
+    
+}
