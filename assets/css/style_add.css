@@ -4,12 +4,40 @@
   color: #000;
   font-size: 36px;
   line-height: 1.25;
-  margin-bottom: 12px;
+  margin-bottom: 24px;
 }
 
 .article-sub {
   display: flex;
-  margin-top: 36px;
+}
+.article-sub ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-left: 20px;
+}
+.article-sub ul li {
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+.article-sub ul li a {
+  background-color: #2B53EC;
+  border-radius: 4px;
+  color: #fff;
+  display: inline-block;
+  font-size: 14px;
+  padding: 6px 12px;
+  text-decoration: none;
+  transition: opacity 0.3s;
+}
+.article-sub ul li a:hover {
+  opacity: 0.8;
+}
+.article-sub ul li a::before {
+  content: "#";
+  margin-right: 4px;
 }
 
 .article-date {
@@ -21,6 +49,17 @@
   height: 400px;
   margin-top: 112px;
   width: 100%;
+}
+
+.article-sub-thumbnail {
+  margin-top: 40px;
+  margin-bottom: 48px;
+  width: 100%;
+}
+.article-sub-thumbnail img {
+  width: 100%;
+  height: auto;
+  vertical-align: bottom;
 }
 
 .article-text h2 {
@@ -58,12 +97,13 @@
 /* PC向けスタイル */
 @media screen and (min-width: 768px) {
   .article-title {
-    margin-bottom: 12px;
+    margin-bottom: 24px;
   }
   .article-title,
   .article-sub {
     max-width: 720px;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
   }
   .article-fv {
     height: 400px;
@@ -86,37 +126,87 @@
 }
 /* SP向けスタイル */
 @media screen and (max-width: 767px) {
+  body.single .site-content-contain {
+    background-color: #fff;
+  }
+  body.single .site-main {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .content-wrapper {
+    width: 100%;
+    margin: 0;
+    background-color: #fff;
+    box-shadow: none; /* カードの影を削除 */
+    border: none;
+    border-radius: 0;
+  }
+  .content {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
   .article-title {
-    font-size: 28px;
-    margin: 8px 0;
+    font-size: 26px;
+    line-height: 1.4;
+    margin: 16px 0 16px;
   }
   .article-sub {
     flex-direction: column;
     margin-top: 24px;
+    margin-bottom: 32px;
+  }
+  .article-sub ul {
+    margin-left: 0;
+    margin-top: 12px;
+  }
+  .article-sub ul li {
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+  .article-sub ul li a {
+    font-size: 13px;
+    padding: 4px 10px;
+  }
+  .article-sub-date {
+    font-size: 14px;
+    margin-top: 0;
   }
   .article-fv {
     height: 250px;
     margin-top: 56px;
   }
+  .article-sub-thumbnail {
+    margin-top: 24px;
+    margin-bottom: 40px;
+  }
   .article-text h2 {
     font-size: 24px;
-    line-height: 30px;
-    margin: 18px 0 16px;
-    padding-bottom: 10px;
+    line-height: 1.4;
+    margin: 48px 0 24px;
+    padding-bottom: 12px;
   }
   .article-text h3 {
-    margin-bottom: 16px;
-    font-size: 24px;
-    color: #000;
+    font-size: 20px;
+    line-height: 1.5;
+    margin: 32px 0 16px;
     text-align: left;
+    color: #000;
+    font-weight: bold;
   }
   .article-text img {
     width: 100%;
+    margin: 24px 0;
   }
   .article-text p {
     font-size: 16px;
-    line-height: 1.6;
-    margin-top: 24px;
+    line-height: 1.8;
+    margin-top: 0;
+    margin-bottom: 24px;
+  }
+  .article-text li {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 12px;
   }
 }
 /* デフォルトスタイル（全画面サイズ共通） */

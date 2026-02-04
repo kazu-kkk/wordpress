@@ -13,7 +13,7 @@ function inspiro_child_enqueue_styles()
     wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/style.css', array('parent-style'));
 
     // Enqueue additional stylesheet
-    wp_enqueue_style('additional-style', get_stylesheet_directory_uri() . '/assets/css/style_add.css', array('child-style'));
+    wp_enqueue_style('additional-style', get_stylesheet_directory_uri() . '/assets/css/style_add.css', array('child-style'), filemtime(get_stylesheet_directory() . '/assets/css/style_add.css'));
 }
 
 add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_styles', 11);
