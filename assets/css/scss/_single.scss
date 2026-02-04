@@ -3,6 +3,7 @@
     color: #000;
     font-size: 36px;
     line-height: 1.25;
+    margin-bottom: 12px;
   }
   
   .article-sub {
@@ -23,13 +24,24 @@
   
   .article-text {
     h2 {
-      border-bottom: solid 3px #E8E8E8;
+      border-bottom: solid 3px #E8E8E8; /* メインのボーダー */
       font-size: 28px;
       line-height: 36px;
       margin: 20px 0 18px;
       padding-bottom: 12px;
       position: relative;
-    }
+  }
+  
+  h2:after {
+      position: absolute;
+      content: "";
+      display: block;
+      border-bottom: solid 3px #2B53EC; /* アクセントカラーのボーダー */
+      bottom: -3px;
+      width: 30%; /* アンダーラインの長さ */
+      left: 0; /* 左寄せ */
+  }
+  
   
     p {
       color: #000;
@@ -50,6 +62,11 @@
   
   /* PC向けスタイル */
   @media screen and (min-width: 768px) {
+    .article-title {
+      margin-bottom: 12px;
+    }
+
+
     .article-title,
     .article-sub {
       max-width: 720px;
@@ -83,6 +100,7 @@
   @media screen and (max-width: 767px) {
     .article-title {
       font-size: 28px;
+      margin: 8px 0;
     }
   
     .article-sub {

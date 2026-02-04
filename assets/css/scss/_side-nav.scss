@@ -1,41 +1,113 @@
 /* サイドナビの全体スタイル */
 #custom-side-nav {
-    background-color: #f5f5f5; /* 背景色 */
-    padding: 20px; /* 内側の余白 */
-    border: 1px solid #ddd; /* 枠線 */
-    border-radius: 5px; /* 角を丸く */
-    flex-shrink: 3;
-
-    /* サイドナビのリストスタイル */
-    ul {
-        list-style: none; /* リストマーカーを消す */
-        padding: 0; /* 内側の余白をリセット */
-        margin: 0; /* 外側の余白をリセット */
-    
-        LI {
-            margin-bottom: 10px; /* 下の余白 */
-    
-            a {
-                text-decoration: none; /* 下線を消す */
-                color: #0073aa; /* リンク色 */
-                transition: color 0.3s; /* 色の変化にアニメーションを追加 */
-                white-space: nowrap;
-    
-    
-                /* リンクのホバースタイル */
-                &:hover {
-                    color: #005177; /* ホバー時の色 */
-                }
-            }
-        }
-
-    }
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; 
+    min-width: 240px; /* 最小幅を設定 */
+    max-width: 300px; /* 最大幅も設定 */
+    margin: 0 auto; /* 中央配置（必要なら） */
 }
 
-/* サイドナビのタイトルスタイル */
+
+/* サイドナビのタイトル */
 #custom-side-nav .widget-title {
-    font-size: 1.5em; /* フォントサイズ */
-    margin-bottom: 15px; /* 下の余白 */
-    color: #333; /* 文字色 */
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
 }
 
+/* サイドナビのリスト */
+#custom-side-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left; /* リストを左揃えに */
+}
+
+#custom-side-nav li {
+    margin-bottom: 12px;
+}
+
+#custom-side-nav a {
+    display: block;
+    text-decoration: none;
+    color: #0073aa;
+    font-weight: 500;
+    padding: 8px 10px; /* 左に余白を追加 */
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#custom-side-nav a:hover {
+    background-color: #0073aa;
+    color: #fff;
+}
+
+
+/* プロフィールカード */
+.profile-card {
+    text-align: center; /* 名前や画像を中央揃えに */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    margin-bottom: 20px;
+}
+
+/* プロフィール画像 */
+.profile-avatar {
+    display: block;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 10px; /* 画像は中央揃え */
+}
+
+/* 名前は中央揃えのまま */
+.profile-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+/* プロフィール本文（左揃え） */
+.profile-bio {
+    font-size: 14px;
+    color: #666;
+    text-align: left; /* 左揃え */
+    margin-bottom: 10px;
+}
+
+/* ソーシャルボタン（中央揃え） */
+.profile-social {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+
+.profile-social .social-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #0073aa;
+    transition: background-color 0.3s ease;
+}
+
+.profile-social .social-button:hover {
+    background-color: #005177;
+}
+
+.profile-social .social-button img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1); /* アイコンを白くする */
+}

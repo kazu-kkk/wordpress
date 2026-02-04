@@ -17,7 +17,8 @@
     
             .entry-title a {
                 font-size: 20px;
-                line-height: 20px;
+                line-height: 30px;
+                display: block;
             }
         }
     }
@@ -45,6 +46,12 @@
     .inner-wrap--top-page {
         padding: 90px 30px;
     }
+
+
+    .post-thumbnail {
+        margin-bottom: 12px;
+    }
+
     
 }
 
