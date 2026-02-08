@@ -110,3 +110,13 @@ function inspiro_child_enqueue_google_fonts()
     wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap', [], null);
 }
 add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_google_fonts');
+
+/**
+ * Custom Favicon
+ */
+function inspiro_child_custom_favicon() {
+    $favicon_url = get_stylesheet_directory_uri() . '/assets/images/yuny_logo.png';
+    echo '<link rel="shortcut icon" href="' . esc_url($favicon_url) . '" />' . "\n";
+    echo '<link rel="apple-touch-icon" href="' . esc_url($favicon_url) . '" />' . "\n";
+}
+add_action('wp_head', 'inspiro_child_custom_favicon');

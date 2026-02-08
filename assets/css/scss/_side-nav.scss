@@ -1,23 +1,25 @@
 /* サイドナビの全体スタイル */
 #custom-side-nav {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: transparent; /* 背景色を透明にしてサイトに馴染ませる */
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none; /* シャドウ削除 */
     width: 100%; 
-    min-width: 240px; /* 最小幅を設定 */
-    max-width: 300px; /* 最大幅も設定 */
-    margin: 0 auto; /* 中央配置（必要なら） */
+    min-width: 240px;
+    max-width: 300px;
+    margin: 0 auto;
 }
-
 
 /* サイドナビのタイトル */
 #custom-side-nav .widget-title {
-    font-size: 1.4em;
+    font-size: 1.2rem;
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
     color: #333;
-    text-align: center;
+    text-align: left;
+    border-bottom: 2px solid #2B53EC;
+    padding-bottom: 8px;
+    letter-spacing: 0.05em;
 }
 
 /* サイドナビのリスト */
@@ -25,85 +27,116 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    text-align: left; /* リストを左揃えに */
 }
 
 #custom-side-nav li {
     margin-bottom: 12px;
 }
 
+/* カテゴリリンク - カード型デザイン */
 #custom-side-nav a {
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     text-decoration: none;
-    color: #0073aa;
+    color: #333;
     font-weight: 500;
-    padding: 8px 10px; /* 左に余白を追加 */
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
+    padding: 14px 16px;
+    background-color: #fff; /* 白背景のカード */
+    border-radius: 8px; /* 角丸 8px (サイト共通) */
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    
+    /* 矢印アイコン装飾 */
+    &::after {
+        content: '';
+        display: block;
+        width: 6px;
+        height: 6px;
+        border-top: 2px solid #ddd;
+        border-right: 2px solid #ddd;
+        transform: rotate(45deg);
+        transition: all 0.3s ease;
+    }
 }
 
 #custom-side-nav a:hover {
-    background-color: #0073aa;
+    background-color: #2B53EC; /* テーマカラーのブルー */
     color: #fff;
+    box-shadow: 0 4px 12px rgba(43, 83, 236, 0.25);
+    transform: translateY(-2px); /* 少し浮き上がる動き */
+
+    &::after {
+        border-color: #fff;
+        transform: rotate(45deg) translate(2px, -2px);
+    }
 }
 
 
 /* プロフィールカード */
 .profile-card {
-    text-align: center; /* 名前や画像を中央揃えに */
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    text-align: center;
+    padding: 30px 20px;
+    border: none;
+    border-radius: 12px;
     background-color: #fff;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* 浮きすぎない上品な影 */
 }
 
 /* プロフィール画像 */
 .profile-avatar {
     display: block;
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    margin: 0 auto 10px; /* 画像は中央揃え */
+    margin: 0 auto 16px;
+    object-fit: cover;
+    box-shadow: none; /* シャドウ削除 */
 }
 
-/* 名前は中央揃えのまま */
+/* 名前 */
 .profile-name {
-    font-size: 18px;
+    font-size: 1.1rem;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 12px;
     text-align: center;
+    color: #333;
 }
 
-/* プロフィール本文（左揃え） */
+/* プロフィール本文 */
 .profile-bio {
     font-size: 14px;
     color: #666;
-    text-align: left; /* 左揃え */
+    text-align: left;
     margin-bottom: 10px;
+    line-height: 1.8; /* 行間を広げて読みやすく */
+    letter-spacing: 0.02em;
 }
 
-/* ソーシャルボタン（中央揃え） */
+/* ソーシャルボタン */
 .profile-social {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
+    margin-top: 20px;
 }
-
 
 .profile-social .social-button {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background-color: #0073aa;
-    transition: background-color 0.3s ease;
+    background-color: #2B53EC; /* テーマカラー */
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(43, 83, 236, 0.3);
 }
 
 .profile-social .social-button:hover {
-    background-color: #005177;
+    background-color: #1a3db8;
+    transform: translateY(-2px);
 }
 
 .profile-social .social-button img {
