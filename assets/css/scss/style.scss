@@ -59,10 +59,49 @@ img {
 
 
 
+
 .inner-wrap {
   max-width: 1200px; /* 最大幅 */
   margin: 0 auto; /* 水平方向の中央揃え */
   font-family: 'Arial', sans-serif; /* シンプルなフォント */
+}
+
+/* ページタイトルの共通設定 */
+#primary .page-title {
+  /* リセットと基本設定 */
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 0;
+  margin: 0 0 40px 0;
+  
+  /* テキストスタイル */
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  letter-spacing: 0.05em;
+  text-align: center;
+  
+  /* 装飾リセット（グレーの下線を削除） */
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* アクセントライン（青色の強調線） */
+#primary .page-title::after {
+  content: '';
+  display: block; /* ブロック要素にして自然な配置にする */
+  width: 60px;
+  height: 4px; /* 視認性を高めるため少し太く */
+  background-color: #2B53EC;
+  border-radius: 2px;
+  
+  /* 位置調整（絶対配置をやめてマージンで調整） */
+  position: static;
+  margin: 10px auto 0; /* テキストとの間隔を狭める（10px） */
 }
 
 .site-content-contain {
