@@ -62,9 +62,6 @@
   vertical-align: bottom;
 }
 
-.article-text {
-  /* Table Style */
-}
 .article-text h2 {
   border-bottom: solid 3px #E8E8E8; /* メインのボーダー */
   font-size: 28px;
@@ -96,6 +93,9 @@
   margin-left: 20px;
   color: #000;
 }
+.article-text {
+  /* Table Style */
+}
 .article-text .wp-block-table {
   margin: 40px 0;
   overflow-x: auto;
@@ -124,6 +124,32 @@
   vertical-align: middle;
   font-size: 16px;
 }
+.article-text .wp-block-table {
+  /* 縦方向のヘッダー用クラス */
+}
+.article-text .wp-block-table.is-vertical-header table tbody tr td:first-child {
+  background-color: #2B53EC;
+  color: #fff;
+  font-weight: bold;
+  border: 1px solid #2B53EC;
+  padding: 15px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 16px;
+}
+.article-text .wp-block-table {
+  /* 任意のセルをヘッダー風にするクラス */
+}
+.article-text .wp-block-table table tbody tr td.u-header-cell {
+  background-color: #2B53EC;
+  color: #fff;
+  font-weight: bold;
+  border: 1px solid #2B53EC;
+  padding: 15px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 16px;
+}
 
 /* PC向けスタイル */
 @media screen and (min-width: 768px) {
@@ -144,8 +170,8 @@
     margin: 0 auto;
   }
   .article-text h3 {
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 24px;
+    line-height: 1.5;
     margin: 16px 0 14px;
     padding-bottom: 8px;
   }
@@ -217,7 +243,7 @@
     padding-bottom: 12px;
   }
   .article-text h3 {
-    font-size: 20px;
+    font-size: 22px;
     line-height: 1.5;
     margin: 32px 0 16px;
     text-align: left;
@@ -1473,4 +1499,6 @@ img {
     border-radius: 0%;
     box-shadow: none;
   }
-}/*# sourceMappingURL=style_add.css.map */
+}
+
+/*# sourceMappingURL=style_add.css.map */
