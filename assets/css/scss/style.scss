@@ -589,8 +589,7 @@ img {
 @media screen and (width <=767px) {
 
   .inner-wrap {
-    padding:40px 16px; /* 左右に余白を追加 */
-
+    padding:40px 16px 20px; /* 左右に余白を追加、下部は20pxに */
     
   }
 
@@ -607,6 +606,21 @@ img {
   position: relative;  /* positionはrelativeに設定 */
   width: 100%;
   padding: 0 24px;
+}
+
+/* ページタイトル（SP） */
+#primary .page-title,
+#primary .type-page .entry-title {
+  font-size: 20px; /* PCの28pxから縮小 */
+  margin-bottom: 24px; /* マージン調整 */
+}
+
+/* アクセントライン（SP） */
+#primary .page-title::after,
+#primary .type-page .entry-title::after {
+  width: 40px; /* 線も少し短く */
+  height: 3px;
+  margin-top: 8px;
 }
 
 .hero-text {
@@ -766,7 +780,7 @@ img {
 
   .contents {
     width: 350px;
-    padding-bottom: 120px;
+    padding-bottom: 60px; /* 余白削減 (120px -> 60px) */
     margin: 0 auto;
     background-color: #fff;
   }

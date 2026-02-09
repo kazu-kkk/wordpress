@@ -62,6 +62,9 @@
   vertical-align: bottom;
 }
 
+.article-text {
+  /* Table Style */
+}
 .article-text h2 {
   border-bottom: solid 3px #E8E8E8; /* メインのボーダー */
   font-size: 28px;
@@ -93,13 +96,12 @@
   margin-left: 20px;
   color: #000;
 }
-.article-text {
-  /* Table Style */
-}
 .article-text .wp-block-table {
   margin: 40px 0;
   overflow-x: auto;
   /* 共通テーブルスタイル（is-style-regularも含める） */
+  /* 縦方向のヘッダー用クラス */
+  /* 任意のセルをヘッダー風にするクラス */
 }
 .article-text .wp-block-table table {
   border-collapse: separate;
@@ -128,9 +130,6 @@
   font-size: 16px;
   border-radius: 4px; /* 角丸 */
 }
-.article-text .wp-block-table {
-  /* 縦方向のヘッダー用クラス */
-}
 .article-text .wp-block-table.is-vertical-header table tbody tr td:first-child {
   background-color: #EFF4FF;
   color: #2B53EC;
@@ -141,9 +140,6 @@
   vertical-align: middle;
   font-size: 16px;
   border-radius: 4px;
-}
-.article-text .wp-block-table {
-  /* 任意のセルをヘッダー風にするクラス */
 }
 .article-text .wp-block-table table tbody tr td.u-header-cell {
   background-color: #EFF4FF;
@@ -318,15 +314,25 @@
 /* スマートフォン向けのスタイル (768px以下) */
 @media screen and (max-width: 767px) {
   .site-footer {
-    padding: 15px; /* 内側の余白を少し狭く */
+    padding: 30px 15px; /* 上下の余白を調整 */
+  }
+  .site-footer .inner-wrap {
+    padding: 0 !important; /* グローバルのinner-wrap余白を打ち消し */
+  }
+  .footer-navigation {
+    margin-bottom: 24px; /* contactと権利テキストの間隔 */
+  }
+  .site-footer p {
+    margin-bottom: 0; /* 下の余白はfooterのpaddingで確保 */
+    font-size: 11px;
   }
   .footer-navigation ul {
     flex-direction: column; /* リンクを縦並びに変更 */
     align-items: center; /* 中央揃え */
-    gap: 10px; /* リンク間のスペースを狭く */
+    gap: 16px; /* リンク間のスペース */
   }
   .footer-navigation a {
-    font-size: 14px; /* フォントサイズを少し小さく */
+    font-size: 13px;
   }
 }
 @media screen and (width >= 767px) {
@@ -678,6 +684,50 @@
   filter: brightness(0) invert(1); /* アイコンを白くする */
 }
 
+/* モバイル端末向けの調整 */
+@media screen and (max-width: 767px) {
+  #custom-side-nav {
+    max-width: 100%;
+  }
+  /* プロフィールカードを横並び（グリッド）に変更 */
+  .profile-card {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    grid-template-rows: auto auto; /* 名前とバイオ用の2行 */
+    column-gap: 16px; /* 画像とテキストの間隔 */
+    text-align: left;
+    padding: 20px;
+    align-items: start; /* 上揃え、または center で中央揃え */
+  }
+  .profile-avatar {
+    grid-row: 1/3; /* 2行分を占める */
+    grid-column: 1/2;
+    width: 80px;
+    height: 80px;
+    margin: 0; /* 中央揃えのマージンをリセット */
+  }
+  .profile-name {
+    grid-row: 1/2;
+    grid-column: 2/3;
+    margin-bottom: 4px;
+    font-size: 16px; /* 名前を少し小さく */
+    text-align: left; /* 左揃え */
+    align-self: end; /* 名前を下寄りに配置（任意） */
+  }
+  .profile-bio {
+    grid-row: 2/3;
+    grid-column: 2/3;
+    font-size: 13px;
+    text-align: left;
+    margin-bottom: 0px;
+    line-height: 1.5;
+  }
+  .profile-social {
+    justify-content: flex-start; /* 左寄せ */
+    margin-top: 10px;
+    grid-column: 2/3; /* 必要ならグリッド配置に追加 */
+  }
+}
 @media screen and (width >= 767px) {
   .custom-logo-link img {
     display: inline-block;
@@ -1300,7 +1350,7 @@ img {
 }
 @media screen and (width <= 767px) {
   .inner-wrap {
-    padding: 40px 16px; /* 左右に余白を追加 */
+    padding: 40px 16px 20px; /* 左右に余白を追加、下部は20pxに */
   }
   /* Heroエリアのスタイル */
   .hero-background {
@@ -1314,6 +1364,19 @@ img {
     position: relative; /* positionはrelativeに設定 */
     width: 100%;
     padding: 0 24px;
+  }
+  /* ページタイトル（SP） */
+  #primary .page-title,
+  #primary .type-page .entry-title {
+    font-size: 20px; /* PCの28pxから縮小 */
+    margin-bottom: 24px; /* マージン調整 */
+  }
+  /* アクセントライン（SP） */
+  #primary .page-title::after,
+  #primary .type-page .entry-title::after {
+    width: 40px; /* 線も少し短く */
+    height: 3px;
+    margin-top: 8px;
   }
   .hero-text {
     font-size: 15px;
@@ -1441,7 +1504,7 @@ img {
   }
   .contents {
     width: 350px;
-    padding-bottom: 120px;
+    padding-bottom: 60px; /* 余白削減 (120px -> 60px) */
     margin: 0 auto;
     background-color: #fff;
   }
@@ -1536,6 +1599,4 @@ img {
     border-radius: 0%;
     box-shadow: none;
   }
-}
-
-/*# sourceMappingURL=style_add.css.map */
+}/*# sourceMappingURL=style_add.css.map */
