@@ -120,3 +120,19 @@ function inspiro_child_custom_favicon() {
     echo '<link rel="apple-touch-icon" href="' . esc_url($favicon_url) . '" />' . "\n";
 }
 add_action('wp_head', 'inspiro_child_custom_favicon');
+
+/**
+ * Identify Custom Post Types in Archives
+ */
+function inspiro_child_add_cpt_to_archives($query) {
+    if (is_admin() || ! $query->is_main_query()) {
+        return;
+    }
+
+    // Check for category or tag archives
+    if ( (is_category() || is_tag()) && empty($query->query_vars['suppress_filters']) ) {
+        // Include 'post' and likely CPT names.
+        $query->set('post_type', array('post', 'portfolio_item', 'portfolio'));
+    }
+}
+add_action('pre_get_posts', 'inspiro_child_add_cpt_to_archives');

@@ -258,7 +258,7 @@ img {
     font-size: 16px; /* フォントサイズ */
   }
 
-  .tag {
+  span.tag, a.tag {
     display: inline-block;
     padding: 5px 8px;
     font-size: 13px;
@@ -632,13 +632,6 @@ img {
     font-size: 12px; /* フォントサイズを小さく */
   }
 
-  .tag {
-    padding: 5px 8px;
-    font-size: 13px;
-    font-weight: bold;
-    background-color: #ebff40;
-    border-radius: 5px;
-  }
 
   .header {
     position: fixed;
