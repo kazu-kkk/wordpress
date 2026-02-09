@@ -110,24 +110,26 @@
     margin: 40px 0;
     overflow-x: auto;
 
-    &.is-style-regular {
-      table {
-        border-collapse: collapse;
+    /* 共通テーブルスタイル（is-style-regularも含める） */
+    table {
+        border-collapse: separate;
+        border-spacing: 2px; /* セル間の隙間を線として表現 */
         width: 100%;
         min-width: 600px; /* 横スクロール対応のため最小幅を指定 */
 
         thead {
           tr {
             th {
-              background-color: #2B53EC;
-              color: #fff;
+              background-color: #EFF4FF; /* 薄い青グレー（サイトトーンに合わせる） */
+              color: #2B53EC; /* アクセントカラー */
               font-weight: bold;
-              border: 1px solid #2B53EC;
-              padding: 15px;
+              border: none;
+              padding: 16px;
               text-align: center;
               vertical-align: middle;
               font-size: 16px;
               white-space: nowrap;
+              border-radius: 4px; /* 角丸で柔らかい印象に */
             }
           }
         }
@@ -135,42 +137,44 @@
         tbody {
           tr {
             td {
-              background-color: #fff;
+              background-color: #F9F9F9; /* 淡いグレー背景 */
               color: #333;
-              border: 1px solid #E0E0E0;
-              padding: 15px;
+              border: none;
+              padding: 16px;
               vertical-align: middle;
               font-size: 16px;
+              border-radius: 4px; /* 角丸 */
             }
           }
         }
-      }
     }
 
     /* 縦方向のヘッダー用クラス */
     &.is-vertical-header {
       table tbody tr td:first-child {
-        background-color: #2B53EC;
-        color: #fff;
+        background-color: #EFF4FF;
+        color: #2B53EC;
         font-weight: bold;
-        border: 1px solid #2B53EC;
-        padding: 15px;
+        border: none;
+        padding: 16px;
         text-align: center;
         vertical-align: middle;
         font-size: 16px;
+        border-radius: 4px;
       }
     }
 
     /* 任意のセルをヘッダー風にするクラス */
     table tbody tr td.u-header-cell {
-        background-color: #2B53EC;
-        color: #fff;
+        background-color: #EFF4FF;
+        color: #2B53EC;
         font-weight: bold;
-        border: 1px solid #2B53EC;
-        padding: 15px;
+        border: none;
+        padding: 16px;
         text-align: center;
         vertical-align: middle;
         font-size: 16px;
+        border-radius: 4px;
     }
   }
 }

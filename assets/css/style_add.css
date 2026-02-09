@@ -99,56 +99,62 @@
 .article-text .wp-block-table {
   margin: 40px 0;
   overflow-x: auto;
+  /* 共通テーブルスタイル（is-style-regularも含める） */
 }
-.article-text .wp-block-table.is-style-regular table {
-  border-collapse: collapse;
+.article-text .wp-block-table table {
+  border-collapse: separate;
+  border-spacing: 2px; /* セル間の隙間を線として表現 */
   width: 100%;
   min-width: 600px; /* 横スクロール対応のため最小幅を指定 */
 }
-.article-text .wp-block-table.is-style-regular table thead tr th {
-  background-color: #2B53EC;
-  color: #fff;
+.article-text .wp-block-table table thead tr th {
+  background-color: #EFF4FF; /* 薄い青グレー（サイトトーンに合わせる） */
+  color: #2B53EC; /* アクセントカラー */
   font-weight: bold;
-  border: 1px solid #2B53EC;
-  padding: 15px;
+  border: none;
+  padding: 16px;
   text-align: center;
   vertical-align: middle;
   font-size: 16px;
   white-space: nowrap;
+  border-radius: 4px; /* 角丸で柔らかい印象に */
 }
-.article-text .wp-block-table.is-style-regular table tbody tr td {
-  background-color: #fff;
+.article-text .wp-block-table table tbody tr td {
+  background-color: #F9F9F9; /* 淡いグレー背景 */
   color: #333;
-  border: 1px solid #E0E0E0;
-  padding: 15px;
+  border: none;
+  padding: 16px;
   vertical-align: middle;
   font-size: 16px;
+  border-radius: 4px; /* 角丸 */
 }
 .article-text .wp-block-table {
   /* 縦方向のヘッダー用クラス */
 }
 .article-text .wp-block-table.is-vertical-header table tbody tr td:first-child {
-  background-color: #2B53EC;
-  color: #fff;
+  background-color: #EFF4FF;
+  color: #2B53EC;
   font-weight: bold;
-  border: 1px solid #2B53EC;
-  padding: 15px;
+  border: none;
+  padding: 16px;
   text-align: center;
   vertical-align: middle;
   font-size: 16px;
+  border-radius: 4px;
 }
 .article-text .wp-block-table {
   /* 任意のセルをヘッダー風にするクラス */
 }
 .article-text .wp-block-table table tbody tr td.u-header-cell {
-  background-color: #2B53EC;
-  color: #fff;
+  background-color: #EFF4FF;
+  color: #2B53EC;
   font-weight: bold;
-  border: 1px solid #2B53EC;
-  padding: 15px;
+  border: none;
+  padding: 16px;
   text-align: center;
   vertical-align: middle;
   font-size: 16px;
+  border-radius: 4px;
 }
 
 /* PC向けスタイル */
