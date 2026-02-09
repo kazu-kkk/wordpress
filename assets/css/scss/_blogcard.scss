@@ -1,10 +1,11 @@
 //PC
 @media screen and (width >=767px) {
     .blogcard {
-        max-width: 400px;
+        width: 100%;
         background: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         transition: transform 0.2s ease, box-shadow 0.2s ease;
         overflow: hidden;
     }
@@ -12,17 +13,25 @@
     .blogcard a {
         text-decoration: none;
         color: inherit;
-        display: block;
+        display: flex;
+        align-items: stretch;
     }
     
     .blogcard_thumbnail {
+        flex: 0 0 240px;
+        width: 240px;
         overflow: hidden;
+        border-right: 1px solid #eee;
     }
     
-    .blogcard_thumbnail img {
+    .blogcard .blogcard_thumbnail img {
         width: 100%;
-        height: auto;
-        transition: transform 0.2s ease;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+        margin: 0;
+        padding: 0;
+        vertical-align: bottom;
     }
     
     .blogcard:hover .blogcard_thumbnail img {
@@ -30,30 +39,44 @@
     }
     
     .blogcard_content {
-        padding: 16px;
+        flex: 1;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 0; /* Flexbox text overflow fix */
     }
     
     .blogcard_title {
         font-size: 1.1rem;
-        font-weight: 600;
-        color: #222;
-        margin-bottom: 8px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 10px;
+        line-height: 1.4;
     }
     
     .blogcard_excerpt {
         font-size: 0.9rem;
         color: #666;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
     
     .blogcard_link {
         font-size: 0.8rem;
         color: #007BFF;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     
     .blogcard:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     }
     
 }
@@ -61,88 +84,96 @@
 //SP
 @media screen and (width <=767px) {
     .blogcard {
-        max-width: 100%; /* スマホ画面幅にフィット */
-        margin: 8px auto; /* 各カードの間隔を調整 */
+        width: 100%;
+        max-width: 100%;
+        margin: 10px auto;
         background: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         overflow: hidden;
     }
     
     .blogcard a {
         text-decoration: none;
         color: inherit;
-        display: block;
+        display: flex;
+        align-items: stretch;
+        height: 100%;
     }
     
     .blogcard_thumbnail {
+        flex: 0 0 110px;
+        width: 110px;
         overflow: hidden;
+        border-right: 1px solid #f0f0f0;
+        position: relative;
+        line-height: 0; /* 画像下の隙間対策 */
     }
     
-    .blogcard_thumbnail img {
-        width: 100%; /* サムネイル画像を画面幅に合わせる */
-        height: auto;
-        transition: transform 0.2s ease;
-    }
-    
-    .blogcard:hover .blogcard_thumbnail img {
-        transform: scale(1.05); /* ホバーで少し拡大 */
+    .blogcard .blogcard_thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        margin: 0;
+        padding: 0;
     }
     
     .blogcard_content {
-        padding: 12px; /* スマホ向けに少し余白を減らす */
+        flex: 1;
+        padding: 10px 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 0;
     }
     
     .blogcard_title {
-        font-size: 1rem; /* スマホ向けにフォントサイズ調整 */
-        font-weight: 600;
-        color: #222;
-        margin-bottom: 6px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 4px;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
     
     .blogcard_excerpt {
-        font-size: 0.85rem;
-        color: #666;
-        margin-bottom: 8px;
+        font-size: 0.8rem;
+        color: #777;
+        margin-bottom: 4px;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
     
     .blogcard_link {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         color: #007BFF;
-        word-break: break-word; /* URLが長い場合でも崩れないように */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     
-    .blogcard:hover {
-        transform: translateY(-3px); /* ホバー時の浮き上がりを少し控えめに */
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    .blogcard:active {
+        background-color: #fafafa;
     }
     
-    /* レスポンシブブレイクポイント */
-    @media (max-width: 768px) {
-        .blogcard {
-            border-radius: 8px; /* 角丸を少し控えめに */
+    @media (max-width: 360px) {
+        .blogcard_thumbnail {
+            flex: 0 0 90px;
+            width: 90px;
         }
-    
-        .blogcard_content {
-            padding: 10px; /* コンテンツ余白をさらに調整 */
-        }
-    
         .blogcard_title {
-            font-size: 0.95rem; /* タイトルフォントサイズを調整 */
+            font-size: 0.9rem;
         }
-    
         .blogcard_excerpt {
-            font-size: 0.8rem; /* 説明文のフォントサイズを調整 */
-        }
-    
-        .blogcard_link {
-            font-size: 0.7rem; /* URLフォントサイズを小さめに */
-        }
-
-        .post-thumbnail a {
-            width: 100%;
+            display: none;
         }
     }
-    
 }
