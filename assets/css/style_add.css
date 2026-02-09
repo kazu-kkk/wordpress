@@ -807,7 +807,8 @@ img {
 }
 
 /* ページタイトルの共通設定 */
-#primary .page-title {
+#primary .page-title,
+#primary .type-page .entry-title {
   /* リセットと基本設定 */
   position: relative;
   display: block;
@@ -829,7 +830,8 @@ img {
 }
 
 /* アクセントライン（青色の強調線） */
-#primary .page-title::after {
+#primary .page-title::after,
+#primary .type-page .entry-title::after {
   content: "";
   display: block; /* ブロック要素にして自然な配置にする */
   width: 60px;

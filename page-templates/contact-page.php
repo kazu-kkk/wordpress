@@ -30,15 +30,15 @@ get_header(); ?>
 
                         <!-- Instagramリンク -->
                         <div class="instagram-card-container">
-                            <a href="https://www.instagram.com/h.k.digo?igsh=MTdlNjlzMmNoa3A3bw%3D%3D&utm_source=qr"
+                            <a href="https://www.instagram.com/yundigola/"
                                 class="instagram-card"
                                 target="_blank"
                                 rel="noopener noreferrer">
                                 <div class="instagram-avatar">
-                                    <img src="https://www.ds-pedia.com/wp-content/uploads/2025/01/cropped-433923002_301491172718535_3556504599640674491_n.jpg" alt="Instagram Icon">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/yuny_logo.png" alt="Instagram Icon">
                                 </div>
                                 <div class="instagram-info">
-                                    <p class="instagram-username">@h.k.digo</p>
+                                    <p class="instagram-username">Yuny</p>
                                     <span class="instagram-button">Instagramで連絡する</span>
                                 </div>
                             </a>
