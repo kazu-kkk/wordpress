@@ -62,6 +62,9 @@
   vertical-align: bottom;
 }
 
+.article-text {
+  /* Table Style */
+}
 .article-text h2 {
   border-bottom: solid 3px #E8E8E8; /* メインのボーダー */
   font-size: 28px;
@@ -93,13 +96,12 @@
   margin-left: 20px;
   color: #000;
 }
-.article-text {
-  /* Table Style */
-}
 .article-text .wp-block-table {
   margin: 40px 0;
   overflow-x: auto;
   /* 共通テーブルスタイル（is-style-regularも含める） */
+  /* 縦方向のヘッダー用クラス */
+  /* 任意のセルをヘッダー風にするクラス */
 }
 .article-text .wp-block-table table {
   border-collapse: separate;
@@ -128,9 +130,6 @@
   font-size: 16px;
   border-radius: 4px; /* 角丸 */
 }
-.article-text .wp-block-table {
-  /* 縦方向のヘッダー用クラス */
-}
 .article-text .wp-block-table.is-vertical-header table tbody tr td:first-child {
   background-color: #EFF4FF;
   color: #2B53EC;
@@ -141,9 +140,6 @@
   vertical-align: middle;
   font-size: 16px;
   border-radius: 4px;
-}
-.article-text .wp-block-table {
-  /* 任意のセルをヘッダー風にするクラス */
 }
 .article-text .wp-block-table table tbody tr td.u-header-cell {
   background-color: #EFF4FF;
@@ -1673,6 +1669,4 @@ img {
 
 .title-h2__text--sns::before {
   background-image: url("images/ico_connection.svg");
-}
-
-/*# sourceMappingURL=style_add.css.map */
+}/*# sourceMappingURL=style_add.css.map */

@@ -40,12 +40,16 @@
     .site-footer {
       padding: 20px; /* 内側の余白 */
     }
+
+    .footer-navigation ul {
+        justify-content: center; /* PCで中央揃え */
+    }
   }
   
   /* スマートフォン向けのスタイル (768px以下) */
   @media screen and (max-width: 767px) {
     .site-footer {
-      padding: 30px 15px; /* 上下の余白を調整 */
+      padding: 20px 15px;
     }
 
     .site-footer .inner-wrap {
@@ -53,7 +57,7 @@
     }
 
     .footer-navigation {
-        margin-bottom: 24px; /* contactと権利テキストの間隔 */
+        margin-bottom: 40px; /* contactと権利テキストの間隔 (広めに調整) */
     }
   
     .site-footer p {

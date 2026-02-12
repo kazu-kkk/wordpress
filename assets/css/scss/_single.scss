@@ -44,9 +44,9 @@
     }
   }
   
-  .article-date {
+  .article-sub-date {
     color: #000;
-    margin-top: 15px;
+    margin: 0;
   }
   
   .article-fv {
@@ -192,6 +192,10 @@
       margin-left: auto;
       margin-right: auto;
     }
+
+    .article-sub {
+      align-items: center;
+    }
   
     .article-fv {
       height: 400px;
@@ -229,18 +233,20 @@
        padding-right: 0;
     }
 
-    .content-wrapper {
+    body.single .content-wrapper {
       width: 100%;
       margin: 0;
-      background-color: #fff;
-      box-shadow: none; /* カードの影を削除 */
+      padding: 80px 0 48px;
+      background-color: transparent;
+      box-shadow: none;
       border: none;
       border-radius: 0;
     }
 
-    .content {
-      padding-left: 24px;
-      padding-right: 24px;
+    body.single .content {
+      padding: 0 20px;
+      background-color: transparent;
+      box-shadow: none;
     }
 
     .article-title {
@@ -273,6 +279,7 @@
     .article-sub-date {
       font-size: 14px;
       margin-top: 0;
+      margin-bottom: 10px;
     }
   
     .article-fv {

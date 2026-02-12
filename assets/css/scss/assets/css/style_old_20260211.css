@@ -62,6 +62,9 @@
   vertical-align: bottom;
 }
 
+.article-text {
+  /* Table Style */
+}
 .article-text h2 {
   border-bottom: solid 3px #E8E8E8; /* メインのボーダー */
   font-size: 28px;
@@ -93,13 +96,12 @@
   margin-left: 20px;
   color: #000;
 }
-.article-text {
-  /* Table Style */
-}
 .article-text .wp-block-table {
   margin: 40px 0;
   overflow-x: auto;
   /* 共通テーブルスタイル（is-style-regularも含める） */
+  /* 縦方向のヘッダー用クラス */
+  /* 任意のセルをヘッダー風にするクラス */
 }
 .article-text .wp-block-table table {
   border-collapse: separate;
@@ -128,9 +130,6 @@
   font-size: 16px;
   border-radius: 4px; /* 角丸 */
 }
-.article-text .wp-block-table {
-  /* 縦方向のヘッダー用クラス */
-}
 .article-text .wp-block-table.is-vertical-header table tbody tr td:first-child {
   background-color: #EFF4FF;
   color: #2B53EC;
@@ -141,9 +140,6 @@
   vertical-align: middle;
   font-size: 16px;
   border-radius: 4px;
-}
-.article-text .wp-block-table {
-  /* 任意のセルをヘッダー風にするクラス */
 }
 .article-text .wp-block-table table tbody tr td.u-header-cell {
   background-color: #EFF4FF;
@@ -320,9 +316,6 @@
   .site-footer {
     padding: 20px; /* 内側の余白 */
   }
-  .footer-navigation ul {
-    justify-content: center; /* PCで中央揃え */
-  }
 }
 /* スマートフォン向けのスタイル (768px以下) */
 @media screen and (max-width: 767px) {
@@ -333,7 +326,7 @@
     padding: 0 !important; /* グローバルのinner-wrap余白を打ち消し */
   }
   .footer-navigation {
-    margin-bottom: 40px; /* contactと権利テキストの間隔 (広めに調整) */
+    margin-bottom: 24px; /* contactと権利テキストの間隔 */
   }
   .site-footer p {
     margin-bottom: 0; /* 下の余白はfooterのpaddingで確保 */
@@ -1606,73 +1599,4 @@ img {
   .works-link {
     margin-top: 46px;
   }
-}
-/* =========================================
-   Design Adjustments (FV, TOP Title, Footer)
-   ========================================= */
-/* FV Height Correction */
-.hero-background {
-  min-height: 80vh !important;
-  padding: 50px 0;
-}
-
-/* TOP Article Title Adjustments */
-.fv-article-text__title {
-  line-height: 1.5;
-  margin-bottom: 10px;
-}
-
-.new-article-text__title,
-.pickup-article-text__title {
-  line-height: 1.6;
-  margin-top: 0;
-  margin-bottom: 8px;
-}
-
-/* TOP h2 Styles */
-.title-h2__text {
-  position: relative;
-  padding-left: 40px;
-  margin-bottom: 16px;
-  font-size: 20px;
-  color: #000;
-  text-align: left;
-  font-weight: bold;
-}
-
-.title-h2__text--pick-up::before,
-.title-h2__text--new::before,
-.title-h2__text--category::before,
-.title-h2__text--popular-tag::before,
-.title-h2__text--sns::before {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  display: block;
-  width: 34px;
-  height: 34px;
-  content: "";
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: contain;
-  transform: translateY(-50%);
-}
-
-.title-h2__text--pick-up::before,
-.title-h2__text--new::before {
-  background-image: url("images/ico_article.svg");
-}
-
-.title-h2__text--category::before {
-  background-image: url("images/ico_shape.svg");
-}
-
-.title-h2__text--popular-tag::before {
-  background-image: url("images/ico_tag.svg");
-}
-
-.title-h2__text--sns::before {
-  background-image: url("images/ico_connection.svg");
-}
-
-/*# sourceMappingURL=style_add.css.map */
+}/*# sourceMappingURL=style_old_20260211.css.map */

@@ -1,9 +1,10 @@
 /* サイドナビの全体スタイル */
 #custom-side-nav {
-    background-color: transparent; /* 背景色を透明にしてサイトに馴染ませる */
-    padding: 0;
-    border-radius: 0;
-    box-shadow: none; /* シャドウ削除 */
+    background-color: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
     width: 100%; 
     min-width: 240px;
     max-width: 300px;
