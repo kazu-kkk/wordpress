@@ -13,7 +13,8 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(is_front_page() ? 'top-page-article' : ''); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class((is_front_page() || is_home() || is_archive() || is_search()) ? 'top-page-article' : ''); ?>>
+
 
 	<?php get_template_part('template-parts/post/article/header'); ?>
 

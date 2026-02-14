@@ -1,0 +1,17 @@
+{
+  "name": "inspiro-child",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile:sass": "sass assets/css/scss/style_add.scss assets/css/style_add.css",
+    "watch:sass": "sass --watch assets/css/scss/style_add.scss assets/css/style_add.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "sass": "^1.97.3"
+  }
+}

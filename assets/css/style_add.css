@@ -24,7 +24,7 @@
 }
 .article-sub ul li a {
   background-color: #2B53EC;
-  border-radius: 4px;
+  border-radius: 5px;
   color: #fff;
   display: inline-block;
   font-size: 14px;
@@ -40,9 +40,9 @@
   margin-right: 4px;
 }
 
-.article-date {
+.article-sub-date {
   color: #000;
-  margin-top: 15px;
+  margin: 0;
 }
 
 .article-fv {
@@ -93,6 +93,69 @@
   margin-left: 20px;
   color: #000;
 }
+.article-text {
+  /* Table Style */
+}
+.article-text .wp-block-table {
+  margin: 40px 0;
+  overflow-x: auto;
+  /* 共通テーブルスタイル（is-style-regularも含める） */
+}
+.article-text .wp-block-table table {
+  border-collapse: separate;
+  border-spacing: 2px; /* セル間の隙間を線として表現 */
+  width: 100%;
+  min-width: 600px; /* 横スクロール対応のため最小幅を指定 */
+}
+.article-text .wp-block-table table thead tr th {
+  background-color: #EFF4FF; /* 薄い青グレー（サイトトーンに合わせる） */
+  color: #2B53EC; /* アクセントカラー */
+  font-weight: bold;
+  border: none;
+  padding: 16px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 16px;
+  white-space: nowrap;
+  border-radius: 4px; /* 角丸で柔らかい印象に */
+}
+.article-text .wp-block-table table tbody tr td {
+  background-color: #F9F9F9; /* 淡いグレー背景 */
+  color: #333;
+  border: none;
+  padding: 16px;
+  vertical-align: middle;
+  font-size: 16px;
+  border-radius: 4px; /* 角丸 */
+}
+.article-text .wp-block-table {
+  /* 縦方向のヘッダー用クラス */
+}
+.article-text .wp-block-table.is-vertical-header table tbody tr td:first-child {
+  background-color: #EFF4FF;
+  color: #2B53EC;
+  font-weight: bold;
+  border: none;
+  padding: 16px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 16px;
+  border-radius: 4px;
+}
+.article-text .wp-block-table {
+  /* 任意のセルをヘッダー風にするクラス */
+}
+.article-text .wp-block-table table tbody tr td.u-header-cell {
+  background-color: #EFF4FF;
+  color: #2B53EC;
+  font-weight: bold;
+  border: none;
+  padding: 16px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 16px;
+  border-radius: 4px;
+}
 
 /* PC向けスタイル */
 @media screen and (min-width: 768px) {
@@ -105,6 +168,9 @@
     margin-left: auto;
     margin-right: auto;
   }
+  .article-sub {
+    align-items: center;
+  }
   .article-fv {
     height: 400px;
   }
@@ -113,8 +179,8 @@
     margin: 0 auto;
   }
   .article-text h3 {
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 24px;
+    line-height: 1.5;
     margin: 16px 0 14px;
     padding-bottom: 8px;
   }
@@ -133,17 +199,19 @@
     padding-left: 0;
     padding-right: 0;
   }
-  .content-wrapper {
+  body.single .content-wrapper {
     width: 100%;
     margin: 0;
-    background-color: #fff;
-    box-shadow: none; /* カードの影を削除 */
+    padding: 80px 0 48px;
+    background-color: transparent;
+    box-shadow: none;
     border: none;
     border-radius: 0;
   }
-  .content {
-    padding-left: 24px;
-    padding-right: 24px;
+  body.single .content {
+    padding: 0 20px;
+    background-color: transparent;
+    box-shadow: none;
   }
   .article-title {
     font-size: 26px;
@@ -170,6 +238,7 @@
   .article-sub-date {
     font-size: 14px;
     margin-top: 0;
+    margin-bottom: 10px;
   }
   .article-fv {
     height: 250px;
@@ -186,7 +255,7 @@
     padding-bottom: 12px;
   }
   .article-text h3 {
-    font-size: 20px;
+    font-size: 22px;
     line-height: 1.5;
     margin: 32px 0 16px;
     text-align: left;
@@ -251,138 +320,189 @@
   .site-footer {
     padding: 20px; /* 内側の余白 */
   }
+  .footer-navigation ul {
+    justify-content: center; /* PCで中央揃え */
+  }
 }
 /* スマートフォン向けのスタイル (768px以下) */
 @media screen and (max-width: 767px) {
   .site-footer {
-    padding: 15px; /* 内側の余白を少し狭く */
+    padding: 20px 15px;
+  }
+  .site-footer .inner-wrap {
+    padding: 0 !important; /* グローバルのinner-wrap余白を打ち消し */
+  }
+  .footer-navigation {
+    margin-bottom: 40px; /* contactと権利テキストの間隔 (広めに調整) */
+  }
+  .site-footer p {
+    margin-bottom: 0; /* 下の余白はfooterのpaddingで確保 */
+    font-size: 11px;
   }
   .footer-navigation ul {
     flex-direction: column; /* リンクを縦並びに変更 */
     align-items: center; /* 中央揃え */
-    gap: 10px; /* リンク間のスペースを狭く */
+    gap: 16px; /* リンク間のスペース */
   }
   .footer-navigation a {
-    font-size: 14px; /* フォントサイズを少し小さく */
+    font-size: 13px;
   }
 }
 @media screen and (width >= 767px) {
   .blogcard {
-    max-width: 400px;
+    width: 100%;
     background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     overflow: hidden;
   }
   .blogcard a {
     text-decoration: none;
     color: inherit;
-    display: block;
+    display: flex;
+    align-items: stretch;
   }
   .blogcard_thumbnail {
+    flex: 0 0 240px;
+    width: 240px;
     overflow: hidden;
+    border-right: 1px solid #eee;
   }
-  .blogcard_thumbnail img {
+  .blogcard .blogcard_thumbnail img {
     width: 100%;
-    height: auto;
-    transition: transform 0.2s ease;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    margin: 0;
+    padding: 0;
+    vertical-align: bottom;
   }
   .blogcard:hover .blogcard_thumbnail img {
     transform: scale(1.05);
   }
   .blogcard_content {
-    padding: 16px;
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0; /* Flexbox text overflow fix */
   }
   .blogcard_title {
     font-size: 1.1rem;
-    font-weight: 600;
-    color: #222;
-    margin-bottom: 8px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+    line-height: 1.4;
   }
   .blogcard_excerpt {
     font-size: 0.9rem;
     color: #666;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   .blogcard_link {
     font-size: 0.8rem;
     color: #007BFF;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .blogcard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   }
 }
 @media screen and (width <= 767px) {
   .blogcard {
-    max-width: 100%; /* スマホ画面幅にフィット */
-    margin: 8px auto; /* 各カードの間隔を調整 */
+    width: 100%;
+    max-width: 100%;
+    margin: 10px auto;
     background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
   }
   .blogcard a {
     text-decoration: none;
     color: inherit;
-    display: block;
+    display: flex;
+    align-items: stretch;
+    height: 100%;
   }
   .blogcard_thumbnail {
+    flex: 0 0 110px;
+    width: 110px;
+    overflow: hidden;
+    border-right: 1px solid #f0f0f0;
+    position: relative;
+    line-height: 0; /* 画像下の隙間対策 */
+  }
+  .blogcard .blogcard_thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+  .blogcard_content {
+    flex: 1;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+  }
+  .blogcard_title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 4px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  .blogcard_thumbnail img {
-    width: 100%; /* サムネイル画像を画面幅に合わせる */
-    height: auto;
-    transition: transform 0.2s ease;
-  }
-  .blogcard:hover .blogcard_thumbnail img {
-    transform: scale(1.05); /* ホバーで少し拡大 */
-  }
-  .blogcard_content {
-    padding: 12px; /* スマホ向けに少し余白を減らす */
-  }
-  .blogcard_title {
-    font-size: 1rem; /* スマホ向けにフォントサイズ調整 */
-    font-weight: 600;
-    color: #222;
-    margin-bottom: 6px;
-  }
   .blogcard_excerpt {
-    font-size: 0.85rem;
-    color: #666;
-    margin-bottom: 8px;
+    font-size: 0.8rem;
+    color: #777;
+    margin-bottom: 4px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   .blogcard_link {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: #007BFF;
-    word-break: break-word; /* URLが長い場合でも崩れないように */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .blogcard:hover {
-    transform: translateY(-3px); /* ホバー時の浮き上がりを少し控えめに */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  .blogcard:active {
+    background-color: #fafafa;
   }
-  /* レスポンシブブレイクポイント */
 }
-@media screen and (width <= 767px) and (max-width: 768px) {
-  .blogcard {
-    border-radius: 8px; /* 角丸を少し控えめに */
-  }
-  .blogcard_content {
-    padding: 10px; /* コンテンツ余白をさらに調整 */
+@media screen and (width <= 767px) and (max-width: 360px) {
+  .blogcard_thumbnail {
+    flex: 0 0 90px;
+    width: 90px;
   }
   .blogcard_title {
-    font-size: 0.95rem; /* タイトルフォントサイズを調整 */
+    font-size: 0.9rem;
   }
   .blogcard_excerpt {
-    font-size: 0.8rem; /* 説明文のフォントサイズを調整 */
-  }
-  .blogcard_link {
-    font-size: 0.7rem; /* URLフォントサイズを小さめに */
-  }
-  .post-thumbnail a {
-    width: 100%;
+    display: none;
   }
 }
 @media screen and (width >= 767px) {
@@ -435,23 +555,27 @@
 }
 /* サイドナビの全体スタイル */
 #custom-side-nav {
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
   width: 100%;
-  min-width: 240px; /* 最小幅を設定 */
-  max-width: 300px; /* 最大幅も設定 */
-  margin: 0 auto; /* 中央配置（必要なら） */
+  min-width: 240px;
+  max-width: 300px;
+  margin: 0 auto;
 }
 
 /* サイドナビのタイトル */
 #custom-side-nav .widget-title {
-  font-size: 1.4em;
+  font-size: 1.2rem;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
   color: #333;
-  text-align: center;
+  text-align: left;
+  border-bottom: 2px solid #2B53EC;
+  padding-bottom: 8px;
+  letter-spacing: 0.05em;
 }
 
 /* サイドナビのリスト */
@@ -459,89 +583,345 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  text-align: left; /* リストを左揃えに */
 }
 
 #custom-side-nav li {
   margin-bottom: 12px;
 }
 
+/* カテゴリリンク - カード型デザイン */
 #custom-side-nav a {
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   text-decoration: none;
-  color: #0073aa;
+  color: #333;
   font-weight: 500;
-  padding: 8px 10px; /* 左に余白を追加 */
-  border-radius: 5px;
-  transition: background-color 0.3s, color 0.3s;
+  padding: 14px 16px;
+  background-color: #fff; /* 白背景のカード */
+  border-radius: 8px; /* 角丸 8px (サイト共通) */
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  /* 矢印アイコン装飾 */
+}
+#custom-side-nav a::after {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-top: 2px solid #ddd;
+  border-right: 2px solid #ddd;
+  transform: rotate(45deg);
+  transition: all 0.3s ease;
 }
 
 #custom-side-nav a:hover {
-  background-color: #0073aa;
+  background-color: #2B53EC; /* テーマカラーのブルー */
   color: #fff;
+  box-shadow: 0 4px 12px rgba(43, 83, 236, 0.25);
+  transform: translateY(-2px); /* 少し浮き上がる動き */
+}
+#custom-side-nav a:hover::after {
+  border-color: #fff;
+  transform: rotate(45deg) translate(2px, -2px);
 }
 
 /* プロフィールカード */
-.profile-card {
-  text-align: center; /* 名前や画像を中央揃えに */
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background-color: #fff;
-  margin-bottom: 20px;
+#custom-side-nav .profile-card {
+  text-align: center;
+  padding: 30px 20px;
+  border: none;
+  border-radius: 12px;
+  background-color: transparent;
+  margin-bottom: 40px;
+  box-shadow: none; /* シャドウ削除 */
 }
 
 /* プロフィール画像 */
 .profile-avatar {
   display: block;
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  margin: 0 auto 10px; /* 画像は中央揃え */
+  margin: 0 auto 16px;
+  object-fit: cover;
+  box-shadow: none; /* シャドウ削除 */
 }
 
-/* 名前は中央揃えのまま */
+/* 名前 */
 .profile-name {
-  font-size: 18px;
+  font-size: 1.1rem;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 12px;
   text-align: center;
+  color: #333;
 }
 
-/* プロフィール本文（左揃え） */
+/* プロフィール本文 */
 .profile-bio {
   font-size: 14px;
   color: #666;
-  text-align: left; /* 左揃え */
+  text-align: left;
   margin-bottom: 10px;
+  line-height: 1.8; /* 行間を広げて読みやすく */
+  letter-spacing: 0.02em;
 }
 
-/* ソーシャルボタン（中央揃え） */
+/* ソーシャルボタン */
 .profile-social {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
+  margin-top: 20px;
 }
 
 .profile-social .social-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background-color: #0073aa;
-  transition: background-color 0.3s ease;
+  background-color: #2B53EC; /* テーマカラー */
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(43, 83, 236, 0.3);
 }
 
 .profile-social .social-button:hover {
-  background-color: #005177;
+  background-color: #1a3db8;
+  transform: translateY(-2px);
 }
 
 .profile-social .social-button img {
   width: 20px;
   height: 20px;
   filter: brightness(0) invert(1); /* アイコンを白くする */
+}
+
+/* =========================================
+   検索ウィジェット
+   ========================================= */
+/* =========================================
+   検索ウィジェット
+   ========================================= */
+/* =========================================
+   検索ウィジェット
+   ========================================= */
+.search-widget {
+  margin-bottom: 24px;
+  margin-top: 40px;
+}
+
+.search-container {
+  position: relative;
+  width: 100%;
+}
+
+#article-search-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  box-sizing: border-box;
+}
+#article-search-input:focus {
+  outline: none;
+  border-color: #2B53EC;
+  box-shadow: 0 0 0 3px rgba(43, 83, 236, 0.1);
+}
+
+/* サジェストリスト */
+.search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  margin-top: 8px; /* 入力欄との間隔 */
+  padding: 0;
+  list-style: none;
+  display: none; /* JSで制御 */
+  max-height: 300px;
+  overflow-y: auto;
+}
+.search-suggestions li {
+  border-bottom: 1px solid #f5f5f5;
+  margin: 0;
+}
+.search-suggestions li:last-child {
+  border-bottom: none;
+}
+.search-suggestions li {
+  /* アクティブな項目（キーボード操作用） */
+}
+.search-suggestions li.active, .search-suggestions li:hover {
+  background-color: #f0f4ff;
+}
+.search-suggestions li.active a, .search-suggestions li:hover a {
+  color: #2B53EC !important;
+}
+.search-suggestions li {
+  /* 検索結果なしの表示 */
+}
+.search-suggestions li.no-results {
+  padding: 12px 16px;
+  color: #999;
+  font-size: 13px;
+  text-align: center;
+  background-color: #fff;
+  pointer-events: none; /* クリック不可 */
+}
+.search-suggestions li {
+  /* 既存の#custom-side-nav a のスタイルを打ち消すために詳細度を確保 */
+}
+.search-suggestions li a {
+  display: block !important;
+  padding: 12px 16px !important;
+  color: #333 !important;
+  text-decoration: none !important;
+  font-size: 14px !important;
+  transition: background 0.2s !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  font-weight: normal !important;
+  margin: 0 !important;
+  justify-content: flex-start !important; /* flex解除または左寄せ */
+  /* 矢印アイコン非表示 */
+}
+.search-suggestions li a::after {
+  display: none !important;
+}
+.search-suggestions li a {
+  /* ハイライト */
+}
+.search-suggestions li a strong {
+  color: #2B53EC;
+  background-color: rgba(43, 83, 236, 0.08);
+  font-weight: bold;
+}
+
+/* モバイル端末向けの調整 */
+@media screen and (max-width: 767px) {
+  #custom-side-nav {
+    display: none;
+    max-width: 100%;
+  }
+  /* プロフィールカードを横並び（グリッド）に変更 */
+  #custom-side-nav .profile-card {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    grid-template-rows: auto auto; /* 名前とバイオ用の2行 */
+    column-gap: 16px; /* 画像とテキストの間隔 */
+    text-align: left;
+    padding: 20px;
+    align-items: start; /* 上揃え、または center で中央揃え */
+    margin-bottom: 40px; /* ここに追加 */
+  }
+  .profile-avatar {
+    grid-row: 1/3; /* 2行分を占める */
+    grid-column: 1/2;
+    width: 80px;
+    height: 80px;
+    margin: 0; /* 中央揃えのマージンをリセット */
+  }
+  .profile-name {
+    grid-row: 1/2;
+    grid-column: 2/3;
+    margin-bottom: 4px;
+    font-size: 16px; /* 名前を少し小さく */
+    text-align: left; /* 左揃え */
+    align-self: end; /* 名前を下寄りに配置（任意） */
+  }
+  .profile-bio {
+    grid-row: 2/3;
+    grid-column: 2/3;
+    font-size: 13px;
+    text-align: left;
+    margin-bottom: 0px;
+    line-height: 1.5;
+  }
+  .profile-social {
+    justify-content: flex-start; /* 左寄せ */
+    margin-top: 10px;
+    grid-column: 2/3; /* 必要ならグリッド配置に追加 */
+  }
+  /* 検索ウィジェットのSP調整があればここに追加 */
+  .search-widget {
+    margin-bottom: 30px;
+  }
+}
+/* サイドナビのラッパー（左右余白） */
+.side-nav__wrap {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+/* 閉じるボタンをサイドバーのエリア外（左側）に配置 */
+#side-nav {
+  overflow: visible !important; /* ボタンが見えるようにする */
+}
+
+.side-nav__close-button {
+  position: absolute;
+  top: 20px; /* 上からの位置 */
+  left: -50px; /* サイドバーの左側に配置 */
+  width: 40px;
+  height: 40px;
+  z-index: 9999;
+}
+
+.side-nav__close-button .navbar-toggle {
+  background-color: rgba(50, 50, 50, 0.8); /* 背景色（半透明の黒） */
+  border: none;
+  border-radius: 50%; /* 丸くする */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.side-nav__close-button .navbar-toggle .icon-bar {
+  background-color: #fff; /* アイコンを白に */
+  display: block;
+  width: 20px;
+  height: 2px;
+  margin: 2px 0;
+  border-radius: 1px;
+}
+
+/* サイドバー展開時のオーバーレイカスタマイズ */
+.side-nav-overlay {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(2px);
+  transition: background-color 0.3s ease;
+}
+
+/* 親テーマのスタイルを上書き */
+.side-nav-open .side-nav-overlay {
+  right: 0 !important; /* 全画面を覆う */
+  width: 100% !important;
+  z-index: 9990 !important; /* サイドバーの下 */
+  cursor: pointer;
+}
+
+/* サイドバー本体のZ-index */
+#side-nav {
+  z-index: 9999 !important;
 }
 
 @media screen and (width >= 767px) {
@@ -553,14 +933,337 @@
   #site-navigation .inner-wrap {
     padding-top: 0;
   }
+  #site-navigation .navbar-toggle {
+    display: none;
+  }
+  /* PCではメニュー内の検索フォームを非表示 */
+  /* PCではメニュー内の検索フォームを非表示 */
+  .mobile-side-nav-content {
+    display: none;
+  }
 }
-@media screen and (width <= 767px) {
+@media screen and (max-width: 767px) {
   .custom-logo-link img {
     display: inline-block;
     max-width: 140px;
   }
   #site-navigation .inner-wrap {
     padding: 0 16px;
+  }
+  /* ハンバーガーメニュー展開時のスタイル (side-navデザインを踏襲) */
+  /* 全体ラッパーと背景色指定 */
+  #side-nav,
+  .side-nav__scrollable-container {
+    background-color: #F5F7FF !important; /* 強制的に背景色を変更 */
+  }
+  /* コンテナの余白調整 */
+  .side-nav__scrollable-container {
+    padding: 24px 16px !important;
+  }
+  #masthead #site-navigation .navbar-collapse,
+  #side-nav .navbar-collapse {
+    padding: 0; /* 親コンテナで余白をとるのでここは0に */
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    max-height: none;
+  }
+  #masthead #site-navigation .navbar-nav,
+  #side-nav .navbar-nav {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    float: none;
+  }
+  #masthead #site-navigation .navbar-nav li,
+  #side-nav .navbar-nav li {
+    margin-bottom: 12px;
+    float: none;
+    border: none;
+  }
+  /* リンクスタイル - カード型デザイン */
+  #masthead #site-navigation .navbar-nav li a,
+  #side-nav .navbar-nav li a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 16px 20px;
+    background-color: #fff; /* 白背景のカード */
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    border: none;
+    width: 100%;
+    /* 矢印アイコン */
+  }
+  #masthead #site-navigation .navbar-nav li a::after,
+  #side-nav .navbar-nav li a::after {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-top: 2px solid #ddd;
+    border-right: 2px solid #ddd;
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+  }
+  #masthead #site-navigation .navbar-nav li a:hover,
+  #side-nav .navbar-nav li a:hover {
+    background-color: #2B53EC;
+    color: #fff;
+    box-shadow: 0 6px 15px rgba(43, 83, 236, 0.2);
+    transform: translateY(-2px);
+  }
+  #masthead #site-navigation .navbar-nav li a:hover::after,
+  #side-nav .navbar-nav li a:hover::after {
+    border-color: #fff;
+    transform: rotate(45deg) translate(2px, -2px);
+  }
+  /* 検索ウィジェットのスタイル (side-navから移植) */
+  /* 検索ウィジェットのスタイル (side-navから移植) */
+  /* 検索ウィジェットのスタイル (side-navから移植) */
+  /* 検索ウィジェットのスタイル (side-navから移植) */
+  .mobile-side-nav-content {
+    display: block;
+    padding: 0 0 20px;
+    margin-top: 10px;
+    /* 見出しスタイル (side-navから移植) */
+  }
+  .mobile-side-nav-content .widget-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: #333;
+    text-align: left;
+    border-bottom: 2px solid #2B53EC;
+    padding-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
+  .mobile-side-nav-content {
+    /* プロフィールカード (side-navのSP用スタイルを移植) */
+  }
+  .mobile-side-nav-content .profile-card {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 16px;
+    text-align: left;
+    padding: 20px 0; /* 横幅一杯に使うため左右paddingは0に調整 */
+    align-items: start;
+    margin-bottom: 0px;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+  }
+  .mobile-side-nav-content .profile-avatar {
+    grid-row: 1/3;
+    grid-column: 1/2;
+    width: 80px;
+    height: 80px;
+    margin: 0;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .mobile-side-nav-content .profile-name {
+    grid-row: 1/2;
+    grid-column: 2/3;
+    margin-bottom: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    align-self: end;
+    color: #333;
+  }
+  .mobile-side-nav-content .profile-bio {
+    grid-row: 2/3;
+    grid-column: 2/3;
+    font-size: 13px;
+    text-align: left;
+    margin-bottom: 0px;
+    line-height: 1.5;
+    color: #666;
+  }
+  .mobile-side-nav-content {
+    /* カテゴリなどのリストスタイルリセット */
+  }
+  .mobile-side-nav-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .mobile-side-nav-content ul li {
+    margin-bottom: 12px;
+    border: none;
+  }
+  .mobile-side-nav-content ul li a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 14px 16px;
+    background-color: #fff;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    box-sizing: border-box; /* パディングを含める */
+  }
+  .mobile-side-nav-content ul li a::after {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-top: 2px solid #ddd;
+    border-right: 2px solid #ddd;
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+  }
+  .mobile-side-nav-content ul li a:hover {
+    background-color: #2B53EC;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(43, 83, 236, 0.25);
+    transform: translateY(-2px);
+  }
+  .mobile-side-nav-content ul li a:hover::after {
+    border-color: #fff;
+    transform: rotate(45deg) translate(2px, -2px);
+  }
+  .search-widget {
+    margin-bottom: 24px;
+    margin-top: 0;
+  }
+  .search-container {
+    position: relative;
+    width: 100%;
+  }
+  #article-search-input,
+  .article-search-input-mobile {
+    width: 100%;
+    padding: 14px 16px; /* 他のカードと高さを合わせるため微調整 */
+    border: none;
+    border-radius: 8px; /* 他のカードと合わせる */
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 他のカードと合わせる */
+    background-color: #fff;
+    box-sizing: border-box;
+  }
+  #article-search-input:focus,
+  .article-search-input-mobile:focus {
+    outline: none;
+    border: 1px solid #2B53EC;
+    box-shadow: 0 0 0 3px rgba(43, 83, 236, 0.1);
+  }
+  /* サジェストリスト */
+  #masthead .search-suggestions,
+  #side-nav .search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    margin-top: 8px; /* 入力欄との間隔 */
+    padding: 0;
+    list-style: none;
+    display: none; /* JSで制御 */
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  #masthead .search-suggestions li,
+  #side-nav .search-suggestions li {
+    border-bottom: 1px solid #f5f5f5;
+    margin: 0;
+    padding: 0;
+  }
+  #masthead .search-suggestions li:last-child,
+  #side-nav .search-suggestions li:last-child {
+    border-bottom: none;
+  }
+  #masthead .search-suggestions li,
+  #side-nav .search-suggestions li {
+    /* アクティブな項目（キーボード操作用） */
+  }
+  #masthead .search-suggestions li.active, #masthead .search-suggestions li:hover,
+  #side-nav .search-suggestions li.active,
+  #side-nav .search-suggestions li:hover {
+    background-color: #f0f4ff;
+  }
+  #masthead .search-suggestions li.active a, #masthead .search-suggestions li:hover a,
+  #side-nav .search-suggestions li.active a,
+  #side-nav .search-suggestions li:hover a {
+    color: #2B53EC !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+  #masthead .search-suggestions li,
+  #side-nav .search-suggestions li {
+    /* 検索結果なしの表示 */
+  }
+  #masthead .search-suggestions li.no-results,
+  #side-nav .search-suggestions li.no-results {
+    padding: 12px 16px;
+    color: #999;
+    font-size: 13px;
+    text-align: center;
+    background-color: #fff;
+    pointer-events: none; /* クリック不可 */
+  }
+  #masthead .search-suggestions li,
+  #side-nav .search-suggestions li {
+    /* リンクスタイルのリセットと再定義 */
+  }
+  #masthead .search-suggestions li a,
+  #side-nav .search-suggestions li a {
+    display: block !important;
+    padding: 12px 16px !important;
+    color: #333 !important;
+    text-decoration: none !important;
+    font-size: 14px !important;
+    transition: background 0.2s !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    font-weight: normal !important;
+    margin: 0 !important;
+    justify-content: flex-start !important; /* flex解除または左寄せ */
+    width: auto !important; /* autoに戻す */
+    /* 矢印アイコン非表示 */
+  }
+  #masthead .search-suggestions li a::after,
+  #side-nav .search-suggestions li a::after {
+    display: none !important;
+  }
+  #masthead .search-suggestions li a,
+  #side-nav .search-suggestions li a {
+    /* ハイライト */
+  }
+  #masthead .search-suggestions li a strong,
+  #side-nav .search-suggestions li a strong {
+    color: #2B53EC;
+    background-color: rgba(43, 83, 236, 0.08);
+    font-weight: bold;
+  }
+  #masthead .search-suggestions li a:hover,
+  #side-nav .search-suggestions li a:hover {
+    background-color: transparent !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  /* 既存の不要な検索ウィジェット（WordPress標準ブロック）を非表示 */
+  #site-navigation .widget_search,
+  #side-nav .widget_search,
+  .navbar-collapse .widget_search {
+    display: none;
   }
 }
 /* --- 共通部分（PC・SP共通のスタイル） --- */
@@ -691,6 +1394,274 @@
   text-decoration: none !important;
 }
 
+/* Bento Page Styles */
+.bento-wrapper {
+  max-width: 900px; /* Slightly narrower for tight feel */
+  margin: 60px auto;
+  padding: 0 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #000;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 200px; /* Fixed height for clean alignment */
+  gap: 24px;
+}
+
+/* Base Card Style */
+.bento-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  overflow: hidden;
+  text-align: center;
+  text-decoration: none;
+  background-color: #fcfcfc; /* Updated background */
+  border: 1px solid #ececec; /* Updated border */
+  border-radius: 32px; /* Very rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03); /* Subtle shadow by default */
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+  color: #333;
+  cursor: pointer;
+}
+.bento-card:hover {
+  transform: scale(1.02); /* Slight scale */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Profile Section - Spans 2x2 area on PC */
+.profile-card {
+  grid-column: span 2;
+  grid-row: span 2;
+  background-color: transparent; /* No background */
+  box-shadow: none; /* No shadow */
+  border: none; /* No border */
+  align-items: flex-start;
+  text-align: left;
+  padding: 32px; /* Reduced from 40px to match base */
+  cursor: default; /* Profile usually not a link */
+  margin-bottom: 0 !important; /* Explicitly remove bottom margin */
+}
+.profile-card:hover {
+  transform: none; /* No hover effect for profile */
+  box-shadow: none;
+}
+.profile-card .profile-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  height: 100%;
+  gap: 16px; /* Reduced gap */
+  width: 100%;
+}
+.profile-card .profile-image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 28px; /* Slightly squircle */
+  object-fit: cover;
+  margin-bottom: 0; /* Ensure no margin */
+}
+.profile-card h1 {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 8px 0; /* Reduced margin */
+  color: #000;
+  line-height: 1.1;
+}
+.profile-card p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666;
+  font-weight: 500;
+  margin: 0; /* Reset margin */
+}
+
+/* Social Cards */
+.social-card {
+  font-weight: 700;
+  font-size: 18px;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 24px;
+  /* Icon styles */
+}
+.social-card .card-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 20px;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+}
+.social-card {
+  /* Icon inside svg */
+}
+.social-card svg {
+  width: 48px;
+  height: 48px;
+}
+.social-card span {
+  font-size: 20px;
+}
+
+/* Specific Colors */
+.instagram {
+  grid-column: span 1;
+  grid-row: span 2; /* Tall card */
+  background-color: #FEEBF1;
+  border: 1px solid #FCDFE9; /* Matching subtle border */
+  color: #E1306C;
+  /* Remove default hover opacity, rely on scale */
+}
+.instagram:hover {
+  opacity: 1;
+}
+.instagram .card-icon {
+  justify-content: center;
+  align-items: center;
+}
+.instagram svg {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.youtube {
+  grid-column: span 1;
+  grid-row: span 1;
+  background-color: #fcf4f4;
+  color: #ff0000;
+  border: 1px solid #ecdcdc;
+}
+.youtube .card-icon {
+  justify-content: center;
+  align-items: center;
+}
+
+.note {
+  grid-column: span 1;
+  grid-row: span 1;
+  /* background-color: #fcfcfc; Inherits */
+  /* border: 1px solid #ececec; Inherits */
+  color: #2cb696;
+}
+.note .card-icon {
+  justify-content: center;
+  align-items: center;
+}
+.note .card-label {
+  margin-top: auto;
+  font-size: 14px;
+  color: #999;
+}
+
+.twitter { /* X */
+  grid-column: span 1;
+  grid-row: span 1;
+  /* Inherit base background and border */
+  color: #000;
+}
+.twitter .card-icon {
+  justify-content: center;
+  align-items: center;
+}
+
+.despedia {
+  grid-column: span 2;
+  grid-row: span 1;
+  /* background-color: #fcfcfc; inherits */
+  color: #2b53ec;
+  align-items: center;
+  justify-content: center;
+}
+.despedia .card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.despedia .card-title {
+  font-size: 28px;
+  font-weight: 800;
+}
+.despedia .card-url {
+  font-size: 16px;
+  opacity: 0.8;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Responsive - SP */
+@media screen and (max-width: 768px) {
+  .bento-wrapper {
+    margin: 40px auto;
+    padding: 0 16px;
+    width: 100%;
+  }
+  .bento-grid {
+    grid-template-columns: 1fr 1fr; /* 2 columns for SP */
+    grid-auto-rows: minmax(160px, auto);
+    gap: 16px;
+  }
+  .bento-card {
+    padding: 24px;
+    border-radius: 24px;
+  }
+  .profile-card {
+    grid-column: span 2; /* Full width */
+    grid-row: auto;
+    padding: 32px 24px;
+  }
+  .profile-card .profile-content {
+    gap: 20px;
+  }
+  .profile-card .profile-image img {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+  }
+  .profile-card h1 {
+    font-size: 24px;
+  }
+  .profile-card p {
+    font-size: 14px;
+  }
+  /* Arrange items to fill gaps nicely */
+  .instagram {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+  .instagram svg {
+    width: 60px;
+    height: 60px;
+  }
+  .instagram span {
+    font-size: 16px;
+  }
+  .youtube {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .note {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .twitter {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .despedia {
+    grid-column: span 2; /* Full width */
+    grid-row: span 1;
+  }
+}
 * {
   box-sizing: border-box;
   padding: 0;
@@ -742,6 +1713,43 @@ img {
   font-family: "Arial", sans-serif; /* シンプルなフォント */
 }
 
+/* ページタイトルの共通設定 */
+#primary .page-title,
+#primary .type-page .entry-title {
+  /* リセットと基本設定 */
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 0;
+  margin: 0 0 40px 0;
+  /* テキストスタイル */
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  letter-spacing: 0.05em;
+  text-align: center;
+  /* 装飾リセット（グレーの下線を削除） */
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* アクセントライン（青色の強調線） */
+#primary .page-title::after,
+#primary .type-page .entry-title::after {
+  content: "";
+  display: block; /* ブロック要素にして自然な配置にする */
+  width: 60px;
+  height: 4px; /* 視認性を高めるため少し太く */
+  background-color: #2B53EC;
+  border-radius: 2px;
+  /* 位置調整（絶対配置をやめてマージンで調整） */
+  position: static;
+  margin: 10px auto 0; /* テキストとの間隔を狭める（10px） */
+}
+
 .site-content-contain {
   background-color: #F5F7FF;
 }
@@ -757,7 +1765,7 @@ img {
     background-color: #2B53EC; /* 青色の背景 */
     text-align: center;
     padding: 50px 0; /* 上下の余白を確保 */
-    min-height: 100vh; /* ビューポート全体の高さ */
+    min-height: 80vh; /* ビューポートの80% */
     display: flex;
     align-items: center; /* 縦方向に中央揃え */
     justify-content: center; /* 横方向に中央揃え */
@@ -863,7 +1871,7 @@ img {
     margin-top: 50px; /* 上のマージンを調整 */
     font-size: 16px; /* フォントサイズ */
   }
-  .tag {
+  span.tag, a.tag {
     display: inline-block;
     padding: 5px 8px;
     font-size: 13px;
@@ -1129,14 +2137,14 @@ img {
 }
 @media screen and (width <= 767px) {
   .inner-wrap {
-    padding: 40px 16px; /* 左右に余白を追加 */
+    padding: 40px 16px 20px; /* 左右に余白を追加、下部は20pxに */
   }
   /* Heroエリアのスタイル */
   .hero-background {
     background-color: #2B53EC; /* 青色の背景 */
     text-align: center;
     padding: 50px 0; /* 上下の余白を確保 */
-    min-height: 100vh; /* ビューポート全体の高さ */
+    min-height: 80vh; /* ビューポートの80% */
     display: flex;
     align-items: center; /* 縦方向に中央揃え */
     justify-content: center; /* 横方向に中央揃え */
@@ -1144,14 +2152,28 @@ img {
     width: 100%;
     padding: 0 24px;
   }
+  /* ページタイトル（SP） */
+  #primary .page-title,
+  #primary .type-page .entry-title {
+    font-size: 20px; /* PCの28pxから縮小 */
+    margin-bottom: 24px; /* マージン調整 */
+  }
+  /* アクセントライン（SP） */
+  #primary .page-title::after,
+  #primary .type-page .entry-title::after {
+    width: 40px; /* 線も少し短く */
+    height: 3px;
+    margin-top: 8px;
+  }
   .hero-text {
     font-size: 15px;
     font-weight: bold;
     color: #fff;
   }
   /* ロゴ画像のスタイル */
+  /* ロゴ画像のスタイル */
   .hero-background img {
-    max-width: 100%; /* ロゴ画像の最大幅を100%に */
+    max-width: 80%; /* ロゴ画像の最大幅を80%に */
     height: auto; /* 高さは自動調整 */
   }
   .button {
@@ -1160,13 +2182,6 @@ img {
     padding: 8px; /* パディングを調整 */
     margin-top: 20px; /* 上のマージンを短縮 */
     font-size: 12px; /* フォントサイズを小さく */
-  }
-  .tag {
-    padding: 5px 8px;
-    font-size: 13px;
-    font-weight: bold;
-    background-color: #ebff40;
-    border-radius: 5px;
   }
   .header {
     position: fixed;
@@ -1188,8 +2203,17 @@ img {
   }
   .content-wrapper {
     width: 100%;
-    background-color: #9a9593;
-    padding: 48px 20px;
+    margin: 0;
+    padding: 80px 0 48px;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+  }
+  .content {
+    padding: 0 20px;
+    background-color: transparent;
+    box-shadow: none;
   }
   .fv {
     width: 100%;
@@ -1277,7 +2301,7 @@ img {
   }
   .contents {
     width: 350px;
-    padding-bottom: 120px;
+    padding-bottom: 60px; /* 余白削減 (120px -> 60px) */
     margin: 0 auto;
     background-color: #fff;
   }
@@ -1356,20 +2380,73 @@ img {
   .works-link {
     margin-top: 46px;
   }
-  .content {
-    width: 100%;
-    height: auto;
-    padding: 20px 12px;
-    margin: 40px auto 0;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 0 8px gray;
-  }
-  .content-category {
-    padding: 0;
-    margin: 0 auto;
-    background-color: transparent;
-    border-radius: 0%;
-    box-shadow: none;
-  }
-}/*# sourceMappingURL=style_add.css.map */
+}
+/* =========================================
+   Design Adjustments (FV, TOP Title, Footer)
+   ========================================= */
+/* FV Height Correction */
+.hero-background {
+  min-height: 80vh !important;
+  padding: 50px 0;
+}
+
+/* TOP Article Title Adjustments */
+.fv-article-text__title {
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.new-article-text__title,
+.pickup-article-text__title {
+  line-height: 1.6;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+/* TOP h2 Styles */
+.title-h2__text {
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 16px;
+  font-size: 20px;
+  color: #000;
+  text-align: left;
+  font-weight: bold;
+}
+
+.title-h2__text--pick-up::before,
+.title-h2__text--new::before,
+.title-h2__text--category::before,
+.title-h2__text--popular-tag::before,
+.title-h2__text--sns::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: block;
+  width: 34px;
+  height: 34px;
+  content: "";
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  transform: translateY(-50%);
+}
+
+.title-h2__text--pick-up::before,
+.title-h2__text--new::before {
+  background-image: url("images/ico_article.svg");
+}
+
+.title-h2__text--category::before {
+  background-image: url("images/ico_shape.svg");
+}
+
+.title-h2__text--popular-tag::before {
+  background-image: url("images/ico_tag.svg");
+}
+
+.title-h2__text--sns::before {
+  background-image: url("images/ico_connection.svg");
+}
+
+/*# sourceMappingURL=style_add.css.map */

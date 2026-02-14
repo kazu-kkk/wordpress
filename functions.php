@@ -110,3 +110,55 @@ function inspiro_child_enqueue_google_fonts()
     wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap', [], null);
 }
 add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_google_fonts');
+
+/**
+ * Custom Favicon
+ */
+function inspiro_child_custom_favicon() {
+    $favicon_url = get_stylesheet_directory_uri() . '/assets/images/yuny_logo.png';
+    echo '<link rel="shortcut icon" href="' . esc_url($favicon_url) . '" />' . "\n";
+    echo '<link rel="apple-touch-icon" href="' . esc_url($favicon_url) . '" />' . "\n";
+}
+add_action('wp_head', 'inspiro_child_custom_favicon');
+
+/**
+ * Identify Custom Post Types in Archives
+ */
+function inspiro_child_add_cpt_to_archives($query) {
+    if (is_admin() || ! $query->is_main_query()) {
+        return;
+    }
+
+    // Check for category or tag archives
+    if ( (is_category() || is_tag()) && empty($query->query_vars['suppress_filters']) ) {
+        // Include 'post' and likely CPT names.
+        $query->set('post_type', array('post', 'portfolio_item', 'portfolio'));
+    }
+}
+add_action('pre_get_posts', 'inspiro_child_add_cpt_to_archives');
+
+
+/**
+ * Enqueue scripts for search suggestions
+ */
+function inspiro_child_enqueue_scripts() {
+    wp_enqueue_script(
+        'inspiro-search-suggestion',
+        get_stylesheet_directory_uri() . '/assets/js/search-suggestion.js',
+        array(),
+        filemtime(get_stylesheet_directory() . '/assets/js/search-suggestion.js'),
+        true
+    );
+
+    wp_localize_script('inspiro-search-suggestion', 'inspiroSearch', array(
+        'root' => esc_url_raw(rest_url()),
+        'nonce' => wp_create_nonce('wp_rest')
+    ));
+}
+add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_scripts');
+
+
+/**
+ * Add custom search widget to primary menu for mobile
+ */
+

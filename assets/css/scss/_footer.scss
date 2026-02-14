@@ -40,22 +40,39 @@
     .site-footer {
       padding: 20px; /* 内側の余白 */
     }
+
+    .footer-navigation ul {
+        justify-content: center; /* PCで中央揃え */
+    }
   }
   
   /* スマートフォン向けのスタイル (768px以下) */
   @media screen and (max-width: 767px) {
     .site-footer {
-      padding: 15px; /* 内側の余白を少し狭く */
+      padding: 20px 15px;
+    }
+
+    .site-footer .inner-wrap {
+        padding: 0 !important; /* グローバルのinner-wrap余白を打ち消し */
+    }
+
+    .footer-navigation {
+        margin-bottom: 40px; /* contactと権利テキストの間隔 (広めに調整) */
+    }
+  
+    .site-footer p {
+        margin-bottom: 0; /* 下の余白はfooterのpaddingで確保 */
+        font-size: 11px;
     }
   
     .footer-navigation ul {
       flex-direction: column; /* リンクを縦並びに変更 */
       align-items: center; /* 中央揃え */
-      gap: 10px; /* リンク間のスペースを狭く */
+      gap: 16px; /* リンク間のスペース */
     }
   
     .footer-navigation a {
-      font-size: 14px; /* フォントサイズを少し小さく */
+      font-size: 13px;
     }
   }
   
