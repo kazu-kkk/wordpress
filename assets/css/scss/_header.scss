@@ -9,6 +9,10 @@
         padding-top: 0;
     }
 
+    #site-navigation .navbar-toggle {
+        display: none;
+    }
+
 }
 
 @media screen and (width <=767px)  {

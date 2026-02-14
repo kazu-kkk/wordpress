@@ -857,6 +857,11 @@
   .search-widget {
     margin-bottom: 30px;
   }
+  /* Hide Recent Posts and Recent Comments */
+  #custom-side-nav .widget_recent_entries,
+  #custom-side-nav .widget_recent_comments {
+    display: none;
+  }
 }
 @media screen and (width >= 767px) {
   .custom-logo-link img {
@@ -866,6 +871,9 @@
   }
   #site-navigation .inner-wrap {
     padding-top: 0;
+  }
+  #site-navigation .navbar-toggle {
+    display: none;
   }
 }
 @media screen and (width <= 767px) {
