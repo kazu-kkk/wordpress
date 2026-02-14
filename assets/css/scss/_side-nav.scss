@@ -313,3 +313,69 @@
         margin-bottom: 30px;
     }
 }
+
+/* サイドナビのラッパー（左右余白） */
+.side-nav__wrap {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+}
+
+/* 閉じるボタンをサイドバーのエリア外（左側）に配置 */
+#side-nav {
+    overflow: visible !important; /* ボタンが見えるようにする */
+}
+
+.side-nav__close-button {
+    position: absolute;
+    top: 20px; /* 上からの位置 */
+    left: -50px; /* サイドバーの左側に配置 */
+    width: 40px;
+    height: 40px;
+    z-index: 9999;
+}
+
+.side-nav__close-button .navbar-toggle {
+    background-color: rgba(50, 50, 50, 0.8); /* 背景色（半透明の黒） */
+    border: none;
+    border-radius: 50%; /* 丸くする */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.side-nav__close-button .navbar-toggle .icon-bar {
+    background-color: #fff; /* アイコンを白に */
+    display: block;
+    width: 20px;
+    height: 2px;
+    margin: 2px 0;
+    border-radius: 1px;
+}
+
+
+/* サイドバー展開時のオーバーレイカスタマイズ */
+.side-nav-overlay {
+    background-color: rgba(0, 0, 0, 0.6) !important; 
+    backdrop-filter: blur(2px);
+    transition: background-color 0.3s ease;
+}
+
+/* 親テーマのスタイルを上書き */
+.side-nav-open .side-nav-overlay {
+    right: 0 !important; /* 全画面を覆う */
+    width: 100% !important;
+    z-index: 9990 !important; /* サイドバーの下 */
+    cursor: pointer;
+}
+
+/* サイドバー本体のZ-index */
+#side-nav {
+    z-index: 9999 !important;
+}

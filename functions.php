@@ -156,3 +156,9 @@ function inspiro_child_enqueue_scripts() {
     ));
 }
 add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_scripts');
+
+
+/**
+ * Add custom search widget to primary menu for mobile
+ */
+

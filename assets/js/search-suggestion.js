@@ -1,70 +1,86 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('article-search-input');
-    const suggestionsList = document.getElementById('search-suggestions');
+    // Initialize for desktop/PC
+    setupSearchSuggestions('article-search-input', 'search-suggestions');
+    // Initialize for mobile
+    setupSearchSuggestions('article-search-input-mobile', 'search-suggestions-mobile');
 
-    if (!searchInput || !suggestionsList) return;
+    function setupSearchSuggestions(inputId, listId) {
+        const searchInput = document.getElementById(inputId);
+        const suggestionsList = document.getElementById(listId);
 
-    let timeout = null;
-    let currentFocus = -1;
+        if (!searchInput || !suggestionsList) return;
 
-    searchInput.addEventListener('input', function(e) {
-        const query = e.target.value.trim();
-        
-        // Clear previous timeout
-        if (timeout) clearTimeout(timeout);
+        let timeout = null;
+        let currentFocus = -1;
 
-        if (query.length < 2) {
-            suggestionsList.innerHTML = '';
-            suggestionsList.style.display = 'none';
-            return;
-        }
+        searchInput.addEventListener('input', function(e) {
+            const query = e.target.value.trim();
+            
+            if (timeout) clearTimeout(timeout);
 
-        // Debounce
-        timeout = setTimeout(() => {
-            fetchSuggestions(query);
-        }, 300);
-    });
+            if (query.length < 2) {
+                suggestionsList.innerHTML = '';
+                suggestionsList.style.display = 'none';
+                return;
+            }
 
-    // Keyboard navigation
-    searchInput.addEventListener('keydown', function(e) {
-        const items = suggestionsList.getElementsByTagName('li');
-        if (e.key === 'ArrowDown') {
-            currentFocus++;
-            addActive(items);
-        } else if (e.key === 'ArrowUp') {
-            currentFocus--;
-            addActive(items);
-        } else if (e.key === 'Enter') {
-            e.preventDefault();
-            if (currentFocus > -1) {
-                if (items) items[currentFocus].querySelector('a').click();
+            timeout = setTimeout(() => {
+                fetchSuggestions(query, suggestionsList);
+            }, 300);
+        });
+
+        // Keyboard navigation
+        searchInput.addEventListener('keydown', function(e) {
+            const items = suggestionsList.getElementsByTagName('li');
+            if (e.key === 'ArrowDown') {
+                currentFocus++;
+                addActive(items);
+            } else if (e.key === 'ArrowUp') {
+                currentFocus--;
+                addActive(items);
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (currentFocus > -1) {
+                    if (items && items[currentFocus]) {
+                        items[currentFocus].querySelector('a').click();
+                    }
+                }
+            }
+        });
+
+        function addActive(items) {
+            if (!items) return false;
+            removeActive(items);
+            if (currentFocus >= items.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = items.length - 1;
+            items[currentFocus].classList.add('active');
+            
+            const activeItem = items[currentFocus];
+            if (activeItem) {
+                activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         }
-    });
 
-    function addActive(items) {
-        if (!items) return false;
-        removeActive(items);
-        if (currentFocus >= items.length) currentFocus = 0;
-        if (currentFocus < 0) currentFocus = items.length - 1;
-        items[currentFocus].classList.add('active');
-        
-        // Scroll to active item if needed
-        const activeItem = items[currentFocus];
-        if (activeItem) {
-            activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        function removeActive(items) {
+            for (let i = 0; i < items.length; i++) {
+                items[i].classList.remove('active');
+            }
         }
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchInput.contains(e.target) && !suggestionsList.contains(e.target)) {
+                suggestionsList.style.display = 'none';
+            }
+        });
     }
 
-    function removeActive(items) {
-        for (let i = 0; i < items.length; i++) {
-            items[i].classList.remove('active');
-        }
-    }
-
-    function fetchSuggestions(query) {
+    function fetchSuggestions(query, suggestionsList) {
         // Use the global search endpoint to find content across post types
+        // Note: inspiroSearch must be defined globally via wp_localize_script
+        if (typeof inspiroSearch === 'undefined') return;
+        
         const url = `${inspiroSearch.root}wp/v2/search?search=${encodeURIComponent(query)}&per_page=5`;
 
         fetch(url)
@@ -74,22 +90,19 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(results => {
                 suggestionsList.innerHTML = '';
-                currentFocus = -1; // Reset focus whenever results are updated
-
+                // Since this function is async and separate from the input object, we rely on event listeners for focus management
+                
                 if (results.length > 0) {
                     suggestionsList.style.display = 'block';
                     results.forEach(item => {
                         const li = document.createElement('li');
                         const a = document.createElement('a');
-                        a.href = item.url;
+                        a.href = item.url; // Ensure 'url' is the correct property from WP API
                         
-                        // Decode HTML entities in the title
-                        let decodedTitle = decodeHTMLEntities(item.title);
-                        
-                        // Highlight search query
-                        // Create a regex that is case-insensitive
+                        let title = item.title;
+                        // Use regex to highlight query
                         const regex = new RegExp(`(${query})`, 'gi');
-                        const highlightedTitle = decodedTitle.replace(regex, '<strong>$1</strong>');
+                        const highlightedTitle = title.replace(regex, '<strong>$1</strong>');
                         
                         a.innerHTML = highlightedTitle;
                         li.appendChild(a);
@@ -108,17 +121,4 @@ document.addEventListener('DOMContentLoaded', function() {
                 suggestionsList.style.display = 'none';
             });
     }
-
-    function decodeHTMLEntities(text) {
-        const textArea = document.createElement('textarea');
-        textArea.innerHTML = text;
-        return textArea.value;
-    }
-
-    // Hide suggestions when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!searchInput.contains(e.target) && !suggestionsList.contains(e.target)) {
-            suggestionsList.style.display = 'none';
-        }
-    });
 });
