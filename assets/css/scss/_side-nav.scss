@@ -145,6 +145,92 @@
     height: 20px;
     filter: brightness(0) invert(1); /* アイコンを白くする */
 }
+
+/* =========================================
+   検索ウィジェット
+   ========================================= */
+.search-widget {
+    margin-bottom: 40px;
+}
+
+.search-container {
+    position: relative;
+    width: 100%;
+}
+
+#article-search-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    box-sizing: border-box;
+    
+    &:focus {
+        outline: none;
+        border-color: #2B53EC;
+        box-shadow: 0 0 0 3px rgba(43, 83, 236, 0.1);
+    }
+}
+
+/* サジェストリスト */
+.search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    margin-top: 8px; /* 入力欄との間隔 */
+    padding: 0;
+    list-style: none;
+    display: none; /* JSで制御 */
+    max-height: 300px;
+    overflow-y: auto;
+    
+    li {
+        border-bottom: 1px solid #f5f5f5;
+        margin: 0;
+        
+        &:last-child {
+            border-bottom: none;
+        }
+        
+        /* 既存の#custom-side-nav a のスタイルを打ち消すために詳細度を確保 */
+        a {
+            display: block !important;
+            padding: 12px 16px !important;
+            color: #333 !important;
+            text-decoration: none !important;
+            font-size: 14px !important;
+            transition: background 0.2s !important;
+            box-shadow: none !important; 
+            border-radius: 0 !important;
+            background-color: transparent !important;
+            font-weight: normal !important;
+            margin: 0 !important;
+            justify-content: flex-start !important; /* flex解除または左寄せ */
+            
+            /* 矢印アイコン非表示 */
+            &::after {
+                display: none !important;
+            }
+            
+            &:hover {
+                background-color: #f0f4ff !important;
+                color: #2B53EC !important;
+                transform: none !important;
+            }
+        }
+    }
+}
+
 /* モバイル端末向けの調整 */
 @media screen and (max-width: 767px) {
     #custom-side-nav {
@@ -192,5 +278,10 @@
         justify-content: flex-start; /* 左寄せ */
         margin-top: 10px;
         grid-column: 2 / 3; /* 必要ならグリッド配置に追加 */
+    }
+    
+    /* 検索ウィジェットのSP調整があればここに追加 */
+    .search-widget {
+        margin-bottom: 30px;
     }
 }

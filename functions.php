@@ -136,3 +136,23 @@ function inspiro_child_add_cpt_to_archives($query) {
     }
 }
 add_action('pre_get_posts', 'inspiro_child_add_cpt_to_archives');
+
+
+/**
+ * Enqueue scripts for search suggestions
+ */
+function inspiro_child_enqueue_scripts() {
+    wp_enqueue_script(
+        'inspiro-search-suggestion',
+        get_stylesheet_directory_uri() . '/assets/js/search-suggestion.js',
+        array(),
+        filemtime(get_stylesheet_directory() . '/assets/js/search-suggestion.js'),
+        true
+    );
+
+    wp_localize_script('inspiro-search-suggestion', 'inspiroSearch', array(
+        'root' => esc_url_raw(rest_url()),
+        'nonce' => wp_create_nonce('wp_rest')
+    ));
+}
+add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_scripts');
