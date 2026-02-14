@@ -74,7 +74,18 @@
     }
 
     .post-thumbnail {
+        width: 100%;
         margin-bottom: 4px;
+
+        a {
+            display: block;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
     }
 
 

@@ -677,7 +677,16 @@
     line-height: 20px;
   }
   .post-thumbnail {
+    width: 100%;
     margin-bottom: 4px;
+  }
+  .post-thumbnail a {
+    display: block;
+  }
+  .post-thumbnail img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
   }
 }
 /* サイドナビの全体スタイル */
