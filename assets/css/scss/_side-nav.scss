@@ -75,14 +75,14 @@
 
 
 /* プロフィールカード */
-.profile-card {
+#custom-side-nav .profile-card {
     text-align: center;
     padding: 30px 20px;
     border: none;
     border-radius: 12px;
-    background-color: #fff;
+    background-color: transparent;
     margin-bottom: 40px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* 浮きすぎない上品な影 */
+    box-shadow: none; /* シャドウ削除 */
 }
 
 /* プロフィール画像 */
@@ -149,8 +149,15 @@
 /* =========================================
    検索ウィジェット
    ========================================= */
+/* =========================================
+   検索ウィジェット
+   ========================================= */
+/* =========================================
+   検索ウィジェット
+   ========================================= */
 .search-widget {
-    margin-bottom: 40px;
+    margin-bottom: 24px;
+    margin-top: 40px;
 }
 
 .search-container {
@@ -201,6 +208,25 @@
         &:last-child {
             border-bottom: none;
         }
+
+        /* アクティブな項目（キーボード操作用） */
+        &.active, &:hover {
+            background-color: #f0f4ff;
+            
+            a {
+                color: #2B53EC !important;
+            }
+        }
+        
+        /* 検索結果なしの表示 */
+        &.no-results {
+            padding: 12px 16px;
+            color: #999;
+            font-size: 13px;
+            text-align: center;
+            background-color: #fff;
+            pointer-events: none; /* クリック不可 */
+        }
         
         /* 既存の#custom-side-nav a のスタイルを打ち消すために詳細度を確保 */
         a {
@@ -221,11 +247,12 @@
             &::after {
                 display: none !important;
             }
-            
-            &:hover {
-                background-color: #f0f4ff !important;
-                color: #2B53EC !important;
-                transform: none !important;
+
+            /* ハイライト */
+            strong {
+                color: #2B53EC;
+                background-color: rgba(43, 83, 236, 0.08);
+                font-weight: bold;
             }
         }
     }
@@ -238,7 +265,7 @@
     }
 
     /* プロフィールカードを横並び（グリッド）に変更 */
-    .profile-card {
+    #custom-side-nav .profile-card {
         display: grid;
         grid-template-columns: 80px 1fr;
         grid-template-rows: auto auto; /* 名前とバイオ用の2行 */
@@ -246,6 +273,7 @@
         text-align: left;
         padding: 20px;
         align-items: start; /* 上揃え、または center で中央揃え */
+        margin-bottom: 40px; /* ここに追加 */
     }
 
     .profile-avatar {

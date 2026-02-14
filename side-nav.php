@@ -2,15 +2,6 @@
 
 
 
-    <!-- 記事検索 -->
-    <div class="search-widget">
-        <h2 class="widget-title">SEARCH</h2>
-        <div class="search-container">
-            <input type="text" id="article-search-input" placeholder="キーワード検索..." autocomplete="off">
-            <ul id="search-suggestions" class="search-suggestions"></ul>
-        </div>
-    </div>
-
     <!-- プロフィールカード -->
     <div class="profile-card">
         <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/yuny_logo.png"
@@ -23,6 +14,16 @@
             <a href="https://twitter.com" target="_blank" class="social-button"><img src="<?php echo get_template_directory_uri(); ?>/images/x-icon.png" alt="X"></a>
             <a href="https://note.com" target="_blank" class="social-button"><img src="<?php echo get_template_directory_uri(); ?>/images/note-icon.png" alt="Note"></a>
         </div> -->
+    </div>
+
+
+    <!-- 記事検索 -->
+    <div class="search-widget">
+        <h2 class="widget-title">SEARCH</h2>
+        <div class="search-container">
+            <input type="text" id="article-search-input" placeholder="キーワード検索..." autocomplete="off">
+            <ul id="search-suggestions" class="search-suggestions"></ul>
+        </div>
     </div>
 
 
