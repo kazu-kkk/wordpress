@@ -261,6 +261,7 @@
 /* モバイル端末向けの調整 */
 @media screen and (max-width: 767px) {
     #custom-side-nav {
+         display: none;
          max-width: 100%;
     }
 
