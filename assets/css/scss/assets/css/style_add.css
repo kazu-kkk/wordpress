@@ -274,74 +274,199 @@
     margin-bottom: 12px;
   }
 }
-/* デフォルトスタイル（全画面サイズ共通） */
-.site-footer {
-  background-color: #f8f9fa; /* 明るいグレーの背景 */
-  text-align: center; /* 中央揃え */
-  border-top: 1px solid #e9ecef; /* 上部に薄い線 */
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* 上部に軽い影 */
+/* ==============================================
+   Rich Footer Styles
+   ============================================== */
+.site-footer-rich {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  padding: 60px 0 20px;
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  margin-top: 0;
+  border-top: none; /* 既存のボーダーを削除 */
+  box-shadow: none; /* 既存のシャドウを削除 */
+}
+.site-footer-rich .inner-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  /* グローバルの干渉を防ぐためのリセット */
+  display: block;
+}
+.site-footer-rich a {
+  color: #b0b0b0;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+.site-footer-rich a:hover {
+  color: #fff;
 }
 
-.site-footer p {
-  font-size: 14px; /* 小さめのフォント */
-  color: #6c757d; /* グレーの文字色 */
-  margin-bottom: 15px; /* 下に余白 */
+/* Footer Grid */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 50px;
+  /* タブレット (768px - 1024px付近) */
+  /* スマートフォン (767px以下) */
 }
-
-.footer-navigation ul {
-  list-style: none; /* リストマーカーを非表示 */
-  padding: 0; /* 内側の余白をリセット */
-  margin: 0; /* 外側の余白をリセット */
-  display: flex; /* デフォルトで横並び */
-  gap: 15px; /* リンク間のスペース */
-}
-
-.footer-navigation a {
-  text-decoration: none; /* 下線を非表示 */
-  color: #000; /* 黒に設定 */
-  font-size: 16px; /* フォントサイズ */
-  transition: color 0.3s ease; /* カラーのスムーズな切り替え */
-}
-
-.footer-navigation a:hover {
-  color: #555; /* 少し明るい黒 (ダークグレー) */
-}
-
-.footer-navigation a:active {
-  color: #333; /* 中間の黒 */
-}
-
-/* タブレット以上の画面幅 (768px以上) */
-@media screen and (min-width: 768px) {
-  .site-footer {
-    padding: 20px; /* 内側の余白 */
-  }
-  .footer-navigation ul {
-    justify-content: center; /* PCで中央揃え */
+@media screen and (max-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr; /* 2列に変更 */
+    gap: 30px;
   }
 }
-/* スマートフォン向けのスタイル (768px以下) */
 @media screen and (max-width: 767px) {
-  .site-footer {
-    padding: 20px 15px;
+  .footer-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 40px;
   }
-  .site-footer .inner-wrap {
-    padding: 0 !important; /* グローバルのinner-wrap余白を打ち消し */
+}
+
+/* Columns */
+.footer-col .footer-heading {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 20px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-left: 3px solid #6c5ce7; /* アクセントカラー */
+  padding-left: 10px;
+  line-height: 1.2;
+}
+
+/* 1. Brand */
+.footer-brand .footer-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.footer-brand .footer-logo img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  margin-right: 12px;
+  border-radius: 50%;
+}
+.footer-brand .footer-logo .site-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+.footer-brand .footer-desc {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #a0a0a0;
+  margin-bottom: 20px;
+}
+.footer-brand .footer-sns {
+  display: flex;
+  gap: 12px;
+}
+.footer-brand .footer-sns a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background-color: #333;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+.footer-brand .footer-sns a svg {
+  width: 20px;
+  height: 20px;
+  fill: #e0e0e0;
+  transition: fill 0.3s ease;
+}
+.footer-brand .footer-sns a:hover {
+  background-color: #6c5ce7;
+  transform: translateY(-3px);
+}
+.footer-brand .footer-sns a:hover svg {
+  fill: #fff;
+}
+
+/* 2 & 4. Menu Lists */
+.footer-menu ul, .footer-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.footer-menu ul li, .footer-info ul li {
+  margin-bottom: 12px;
+  padding: 0;
+}
+.footer-menu ul li a, .footer-info ul li a {
+  font-size: 14px;
+  display: block;
+  position: relative;
+}
+.footer-menu ul li a:hover, .footer-info ul li a:hover {
+  color: #fff;
+  padding-left: 5px; /* ホバー時に少し右に動く */
+}
+
+/* 3. Tags */
+.footer-tags .tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.footer-tags .tag-cloud .tag-link, .footer-tags .tag-cloud a { /* aタグも対象に */
+  font-size: 12px;
+  padding: 6px 12px;
+  background-color: #333;
+  border-radius: 20px;
+  color: #ccc;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-block; /* インラインブロックで崩れ防止 */
+}
+.footer-tags .tag-cloud .tag-link:hover, .footer-tags .tag-cloud a:hover {
+  background-color: #6c5ce7;
+  color: #fff;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  border-top: 1px solid #333;
+  padding-top: 25px;
+  text-align: center;
+}
+.footer-bottom .copyright {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive Overrides */
+@media screen and (max-width: 767px) {
+  .site-footer-rich {
+    padding: 40px 0 30px;
+    /* SP時のinner-wrap余白調整（打ち消し用） */
   }
-  .footer-navigation {
-    margin-bottom: 40px; /* contactと権利テキストの間隔 (広めに調整) */
+  .site-footer-rich .inner-wrap {
+    padding: 0 20px !important;
   }
-  .site-footer p {
-    margin-bottom: 0; /* 下の余白はfooterのpaddingで確保 */
-    font-size: 11px;
+  .footer-col {
+    text-align: left; /* 左揃えで統一 */
   }
-  .footer-navigation ul {
-    flex-direction: column; /* リンクを縦並びに変更 */
-    align-items: center; /* 中央揃え */
-    gap: 16px; /* リンク間のスペース */
+  /* 各カラムの下部にボーダーを入れて区切りを見やすくする場合のオプション */
+  /*
+  .footer-col:not(:last-child) {
+      border-bottom: 1px solid #2a2a2a;
+      padding-bottom: 30px;
   }
-  .footer-navigation a {
-    font-size: 13px;
+  */
+  .footer-brand .footer-desc {
+    font-size: 14px;
   }
 }
 @media screen and (width >= 767px) {
@@ -546,7 +671,16 @@
     line-height: 20px;
   }
   .post-thumbnail {
+    width: 100%;
     margin-bottom: 4px;
+  }
+  .post-thumbnail a {
+    display: block;
+  }
+  .post-thumbnail img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
   }
 }
 /* サイドナビの全体スタイル */
@@ -623,14 +757,14 @@
 }
 
 /* プロフィールカード */
-.profile-card {
+#custom-side-nav .profile-card {
   text-align: center;
   padding: 30px 20px;
   border: none;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: transparent;
   margin-bottom: 40px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* 浮きすぎない上品な影 */
+  box-shadow: none; /* シャドウ削除 */
 }
 
 /* プロフィール画像 */
@@ -697,8 +831,15 @@
 /* =========================================
    検索ウィジェット
    ========================================= */
+/* =========================================
+   検索ウィジェット
+   ========================================= */
+/* =========================================
+   検索ウィジェット
+   ========================================= */
 .search-widget {
-  margin-bottom: 40px;
+  margin-bottom: 24px;
+  margin-top: 40px;
 }
 
 .search-container {
@@ -793,10 +934,11 @@
 /* モバイル端末向けの調整 */
 @media screen and (max-width: 767px) {
   #custom-side-nav {
+    display: none;
     max-width: 100%;
   }
   /* プロフィールカードを横並び（グリッド）に変更 */
-  .profile-card {
+  #custom-side-nav .profile-card {
     display: grid;
     grid-template-columns: 80px 1fr;
     grid-template-rows: auto auto; /* 名前とバイオ用の2行 */
@@ -839,6 +981,71 @@
     margin-bottom: 30px;
   }
 }
+/* サイドナビのラッパー（左右余白） */
+.side-nav__wrap {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+/* 閉じるボタンをサイドバーのエリア外（左側）に配置 */
+#side-nav {
+  overflow: visible !important; /* ボタンが見えるようにする */
+}
+
+.side-nav__close-button {
+  position: absolute;
+  top: 20px; /* 上からの位置 */
+  left: -50px; /* サイドバーの左側に配置 */
+  width: 40px;
+  height: 40px;
+  z-index: 9999;
+}
+
+.side-nav__close-button .navbar-toggle {
+  background-color: rgba(50, 50, 50, 0.8); /* 背景色（半透明の黒） */
+  border: none;
+  border-radius: 50%; /* 丸くする */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.side-nav__close-button .navbar-toggle .icon-bar {
+  background-color: #fff; /* アイコンを白に */
+  display: block;
+  width: 20px;
+  height: 2px;
+  margin: 2px 0;
+  border-radius: 1px;
+}
+
+/* サイドバー展開時のオーバーレイカスタマイズ */
+.side-nav-overlay {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(2px);
+  transition: background-color 0.3s ease;
+}
+
+/* 親テーマのスタイルを上書き */
+.side-nav-open .side-nav-overlay {
+  right: 0 !important; /* 全画面を覆う */
+  width: 100% !important;
+  z-index: 9990 !important; /* サイドバーの下 */
+  cursor: pointer;
+}
+
+/* サイドバー本体のZ-index */
+#side-nav {
+  z-index: 9999 !important;
+}
+
 @media screen and (width >= 767px) {
   .custom-logo-link img {
     display: inline-block;
@@ -848,14 +1055,321 @@
   #site-navigation .inner-wrap {
     padding-top: 0;
   }
+  #site-navigation .navbar-toggle {
+    display: none;
+  }
+  /* PCではメニュー内の検索フォームを非表示 */
+  /* PCではメニュー内の検索フォームを非表示 */
+  .mobile-side-nav-content {
+    display: none;
+  }
 }
-@media screen and (width <= 767px) {
+@media screen and (max-width: 767px) {
   .custom-logo-link img {
     display: inline-block;
     max-width: 140px;
   }
   #site-navigation .inner-wrap {
     padding: 0 16px;
+  }
+  /* ハンバーガーメニュー展開時のスタイル (side-navデザインを踏襲) */
+  /* 全体ラッパーと背景色指定 */
+  #side-nav,
+  .side-nav__scrollable-container {
+    background-color: #F5F7FF !important; /* 強制的に背景色を変更 */
+  }
+  /* コンテナの余白調整 */
+  .side-nav__scrollable-container {
+    padding: 24px 16px !important;
+  }
+  #masthead #site-navigation .navbar-collapse,
+  #side-nav .navbar-collapse {
+    padding: 0; /* 親コンテナで余白をとるのでここは0に */
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    max-height: none;
+  }
+  #masthead #site-navigation .navbar-nav,
+  #side-nav .navbar-nav {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    float: none;
+  }
+  #masthead #site-navigation .navbar-nav li,
+  #side-nav .navbar-nav li {
+    margin-bottom: 12px;
+    float: none;
+    border: none;
+  }
+  /* リンクスタイル - カード型デザイン */
+  #masthead #site-navigation .navbar-nav li a,
+  #side-nav .navbar-nav li a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 16px 20px;
+    background-color: #fff; /* 白背景のカード */
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    border: none;
+    width: 100%;
+    /* 矢印アイコン */
+  }
+  #masthead #site-navigation .navbar-nav li a::after,
+  #side-nav .navbar-nav li a::after {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-top: 2px solid #ddd;
+    border-right: 2px solid #ddd;
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+  }
+  #masthead #site-navigation .navbar-nav li a:hover,
+  #side-nav .navbar-nav li a:hover {
+    background-color: #2B53EC;
+    color: #fff;
+    box-shadow: 0 6px 15px rgba(43, 83, 236, 0.2);
+    transform: translateY(-2px);
+  }
+  #masthead #site-navigation .navbar-nav li a:hover::after,
+  #side-nav .navbar-nav li a:hover::after {
+    border-color: #fff;
+    transform: rotate(45deg) translate(2px, -2px);
+  }
+  /* 検索ウィジェットのスタイル (side-navから移植) */
+  /* 検索ウィジェットのスタイル (side-navから移植) */
+  /* 検索ウィジェットのスタイル (side-navから移植) */
+  /* 検索ウィジェットのスタイル (side-navから移植) */
+  .mobile-side-nav-content {
+    display: block;
+    padding: 0 0 20px;
+    margin-top: 10px;
+    /* 見出しスタイル (side-navから移植) */
+    /* プロフィールカード (side-navのSP用スタイルを移植) */
+    /* カテゴリなどのリストスタイルリセット */
+  }
+  .mobile-side-nav-content .widget-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: #333;
+    text-align: left;
+    border-bottom: 2px solid #2B53EC;
+    padding-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
+  .mobile-side-nav-content .profile-card {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 16px;
+    text-align: left;
+    padding: 20px 0; /* 横幅一杯に使うため左右paddingは0に調整 */
+    align-items: start;
+    margin-bottom: 0px;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+  }
+  .mobile-side-nav-content .profile-avatar {
+    grid-row: 1/3;
+    grid-column: 1/2;
+    width: 80px;
+    height: 80px;
+    margin: 0;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .mobile-side-nav-content .profile-name {
+    grid-row: 1/2;
+    grid-column: 2/3;
+    margin-bottom: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    align-self: end;
+    color: #333;
+  }
+  .mobile-side-nav-content .profile-bio {
+    grid-row: 2/3;
+    grid-column: 2/3;
+    font-size: 13px;
+    text-align: left;
+    margin-bottom: 0px;
+    line-height: 1.5;
+    color: #666;
+  }
+  .mobile-side-nav-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .mobile-side-nav-content ul li {
+    margin-bottom: 12px;
+    border: none;
+  }
+  .mobile-side-nav-content ul li a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 14px 16px;
+    background-color: #fff;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    box-sizing: border-box; /* パディングを含める */
+  }
+  .mobile-side-nav-content ul li a::after {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-top: 2px solid #ddd;
+    border-right: 2px solid #ddd;
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+  }
+  .mobile-side-nav-content ul li a:hover {
+    background-color: #2B53EC;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(43, 83, 236, 0.25);
+    transform: translateY(-2px);
+  }
+  .mobile-side-nav-content ul li a:hover::after {
+    border-color: #fff;
+    transform: rotate(45deg) translate(2px, -2px);
+  }
+  .search-widget {
+    margin-bottom: 24px;
+    margin-top: 0;
+  }
+  .search-container {
+    position: relative;
+    width: 100%;
+  }
+  #article-search-input,
+  .article-search-input-mobile {
+    width: 100%;
+    padding: 14px 16px; /* 他のカードと高さを合わせるため微調整 */
+    border: none;
+    border-radius: 8px; /* 他のカードと合わせる */
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 他のカードと合わせる */
+    background-color: #fff;
+    box-sizing: border-box;
+  }
+  #article-search-input:focus,
+  .article-search-input-mobile:focus {
+    outline: none;
+    border: 1px solid #2B53EC;
+    box-shadow: 0 0 0 3px rgba(43, 83, 236, 0.1);
+  }
+  /* サジェストリスト */
+  #masthead .search-suggestions,
+  #side-nav .search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    margin-top: 8px; /* 入力欄との間隔 */
+    padding: 0;
+    list-style: none;
+    display: none; /* JSで制御 */
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  #masthead .search-suggestions li,
+  #side-nav .search-suggestions li {
+    border-bottom: 1px solid #f5f5f5;
+    margin: 0;
+    padding: 0;
+    /* アクティブな項目（キーボード操作用） */
+    /* 検索結果なしの表示 */
+    /* リンクスタイルのリセットと再定義 */
+  }
+  #masthead .search-suggestions li:last-child,
+  #side-nav .search-suggestions li:last-child {
+    border-bottom: none;
+  }
+  #masthead .search-suggestions li.active, #masthead .search-suggestions li:hover,
+  #side-nav .search-suggestions li.active,
+  #side-nav .search-suggestions li:hover {
+    background-color: #f0f4ff;
+  }
+  #masthead .search-suggestions li.active a, #masthead .search-suggestions li:hover a,
+  #side-nav .search-suggestions li.active a,
+  #side-nav .search-suggestions li:hover a {
+    color: #2B53EC !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+  #masthead .search-suggestions li.no-results,
+  #side-nav .search-suggestions li.no-results {
+    padding: 12px 16px;
+    color: #999;
+    font-size: 13px;
+    text-align: center;
+    background-color: #fff;
+    pointer-events: none; /* クリック不可 */
+  }
+  #masthead .search-suggestions li a,
+  #side-nav .search-suggestions li a {
+    display: block !important;
+    padding: 12px 16px !important;
+    color: #333 !important;
+    text-decoration: none !important;
+    font-size: 14px !important;
+    transition: background 0.2s !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    font-weight: normal !important;
+    margin: 0 !important;
+    justify-content: flex-start !important; /* flex解除または左寄せ */
+    width: auto !important; /* autoに戻す */
+    /* 矢印アイコン非表示 */
+    /* ハイライト */
+  }
+  #masthead .search-suggestions li a::after,
+  #side-nav .search-suggestions li a::after {
+    display: none !important;
+  }
+  #masthead .search-suggestions li a strong,
+  #side-nav .search-suggestions li a strong {
+    color: #2B53EC;
+    background-color: rgba(43, 83, 236, 0.08);
+    font-weight: bold;
+  }
+  #masthead .search-suggestions li a:hover,
+  #side-nav .search-suggestions li a:hover {
+    background-color: transparent !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  /* 既存の不要な検索ウィジェット（WordPress標準ブロック）を非表示 */
+  #site-navigation .widget_search,
+  #side-nav .widget_search,
+  .navbar-collapse .widget_search {
+    display: none;
   }
 }
 /* --- 共通部分（PC・SP共通のスタイル） --- */
@@ -1761,8 +2275,9 @@ img {
     color: #fff;
   }
   /* ロゴ画像のスタイル */
+  /* ロゴ画像のスタイル */
   .hero-background img {
-    max-width: 100%; /* ロゴ画像の最大幅を100%に */
+    max-width: 80%; /* ロゴ画像の最大幅を80%に */
     height: auto; /* 高さは自動調整 */
   }
   .button {

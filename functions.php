@@ -162,3 +162,38 @@ add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_scripts');
  * Add custom search widget to primary menu for mobile
  */
 
+
+/**
+ * Target Audience Component (Shortcode)
+ */
+function inspiro_child_target_audience($atts) {
+    $atts = shortcode_atts(array(
+        'point1' => '',
+        'point2' => '',
+        'point3' => '',
+    ), $atts);
+
+    $html = '<div class="target-audience">';
+    $html .= '<div class="target-audience__title">この記事はこんな方に向けて書いています</div>';
+    
+    $has_points = false;
+    $points_html = '<ul class="target-audience__list">';
+    
+    for ($i = 1; $i <= 3; $i++) {
+        $point = $atts['point' . $i];
+        if (!empty($point)) {
+            $has_points = true;
+            $points_html .= '<li class="target-audience__item">' . esc_html($point) . '</li>';
+        }
+    }
+    $points_html .= '</ul>';
+
+    if ($has_points) {
+        $html .= $points_html;
+    }
+
+    $html .= '</div>';
+
+    return $html;
+}
+add_shortcode('target_audience', 'inspiro_child_target_audience');
