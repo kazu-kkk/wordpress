@@ -14,6 +14,7 @@
 @use "./contact-page.scss";
 @use "./bento.scss";
 @use "./target-audience.scss";
+@use "./contact-form.scss";
 
 //リセットcss
 * {
@@ -280,6 +281,16 @@ img {
     height: 90px;
     padding-top: 10px;
     backdrop-filter: blur(12px);
+  }
+
+  // site-contentの余白をheaderの高さ(90px)に合わせる。
+  // 背景色を上部まで塗りつぶすため、marginではなくpaddingを使用。
+  .site-content {
+    margin-top: 0;
+    // 【特例措置】基本的に!importantは使用しないルールだが、親テーマ(inspiro)のJSによって
+    // HTMLのstyle属性に直接「padding-top: 114.797px」が付与されてしまうため、
+    // HTMLのインラインスタイルをCSSから上書きするための唯一の手段として使用。
+    padding-top: 90px !important;
   }
 
   .header__contents {

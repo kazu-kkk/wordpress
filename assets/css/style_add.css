@@ -1445,7 +1445,7 @@
   }
 }
 /* contact-page.php専用のスタイル */
-.page-id-138 .instagram-card {
+.page-id-616 .instagram-card {
   display: flex;
   align-items: center;
   gap: 15px;
@@ -1460,32 +1460,32 @@
   color: inherit; /* リンクの色を継承 */
 }
 
-.page-id-138 .instagram-card:hover {
+.page-id-616 .instagram-card:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
-.page-id-138 .instagram-avatar img {
+.page-id-616 .instagram-avatar img {
   width: 60px;
   height: 60px;
   border-radius: 50%;
   border: 2px solid #e6683c;
 }
 
-.page-id-138 .instagram-info {
+.page-id-616 .instagram-info {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.page-id-138 .instagram-username {
+.page-id-616 .instagram-username {
   font-size: 16px;
   font-weight: bold;
   color: #333;
   margin-bottom: 5px;
 }
 
-.page-id-138 .instagram-button {
+.page-id-616 .instagram-button {
   display: inline-block;
   padding: 8px 15px;
   background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
@@ -1496,30 +1496,34 @@
   text-decoration: none;
 }
 
-.page-id-138 .container-fluid {
+.page-id-616 .container-fluid {
   width: 100%;
   max-width: 100%;
   padding-left: 15px;
   padding-right: 15px;
 }
 
-.page-id-138 .instagram-card-container {
+.page-id-616 .instagram-card-container {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 30px; /* 上部に少しスペースを追加 */
 }
 
-.page-id-138 body {
+.page-id-616 body {
   padding-bottom: 200px;
 }
 
-.page-id-138 .entry-content {
+.page-id-616 .site-main {
+  width: 100%;
+}
+
+.page-id-616 .entry-content {
   margin-bottom: 50px;
   text-align: center;
 }
 
-.page-id-138 .entry-title {
+.page-id-616 .entry-title {
   font-size: 32px;
   font-weight: bold;
   margin-bottom: 20px;
@@ -1861,6 +1865,116 @@
   }
 }
 
+.entry-content {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+
+.entry-content div.wpcf7 {
+  /* 【特例措置】親要素の不可解なズレを強制リセットし、Flexboxで確実に中央揃えする */
+  display: block !important;
+  width: 100% !important;
+  max-width: 640px !important;
+  margin: 0 !important; /* 親のalign-items: centerで中央寄せにするためマージンは0 */
+  position: static !important;
+  transform: none !important;
+  left: auto !important;
+  right: auto !important;
+  /* 白背景のカードスタイルは削除 */
+  background-color: transparent !important;
+  box-sizing: border-box !important;
+  /* Contact Form 7は自動で <p> タグを出力するため、p タグで余白を管理 */
+}
+.entry-content div.wpcf7 p {
+  margin-bottom: 24px;
+  text-align: left;
+}
+.entry-content div.wpcf7 label {
+  display: block;
+  font-weight: bold;
+  color: #333;
+  font-size: 16px;
+}
+.entry-content div.wpcf7 {
+  /* label内の <br> は非表示にして、CSSで余白を作る（柔軟なレイアウトのため） */
+}
+.entry-content div.wpcf7 label br {
+  display: none;
+}
+.entry-content div.wpcf7 .wpcf7-form-control-wrap {
+  display: block;
+  margin-top: 8px;
+}
+.entry-content div.wpcf7 input[type=text],
+.entry-content div.wpcf7 input[type=email],
+.entry-content div.wpcf7 textarea {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.entry-content div.wpcf7 input[type=text]:focus,
+.entry-content div.wpcf7 input[type=email]:focus,
+.entry-content div.wpcf7 textarea:focus {
+  outline: none;
+  border-color: #2b53ec;
+  box-shadow: 0 0 0 2px rgba(43, 83, 236, 0.2);
+}
+.entry-content div.wpcf7 textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+.entry-content div.wpcf7 input[type=submit] {
+  display: block;
+  width: 228px;
+  padding: 12px 10px;
+  margin: 40px auto 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  background-color: #2b53ec;
+  border: 2px solid #2b53ec;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+.entry-content div.wpcf7 input[type=submit]:hover {
+  color: #2b53ec;
+  background-color: #fff;
+}
+@media screen and (max-width: 767px) {
+  .entry-content div.wpcf7 input[type=submit] {
+    width: 180px;
+    font-size: 14px;
+  }
+}
+.entry-content div.wpcf7 {
+  /* エラーメッセージなどの調整 */
+}
+.entry-content div.wpcf7 .wpcf7-not-valid-tip {
+  font-size: 14px;
+  color: #dc2743;
+  margin-top: 4px;
+  display: block;
+}
+.entry-content div.wpcf7 .wpcf7-response-output {
+  border-radius: 8px;
+  margin-top: 24px;
+  padding: 16px;
+  font-size: 15px;
+  text-align: center;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -2086,6 +2200,10 @@ img {
     height: 90px;
     padding-top: 10px;
     backdrop-filter: blur(12px);
+  }
+  .site-content {
+    margin-top: 0;
+    padding-top: 90px !important;
   }
   .header__contents {
     display: flex;
@@ -2646,6 +2764,4 @@ img {
 
 .title-h2__text--sns::before {
   background-image: url("images/ico_connection.svg");
-}
-
-/*# sourceMappingURL=style_add.css.map */
+}/*# sourceMappingURL=style_add.css.map */
