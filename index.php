@@ -55,14 +55,7 @@ get_header(); ?>
 			</div>
 
 			<?php
-			// Place pagination outside of the content wrapper.
-			if (have_posts()) {
-				the_posts_pagination(
-					array(
-						'prev_next' => false,
-					)
-				);
-			}
+			// トップページのページネーションは不要なため削除（表示しない）
 			?>
 
 

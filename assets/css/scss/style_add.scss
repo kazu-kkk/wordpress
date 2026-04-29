@@ -135,8 +135,8 @@ img {
 .hero-background {
   background-color: #2B53EC;  /* 青色の背景 */
   text-align: center;
-  padding: 50px 0;  /* 上下の余白を確保 */
-  min-height: 80vh;  /* ビューポートの80% */
+  padding: 30px 0;  /* 上下の余白を縮小し、情報密度を向上 */
+  min-height: 30vh;  /* ビューポートの約30%に縮小（元は80vh） */
   display: flex;
   align-items: center;  /* 縦方向に中央揃え */
   justify-content: center;  /* 横方向に中央揃え */
@@ -152,9 +152,12 @@ img {
 
 /* ロゴ画像のスタイル */
 .hero-background img {
-  max-width: 800px;  /* ロゴ画像の最大幅を100%に */
-  padding: 0 100px;
+  max-width: 600px;  /* ヒーローエリア縮小に合わせてロゴの最大幅も少し抑える */
+  width: 100%;
+  padding: 0 40px;
   height: auto;  /* 高さは自動調整 */
+  max-height: 18vh; /* エリアからはみ出さないように制限を追加 */
+  object-fit: contain;
 }
 
 
@@ -291,6 +294,12 @@ img {
     // HTMLのstyle属性に直接「padding-top: 114.797px」が付与されてしまうため、
     // HTMLのインラインスタイルをCSSから上書きするための唯一の手段として使用。
     padding-top: 90px !important;
+  }
+
+  // ヒーローエリア（FV）があるトップページでは、下のコンテンツが見切れないように上部の余白を詰める
+  body.home .site-content,
+  body.blog .site-content {
+    padding-top: 20px !important;
   }
 
   .header__contents {
@@ -604,8 +613,13 @@ img {
 @media screen and (width <=767px) {
 
   .inner-wrap {
-    padding:40px 16px 20px; /* 左右に余白を追加、下部は20pxに */
-    
+    padding:40px 16px 80px; /* 左右に余白を追加、下部はフッターから離すために80pxに拡大 */
+  }
+
+  // ヒーローエリア（FV）があるトップページでは、下のコンテンツが見切れないように上部の余白を詰める（SP）
+  body.home .site-content,
+  body.blog .site-content {
+    padding-top: 10px !important; // SPではより余白を小さくする
   }
 
 
@@ -613,14 +627,13 @@ img {
 .hero-background {
   background-color: #2B53EC;  /* 青色の背景 */
   text-align: center;
-  padding: 50px 0;  /* 上下の余白を確保 */
-  min-height: 80vh;  /* ビューポートの80% */
+  padding: 30px 24px;  /* 上下の余白を縮小 */
+  min-height: 30vh;  /* ビューポートの約30%に縮小（元は80vh） */
   display: flex;
   align-items: center;  /* 縦方向に中央揃え */
   justify-content: center;  /* 横方向に中央揃え */
   position: relative;  /* positionはrelativeに設定 */
   width: 100%;
-  padding: 0 24px;
 }
 
 /* ページタイトル（SP） */
@@ -649,6 +662,8 @@ img {
 .hero-background img {
   max-width: 80%;  /* ロゴ画像の最大幅を80%に */
   height: auto;  /* 高さは自動調整 */
+  max-height: 18vh; /* はみ出し防止用制限を追加 */
+  object-fit: contain;
 }
 
 

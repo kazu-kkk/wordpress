@@ -197,3 +197,17 @@ function inspiro_child_target_audience($atts) {
     return $html;
 }
 add_shortcode('target_audience', 'inspiro_child_target_audience');
+
+/**
+ * トップページ（ホーム）の表示件数を最新8記事のみに制限する
+ */
+function inspiro_child_limit_home_posts($query) {
+    if (is_admin() || ! $query->is_main_query()) {
+        return;
+    }
+
+    if (is_home() || is_front_page()) {
+        $query->set('posts_per_page', 8);
+    }
+}
+add_action('pre_get_posts', 'inspiro_child_limit_home_posts');
