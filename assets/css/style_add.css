@@ -1518,18 +1518,27 @@
   width: 100%;
 }
 
-.page-id-616 .entry-content {
+/* 見出しとフォームの隙間をTopページに合わせる */
+body.page-id-616 .entry-header {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+body.page-id-616 .entry-content {
+  margin-top: 0;
   margin-bottom: 50px;
   text-align: center;
 }
 
-.page-id-616 .entry-title {
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
+/* トップページの .page-title と同じマージン（PC: 40px, SP: 24px） */
+#primary.content-area .page-id-616 .entry-title {
+  margin-bottom: 40px;
 }
 
+@media screen and (max-width: 767px) {
+  #primary.content-area .page-id-616 .entry-title {
+    margin-bottom: 24px;
+  }
+}
 .page-id-138 a, .page-id-138 .instagram-card, .page-id-138 .instagram-card span {
   text-decoration: none !important;
 }
@@ -2776,4 +2785,6 @@ img {
 
 .title-h2__text--sns::before {
   background-image: url("images/ico_connection.svg");
-}/*# sourceMappingURL=style_add.css.map */
+}
+
+/*# sourceMappingURL=style_add.css.map */
