@@ -363,20 +363,65 @@
 
 /* サイドバー展開時のオーバーレイカスタマイズ */
 .side-nav-overlay {
+    display: block !important; /* display:noneからの切り替えによるちらつきを防ぐ */
+    visibility: hidden;
+    opacity: 0;
     background-color: rgba(0, 0, 0, 0.6) !important; 
+    -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
-    transition: background-color 0.3s ease;
+    transition: opacity 0.4s ease, visibility 0.4s ease, background-color 0.4s ease !important;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 /* 親テーマのスタイルを上書き */
-.side-nav-open .side-nav-overlay {
+body.side-nav-open .side-nav-overlay {
+    visibility: visible;
+    opacity: 1;
     right: 0 !important; /* 全画面を覆う */
     width: 100% !important;
     z-index: 9990 !important; /* サイドバーの下 */
     cursor: pointer;
 }
 
-/* サイドバー本体のZ-index */
-#side-nav {
+/* 親テーマのスタイルを上書き */
+/* .side-nav-open .side-nav-overlay の定義は上に統合しました */
+
+/* サイドバー本体のZ-indexおよびちらつき防止 */
+#side-nav,
+.side-nav__scrollable-container {
     z-index: 9999 !important;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: transform; /* translateZの代わりにwill-changeを使用して上書きを防止 */
+}
+
+/* JS側の短いタイマー（0.18s）でアニメーション途中にサイドバーが消えるのを防ぐ */
+#side-nav {
+    transition: visibility 0s linear 0.4s !important;
+}
+
+body.side-nav-open #side-nav {
+    transition: visibility 0s linear 0s !important;
+}
+
+/* アイコンのちらつき防止 */
+.navbar-toggle .icon-bar {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* =========================================
+   アニメーション速度と画面ズレの修正
+   ========================================= */
+
+/* サイドナビ展開時のメインコンテンツ（.site）の左ズレを防止 */
+body.side-nav-open .site {
+    transform: none !important;
+}
+
+/* サイドバーおよびメインコンテンツのアニメーション速度を遅くする（元は0.18s -> 0.4s） */
+.site,
+.side-nav__scrollable-container {
+    transition: transform 0.4s ease !important;
 }
