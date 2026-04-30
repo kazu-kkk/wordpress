@@ -646,7 +646,10 @@
   .top-page-content-article .category-article .entry-title a {
     font-size: 20px;
     line-height: 30px;
-    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
   }
   .top-page-article {
     width: calc((100% - 20px) / 2);
@@ -654,6 +657,10 @@
   .top-page-article .entry-title a {
     font-size: 20px;
     line-height: 20px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
   }
   .inner-wrap {
     padding-top: 56px;
@@ -675,6 +682,10 @@
   .top-page-article .entry-title a {
     font-size: 20px;
     line-height: 20px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
   }
   .post-thumbnail {
     width: 100%;
@@ -2842,6 +2853,10 @@ img {
   line-height: 1.5;
   margin-bottom: 10px;
   transition: color 0.4s ease;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
 .new-article-text__title,
@@ -2850,6 +2865,10 @@ img {
   margin-top: 0;
   margin-bottom: 8px;
   transition: color 0.4s ease;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
 /* TOP h2 Styles */
@@ -2923,8 +2942,12 @@ img {
   object-fit: cover;
 }
 .top-page-article {
-  /* タイトルテキストのアニメーション */
+  /* タイトルテキストのアニメーションと3行制限（4行目以降は省略） */
 }
 .top-page-article .entry-title a {
   transition: color 0.4s ease;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }/*# sourceMappingURL=style_add.css.map */

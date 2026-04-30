@@ -18,7 +18,10 @@
             .entry-title a {
                 font-size: 20px;
                 line-height: 30px;
-                display: block;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 3;
+                overflow: hidden;
             }
         }
     }
@@ -31,6 +34,10 @@
         .entry-title a {
             font-size: 20px;
             line-height: 20px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
         }
     }
     
@@ -70,6 +77,10 @@
         .entry-title a {
             font-size: 20px;
             line-height: 20px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
         }
     }
 
