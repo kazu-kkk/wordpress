@@ -211,3 +211,18 @@ function inspiro_child_limit_home_posts($query) {
     }
 }
 add_action('pre_get_posts', 'inspiro_child_limit_home_posts');
+
+/**
+ * アーカイブページのタイトルをカスタマイズ
+ * "記事"カテゴリーの場合は「すべての記事」と表示する
+ */
+function inspiro_child_custom_archive_title($title) {
+    if (is_category()) {
+        $cat_title = single_term_title('', false);
+        if (trim($cat_title) === '記事' || trim($cat_title) === 'article' || trim($cat_title) === 'Article') {
+            $title = 'すべての記事';
+        }
+    }
+    return $title;
+}
+add_filter('get_the_archive_title', 'inspiro_child_custom_archive_title', 999);
