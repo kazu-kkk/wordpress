@@ -365,8 +365,13 @@ img {
     background-color: #fff;
     border-radius: 8px;
 
-    &:hover .fv-article-text__title {
-      color: #2b53ec;
+    &:hover {
+      .fv-article-text__title {
+        color: #2b53ec;
+      }
+      .fv-article-image img {
+        transform: scale(1.05);
+      }
     }
   }
 
@@ -377,11 +382,14 @@ img {
   .fv-article-image {
     width: 625px;
     height: 446px;
+    overflow: hidden;
   }
 
   .fv-article-image img {
     width: 625px;
+    height: 100%;
     object-fit: cover;
+    transition: transform 0.4s ease;
   }
 
   .fv-article-text {
@@ -441,9 +449,25 @@ img {
     overflow: hidden;
     border-radius: 8px;
 
+    &:hover {
+      .pickup-article-text__title {
+        color: #2b53ec;
+      }
+      .pickup-article__image img {
+        transform: scale(1.05);
+      }
+    }
+
     &__image {
       width: 100%;
       height: 207px;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+      }
     }
   }
 
@@ -501,9 +525,25 @@ img {
     text-align: left;
     border-radius: 8px;
 
+    &:hover {
+      .new-article-text__title {
+        color: #2b53ec;
+      }
+      .new-article__image img {
+        transform: scale(1.05);
+      }
+    }
+
     &__image {
       width: 200px;
       height: 100%;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+      }
     }
 
     &:first-child {
@@ -732,15 +772,27 @@ img {
     overflow: hidden;
     background-color: #484948;
     border-radius: 8px;
+
+    &:hover {
+      .fv-article-text__title {
+        color: #2b53ec;
+      }
+      .fv-article-image img {
+        transform: scale(1.05);
+      }
+    }
   }
 
   .fv-article-image {
     width: 100%;
+    overflow: hidden;
   }
 
   .fv-article-image img {
     width: 100%;
+    height: 100%;
     object-fit: cover;
+    transition: transform 0.4s ease;
   }
 
   .fv-article-text {
@@ -791,9 +843,25 @@ img {
     overflow: hidden;
     border-radius: 8px;
 
+    &:hover {
+      .pickup-article-text__title {
+        color: #2b53ec;
+      }
+      .pickup-article__image img {
+        transform: scale(1.05);
+      }
+    }
+
     &__image {
       width: 100%;
       height: 207px;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+      }
     }
   }
 
@@ -843,9 +911,25 @@ img {
     overflow: hidden;
     border-radius: 8px;
 
+    &:hover {
+      .new-article-text__title {
+        color: #2b53ec;
+      }
+      .new-article__image img {
+        transform: scale(1.05);
+      }
+    }
+
     &__image {
       width: 100%;
       height: 100%;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+      }
     }
 
     &:first-child {
@@ -938,6 +1022,7 @@ img {
 .fv-article-text__title {
     line-height: 1.5;
     margin-bottom: 10px;
+    transition: color 0.4s ease;
 }
 
 .new-article-text__title,
@@ -945,6 +1030,7 @@ img {
     line-height: 1.6;
     margin-top: 0;
     margin-bottom: 8px;
+    transition: color 0.4s ease;
 }
 
 /* TOP h2 Styles */
@@ -991,4 +1077,36 @@ img {
 
 .title-h2__text--sns::before {
     background-image: url("images/ico_connection.svg");
+}
+
+/* =========================================
+   トップページ最新の投稿（top-page-article）
+   ========================================= */
+.top-page-article {
+  /* 記事ラッパー全体にホバーした際に発火 */
+  &:hover {
+    .entry-title a {
+      color: #2b53ec;
+    }
+    .post-thumbnail img {
+      transform: scale(1.05);
+    }
+  }
+
+  /* サムネイル画像のはみ出し防止とアニメーション */
+  .post-thumbnail {
+    overflow: hidden;
+    
+    img {
+      transition: transform 0.4s ease;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  /* タイトルテキストのアニメーション */
+  .entry-title a {
+    transition: color 0.4s ease;
+  }
 }
