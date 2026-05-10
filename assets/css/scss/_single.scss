@@ -1,4 +1,20 @@
 /* 共通部分 */
+body.single #masthead,
+body.single .site-header,
+body.single .header,
+body.single .navbar {
+    background-color: #000 !important;
+    background-image: none !important;
+}
+
+/* 隙間の白い部分をグレーで塗りつぶす */
+body.single,
+body.single #page,
+body.single .site-content-contain,
+body.single .site-content {
+    background-color: #e6e6e6 !important;
+}
+
 .article-title {
     color: #000;
     font-size: 36px;

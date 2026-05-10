@@ -226,3 +226,14 @@ function inspiro_child_custom_archive_title($title) {
     return $title;
 }
 add_filter('get_the_archive_title', 'inspiro_child_custom_archive_title', 999);
+
+/**
+ * 記事ページでヘッダーが透過する問題（has-header-imageクラスの付与）を解除する
+ */
+function inspiro_child_remove_header_image_class($classes) {
+    if (is_single()) {
+        $classes = array_diff($classes, array('has-header-image'));
+    }
+    return $classes;
+}
+add_filter('body_class', 'inspiro_child_remove_header_image_class', 999);
