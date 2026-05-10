@@ -237,3 +237,20 @@ function inspiro_child_remove_header_image_class($classes) {
     return $classes;
 }
 add_filter('body_class', 'inspiro_child_remove_header_image_class', 999);
+
+/**
+ * Checklist Shortcodes
+ */
+function inspiro_child_checklist_shortcode($atts, $content = null) {
+    // do_shortcodeで[check]を展開
+    $content = do_shortcode($content);
+    // wpautopによって追加される可能性のある不要な<p>や<br>を削除
+    $content = str_replace(array('<p>', '</p>', '<br />', '<br>'), '', $content);
+    return '<ul class="checklist">' . trim($content) . '</ul>';
+}
+add_shortcode('checklist', 'inspiro_child_checklist_shortcode');
+
+function inspiro_child_check_shortcode($atts, $content = null) {
+    return '<li>' . do_shortcode(trim($content)) . '</li>';
+}
+add_shortcode('check', 'inspiro_child_check_shortcode');
