@@ -85,7 +85,7 @@
 				<h3 class="footer-heading">Information</h3>
 				<nav>
 					<ul>
-						<li><a href="https://bento.me/hk1203" target="_blank">About</a></li>
+						<li><a href="/about/">About</a></li>
 						<li><a href="/privacy">Privacy Policy</a></li>
 						<li><a href="/contact">Contact</a></li>
 					</ul>

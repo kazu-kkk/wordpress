@@ -21,7 +21,7 @@ get_header(); ?>
 							</div>
 							<div class="profile-text">
 								<h1>Yuny</h1>
-								<p>UI/UX/グラフィックデザイナー<br>モーションや写真、映像や3Dも時々触ります</p>
+								<p>UI/UX Designer</p>
 							</div>
 						</div>
 					</div>
@@ -77,6 +77,16 @@ get_header(); ?>
                     <!-- Bento Sunset Notice (Optional, or skip since it's about Bento platform itself) -->
                     <!-- Skipping for personal site -->
 
+				</div>
+				
+				<!-- 管理画面から入力したプロフィール文章を出力 -->
+				<div class="about-content post-content" style="margin-top: 40px;">
+					<?php
+					while ( have_posts() ) :
+						the_post();
+						the_content();
+					endwhile;
+					?>
 				</div>
 			</div>
 
