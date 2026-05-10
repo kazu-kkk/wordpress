@@ -59,6 +59,7 @@ body.single .site-content {
 .article-sub-date {
   color: #000;
   margin: 0;
+  white-space: nowrap;
 }
 
 .article-fv {
@@ -185,7 +186,7 @@ body.single .site-content {
     margin-right: auto;
   }
   .article-sub {
-    align-items: center;
+    align-items: flex-start;
   }
   .article-fv {
     height: 400px;
