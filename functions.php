@@ -65,25 +65,49 @@ function show_Linkcard($atts)
         'excerpt' => ''
     ), $atts);
 
-    // Fetch OpenGraph data
-    require_once get_stylesheet_directory() . '/OpenGraph.php'; // Adjust path as necessary
-    $graph = OpenGraph::fetch($atts['url']);
-
-    // Get title and description from OGP tags
-    $Link_title = $graph->title ?? $atts['title'];
-    $src = $graph->image ?? '';
-    $Link_description = wp_trim_words($graph->description ?? '', 60, '…');
-    if (!empty($atts['excerpt'])) {
-        $Link_description = $atts['excerpt']; // Use excerpt if OGP description is not available
+    if (empty($atts['url'])) {
+        return '';
     }
 
-    $xLink_img = '<img src="' . esc_url($src) . '" />';
+    // トランジェントキーを生成（URL単位でキャッシュ）
+    $cache_key = 'ogp_' . md5($atts['url']);
+    $ogp_data  = get_transient($cache_key);
+
+    if ($ogp_data === false) {
+        // Fetch OpenGraph data
+        require_once get_stylesheet_directory() . '/OpenGraph.php';
+        $graph = OpenGraph::fetch($atts['url']);
+
+        $ogp_data = array(
+            'title'       => $graph->title ?? '',
+            'image'       => $graph->image ?? '',
+            'description' => $graph->description ?? '',
+        );
+
+        // 24時間キャッシュ（画像が取れなかった場合は1時間後に再試行）
+        $ttl = !empty($ogp_data['image']) ? DAY_IN_SECONDS : HOUR_IN_SECONDS;
+        set_transient($cache_key, $ogp_data, $ttl);
+    }
+
+    // タイトル・説明文
+    $Link_title       = !empty($ogp_data['title']) ? $ogp_data['title'] : $atts['title'];
+    $src              = $ogp_data['image'] ?? '';
+    $Link_description = wp_trim_words($ogp_data['description'] ?? '', 60, '…');
+    if (!empty($atts['excerpt'])) {
+        $Link_description = $atts['excerpt'];
+    }
+
+    // 画像が取得できた場合のみサムネイルを表示
+    $xLink_img = '';
+    if (!empty($src)) {
+        $xLink_img = '<div class="blogcard_thumbnail"><img src="' . esc_url($src) . '" alt="' . esc_attr($Link_title) . '" loading="lazy" /></div>';
+    }
 
     // HTML output
     return '
     <div class="blogcard ex">
-        <a href="' . esc_url($atts['url']) . '" target="_blank">
-            <div class="blogcard_thumbnail">' . $xLink_img . '</div>
+        <a href="' . esc_url($atts['url']) . '" target="_blank" rel="noopener noreferrer">
+            ' . $xLink_img . '
             <div class="blogcard_content">
                 <div class="blogcard_title">' . esc_html($Link_title) . '</div>
                 <div class="blogcard_excerpt">' . esc_html($Link_description) . '</div>
