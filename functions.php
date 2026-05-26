@@ -62,7 +62,8 @@ function show_Linkcard($atts)
     $atts = shortcode_atts(array(
         'url' => '',
         'title' => '',
-        'excerpt' => ''
+        'excerpt' => '',
+        'image' => ''
     ), $atts);
 
     if (empty($atts['url'])) {
@@ -89,19 +90,18 @@ function show_Linkcard($atts)
         set_transient($cache_key, $ogp_data, $ttl);
     }
 
-    // タイトル・説明文
-    $Link_title       = !empty($ogp_data['title']) ? $ogp_data['title'] : $atts['title'];
-    $src              = $ogp_data['image'] ?? '';
-    $Link_description = wp_trim_words($ogp_data['description'] ?? '', 60, '…');
-    if (!empty($atts['excerpt'])) {
-        $Link_description = $atts['excerpt'];
+    // タイトル・説明文・画像（ショートコードの引数が指定されていれば優先）
+    $Link_title       = !empty($atts['title']) ? $atts['title'] : ($ogp_data['title'] ?? '');
+    $src              = !empty($atts['image']) ? $atts['image'] : ($ogp_data['image'] ?? '');
+    $Link_description = !empty($atts['excerpt']) ? $atts['excerpt'] : wp_trim_words($ogp_data['description'] ?? '', 60, '…');
+
+    // 画像が取得できない場合や指定がない場合はデフォルトのNO IMAGE画像を設定
+    if (empty($src)) {
+        $src = get_stylesheet_directory_uri() . '/assets/images/no_image.png';
     }
 
-    // 画像が取得できた場合のみサムネイルを表示
-    $xLink_img = '';
-    if (!empty($src)) {
-        $xLink_img = '<div class="blogcard_thumbnail"><img src="' . esc_url($src) . '" alt="' . esc_attr($Link_title) . '" loading="lazy" /></div>';
-    }
+    $no_image_url = get_stylesheet_directory_uri() . '/assets/images/no_image.png';
+    $xLink_img = '<div class="blogcard_thumbnail"><img src="' . esc_url($src) . '" alt="' . esc_attr($Link_title) . '" loading="lazy" onerror="this.onerror=null;this.src=\'' . esc_url($no_image_url) . '\';" /></div>';
 
     // HTML output
     return '
@@ -278,3 +278,159 @@ function inspiro_child_check_shortcode($atts, $content = null) {
     return '<li>' . do_shortcode(trim($content)) . '</li>';
 }
 add_shortcode('check', 'inspiro_child_check_shortcode');
+
+/**
+ * Helper to resolve pin.it shortlinks to full Pinterest URLs
+ */
+function inspiro_child_resolve_pinterest_url($url) {
+    if (strpos($url, 'pin.it') === false) {
+        return $url;
+    }
+    
+    $cache_key = 'resolved_pin_' . md5($url);
+    $resolved = get_transient($cache_key);
+    
+    if ($resolved) {
+        return $resolved;
+    }
+
+    $response = wp_remote_get($url, array('redirection' => 5, 'timeout' => 5));
+    if (!is_wp_error($response)) {
+        // wp_remote_get follows redirects and the final URL might be in the history or header.
+        // Actually, if it follows redirects, we can just grab the final URL from the response or wait,
+        // often Pinterest redirect ends with a 200 OK on the final page.
+        // But since wp_remote_* functions might not easily expose the final URL, we can do a simple cURL or get_headers fallback.
+        $headers = @get_headers($url, 1);
+        if ($headers && isset($headers['Location'])) {
+            $location = is_array($headers['Location']) ? end($headers['Location']) : $headers['Location'];
+            // location could be another redirect: https://api.pinterest.com/url_shortener/...
+            // we should probably just extract the pin ID if possible, but let's try to get headers again if it's api.pinterest
+            if (strpos($location, 'api.pinterest.com') !== false) {
+                $headers2 = @get_headers($location, 1);
+                if ($headers2 && isset($headers2['Location'])) {
+                    $location = is_array($headers2['Location']) ? end($headers2['Location']) : $headers2['Location'];
+                }
+            }
+            if (!empty($location)) {
+                // Ensure it's cleanly formatted (remove query strings like ?invite_code=...)
+                $location = preg_replace('/\?.*/', '', $location);
+                set_transient($cache_key, $location, MONTH_IN_SECONDS);
+                return $location;
+            }
+        }
+    }
+    return $url;
+}
+
+/**
+ * Pinterest Embed Shortcode (Official Widget)
+ * [pinterest_embed url="https://www.pinterest.jp/pin/xxxxxx/"]
+ */
+function inspiro_child_pinterest_embed_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'url' => '',
+        'size' => 'large', // small, medium, large
+    ), $atts);
+
+    if (empty($atts['url'])) {
+        return '';
+    }
+
+    $final_url = inspiro_child_resolve_pinterest_url($atts['url']);
+
+    return '<div class="pinterest-embed"><a data-pin-do="embedPin" data-pin-width="' . esc_attr($atts['size']) . '" href="' . esc_url($final_url) . '"></a><script async defer src="https://assets.pinterest.com/js/pinit.js"></script></div>';
+}
+add_shortcode('pinterest_embed', 'inspiro_child_pinterest_embed_shortcode');
+
+/**
+ * Pinterest Image Fetch Shortcode (OGP Scraping)
+ * [pinterest_image url="https://www.pinterest.jp/pin/xxxxxx/"]
+ */
+function inspiro_child_pinterest_image_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'url'    => '',
+        'width'  => 'auto',
+        'height' => '300px',
+        'alt'    => 'Pinterest Image', // デフォルトのaltテキスト
+    ), $atts);
+
+    if (empty($atts['url'])) {
+        return '';
+    }
+
+    $final_url = inspiro_child_resolve_pinterest_url($atts['url']);
+
+    $cache_key = 'pinterest_ogp_' . md5($final_url);
+    $image_url = get_transient($cache_key);
+
+    if ($image_url === false) {
+        if (!class_exists('OpenGraph')) {
+            require_once get_stylesheet_directory() . '/OpenGraph.php';
+        }
+        $graph = OpenGraph::fetch($final_url);
+        $image_url = $graph->image ?? '';
+
+        $ttl = !empty($image_url) ? DAY_IN_SECONDS : HOUR_IN_SECONDS;
+        set_transient($cache_key, $image_url, $ttl);
+    }
+
+    if (empty($image_url)) {
+        return '<p>Pinterest画像の取得に失敗しました。</p>';
+    }
+
+    $width_val = $atts['width'];
+    $height_val = $atts['height'];
+    
+    // pxなどの単位がない場合はpxを補完（autoなどの文字列はそのまま）
+    $width_css = is_numeric($width_val) ? $width_val . 'px' : $width_val;
+    $height_css = is_numeric($height_val) ? $height_val . 'px' : $height_val;
+
+    // imgタグ用の属性値（autoなどの場合は出力しない）
+    $img_width_attr = is_numeric($width_val) ? ' width="' . esc_attr($width_val) . '"' : '';
+    $img_height_attr = is_numeric($height_val) ? ' height="' . esc_attr($height_val) . '"' : '';
+
+    // 画像自体にサイズを指定し、親要素で中央寄せする構成に変更（余白ができなくなる）
+    $unique_id = 'pin_' . md5($final_url . $width_css . $height_css . uniqid());
+    
+    $custom_css = "<style>
+        .{$unique_id} {
+            margin: 2rem auto;
+            text-align: center;
+        }
+        .{$unique_id} a.pin-link {
+            display: inline-block;
+            max-width: 100%;
+        }
+        .{$unique_id} img {
+            width: {$width_css} !important;
+            height: {$height_css} !important;
+            max-width: 100% !important;
+            object-fit: contain !important;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .{$unique_id} .pin-source {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #666;
+        }
+        .{$unique_id} .pin-source a {
+            color: #666;
+            text-decoration: underline;
+        }
+        .{$unique_id} .pin-source a:hover {
+            color: #2b53ec;
+        }
+    </style>";
+
+    // alt属性の値を取得
+    $alt_text = isset($atts['alt']) ? $atts['alt'] : 'Pinterest Image';
+
+    return $custom_css . '<div class="' . esc_attr($unique_id) . ' pinterest-image-wrapper">
+        <a href="' . esc_url($final_url) . '" target="_blank" rel="noopener noreferrer" class="pin-link">
+            <img src="' . esc_url($image_url) . '" alt="' . esc_attr($alt_text) . '" class="pinterest-image" loading="lazy" ' . $img_width_attr . $img_height_attr . ' />
+        </a>
+        <div class="pin-source">出典：<a href="' . esc_url($final_url) . '" target="_blank" rel="noopener noreferrer">Pinterest</a></div>
+    </div>';
+}
+add_shortcode('pinterest_image', 'inspiro_child_pinterest_image_shortcode');

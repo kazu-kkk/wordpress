@@ -295,6 +295,112 @@ body.single .site-content {
     margin-bottom: 12px;
   }
 }
+.related-posts {
+  margin: 64px auto 48px;
+  max-width: 720px;
+}
+.related-posts__title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 24px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #E8E8E8;
+  position: relative;
+}
+.related-posts__title::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 30%;
+  border-bottom: 3px solid #2B53EC;
+}
+.related-posts__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.related-posts__card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.related-posts__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+}
+.related-posts__thumb {
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: #e0e0e0;
+}
+.related-posts__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.related-posts__thumb:hover img {
+  transform: scale(1.04);
+}
+.related-posts__thumb-fallback {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #dde4f7 0%, #c5d0f0 100%);
+}
+.related-posts__body {
+  padding: 12px 14px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.related-posts__date {
+  font-size: 12px;
+  color: #888;
+  margin: 0;
+}
+.related-posts__name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #111;
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 767px) {
+  .related-posts {
+    margin: 48px 20px 32px;
+  }
+  .related-posts__title {
+    font-size: 18px;
+  }
+  .related-posts__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .related-posts__name {
+    font-size: 13px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .related-posts__grid {
+    grid-template-columns: 1fr;
+  }
+}
 /* ==============================================
    Rich Footer Styles
    ============================================== */
@@ -494,6 +600,7 @@ body.single .site-content {
 }
 @media screen and (width >= 767px) {
   .blogcard {
+    display: flex;
     width: 100%;
     min-height: 140px;
     background: #ffffff;
@@ -504,6 +611,7 @@ body.single .site-content {
     overflow: hidden;
   }
   .blogcard a {
+    flex: 1;
     text-decoration: none;
     color: inherit;
     display: flex;
@@ -512,6 +620,7 @@ body.single .site-content {
   .blogcard_thumbnail {
     flex: 0 0 180px;
     width: 180px;
+    min-height: 120px;
     position: relative;
     overflow: hidden;
     border-right: 1px solid #eee;
@@ -539,6 +648,8 @@ body.single .site-content {
     flex-direction: column;
     justify-content: center;
     min-width: 0; /* Flexbox text overflow fix */
+    overflow: hidden;
+    width: 0; /* force flex child to shrink */
   }
   .blogcard_title {
     font-size: 1.1rem;
@@ -546,12 +657,18 @@ body.single .site-content {
     color: #333;
     margin-bottom: 10px;
     line-height: 1.4;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   .blogcard_excerpt {
     font-size: 0.9rem;
     color: #666;
     margin-bottom: 12px;
     line-height: 1.6;
+    word-break: break-all;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -559,7 +676,7 @@ body.single .site-content {
   }
   .blogcard_link {
     font-size: 0.8rem;
-    color: #007BFF;
+    color: #999;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -571,6 +688,7 @@ body.single .site-content {
 }
 @media screen and (width <= 767px) {
   .blogcard {
+    display: flex;
     width: 100%;
     max-width: 100%;
     min-height: 110px;
@@ -582,6 +700,7 @@ body.single .site-content {
     overflow: hidden;
   }
   .blogcard a {
+    flex: 1;
     text-decoration: none;
     color: inherit;
     display: flex;
@@ -590,6 +709,7 @@ body.single .site-content {
   .blogcard_thumbnail {
     flex: 0 0 110px;
     width: 110px;
+    min-height: 90px;
     position: relative;
     overflow: hidden;
     border-right: 1px solid #f0f0f0;
@@ -613,6 +733,8 @@ body.single .site-content {
     flex-direction: column;
     justify-content: center;
     min-width: 0;
+    overflow: hidden;
+    width: 0; /* force flex child to shrink */
   }
   .blogcard_title {
     font-size: 0.95rem;
@@ -637,7 +759,7 @@ body.single .site-content {
   }
   .blogcard_link {
     font-size: 0.7rem;
-    color: #007BFF;
+    color: #999;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -671,7 +793,7 @@ body.single .site-content {
   }
   .top-page-content-article .category-article .entry-title a {
     font-size: 20px;
-    line-height: 30px;
+    line-height: 1.3;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
@@ -682,7 +804,7 @@ body.single .site-content {
   }
   .top-page-article .entry-title a {
     font-size: 20px;
-    line-height: 20px;
+    line-height: 1.3;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
@@ -706,8 +828,8 @@ body.single .site-content {
     margin-bottom: 48px;
   }
   .top-page-article .entry-title a {
-    font-size: 20px;
-    line-height: 20px;
+    font-size: 18px;
+    line-height: 1.3;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
@@ -2139,6 +2261,36 @@ body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-response-output 
   text-align: center;
 }
 
+/* ==========================================================================
+   Pinterest Shortcode Styles
+   ========================================================================== */
+/* 1. 公式埋め込みウィジェット用 */
+.pinterest-embed {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+/* 2. OGP画像取得用 */
+.pinterest-image-wrapper {
+  margin: 2rem 0;
+  text-align: center;
+}
+.pinterest-image-wrapper a {
+  display: inline-block;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.pinterest-image-wrapper a:hover {
+  transform: scale(1.02);
+  opacity: 0.9;
+}
+.pinterest-image-wrapper .pinterest-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -3052,4 +3204,6 @@ img {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
-}/*# sourceMappingURL=style_add.css.map */
+}
+
+/*# sourceMappingURL=style_add.css.map */
