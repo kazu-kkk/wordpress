@@ -13,7 +13,7 @@ body.single,
 body.single #page,
 body.single .site-content-contain,
 body.single .site-content {
-  background-color: #e6e6e6 !important;
+  background-color: #F5F7FF !important;
 }
 
 .article-title {
@@ -123,10 +123,13 @@ body.single .site-content {
   border-spacing: 2px; /* セル間の隙間を線として表現 */
   width: 100%;
   min-width: 600px; /* 横スクロール対応のため最小幅を指定 */
+  background-color: #e2e8f0; /* セル間の境界線となるグレー */
+  border-radius: 6px;
+  overflow: hidden;
 }
 .article-text .wp-block-table table thead tr th {
-  background-color: #EFF4FF; /* 薄い青グレー（サイトトーンに合わせる） */
-  color: #2B53EC; /* アクセントカラー */
+  background-color: #2B53EC; /* ブランドの青でヘッダーをくっきり際立たせる */
+  color: #ffffff; /* 文字色は白 */
   font-weight: bold;
   border: none;
   padding: 16px;
@@ -137,7 +140,7 @@ body.single .site-content {
   border-radius: 4px; /* 角丸で柔らかい印象に */
 }
 .article-text .wp-block-table table tbody tr td {
-  background-color: #F9F9F9; /* 淡いグレー背景 */
+  background-color: #ffffff; /* セル背景を純白にして、#f7f7f7背景からくっきり浮かび上がらせる */
   color: #333;
   border: none;
   padding: 16px;
@@ -149,7 +152,7 @@ body.single .site-content {
   /* 縦方向のヘッダー用クラス */
 }
 .article-text .wp-block-table.is-vertical-header table tbody tr td:first-child {
-  background-color: #EFF4FF;
+  background-color: #EFF4FF; /* 縦ヘッダーは上品な薄い青に */
   color: #2B53EC;
   font-weight: bold;
   border: none;
@@ -210,7 +213,7 @@ body.single .site-content {
 /* SP向けスタイル */
 @media screen and (max-width: 767px) {
   body.single .site-content-contain {
-    background-color: #fff;
+    background-color: #F5F7FF;
   }
   body.single .site-main {
     padding-left: 0;
@@ -219,7 +222,7 @@ body.single .site-content {
   body.single .content-wrapper {
     width: 100%;
     margin: 0;
-    padding: 80px 0 48px;
+    padding: 30px 0 48px;
     background-color: transparent;
     box-shadow: none;
     border: none;
@@ -2159,12 +2162,13 @@ body.page-template-contact-page .entry-content {
   width: 100% !important;
 }
 
-body.page-template-contact-page .entry-content div.wpcf7 {
-  /* 【特例措置】親要素の不可解なズレを強制リセットし、Flexboxで確実に中央揃えする */
+body.page-template-contact-page .entry-content div.wpcf7,
+.entry-content div.wpcf7 {
+  /* 【特例措置】親要素の不可解なズレを強制リセットし、確実に中央揃えする */
   display: block !important;
   width: 100% !important;
   max-width: 640px !important;
-  margin: 0 !important; /* 親のalign-items: centerで中央寄せにするためマージンは0 */
+  margin: 0 auto !important; /* 親のalign-items: center、またはmargin: 0 autoで中央寄せにするため修正 */
   position: static !important;
   transform: none !important;
   left: auto !important;
@@ -2174,29 +2178,37 @@ body.page-template-contact-page .entry-content div.wpcf7 {
   box-sizing: border-box !important;
   /* Contact Form 7は自動で <p> タグを出力するため、p タグで余白を管理 */
 }
-body.page-template-contact-page .entry-content div.wpcf7 p {
+body.page-template-contact-page .entry-content div.wpcf7 p,
+.entry-content div.wpcf7 p {
   margin-bottom: 24px;
   text-align: left;
 }
-body.page-template-contact-page .entry-content div.wpcf7 label {
+body.page-template-contact-page .entry-content div.wpcf7 label,
+.entry-content div.wpcf7 label {
   display: block;
   font-weight: bold;
   color: #333;
   font-size: 16px;
 }
-body.page-template-contact-page .entry-content div.wpcf7 {
+body.page-template-contact-page .entry-content div.wpcf7,
+.entry-content div.wpcf7 {
   /* label内の <br> は非表示にして、CSSで余白を作る（柔軟なレイアウトのため） */
 }
-body.page-template-contact-page .entry-content div.wpcf7 label br {
+body.page-template-contact-page .entry-content div.wpcf7 label br,
+.entry-content div.wpcf7 label br {
   display: none;
 }
-body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-form-control-wrap {
+body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-form-control-wrap,
+.entry-content div.wpcf7 .wpcf7-form-control-wrap {
   display: block;
   margin-top: 8px;
 }
 body.page-template-contact-page .entry-content div.wpcf7 input[type=text],
 body.page-template-contact-page .entry-content div.wpcf7 input[type=email],
-body.page-template-contact-page .entry-content div.wpcf7 textarea {
+body.page-template-contact-page .entry-content div.wpcf7 textarea,
+.entry-content div.wpcf7 input[type=text],
+.entry-content div.wpcf7 input[type=email],
+.entry-content div.wpcf7 textarea {
   width: 100%;
   padding: 14px 16px;
   font-size: 16px;
@@ -2210,16 +2222,21 @@ body.page-template-contact-page .entry-content div.wpcf7 textarea {
 }
 body.page-template-contact-page .entry-content div.wpcf7 input[type=text]:focus,
 body.page-template-contact-page .entry-content div.wpcf7 input[type=email]:focus,
-body.page-template-contact-page .entry-content div.wpcf7 textarea:focus {
+body.page-template-contact-page .entry-content div.wpcf7 textarea:focus,
+.entry-content div.wpcf7 input[type=text]:focus,
+.entry-content div.wpcf7 input[type=email]:focus,
+.entry-content div.wpcf7 textarea:focus {
   outline: none;
   border-color: #2b53ec;
   box-shadow: 0 0 0 2px rgba(43, 83, 236, 0.2);
 }
-body.page-template-contact-page .entry-content div.wpcf7 textarea {
+body.page-template-contact-page .entry-content div.wpcf7 textarea,
+.entry-content div.wpcf7 textarea {
   min-height: 180px;
   resize: vertical;
 }
-body.page-template-contact-page .entry-content div.wpcf7 input[type=submit] {
+body.page-template-contact-page .entry-content div.wpcf7 input[type=submit],
+.entry-content div.wpcf7 input[type=submit] {
   display: block;
   width: 228px;
   padding: 12px 10px;
@@ -2234,26 +2251,31 @@ body.page-template-contact-page .entry-content div.wpcf7 input[type=submit] {
   cursor: pointer;
   transition: all 0.5s ease;
 }
-body.page-template-contact-page .entry-content div.wpcf7 input[type=submit]:hover {
+body.page-template-contact-page .entry-content div.wpcf7 input[type=submit]:hover,
+.entry-content div.wpcf7 input[type=submit]:hover {
   color: #2b53ec;
   background-color: #fff;
 }
 @media screen and (max-width: 767px) {
-  body.page-template-contact-page .entry-content div.wpcf7 input[type=submit] {
+  body.page-template-contact-page .entry-content div.wpcf7 input[type=submit],
+  .entry-content div.wpcf7 input[type=submit] {
     width: 180px;
     font-size: 14px;
   }
 }
-body.page-template-contact-page .entry-content div.wpcf7 {
+body.page-template-contact-page .entry-content div.wpcf7,
+.entry-content div.wpcf7 {
   /* エラーメッセージなどの調整 */
 }
-body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-not-valid-tip {
+body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-not-valid-tip,
+.entry-content div.wpcf7 .wpcf7-not-valid-tip {
   font-size: 14px;
   color: #dc2743;
   margin-top: 4px;
   display: block;
 }
-body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-response-output {
+body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-response-output,
+.entry-content div.wpcf7 .wpcf7-response-output {
   border-radius: 8px;
   margin-top: 24px;
   padding: 16px;
@@ -2561,15 +2583,15 @@ img {
   }
   .content-wrapper {
     width: 100%;
-    padding: 90px 100px;
-    background-color: #e6e6e6;
+    padding: 0 100px 90px;
+    background-color: #F5F7FF;
   }
   .fv {
     width: 100%;
     height: auto;
     padding: 90px 0 30px;
     margin-top: -90px;
-    background: linear-gradient(#2b53ec 75%, #e6e6e6 75%);
+    background: linear-gradient(#2b53ec 75%, #F5F7FF 75%);
   }
   .fv-article {
     width: 1100px;
@@ -2793,11 +2815,11 @@ img {
   .content {
     max-width: 1100px;
     height: auto;
-    padding: 130px 190px;
-    margin: 110px auto 0;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 0 8px gray;
+    padding: 0 190px 60px;
+    margin: 50px auto 0;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
   }
   .content-category {
     padding: 0;
@@ -2881,7 +2903,7 @@ img {
   .content-wrapper {
     width: 100%;
     margin: 0;
-    padding: 80px 0 48px;
+    padding: 30px 0 48px;
     background-color: transparent;
     box-shadow: none;
     border: none;
@@ -3204,6 +3226,35 @@ img {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
+}
+
+/* =========================================
+   ページネーションの緑色をブランドカラーの青に上書き
+   ========================================= */
+body .navigation.pagination .nav-links .page-numbers,
+body .pagination .nav-links .page-numbers {
+  /* 通常時のボーダーとテキスト */
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #333;
+  transition: all 0.3s ease;
+  /* ホバー時の挙動 */
+}
+body .navigation.pagination .nav-links .page-numbers:hover,
+body .pagination .nav-links .page-numbers:hover {
+  background-color: #EFF4FF;
+  color: #2B53EC;
+  border-color: #2B53EC;
+}
+body .navigation.pagination .nav-links .page-numbers,
+body .pagination .nav-links .page-numbers {
+  /* 活性（現在地）のデザイン */
+}
+body .navigation.pagination .nav-links .page-numbers.current,
+body .pagination .nav-links .page-numbers.current {
+  background-color: #2B53EC;
+  color: #ffffff;
+  border-color: #2B53EC;
 }
 
 /*# sourceMappingURL=style_add.css.map */

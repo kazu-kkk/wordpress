@@ -12,7 +12,7 @@ body.single,
 body.single #page,
 body.single .site-content-contain,
 body.single .site-content {
-    background-color: #e6e6e6 !important;
+    background-color: #F5F7FF !important;
 }
 
 .article-title {
@@ -133,12 +133,15 @@ body.single .site-content {
         border-spacing: 2px; /* セル間の隙間を線として表現 */
         width: 100%;
         min-width: 600px; /* 横スクロール対応のため最小幅を指定 */
+        background-color: #e2e8f0; /* セル間の境界線となるグレー */
+        border-radius: 6px;
+        overflow: hidden;
 
         thead {
           tr {
             th {
-              background-color: #EFF4FF; /* 薄い青グレー（サイトトーンに合わせる） */
-              color: #2B53EC; /* アクセントカラー */
+              background-color: #2B53EC; /* ブランドの青でヘッダーをくっきり際立たせる */
+              color: #ffffff; /* 文字色は白 */
               font-weight: bold;
               border: none;
               padding: 16px;
@@ -154,7 +157,7 @@ body.single .site-content {
         tbody {
           tr {
             td {
-              background-color: #F9F9F9; /* 淡いグレー背景 */
+              background-color: #ffffff; /* セル背景を純白にして、#f7f7f7背景からくっきり浮かび上がらせる */
               color: #333;
               border: none;
               padding: 16px;
@@ -169,7 +172,7 @@ body.single .site-content {
     /* 縦方向のヘッダー用クラス */
     &.is-vertical-header {
       table tbody tr td:first-child {
-        background-color: #EFF4FF;
+        background-color: #EFF4FF; /* 縦ヘッダーは上品な薄い青に */
         color: #2B53EC;
         font-weight: bold;
         border: none;
@@ -239,9 +242,9 @@ body.single .site-content {
   
   /* SP向けスタイル */
   @media screen and (max-width: 767px) {
-    // ページ全体の背景を白にする（グレー背景を無効化）
+    // ページ全体の背景をグレーにする（PC版と統一）
     body.single .site-content-contain {
-       background-color: #fff;
+       background-color: #F5F7FF;
     }
 
     // 左右の余白を削除（Bootstrapなどのpaddingを打ち消し）
@@ -253,7 +256,7 @@ body.single .site-content {
     body.single .content-wrapper {
       width: 100%;
       margin: 0;
-      padding: 80px 0 48px;
+      padding: 30px 0 48px;
       background-color: transparent;
       box-shadow: none;
       border: none;

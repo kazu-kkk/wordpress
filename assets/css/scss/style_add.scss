@@ -346,8 +346,8 @@ img {
   
   .content-wrapper {
     width: 100%;
-    padding: 90px 100px;
-    background-color: #e6e6e6;
+    padding: 0 100px 90px;
+    background-color: #F5F7FF;
   }
 
   .fv {
@@ -355,7 +355,7 @@ img {
     height: auto;
     padding: 90px 0 30px;
     margin-top: -90px;
-    background: linear-gradient(#2b53ec 75%, #e6e6e6 75%);
+    background: linear-gradient(#2b53ec 75%, #F5F7FF 75%);
   }
 
   .fv-article {
@@ -635,11 +635,11 @@ img {
   .content {
     max-width: 1100px;
     height: auto;
-    padding: 130px 190px;
-    margin: 110px auto 0;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 0 8px gray;
+    padding: 0 190px 60px;
+    margin: 50px auto 0;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
 
     &-category {
       padding: 0;
@@ -746,7 +746,7 @@ img {
   .content-wrapper {
     width: 100%;
     margin: 0;
-    padding: 80px 0 48px;
+    padding: 30px 0 48px;
     background-color: transparent;
     box-shadow: none;
     border: none;
@@ -1121,5 +1121,37 @@ img {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     overflow: hidden;
+  }
+}
+
+/* =========================================
+   ページネーションの緑色をブランドカラーの青に上書き
+   ========================================= */
+body {
+  .navigation.pagination,
+  .pagination {
+    .nav-links {
+      .page-numbers {
+        /* 通常時のボーダーとテキスト */
+        border: 1px solid #e2e8f0;
+        background-color: #ffffff;
+        color: #333;
+        transition: all 0.3s ease;
+
+        /* ホバー時の挙動 */
+        &:hover {
+          background-color: #EFF4FF;
+          color: #2B53EC;
+          border-color: #2B53EC;
+        }
+
+        /* 活性（現在地）のデザイン */
+        &.current {
+          background-color: #2B53EC;
+          color: #ffffff;
+          border-color: #2B53EC;
+        }
+      }
+    }
   }
 }

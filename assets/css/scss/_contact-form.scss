@@ -6,12 +6,13 @@ body.page-template-contact-page .entry-content {
     width: 100% !important;
 }
 
-body.page-template-contact-page .entry-content div.wpcf7 {
-    /* 【特例措置】親要素の不可解なズレを強制リセットし、Flexboxで確実に中央揃えする */
+body.page-template-contact-page .entry-content div.wpcf7,
+.entry-content div.wpcf7 {
+    /* 【特例措置】親要素の不可解なズレを強制リセットし、確実に中央揃えする */
     display: block !important;
     width: 100% !important;
     max-width: 640px !important;
-    margin: 0 !important; /* 親のalign-items: centerで中央寄せにするためマージンは0 */
+    margin: 0 auto !important; /* 親のalign-items: center、またはmargin: 0 autoで中央寄せにするため修正 */
     position: static !important;
     transform: none !important;
     left: auto !important;
