@@ -178,6 +178,17 @@ function inspiro_child_enqueue_scripts() {
         'root' => esc_url_raw(rest_url()),
         'nonce' => wp_create_nonce('wp_rest')
     ));
+
+    // 記事ページ（single）でのみ目次JSを読み込む
+    if (is_single()) {
+        wp_enqueue_script(
+            'inspiro-toc',
+            get_stylesheet_directory_uri() . '/assets/js/toc.js',
+            array(),
+            filemtime(get_stylesheet_directory() . '/assets/js/toc.js'),
+            true
+        );
+    }
 }
 add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_scripts');
 
@@ -434,3 +445,71 @@ function inspiro_child_pinterest_image_shortcode($atts) {
     </div>';
 }
 add_shortcode('pinterest_image', 'inspiro_child_pinterest_image_shortcode');
+
+/**
+ * 記事本文に目次（TOC）を自動挿入する
+ * - h2 / h3 を抽出し、IDを付与してアンカーリンクを生成
+ * - 見出しが2つ以上ある場合のみ表示
+ * - デフォルトは閉じた状態（JS側で開閉を制御）
+ */
+function inspiro_child_auto_toc($content) {
+    if (!is_single()) {
+        return $content;
+    }
+
+    // h2 / h3 を抽出
+    preg_match_all('/<h([23])[^>]*>(.*?)<\/h[23]>/is', $content, $matches, PREG_SET_ORDER);
+
+    if (count($matches) < 2) {
+        return $content;
+    }
+
+    $toc_items = '';
+    $used_ids  = [];
+    $new_content = $content;
+
+    foreach ($matches as $match) {
+        $level = $match[1];                          // '2' or '3'
+        $text  = wp_strip_all_tags($match[2]);       // プレーンテキスト
+
+        // IDを生成（日本語OK、重複時は連番を付与）
+        $raw_id  = sanitize_title($text);
+        if (empty($raw_id)) {
+            $raw_id = 'section';
+        }
+        $id = $raw_id;
+        $i  = 1;
+        while (in_array($id, $used_ids, true)) {
+            $id = $raw_id . '-' . $i;
+            $i++;
+        }
+        $used_ids[] = $id;
+
+        // 元の見出しタグにIDを付与（最初の出現箇所のみ置換）
+        $original_tag = $match[0];
+        $with_id      = preg_replace('/<h' . $level . '([^>]*)>/', '<h' . $level . '$1 id="' . esc_attr($id) . '">', $original_tag, 1);
+        $new_content  = preg_replace('/' . preg_quote($original_tag, '/') . '/', $with_id, $new_content, 1);
+
+        $item_class  = 'toc__item--h' . $level;
+        $toc_items  .= '<li class="toc__item ' . $item_class . '">';
+        $toc_items  .= '<a class="toc__link" href="#' . esc_attr($id) . '">' . esc_html($text) . '</a>';
+        $toc_items  .= '</li>';
+    }
+
+    $toc_html = '
+<div class="toc">
+    <div class="toc__header">
+        <p class="toc__title">目次</p>
+        <span class="toc__toggle">開く</span>
+    </div>
+    <div class="toc__body">
+        <ul class="toc__list">' . $toc_items . '</ul>
+    </div>
+</div>';
+
+    // 最初の h2 の直前に目次を挿入
+    $new_content = preg_replace('/<h2/', $toc_html . '<h2', $new_content, 1);
+
+    return $new_content;
+}
+add_filter('the_content', 'inspiro_child_auto_toc', 20);

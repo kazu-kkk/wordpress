@@ -16,6 +16,7 @@
 @use "./target-audience.scss";
 @use "./contact-form.scss";
 @use "./pinterest.scss";
+@use "./toc.scss";
 
 //リセットcss
 * {
@@ -29,9 +30,23 @@
   border-width: 0;
 }
 
+// スムーススクロール（固定ヘッダー + 管理バー分のオフセットを scroll-padding-top で吸収）
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 160px; // 90px (header) + 32px (admin bar) + 24px buffer = 146px ≒ 160px
+}
+
+@media screen and (max-width: 767px) {
+  html {
+    scroll-padding-top: 120px; // 50px (header) + 46px (admin bar SP) + 24px buffer = 120px
+  }
+}
+
+
 body {
   font-family: "Verdana", "Hiragino Sans", "Meiryo", sans-serif;
-  background-color: #1a1a1a; /* フッターの背景色と同じ黒系を指定し、下部バウンス時の白い見切れを防止 */
+  background-color: #1a1a1a;
+  /* フッターの背景色と同じ黒系を指定し、下部バウンス時の白い見切れを防止 */
 }
 
 img {
@@ -61,16 +76,20 @@ img {
 .button:hover {
   color: #2b53ec;
   background-color: #fff;
-  border: 2px solid #2b53ec; /* 枠線を明示的に指定 */
+  border: 2px solid #2b53ec;
+  /* 枠線を明示的に指定 */
 }
 
 
 
 
 .inner-wrap {
-  max-width: 1200px; /* 最大幅 */
-  margin: 0 auto; /* 水平方向の中央揃え */
-  font-family: 'Arial', sans-serif; /* シンプルなフォント */
+  max-width: 1200px;
+  /* 最大幅 */
+  margin: 0 auto;
+  /* 水平方向の中央揃え */
+  font-family: 'Arial', sans-serif;
+  /* シンプルなフォント */
 }
 
 /* ページタイトルの共通設定 */
@@ -83,14 +102,14 @@ img {
   height: auto;
   padding: 0;
   margin: 0 0 40px 0;
-  
+
   /* テキストスタイル */
   font-size: 28px;
   font-weight: bold;
   color: #333;
   letter-spacing: 0.05em;
   text-align: center;
-  
+
   /* 装飾リセット（グレーの下線を削除） */
   background-color: transparent;
   border: none;
@@ -102,15 +121,18 @@ img {
 #primary .page-title::after,
 #primary .type-page .entry-title::after {
   content: '';
-  display: block; /* ブロック要素にして自然な配置にする */
+  display: block;
+  /* ブロック要素にして自然な配置にする */
   width: 60px;
-  height: 4px; /* 視認性を高めるため少し太く */
+  height: 4px;
+  /* 視認性を高めるため少し太く */
   background-color: #2B53EC;
   border-radius: 2px;
-  
+
   /* 位置調整（絶対配置をやめてマージンで調整） */
   position: static;
-  margin: 10px auto 0; /* テキストとの間隔を狭める（10px） */
+  margin: 10px auto 0;
+  /* テキストとの間隔を狭める（10px） */
 }
 
 .site-content-contain {
@@ -137,50 +159,61 @@ img {
       margin-top: 0px;
     }
   }
-  
 
-/* Heroエリアのスタイル */
-.hero-background {
-  background-color: #2B53EC;  /* 青色の背景 */
-  text-align: center;
-  padding: 30px 0;  /* 上下の余白を縮小し、情報密度を向上 */
-  min-height: 30vh;  /* ビューポートの約30%に縮小（元は80vh） */
-  display: flex;
-  align-items: center;  /* 縦方向に中央揃え */
-  justify-content: center;  /* 横方向に中央揃え */
-  position: sticky;  /* positionをstickyに変更 */
-  top: 0;  /* 初期表示時にヘッダーの裏側に潜り込ませ、スクロール時もtop:0に固定する */
-  z-index: 1;  /* 低いz-indexを指定して背後に回す */
-  width: 100%;
 
-  /* 上部バウンス時の白い背景見切れ防止用 */
-  &::before {
-    content: '';
-    position: absolute;
-    top: -500px;
-    left: 0;
-    width: 100%;
-    height: 500px;
+  /* Heroエリアのスタイル */
+  .hero-background {
     background-color: #2B53EC;
-    z-index: -1;
+    /* 青色の背景 */
+    text-align: center;
+    padding: 30px 0;
+    /* 上下の余白を縮小し、情報密度を向上 */
+    min-height: 30vh;
+    /* ビューポートの約30%に縮小（元は80vh） */
+    display: flex;
+    align-items: center;
+    /* 縦方向に中央揃え */
+    justify-content: center;
+    /* 横方向に中央揃え */
+    position: sticky;
+    /* positionをstickyに変更 */
+    top: 0;
+    /* 初期表示時にヘッダーの裏側に潜り込ませ、スクロール時もtop:0に固定する */
+    z-index: 1;
+    /* 低いz-indexを指定して背後に回す */
+    width: 100%;
+
+    /* 上部バウンス時の白い背景見切れ防止用 */
+    &::before {
+      content: '';
+      position: absolute;
+      top: -500px;
+      left: 0;
+      width: 100%;
+      height: 500px;
+      background-color: #2B53EC;
+      z-index: -1;
+    }
   }
-}
 
-.hero-text {
-  font-size: 20px;
-  font-weight: bold;
-  color: #fff;
-}
+  .hero-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+  }
 
-/* ロゴ画像のスタイル */
-.hero-background img {
-  max-width: 600px;  /* ヒーローエリア縮小に合わせてロゴの最大幅も少し抑える */
-  width: 100%;
-  padding: 0 40px;
-  height: auto;  /* 高さは自動調整 */
-  max-height: 18vh; /* エリアからはみ出さないように制限を追加 */
-  object-fit: contain;
-}
+  /* ロゴ画像のスタイル */
+  .hero-background img {
+    max-width: 600px;
+    /* ヒーローエリア縮小に合わせてロゴの最大幅も少し抑える */
+    width: 100%;
+    padding: 0 40px;
+    height: auto;
+    /* 高さは自動調整 */
+    max-height: 18vh;
+    /* エリアからはみ出さないように制限を追加 */
+    object-fit: contain;
+  }
 
 
   .title-h2__text {
@@ -283,12 +316,16 @@ img {
   }
 
   .button {
-    width: 228px; /* PC向けの幅 */
-    margin-top: 50px; /* 上のマージンを調整 */
-    font-size: 16px; /* フォントサイズ */
+    width: 228px;
+    /* PC向けの幅 */
+    margin-top: 50px;
+    /* 上のマージンを調整 */
+    font-size: 16px;
+    /* フォントサイズ */
   }
 
-  span.tag, a.tag {
+  span.tag,
+  a.tag {
     display: inline-block;
     padding: 5px 8px;
     font-size: 13px;
@@ -364,7 +401,7 @@ img {
     transition: color 0.4s ease-out;
   }
 
-  
+
   .content-wrapper {
     width: 100%;
     padding: 0 100px 90px;
@@ -391,6 +428,7 @@ img {
       .fv-article-text__title {
         color: #2b53ec;
       }
+
       .fv-article-image img {
         transform: scale(1.05);
       }
@@ -475,6 +513,7 @@ img {
       .pickup-article-text__title {
         color: #2b53ec;
       }
+
       .pickup-article__image img {
         transform: scale(1.05);
       }
@@ -484,6 +523,7 @@ img {
       width: 100%;
       height: 207px;
       overflow: hidden;
+
       img {
         width: 100%;
         height: 100%;
@@ -551,6 +591,7 @@ img {
       .new-article-text__title {
         color: #2b53ec;
       }
+
       .new-article__image img {
         transform: scale(1.05);
       }
@@ -560,6 +601,7 @@ img {
       width: 200px;
       height: 100%;
       overflow: hidden;
+
       img {
         width: 100%;
         height: 100%;
@@ -675,7 +717,8 @@ img {
 @media screen and (width <=767px) {
 
   .inner-wrap {
-    padding:40px 16px 80px; /* 左右に余白を追加、下部はフッターから離すために80pxに拡大 */
+    padding: 40px 16px 80px;
+    /* 左右に余白を追加、下部はフッターから離すために80pxに拡大 */
   }
 
   // ヒーローエリア（FV）があるトップページでは、下のコンテンツが見切れないように上部の余白を詰める（SP）
@@ -685,72 +728,91 @@ img {
   }
 
 
-/* Heroエリアのスタイル */
-.hero-background {
-  background-color: #2B53EC;  /* 青色の背景 */
-  text-align: center;
-  padding: 30px 24px;  /* 上下の余白を縮小 */
-  min-height: 30vh;  /* ビューポートの約30%に縮小（元は80vh） */
-  display: flex;
-  align-items: center;  /* 縦方向に中央揃え */
-  justify-content: center;  /* 横方向に中央揃え */
-  position: sticky;  /* positionをstickyに変更 */
-  top: 0;  /* 初期表示時にヘッダーの裏側に潜り込ませ、スクロール時もtop:0に固定する */
-  z-index: 1;  /* 低いz-indexを指定して背後に回す */
-  width: 100%;
-
-  /* 上部バウンス時の白い背景見切れ防止用 */
-  &::before {
-    content: '';
-    position: absolute;
-    top: -500px;
-    left: 0;
-    width: 100%;
-    height: 500px;
+  /* Heroエリアのスタイル */
+  .hero-background {
     background-color: #2B53EC;
-    z-index: -1;
+    /* 青色の背景 */
+    text-align: center;
+    padding: 30px 24px;
+    /* 上下の余白を縮小 */
+    min-height: 30vh;
+    /* ビューポートの約30%に縮小（元は80vh） */
+    display: flex;
+    align-items: center;
+    /* 縦方向に中央揃え */
+    justify-content: center;
+    /* 横方向に中央揃え */
+    position: sticky;
+    /* positionをstickyに変更 */
+    top: 0;
+    /* 初期表示時にヘッダーの裏側に潜り込ませ、スクロール時もtop:0に固定する */
+    z-index: 1;
+    /* 低いz-indexを指定して背後に回す */
+    width: 100%;
+
+    /* 上部バウンス時の白い背景見切れ防止用 */
+    &::before {
+      content: '';
+      position: absolute;
+      top: -500px;
+      left: 0;
+      width: 100%;
+      height: 500px;
+      background-color: #2B53EC;
+      z-index: -1;
+    }
   }
-}
 
-/* ページタイトル（SP） */
-#primary .page-title,
-#primary .type-page .entry-title {
-  font-size: 20px; /* PCの28pxから縮小 */
-  margin-bottom: 24px; /* マージン調整 */
-}
+  /* ページタイトル（SP） */
+  #primary .page-title,
+  #primary .type-page .entry-title {
+    font-size: 20px;
+    /* PCの28pxから縮小 */
+    margin-bottom: 24px;
+    /* マージン調整 */
+  }
 
-/* アクセントライン（SP） */
-#primary .page-title::after,
-#primary .type-page .entry-title::after {
-  width: 40px; /* 線も少し短く */
-  height: 3px;
-  margin-top: 8px;
-}
+  /* アクセントライン（SP） */
+  #primary .page-title::after,
+  #primary .type-page .entry-title::after {
+    width: 40px;
+    /* 線も少し短く */
+    height: 3px;
+    margin-top: 8px;
+  }
 
-.hero-text {
-  font-size: 15px;
-  font-weight: bold;
-  color: #fff;
-}
+  .hero-text {
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+  }
 
-/* ロゴ画像のスタイル */
-/* ロゴ画像のスタイル */
-.hero-background img {
-  max-width: 80%;  /* ロゴ画像の最大幅を80%に */
-  height: auto;  /* 高さは自動調整 */
-  max-height: 18vh; /* はみ出し防止用制限を追加 */
-  object-fit: contain;
-}
+  /* ロゴ画像のスタイル */
+  /* ロゴ画像のスタイル */
+  .hero-background img {
+    max-width: 80%;
+    /* ロゴ画像の最大幅を80%に */
+    height: auto;
+    /* 高さは自動調整 */
+    max-height: 18vh;
+    /* はみ出し防止用制限を追加 */
+    object-fit: contain;
+  }
 
 
 
 
   .button {
-    width: 180px; /* SP向けの幅 */
-    height: auto; /* 高さを自動調整 */
-    padding: 8px; /* パディングを調整 */
-    margin-top: 20px; /* 上のマージンを短縮 */
-    font-size: 12px; /* フォントサイズを小さく */
+    width: 180px;
+    /* SP向けの幅 */
+    height: auto;
+    /* 高さを自動調整 */
+    padding: 8px;
+    /* パディングを調整 */
+    margin-top: 20px;
+    /* 上のマージンを短縮 */
+    font-size: 12px;
+    /* フォントサイズを小さく */
   }
 
 
@@ -776,7 +838,7 @@ img {
     display: none;
   }
 
- 
+
 
   .content-wrapper {
     width: 100%;
@@ -813,6 +875,7 @@ img {
       .fv-article-text__title {
         color: #2b53ec;
       }
+
       .fv-article-image img {
         transform: scale(1.05);
       }
@@ -883,6 +946,7 @@ img {
       .pickup-article-text__title {
         color: #2b53ec;
       }
+
       .pickup-article__image img {
         transform: scale(1.05);
       }
@@ -892,6 +956,7 @@ img {
       width: 100%;
       height: 207px;
       overflow: hidden;
+
       img {
         width: 100%;
         height: 100%;
@@ -926,7 +991,8 @@ img {
 
   .contents {
     width: 350px;
-    padding-bottom: 60px; /* 余白削減 (120px -> 60px) */
+    padding-bottom: 60px;
+    /* 余白削減 (120px -> 60px) */
     margin: 0 auto;
     background-color: #fff;
   }
@@ -951,6 +1017,7 @@ img {
       .new-article-text__title {
         color: #2b53ec;
       }
+
       .new-article__image img {
         transform: scale(1.05);
       }
@@ -960,6 +1027,7 @@ img {
       width: 100%;
       height: 100%;
       overflow: hidden;
+
       img {
         width: 100%;
         height: 100%;
@@ -1050,42 +1118,42 @@ img {
 
 /* FV Height Correction */
 .hero-background {
-    min-height: 80vh !important;
-    padding: 50px 0;
+  min-height: 80vh !important;
+  padding: 50px 0;
 }
 
 /* TOP Article Title Adjustments */
 .fv-article-text__title {
-    line-height: 1.5;
-    margin-bottom: 10px;
-    transition: color 0.4s ease;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  transition: color 0.4s ease;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
 .new-article-text__title,
 .pickup-article-text__title {
-    line-height: 1.6;
-    margin-top: 0;
-    margin-bottom: 8px;
-    transition: color 0.4s ease;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
+  line-height: 1.6;
+  margin-top: 0;
+  margin-bottom: 8px;
+  transition: color 0.4s ease;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
 /* TOP h2 Styles */
 .title-h2__text {
-    position: relative;
-    padding-left: 40px;
-    margin-bottom: 16px;
-    font-size: 20px;
-    color: #000;
-    text-align: left;
-    font-weight: bold;
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 16px;
+  font-size: 20px;
+  color: #000;
+  text-align: left;
+  font-weight: bold;
 }
 
 .title-h2__text--pick-up::before,
@@ -1093,45 +1161,47 @@ img {
 .title-h2__text--category::before,
 .title-h2__text--popular-tag::before,
 .title-h2__text--sns::before {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    display: block;
-    width: 34px;
-    height: 34px;
-    content: "";
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
-    transform: translateY(-50%);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: block;
+  width: 34px;
+  height: 34px;
+  content: "";
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  transform: translateY(-50%);
 }
 
 .title-h2__text--pick-up::before,
 .title-h2__text--new::before {
-    background-image: url("images/ico_article.svg");
+  background-image: url("images/ico_article.svg");
 }
 
 .title-h2__text--category::before {
-    background-image: url("images/ico_shape.svg");
+  background-image: url("images/ico_shape.svg");
 }
 
 .title-h2__text--popular-tag::before {
-    background-image: url("images/ico_tag.svg");
+  background-image: url("images/ico_tag.svg");
 }
 
 .title-h2__text--sns::before {
-    background-image: url("images/ico_connection.svg");
+  background-image: url("images/ico_connection.svg");
 }
 
 /* =========================================
    トップページ最新の投稿（top-page-article）
    ========================================= */
 .top-page-article {
+
   /* 記事ラッパー全体にホバーした際に発火 */
   &:hover {
     .entry-title a {
       color: #2b53ec;
     }
+
     .post-thumbnail img {
       transform: scale(1.05);
     }
@@ -1140,7 +1210,7 @@ img {
   /* サムネイル画像のはみ出し防止とアニメーション */
   .post-thumbnail {
     overflow: hidden;
-    
+
     img {
       transition: transform 0.4s ease;
       width: 100%;
@@ -1163,6 +1233,7 @@ img {
    ページネーションの緑色をブランドカラーの青に上書き
    ========================================= */
 body {
+
   .navigation.pagination,
   .pagination {
     .nav-links {

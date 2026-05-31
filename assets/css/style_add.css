@@ -2315,6 +2315,136 @@ body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-response-output,
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.toc {
+  max-width: 720px;
+  margin: 40px auto 32px;
+  padding: 0;
+  background-color: #F5F7FF;
+  border: 1px solid #D6DCFA;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.toc__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  cursor: pointer;
+  user-select: none;
+}
+.toc__header:hover {
+  background-color: #eef1fd;
+}
+.toc__title {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+.toc__title::before {
+  content: "📋 ";
+}
+.toc__toggle {
+  font-size: 13px;
+  color: #2B53EC;
+  font-weight: bold;
+  white-space: nowrap;
+  padding: 4px 10px;
+  border: 1px solid #2B53EC;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.toc.is-open .toc__toggle {
+  background-color: #2B53EC;
+  color: #fff;
+}
+.toc__body {
+  display: none;
+  border-top: 1px solid #D6DCFA;
+  padding: 16px 20px 18px;
+}
+.toc.is-open .toc__body {
+  display: block;
+}
+.toc__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.toc__item {
+  margin: 0;
+  padding: 0;
+}
+.toc__item--h2 {
+  margin-bottom: 6px;
+}
+.toc__item--h3 {
+  padding-left: 16px;
+  margin-bottom: 4px;
+  position: relative;
+}
+.toc__item--h3::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #aab4d0;
+}
+.toc__link {
+  display: block;
+  font-size: 14px;
+  color: #2B53EC;
+  line-height: 1.6;
+  padding: 3px 0;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+.toc__link:hover {
+  opacity: 0.7;
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 767px) {
+  .toc {
+    margin: 32px 0 24px;
+    border-radius: 6px;
+  }
+  .toc__header {
+    padding: 12px 16px;
+  }
+  .toc__title {
+    font-size: 14px;
+  }
+  .toc__toggle {
+    font-size: 12px;
+  }
+  .toc__body {
+    padding: 12px 16px 14px;
+  }
+  .toc__link {
+    font-size: 13px;
+  }
+}
+@keyframes toc-highlight-flash {
+  0% {
+    background-color: transparent;
+  }
+  20% {
+    background-color: rgba(43, 83, 236, 0.12);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+.toc-highlight {
+  animation: toc-highlight-flash 1.2s ease-out forwards;
+  border-radius: 4px;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -2326,9 +2456,20 @@ body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-response-output,
   border-width: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 160px;
+}
+
+@media screen and (max-width: 767px) {
+  html {
+    scroll-padding-top: 120px;
+  }
+}
 body {
   font-family: "Verdana", "Hiragino Sans", "Meiryo", sans-serif;
-  background-color: #1a1a1a; /* フッターの背景色と同じ黒系を指定し、下部バウンス時の白い見切れを防止 */
+  background-color: #1a1a1a;
+  /* フッターの背景色と同じ黒系を指定し、下部バウンス時の白い見切れを防止 */
 }
 
 img {
@@ -2358,13 +2499,17 @@ img {
 .button:hover {
   color: #2b53ec;
   background-color: #fff;
-  border: 2px solid #2b53ec; /* 枠線を明示的に指定 */
+  border: 2px solid #2b53ec;
+  /* 枠線を明示的に指定 */
 }
 
 .inner-wrap {
-  max-width: 1200px; /* 最大幅 */
-  margin: 0 auto; /* 水平方向の中央揃え */
-  font-family: "Arial", sans-serif; /* シンプルなフォント */
+  max-width: 1200px;
+  /* 最大幅 */
+  margin: 0 auto;
+  /* 水平方向の中央揃え */
+  font-family: "Arial", sans-serif;
+  /* シンプルなフォント */
 }
 
 /* ページタイトルの共通設定 */
@@ -2394,14 +2539,17 @@ img {
 #primary .page-title::after,
 #primary .type-page .entry-title::after {
   content: "";
-  display: block; /* ブロック要素にして自然な配置にする */
+  display: block;
+  /* ブロック要素にして自然な配置にする */
   width: 60px;
-  height: 4px; /* 視認性を高めるため少し太く */
+  height: 4px;
+  /* 視認性を高めるため少し太く */
   background-color: #2B53EC;
   border-radius: 2px;
   /* 位置調整（絶対配置をやめてマージンで調整） */
   position: static;
-  margin: 10px auto 0; /* テキストとの間隔を狭める（10px） */
+  margin: 10px auto 0;
+  /* テキストとの間隔を狭める（10px） */
 }
 
 .site-content-contain {
@@ -2422,16 +2570,24 @@ img {
   }
   /* Heroエリアのスタイル */
   .hero-background {
-    background-color: #2B53EC; /* 青色の背景 */
+    background-color: #2B53EC;
+    /* 青色の背景 */
     text-align: center;
-    padding: 30px 0; /* 上下の余白を縮小し、情報密度を向上 */
-    min-height: 30vh; /* ビューポートの約30%に縮小（元は80vh） */
+    padding: 30px 0;
+    /* 上下の余白を縮小し、情報密度を向上 */
+    min-height: 30vh;
+    /* ビューポートの約30%に縮小（元は80vh） */
     display: flex;
-    align-items: center; /* 縦方向に中央揃え */
-    justify-content: center; /* 横方向に中央揃え */
-    position: sticky; /* positionをstickyに変更 */
-    top: 0; /* 初期表示時にヘッダーの裏側に潜り込ませ、スクロール時もtop:0に固定する */
-    z-index: 1; /* 低いz-indexを指定して背後に回す */
+    align-items: center;
+    /* 縦方向に中央揃え */
+    justify-content: center;
+    /* 横方向に中央揃え */
+    position: sticky;
+    /* positionをstickyに変更 */
+    top: 0;
+    /* 初期表示時にヘッダーの裏側に潜り込ませ、スクロール時もtop:0に固定する */
+    z-index: 1;
+    /* 低いz-indexを指定して背後に回す */
     width: 100%;
     /* 上部バウンス時の白い背景見切れ防止用 */
   }
@@ -2452,11 +2608,14 @@ img {
   }
   /* ロゴ画像のスタイル */
   .hero-background img {
-    max-width: 600px; /* ヒーローエリア縮小に合わせてロゴの最大幅も少し抑える */
+    max-width: 600px;
+    /* ヒーローエリア縮小に合わせてロゴの最大幅も少し抑える */
     width: 100%;
     padding: 0 40px;
-    height: auto; /* 高さは自動調整 */
-    max-height: 18vh; /* エリアからはみ出さないように制限を追加 */
+    height: auto;
+    /* 高さは自動調整 */
+    max-height: 18vh;
+    /* エリアからはみ出さないように制限を追加 */
     object-fit: contain;
   }
   .title-h2__text {
@@ -2543,11 +2702,15 @@ img {
     transform: translateY(-50%);
   }
   .button {
-    width: 228px; /* PC向けの幅 */
-    margin-top: 50px; /* 上のマージンを調整 */
-    font-size: 16px; /* フォントサイズ */
+    width: 228px;
+    /* PC向けの幅 */
+    margin-top: 50px;
+    /* 上のマージンを調整 */
+    font-size: 16px;
+    /* フォントサイズ */
   }
-  span.tag, a.tag {
+  span.tag,
+  a.tag {
     display: inline-block;
     padding: 5px 8px;
     font-size: 13px;
@@ -2853,7 +3016,8 @@ img {
 }
 @media screen and (width <= 767px) {
   .inner-wrap {
-    padding: 40px 16px 80px; /* 左右に余白を追加、下部はフッターから離すために80pxに拡大 */
+    padding: 40px 16px 80px;
+    /* 左右に余白を追加、下部はフッターから離すために80pxに拡大 */
   }
   body.home .site-content,
   body.blog .site-content {
@@ -2861,16 +3025,24 @@ img {
   }
   /* Heroエリアのスタイル */
   .hero-background {
-    background-color: #2B53EC; /* 青色の背景 */
+    background-color: #2B53EC;
+    /* 青色の背景 */
     text-align: center;
-    padding: 30px 24px; /* 上下の余白を縮小 */
-    min-height: 30vh; /* ビューポートの約30%に縮小（元は80vh） */
+    padding: 30px 24px;
+    /* 上下の余白を縮小 */
+    min-height: 30vh;
+    /* ビューポートの約30%に縮小（元は80vh） */
     display: flex;
-    align-items: center; /* 縦方向に中央揃え */
-    justify-content: center; /* 横方向に中央揃え */
-    position: sticky; /* positionをstickyに変更 */
-    top: 0; /* 初期表示時にヘッダーの裏側に潜り込ませ、スクロール時もtop:0に固定する */
-    z-index: 1; /* 低いz-indexを指定して背後に回す */
+    align-items: center;
+    /* 縦方向に中央揃え */
+    justify-content: center;
+    /* 横方向に中央揃え */
+    position: sticky;
+    /* positionをstickyに変更 */
+    top: 0;
+    /* 初期表示時にヘッダーの裏側に潜り込ませ、スクロール時もtop:0に固定する */
+    z-index: 1;
+    /* 低いz-indexを指定して背後に回す */
     width: 100%;
     /* 上部バウンス時の白い背景見切れ防止用 */
   }
@@ -2887,13 +3059,16 @@ img {
   /* ページタイトル（SP） */
   #primary .page-title,
   #primary .type-page .entry-title {
-    font-size: 20px; /* PCの28pxから縮小 */
-    margin-bottom: 24px; /* マージン調整 */
+    font-size: 20px;
+    /* PCの28pxから縮小 */
+    margin-bottom: 24px;
+    /* マージン調整 */
   }
   /* アクセントライン（SP） */
   #primary .page-title::after,
   #primary .type-page .entry-title::after {
-    width: 40px; /* 線も少し短く */
+    width: 40px;
+    /* 線も少し短く */
     height: 3px;
     margin-top: 8px;
   }
@@ -2905,17 +3080,25 @@ img {
   /* ロゴ画像のスタイル */
   /* ロゴ画像のスタイル */
   .hero-background img {
-    max-width: 80%; /* ロゴ画像の最大幅を80%に */
-    height: auto; /* 高さは自動調整 */
-    max-height: 18vh; /* はみ出し防止用制限を追加 */
+    max-width: 80%;
+    /* ロゴ画像の最大幅を80%に */
+    height: auto;
+    /* 高さは自動調整 */
+    max-height: 18vh;
+    /* はみ出し防止用制限を追加 */
     object-fit: contain;
   }
   .button {
-    width: 180px; /* SP向けの幅 */
-    height: auto; /* 高さを自動調整 */
-    padding: 8px; /* パディングを調整 */
-    margin-top: 20px; /* 上のマージンを短縮 */
-    font-size: 12px; /* フォントサイズを小さく */
+    width: 180px;
+    /* SP向けの幅 */
+    height: auto;
+    /* 高さを自動調整 */
+    padding: 8px;
+    /* パディングを調整 */
+    margin-top: 20px;
+    /* 上のマージンを短縮 */
+    font-size: 12px;
+    /* フォントサイズを小さく */
   }
   .header {
     position: fixed;
@@ -3057,7 +3240,8 @@ img {
   }
   .contents {
     width: 350px;
-    padding-bottom: 60px; /* 余白削減 (120px -> 60px) */
+    padding-bottom: 60px;
+    /* 余白削減 (120px -> 60px) */
     margin: 0 auto;
     background-color: #fff;
   }
