@@ -2479,6 +2479,7 @@ body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-response-output,
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 160px;
+  scrollbar-gutter: stable;
 }
 
 @media screen and (max-width: 767px) {
@@ -2609,6 +2610,8 @@ img {
     /* 初期表示時にヘッダーの裏側に潜り込ませ、スクロール時もtop:0に固定する */
     z-index: 1;
     /* 低いz-indexを指定して背後に回す */
+    left: 0;
+    /* sticky時のleft基準を明示して横ズレを防止 */
     width: 100%;
     /* 上部バウンス時の白い背景見切れ防止用 */
   }
@@ -2631,7 +2634,8 @@ img {
   .hero-background img {
     max-width: 600px;
     /* ヒーローエリア縮小に合わせてロゴの最大幅も少し抑える */
-    width: 100%;
+    width: auto;
+    /* 親要素の幅変化に引っ張られず、スクロール時のズレを防止 */
     padding: 0 40px;
     height: auto;
     /* 高さは自動調整 */
@@ -3068,6 +3072,8 @@ img {
     /* 初期表示時にヘッダーの裏側に潜り込ませ、スクロール時もtop:0に固定する */
     z-index: 1;
     /* 低いz-indexを指定して背後に回す */
+    left: 0;
+    /* sticky時のleft基準を明示して横ズレを防止 */
     width: 100%;
     /* 上部バウンス時の白い背景見切れ防止用 */
   }
@@ -3106,7 +3112,9 @@ img {
   /* ロゴ画像のスタイル */
   .hero-background img {
     max-width: 80%;
-    /* ロゴ画像の最大幅を80%に */
+    /* ロゴ画像の最大幅を調整 */
+    width: auto;
+    /* 親要素の幅変化に引っ張られず、スクロール時のズレを防止 */
     height: auto;
     /* 高さは自動調整 */
     max-height: 18vh;
