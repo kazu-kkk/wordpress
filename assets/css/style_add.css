@@ -408,6 +408,8 @@ body.single .site-content {
    Rich Footer Styles
    ============================================== */
 .site-footer-rich {
+  position: relative; /* z-indexを有効化するために追加 */
+  z-index: 2; /* 背後の.hero-backgroundより上に重ねるために追加 */
   background-color: #1a1a1a;
   color: #e0e0e0;
   padding: 60px 0 20px;
@@ -2326,6 +2328,7 @@ body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-response-output,
 
 body {
   font-family: "Verdana", "Hiragino Sans", "Meiryo", sans-serif;
+  background-color: #1a1a1a; /* フッターの背景色と同じ黒系を指定し、下部バウンス時の白い見切れを防止 */
 }
 
 img {
@@ -2405,6 +2408,12 @@ img {
   background-color: #F5F7FF;
 }
 
+.site-content {
+  position: relative;
+  z-index: 2;
+  background-color: #F5F7FF;
+}
+
 @media screen and (width >= 767px) {
   .archive .page-title,
   .blog .page-title,
@@ -2420,8 +2429,21 @@ img {
     display: flex;
     align-items: center; /* 縦方向に中央揃え */
     justify-content: center; /* 横方向に中央揃え */
-    position: relative; /* positionはrelativeに設定 */
+    position: sticky; /* positionをstickyに変更 */
+    top: 0; /* 初期表示時にヘッダーの裏側に潜り込ませ、スクロール時もtop:0に固定する */
+    z-index: 1; /* 低いz-indexを指定して背後に回す */
     width: 100%;
+    /* 上部バウンス時の白い背景見切れ防止用 */
+  }
+  .hero-background::before {
+    content: "";
+    position: absolute;
+    top: -500px;
+    left: 0;
+    width: 100%;
+    height: 500px;
+    background-color: #2B53EC;
+    z-index: -1;
   }
   .hero-text {
     font-size: 20px;
@@ -2536,7 +2558,7 @@ img {
   }
   .header {
     position: fixed;
-    z-index: 2;
+    z-index: 10;
     width: 100%;
     height: 90px;
     padding-top: 10px;
@@ -2846,8 +2868,21 @@ img {
     display: flex;
     align-items: center; /* 縦方向に中央揃え */
     justify-content: center; /* 横方向に中央揃え */
-    position: relative; /* positionはrelativeに設定 */
+    position: sticky; /* positionをstickyに変更 */
+    top: 0; /* 初期表示時にヘッダーの裏側に潜り込ませ、スクロール時もtop:0に固定する */
+    z-index: 1; /* 低いz-indexを指定して背後に回す */
     width: 100%;
+    /* 上部バウンス時の白い背景見切れ防止用 */
+  }
+  .hero-background::before {
+    content: "";
+    position: absolute;
+    top: -500px;
+    left: 0;
+    width: 100%;
+    height: 500px;
+    background-color: #2B53EC;
+    z-index: -1;
   }
   /* ページタイトル（SP） */
   #primary .page-title,
@@ -2884,7 +2919,7 @@ img {
   }
   .header {
     position: fixed;
-    z-index: 2;
+    z-index: 10;
     width: 100%;
     height: 50px;
     backdrop-filter: blur(12px);
