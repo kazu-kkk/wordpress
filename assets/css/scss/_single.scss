@@ -112,7 +112,7 @@ body.single .site-content {
       margin-top: 32px;
     }
   
-    li {
+    li:not(.toc__item) {
       font-size: 18px;
       line-height: 1.75;
       margin-bottom: 8px;

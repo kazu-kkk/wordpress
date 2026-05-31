@@ -110,11 +110,12 @@
 // SP向け
 @media screen and (max-width: 767px) {
     .toc {
-        margin: 32px 0 24px;
+        margin: 24px 0 20px;
         border-radius: 6px;
+        background-color: #fff; // 本文背景と差をつけて浮き感を解消
 
         &__header {
-            padding: 12px 16px;
+            padding: 12px 14px;
         }
 
         &__title {
@@ -123,10 +124,22 @@
 
         &__toggle {
             font-size: 12px;
+            padding: 3px 8px;
         }
 
         &__body {
-            padding: 12px 16px 14px;
+            padding: 10px 14px 12px;
+        }
+
+        &__list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        &__item {
+            list-style-type: none;
+            margin-left: 0;
         }
 
         &__link {

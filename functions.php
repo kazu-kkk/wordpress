@@ -499,7 +499,7 @@ function inspiro_child_auto_toc($content) {
     $toc_html = '
 <div class="toc">
     <div class="toc__header">
-        <p class="toc__title">目次</p>
+        <div class="toc__title">目次</div>
         <span class="toc__toggle">開く</span>
     </div>
     <div class="toc__body">
