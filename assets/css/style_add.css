@@ -348,7 +348,8 @@ body.single .site-content {
 .related-posts__thumb img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   display: block;
   transition: transform 0.3s ease;
 }
@@ -482,7 +483,8 @@ body.single .site-content {
 .footer-brand .footer-logo img {
   width: 40px;
   height: 40px;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   margin-right: 12px;
   border-radius: 50%;
 }
@@ -637,7 +639,8 @@ body.single .site-content {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     display: block;
     transition: transform 0.3s ease;
     margin: 0;
@@ -726,7 +729,8 @@ body.single .site-content {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     display: block;
     margin: 0;
     padding: 0;
@@ -790,7 +794,8 @@ body.single .site-content {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    column-gap: 20px;
+    -moz-column-gap: 20px;
+         column-gap: 20px;
     row-gap: 32px;
   }
   .top-page-content-article .category-article {
@@ -850,7 +855,8 @@ body.single .site-content {
   .post-thumbnail img {
     width: 100%;
     height: auto;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
   }
 }
 /* サイドナビの全体スタイル */
@@ -944,7 +950,8 @@ body.single .site-content {
   height: 100px;
   border-radius: 50%;
   margin: 0 auto 16px;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   box-shadow: none; /* シャドウ削除 */
 }
 
@@ -1120,7 +1127,8 @@ body.single .site-content {
     display: grid;
     grid-template-columns: 80px 1fr;
     grid-template-rows: auto auto; /* 名前とバイオ用の2行 */
-    column-gap: 16px; /* 画像とテキストの間隔 */
+    -moz-column-gap: 16px;
+         column-gap: 16px; /* 画像とテキストの間隔 */
     text-align: left;
     padding: 20px;
     align-items: start; /* 上揃え、または center で中央揃え */
@@ -1210,10 +1218,8 @@ body.single .site-content {
   visibility: hidden;
   opacity: 0;
   background-color: rgba(0, 0, 0, 0.6) !important;
-  -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
   transition: opacity 0.4s ease, visibility 0.4s ease, background-color 0.4s ease !important;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
@@ -1233,7 +1239,6 @@ body.side-nav-open .side-nav-overlay {
 #side-nav,
 .side-nav__scrollable-container {
   z-index: 9999 !important;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   will-change: transform; /* translateZの代わりにwill-changeを使用して上書きを防止 */
 }
@@ -1249,7 +1254,6 @@ body.side-nav-open #side-nav {
 
 /* アイコンのちらつき防止 */
 .navbar-toggle .icon-bar {
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
@@ -1391,7 +1395,8 @@ body.side-nav-open .site {
     display: grid;
     grid-template-columns: 80px 1fr;
     grid-template-rows: auto auto;
-    column-gap: 16px;
+    -moz-column-gap: 16px;
+         column-gap: 16px;
     text-align: left;
     padding: 20px 0; /* 横幅一杯に使うため左右paddingは0に調整 */
     align-items: start;
@@ -1407,7 +1412,8 @@ body.side-nav-open .site {
     height: 80px;
     margin: 0;
     border-radius: 50%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
   }
   .mobile-side-nav-content .profile-name {
     grid-row: 1/2;
@@ -1819,7 +1825,8 @@ body.page-id-616 .entry-content {
   width: 110px;
   height: 110px;
   border-radius: 50%; /* Circle looks cleaner for horizontal layout */
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   margin-bottom: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -2110,11 +2117,7 @@ body.page-template-default .entry-content a:not(.wp-block-button__link):not(.but
   padding: 0;
   margin: 0;
 }
-.target-audience .target-audience__list li {
-  list-style: none;
-  margin-left: 0;
-}
-.target-audience__item {
+.target-audience .target-audience__list li.target-audience__item {
   position: relative;
   padding-left: 32px;
   margin-bottom: 14px;
@@ -2122,11 +2125,13 @@ body.page-template-default .entry-content a:not(.wp-block-button__link):not(.but
   line-height: 1.6;
   color: #333;
   font-weight: bold;
+  list-style: none;
+  margin-left: 0;
 }
-.target-audience__item:last-child {
+.target-audience .target-audience__list li.target-audience__item:last-child {
   margin-bottom: 0;
 }
-.target-audience__item::before {
+.target-audience .target-audience__list li.target-audience__item::before {
   content: "";
   position: absolute;
   left: 0;
@@ -2139,20 +2144,26 @@ body.page-template-default .entry-content a:not(.wp-block-button__link):not(.but
 }
 @media screen and (max-width: 767px) {
   .target-audience {
-    padding: 20px 24px;
-    margin: 1.5em 0;
+    padding: 16px 20px;
+    margin: 1.2em 0;
   }
   .target-audience__title {
-    font-size: 18px;
+    font-size: 16px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
   }
-  .target-audience__item {
-    font-size: 15px;
+  .target-audience .target-audience__list li.target-audience__item {
+    font-size: 16px;
     padding-left: 28px;
+    margin-bottom: 10px;
   }
-  .target-audience__item::before {
+  .target-audience .target-audience__list li.target-audience__item:last-child {
+    margin-bottom: 0;
+  }
+  .target-audience .target-audience__list li.target-audience__item::before {
     width: 18px;
     height: 18px;
-    top: 3px;
+    top: 4px;
   }
 }
 
@@ -2170,7 +2181,8 @@ body.page-template-contact-page .entry-content div.wpcf7,
   display: block !important;
   width: 100% !important;
   max-width: 640px !important;
-  margin: 0 auto !important; /* 親のalign-items: center、またはmargin: 0 autoで中央寄せにするため修正 */
+  margin: 0 auto !important;
+  /* 親のalign-items: center、またはmargin: 0 autoで中央寄せにするため修正 */
   position: static !important;
   transform: none !important;
   left: auto !important;
@@ -2330,7 +2342,9 @@ body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-response-output,
   align-items: center;
   padding: 14px 20px;
   cursor: pointer;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 .toc__header:hover {
   background-color: #eef1fd;
@@ -2487,7 +2501,8 @@ body {
 img {
   width: 100%;
   height: auto;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .entry-meta span {
@@ -2631,7 +2646,8 @@ img {
     /* 高さは自動調整 */
     max-height: 18vh;
     /* エリアからはみ出さないように制限を追加 */
-    object-fit: contain;
+    -o-object-fit: contain;
+       object-fit: contain;
   }
   .title-h2__text {
     position: relative;
@@ -2818,7 +2834,8 @@ img {
   .fv-article-image img {
     width: 625px;
     height: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     transition: transform 0.4s ease;
   }
   .fv-article-text {
@@ -2883,7 +2900,8 @@ img {
   .pickup-article__image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     transition: transform 0.4s ease;
   }
   .pickup-article-text {
@@ -2944,7 +2962,8 @@ img {
   .new-article__image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     transition: transform 0.4s ease;
   }
   .new-article:first-child {
@@ -3105,7 +3124,8 @@ img {
     /* 高さは自動調整 */
     max-height: 18vh;
     /* はみ出し防止用制限を追加 */
-    object-fit: contain;
+    -o-object-fit: contain;
+       object-fit: contain;
   }
   .button {
     width: 180px;
@@ -3177,7 +3197,8 @@ img {
   .fv-article-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     transition: transform 0.4s ease;
   }
   .fv-article-text {
@@ -3235,7 +3256,8 @@ img {
   .pickup-article__image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     transition: transform 0.4s ease;
   }
   .pickup-article-text {
@@ -3292,7 +3314,8 @@ img {
   .new-article__image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     transition: transform 0.4s ease;
   }
   .new-article:first-child {
@@ -3453,7 +3476,8 @@ img {
   transition: transform 0.4s ease;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .top-page-article {
   /* タイトルテキストのアニメーションと3行制限（4行目以降は省略） */
@@ -3493,6 +3517,4 @@ body .pagination .nav-links .page-numbers.current {
   background-color: #2B53EC;
   color: #ffffff;
   border-color: #2B53EC;
-}
-
-/*# sourceMappingURL=style_add.css.map */
+}/*# sourceMappingURL=style_add.css.map */

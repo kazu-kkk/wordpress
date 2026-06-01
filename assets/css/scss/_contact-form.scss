@@ -12,12 +12,13 @@ body.page-template-contact-page .entry-content div.wpcf7,
     display: block !important;
     width: 100% !important;
     max-width: 640px !important;
-    margin: 0 auto !important; /* 親のalign-items: center、またはmargin: 0 autoで中央寄せにするため修正 */
+    margin: 0 auto !important;
+    /* 親のalign-items: center、またはmargin: 0 autoで中央寄せにするため修正 */
     position: static !important;
     transform: none !important;
     left: auto !important;
     right: auto !important;
-    
+
     /* 白背景のカードスタイルは削除 */
     background-color: transparent !important;
     box-sizing: border-box !important;
@@ -58,7 +59,7 @@ body.page-template-contact-page .entry-content div.wpcf7,
         transition: border-color 0.3s ease, box-shadow 0.3s ease;
         font-family: inherit;
         box-sizing: border-box;
-        
+
         &:focus {
             outline: none;
             border-color: #2b53ec;
@@ -85,7 +86,7 @@ body.page-template-contact-page .entry-content div.wpcf7,
         border-radius: 8px;
         cursor: pointer;
         transition: all 0.5s ease;
-        
+
         &:hover {
             color: #2b53ec;
             background-color: #fff;

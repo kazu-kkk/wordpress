@@ -320,7 +320,7 @@
 
 - ブランドブルーのボーダー (`border: 2px solid #2B53EC`)
 - 各アイテム: SVGチェックアイコン付き、ボールド
-- SP: `padding: 20px 24px`
+- SP: `padding: 16px 20px`、タイトル `font-size: 16px`、アイテム `font-size: 16px`に最適化され、周りの本文テキストとサイズを完全に統一して一貫性を保持
 
 ---
 
