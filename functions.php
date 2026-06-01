@@ -179,6 +179,17 @@ function inspiro_child_enqueue_scripts() {
         'nonce' => wp_create_nonce('wp_rest')
     ));
 
+    // トップページでのみヘッダーロゴのスクロール制御JSを読み込む
+    if (is_front_page() || is_home()) {
+        wp_enqueue_script(
+            'inspiro-header-logo',
+            get_stylesheet_directory_uri() . '/assets/js/header-logo.js',
+            array(),
+            filemtime(get_stylesheet_directory() . '/assets/js/header-logo.js'),
+            true
+        );
+    }
+
     // 記事ページ（single）でのみ目次JSを読み込む
     if (is_single()) {
         wp_enqueue_script(

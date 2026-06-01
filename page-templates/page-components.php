@@ -325,7 +325,51 @@ if (isset($_GET['component_preview'])) {
                         <p style="margin-bottom: 0;">
                             <input type="submit" value="送信する">
                         </p>
-                    </form>
+                </div>
+                <?php
+                break;
+
+            case 'c-header':
+                ?>
+                <div id="c-header-demo" class="home" style="padding: 20px; text-align: center;">
+                    <p style="font-size: 13px; color: #666; margin-bottom: 16px; font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;">
+                        ※下のボックスは固定ヘッダーのデモです。ボタンを押してクラス切り替え（フェードイン）を確認できます。
+                    </p>
+                    <button class="showcase-ctrl-btn" onclick="document.getElementById('c-header-demo-box').classList.toggle('has-scrolled-fv');" style="margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; justify-content: center; width: auto; font-family: 'Plus Jakarta Sans', sans-serif;">
+                        <i class="fa-solid fa-eye"></i> スクロール状態をトグル (has-scrolled-fv)
+                    </button>
+                    
+                    <div id="c-header-demo-box" class="navbar" style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 15px; background: #fff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); max-width: 600px; margin: 0 auto;">
+                        <div class="header-inner" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                            <div class="header-logo-wrapper" style="flex-shrink: 0;">
+                                <div class="custom-logo-link">
+                                    <a href="#" onclick="return false;" class="custom-logo-text">
+                                        <img src="https://www.ds-pedia.com/wp-content/uploads/2025/01/header-log.png" alt="Logo" style="max-height: 35px; width: auto; display: inline-block;">
+                                    </a>
+                                </div>
+                            </div>
+                            <nav style="display: flex; gap: 20px; flex-shrink: 0; align-items: center;">
+                                <span style="font-size: 14px; font-weight: bold; color: #2B53EC; font-family: 'Plus Jakarta Sans', sans-serif;">About</span>
+                                <span style="font-size: 14px; font-weight: bold; color: #2B53EC; font-family: 'Plus Jakarta Sans', sans-serif;">Article</span>
+                                <span style="font-size: 14px; font-weight: bold; color: #2B53EC; font-family: 'Plus Jakarta Sans', sans-serif;">Contact</span>
+                            </nav>
+                        </div>
+                    </div>
+                    
+                    <style>
+                        /* デモボックス内でのロゴ表示・非表示アニメーションの再現 */
+                        #c-header-demo-box .header-logo-wrapper {
+                            opacity: 0;
+                            visibility: hidden;
+                            transform: translateY(-5px);
+                            transition: opacity 0.4s ease-out, visibility 0.4s ease-out, transform 0.4s ease-out;
+                        }
+                        #c-header-demo-box.has-scrolled-fv .header-logo-wrapper {
+                            opacity: 1;
+                            visibility: visible;
+                            transform: translateY(0);
+                        }
+                    </style>
                 </div>
                 <?php
                 break;
@@ -1075,6 +1119,7 @@ if (isset($_GET['component_preview'])) {
                     <a href="#c-bento"><i class="fa-solid fa-table-cells-large"></i> 11. Bento Grid</a>
                     <a href="#c-footer"><i class="fa-solid fa-window-minimize"></i> 12. Footer</a>
                     <a href="#c-contact"><i class="fa-solid fa-envelope"></i> 13. Contact Form</a>
+                    <a href="#c-header"><i class="fa-solid fa-eye-slash"></i> 14. Header Logo Scroll</a>
                 </div>
             </aside>
 
@@ -1835,6 +1880,52 @@ if (isset($_GET['component_preview'])) {
                     </div>
                 </section>
 
+                <!-- 14. Header Logo Scroll -->
+                <section id="c-header" class="showcase-section">
+                    <div class="showcase-section-title">
+                        <span class="title-group">
+                            <span class="section-num">14</span>
+                            <span>固定ヘッダーロゴ表示制御 (.has-scrolled-fv)</span>
+                        </span>
+                        <span class="showcase-section-meta">_header.scss</span>
+                    </div>
+                    <div class="showcase-desc">
+                        TOPページ初期表示時のヘッダー左ロゴ非表示および、FV（ファーストビュー）スクロール後のフェードイン効果です。トグルボタンを押して、フェードインの滑らかなアニメーションをプレビューできます。
+                    </div>
+                    <div class="showcase-preview-wrapper">
+                        <div class="showcase-control-bar">
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">Width:</span>
+                                <button class="showcase-ctrl-btn active" data-width="100%">PC</button>
+                                <button class="showcase-ctrl-btn" data-width="768px">Tablet</button>
+                                <button class="showcase-ctrl-btn" data-width="375px">Mobile</button>
+                            </div>
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">BG:</span>
+                                <button class="showcase-bg-btn active" data-bg="default"></button>
+                                <button class="showcase-bg-btn" data-bg="white"></button>
+                                <button class="showcase-bg-btn" data-bg="gray"></button>
+                                <button class="showcase-bg-btn" data-bg="dark"></button>
+                            </div>
+                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                        </div>
+                        <div class="showcase-preview-box">
+                            <iframe src="<?php echo add_query_arg('component_preview', 'c-header'); ?>" class="showcase-iframe" data-comp="c-header" style="height: 240px;"></iframe>
+                        </div>
+                        <div class="showcase-code-box">
+                            <pre><code class="html-code">&lt;!-- TOPページのbodyに.has-scrolled-fvクラスが付与されることで、ロゴがフェードイン表示されます --&gt;
+&lt;body class="home has-scrolled-fv"&gt;
+  &lt;header id="masthead" class="site-header"&gt;
+    &lt;div class="header-logo-wrapper"&gt;
+      &lt;!-- ロゴマーク --&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
+&lt;/body&gt;</code></pre>
+                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                        </div>
+                    </div>
+                </section>
+
             </main>
         </div>
     </div>
@@ -1866,6 +1957,7 @@ if (isset($_GET['component_preview'])) {
             <a href="#c-bento"><i class="fa-solid fa-table-cells-large"></i> 11. Bento Grid</a>
             <a href="#c-footer"><i class="fa-solid fa-window-minimize"></i> 12. Footer</a>
             <a href="#c-contact"><i class="fa-solid fa-envelope"></i> 13. Contact Form</a>
+            <a href="#c-header"><i class="fa-solid fa-eye-slash"></i> 14. Header Logo Scroll</a>
         </div>
     </div>
 </div>

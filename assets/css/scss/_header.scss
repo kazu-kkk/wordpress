@@ -350,3 +350,23 @@
         display: none;
     }
 }
+
+// ==========================================================================
+// TOPページ初期表示時のロゴ非表示 ＆ スクロールフェードイン効果
+// ==========================================================================
+body.home {
+    .header-logo-wrapper {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-5px);
+        transition: opacity 0.4s ease-out, visibility 0.4s ease-out, transform 0.4s ease-out;
+    }
+
+    &.has-scrolled-fv {
+        .header-logo-wrapper {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    }
+}
