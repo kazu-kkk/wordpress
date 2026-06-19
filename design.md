@@ -74,11 +74,11 @@
 | `.header-logo__image` | ロゴ画像コンテナ `height: 30px` |
 | `.header-link__text` | ナビリンク（白文字） |
 | `.header-link__textColorScroll` | スクロール後リンク色変化 (`#2B53EC`) |
-| `.has-scrolled-fv` | **[NEW]** トップページにおいてFVを超えてスクロールした際に `body` に付与されるクラス。ヘッダー左ロゴ (`.header-logo-wrapper`) をフェードイン表示させます。 |
+| `.has-scrolled-fv` | **[NEW]** トップページにおいてFVを超えてスクロールした際に `body` に付与されるクラス。ヘッダー左ロゴ (`.header-logo-wrapper`) をフェードイン表示させ、ヘッダーに黒い帯（背景）を表示します。 |
 
-**トップページロゴのスクロール制御 (マイクロアニメーション)**:
-- トップページ (`body.home`) の初期表示時は、ヘッダー左のロゴマーク (`.header-logo-wrapper`) は非表示 (`opacity: 0; visibility: hidden; transform: translateY(-5px)`) に設定されます。
-- スクロール位置が FV (`.hero-background`) の高さを超えたあたりで `body` に `.has-scrolled-fv` が自動付与され、ロゴマークが上部からスライドダウンしつつ滑らかにフェードインします。
+**トップページロゴと黒帯のスクロール制御 (マイクロアニメーション)**:
+- トップページ (`body.home`) の初期表示時は、ヘッダー左のロゴマーク (`.header-logo-wrapper`) は非表示 (`opacity: 0; visibility: hidden; transform: translateY(-5px)`) に設定され、ヘッダーの黒い帯（背景）も非表示（透明なグラデーション）になります。
+- スクロール位置が FV (`.hero-background`) の高さを超えたあたりで `body` に `.has-scrolled-fv` が自動付与され、ロゴマークが上部からスライドダウンしつつ滑らかにフェードインし、同時にヘッダーの黒い帯がスムーズに表示されます。
 - トップページ以外のページでは、常に表示されます。
 
 **SP (≤767px)**: ハンバーガーメニュー展開。カード型メニューリンク。サジェスト付き検索ウィジェット表示。

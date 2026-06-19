@@ -352,7 +352,7 @@
 }
 
 // ==========================================================================
-// TOPページ初期表示時のロゴ非表示 ＆ スクロールフェードイン効果
+// TOPページ初期表示時のロゴ非表示 ＆ スクロールフェードイン効果 ＆ 黒帯連動
 // ==========================================================================
 body.home {
     .header-logo-wrapper {
@@ -362,11 +362,32 @@ body.home {
         transition: opacity 0.4s ease-out, visibility 0.4s ease-out, transform 0.4s ease-out;
     }
 
+    // FV内（ロゴ非表示のとき）は、headroom等によるヘッダーの黒帯化を無効化（透明な状態を維持）
+    &:not(.has-scrolled-fv) {
+        .site-header.headroom--not-top {
+            box-shadow: none;
+
+            .navbar {
+                background: none;
+                background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 1%, rgba(0, 0, 0, 0) 100%);
+                padding: 18px 0;
+            }
+        }
+    }
+
+    // FVを抜けたとき（ロゴが表示されるタイミング）で黒い帯を表示
     &.has-scrolled-fv {
         .header-logo-wrapper {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
+        }
+
+        .site-header .navbar {
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0px 0px 18px 1px rgba(0, 0, 0, 0.1);
+            padding: 12px 0;
+            transition: background 0.4s ease-out, padding 0.4s ease-out, box-shadow 0.4s ease-out;
         }
     }
 }

@@ -348,8 +348,7 @@ body.single .site-content {
 .related-posts__thumb img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   display: block;
   transition: transform 0.3s ease;
 }
@@ -483,8 +482,7 @@ body.single .site-content {
 .footer-brand .footer-logo img {
   width: 40px;
   height: 40px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   margin-right: 12px;
   border-radius: 50%;
 }
@@ -639,8 +637,7 @@ body.single .site-content {
     left: 0;
     width: 100%;
     height: 100%;
-    -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     display: block;
     transition: transform 0.3s ease;
     margin: 0;
@@ -729,8 +726,7 @@ body.single .site-content {
     left: 0;
     width: 100%;
     height: 100%;
-    -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     display: block;
     margin: 0;
     padding: 0;
@@ -794,8 +790,7 @@ body.single .site-content {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    -moz-column-gap: 20px;
-         column-gap: 20px;
+    column-gap: 20px;
     row-gap: 32px;
   }
   .top-page-content-article .category-article {
@@ -835,28 +830,56 @@ body.single .site-content {
     display: block;
   }
   .top-page-article {
-    margin-bottom: 48px;
+    display: flex;
+    gap: 16px;
+    align-items: center; /* 画像とテキストを中央揃えにするか、上揃え(flex-start)にするか。今回は中央揃え寄りの方が綺麗に見えやすい */
+    background-color: #fff; /* 白背景でカード化 */
+    border-radius: 12px; /* カード全体の角丸 */
+    padding: 12px; /* カード内の余白 */
+    margin-bottom: 20px; /* カード同士の間隔 */
+  }
+  .top-page-article .entry-header {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+  }
+  .top-page-article .entry-title {
+    margin: 0;
+    padding: 0;
   }
   .top-page-article .entry-title a {
-    font-size: 18px;
-    line-height: 1.3;
+    font-size: 15px;
+    font-weight: bold; /* タイトルを太くしてメリハリを */
+    color: #333; /* 真っ黒より少し柔らかい濃いグレー */
+    line-height: 1.5;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2; /* スマホの横並びなら2行がすっきりする */
     overflow: hidden;
   }
+  .top-page-article .entry-meta {
+    display: none; /* メタ情報がない場合、空のブロックが下余白を作ってしまうため非表示 */
+  }
   .post-thumbnail {
-    width: 100%;
-    margin-bottom: 4px;
+    width: 100px; /* 幅を固定してテキストエリアを広く保つ */
+    flex-shrink: 0;
+    margin: 0;
   }
   .post-thumbnail a {
     display: block;
+    border-radius: 8px; /* 画像にも角丸をつけて柔らかく */
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
   }
   .post-thumbnail img {
     width: 100%;
-    height: auto;
-    -o-object-fit: cover;
-       object-fit: cover;
+    height: 100%;
+    aspect-ratio: 1/1; /* 正方形にトリミングすることでモダンな印象に */
+    object-fit: cover;
   }
 }
 /* サイドナビの全体スタイル */
@@ -950,8 +973,7 @@ body.single .site-content {
   height: 100px;
   border-radius: 50%;
   margin: 0 auto 16px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   box-shadow: none; /* シャドウ削除 */
 }
 
@@ -1127,8 +1149,7 @@ body.single .site-content {
     display: grid;
     grid-template-columns: 80px 1fr;
     grid-template-rows: auto auto; /* 名前とバイオ用の2行 */
-    -moz-column-gap: 16px;
-         column-gap: 16px; /* 画像とテキストの間隔 */
+    column-gap: 16px; /* 画像とテキストの間隔 */
     text-align: left;
     padding: 20px;
     align-items: start; /* 上揃え、または center で中央揃え */
@@ -1218,8 +1239,10 @@ body.single .site-content {
   visibility: hidden;
   opacity: 0;
   background-color: rgba(0, 0, 0, 0.6) !important;
+  -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
   transition: opacity 0.4s ease, visibility 0.4s ease, background-color 0.4s ease !important;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
@@ -1239,6 +1262,7 @@ body.side-nav-open .side-nav-overlay {
 #side-nav,
 .side-nav__scrollable-container {
   z-index: 9999 !important;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   will-change: transform; /* translateZの代わりにwill-changeを使用して上書きを防止 */
 }
@@ -1254,6 +1278,7 @@ body.side-nav-open #side-nav {
 
 /* アイコンのちらつき防止 */
 .navbar-toggle .icon-bar {
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
@@ -1395,8 +1420,7 @@ body.side-nav-open .site {
     display: grid;
     grid-template-columns: 80px 1fr;
     grid-template-rows: auto auto;
-    -moz-column-gap: 16px;
-         column-gap: 16px;
+    column-gap: 16px;
     text-align: left;
     padding: 20px 0; /* 横幅一杯に使うため左右paddingは0に調整 */
     align-items: start;
@@ -1412,8 +1436,7 @@ body.side-nav-open .site {
     height: 80px;
     margin: 0;
     border-radius: 50%;
-    -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
   }
   .mobile-side-nav-content .profile-name {
     grid-row: 1/2;
@@ -1620,10 +1643,24 @@ body.home .header-logo-wrapper {
   transform: translateY(-5px);
   transition: opacity 0.4s ease-out, visibility 0.4s ease-out, transform 0.4s ease-out;
 }
+body.home:not(.has-scrolled-fv) .site-header.headroom--not-top {
+  box-shadow: none;
+}
+body.home:not(.has-scrolled-fv) .site-header.headroom--not-top .navbar {
+  background: none;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 1%, rgba(0, 0, 0, 0) 100%);
+  padding: 18px 0;
+}
 body.home.has-scrolled-fv .header-logo-wrapper {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+}
+body.home.has-scrolled-fv .site-header .navbar {
+  background: rgba(0, 0, 0, 0.9);
+  box-shadow: 0px 0px 18px 1px rgba(0, 0, 0, 0.1);
+  padding: 12px 0;
+  transition: background 0.4s ease-out, padding 0.4s ease-out, box-shadow 0.4s ease-out;
 }
 
 /* --- 共通部分（PC・SP共通のスタイル） --- */
@@ -1837,8 +1874,7 @@ body.page-id-616 .entry-content {
   width: 110px;
   height: 110px;
   border-radius: 50%; /* Circle looks cleaner for horizontal layout */
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   margin-bottom: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -2354,9 +2390,7 @@ body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-response-output,
   align-items: center;
   padding: 14px 20px;
   cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 .toc__header:hover {
   background-color: #eef1fd;
@@ -2438,7 +2472,6 @@ body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-response-output,
   .toc {
     margin: 24px 0 20px;
     border-radius: 6px;
-    background-color: #fff;
   }
   .toc__header {
     padding: 12px 14px;
@@ -2513,8 +2546,7 @@ body {
 img {
   width: 100%;
   height: auto;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 .entry-meta span {
@@ -2658,8 +2690,7 @@ img {
     /* 高さは自動調整 */
     max-height: 18vh;
     /* エリアからはみ出さないように制限を追加 */
-    -o-object-fit: contain;
-       object-fit: contain;
+    object-fit: contain;
   }
   .title-h2__text {
     position: relative;
@@ -2846,8 +2877,7 @@ img {
   .fv-article-image img {
     width: 625px;
     height: 100%;
-    -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     transition: transform 0.4s ease;
   }
   .fv-article-text {
@@ -2912,8 +2942,7 @@ img {
   .pickup-article__image img {
     width: 100%;
     height: 100%;
-    -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     transition: transform 0.4s ease;
   }
   .pickup-article-text {
@@ -2974,8 +3003,7 @@ img {
   .new-article__image img {
     width: 100%;
     height: 100%;
-    -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     transition: transform 0.4s ease;
   }
   .new-article:first-child {
@@ -3121,9 +3149,10 @@ img {
     margin-top: 8px;
   }
   .hero-text {
-    font-size: 15px;
+    font-size: clamp(11px, 3.5vw, 15px); /* SPサイズで1文字だけ改行されるのを防ぐため画面幅に合わせて調整 */
     font-weight: bold;
     color: #fff;
+    white-space: nowrap; /* 強制的に1行で収める（万が一はみ出す場合はclampで縮小される） */
   }
   /* ロゴ画像のスタイル */
   /* ロゴ画像のスタイル */
@@ -3136,8 +3165,7 @@ img {
     /* 高さは自動調整 */
     max-height: 18vh;
     /* はみ出し防止用制限を追加 */
-    -o-object-fit: contain;
-       object-fit: contain;
+    object-fit: contain;
   }
   .button {
     width: 180px;
@@ -3209,8 +3237,7 @@ img {
   .fv-article-image img {
     width: 100%;
     height: 100%;
-    -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     transition: transform 0.4s ease;
   }
   .fv-article-text {
@@ -3268,8 +3295,7 @@ img {
   .pickup-article__image img {
     width: 100%;
     height: 100%;
-    -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     transition: transform 0.4s ease;
   }
   .pickup-article-text {
@@ -3326,8 +3352,7 @@ img {
   .new-article__image img {
     width: 100%;
     height: 100%;
-    -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     transition: transform 0.4s ease;
   }
   .new-article:first-child {
@@ -3488,8 +3513,7 @@ img {
   transition: transform 0.4s ease;
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .top-page-article {
   /* タイトルテキストのアニメーションと3行制限（4行目以降は省略） */
@@ -3529,4 +3553,6 @@ body .pagination .nav-links .page-numbers.current {
   background-color: #2B53EC;
   color: #ffffff;
   border-color: #2B53EC;
-}/*# sourceMappingURL=style_add.css.map */
+}
+
+/*# sourceMappingURL=style_add.css.map */

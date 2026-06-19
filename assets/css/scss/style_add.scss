@@ -788,9 +788,10 @@ img {
   }
 
   .hero-text {
-    font-size: 15px;
+    font-size: clamp(11px, 3.5vw, 15px); /* SPサイズで1文字だけ改行されるのを防ぐため画面幅に合わせて調整 */
     font-weight: bold;
     color: #fff;
+    white-space: nowrap; /* 強制的に1行で収める（万が一はみ出す場合はclampで縮小される） */
   }
 
   /* ロゴ画像のスタイル */

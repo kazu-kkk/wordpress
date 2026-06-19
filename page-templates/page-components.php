@@ -339,7 +339,7 @@ if (isset($_GET['component_preview'])) {
                         <i class="fa-solid fa-eye"></i> スクロール状態をトグル (has-scrolled-fv)
                     </button>
                     
-                    <div id="c-header-demo-box" class="navbar" style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 15px; background: #fff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); max-width: 600px; margin: 0 auto;">
+                    <div id="c-header-demo-box" class="navbar" style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 15px; background: none; background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 1%, rgba(0, 0, 0, 0) 100%); box-shadow: none; max-width: 600px; margin: 0 auto; transition: background 0.4s ease-out, box-shadow 0.4s ease-out;">
                         <div class="header-inner" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                             <div class="header-logo-wrapper" style="flex-shrink: 0;">
                                 <div class="custom-logo-link">
@@ -349,9 +349,9 @@ if (isset($_GET['component_preview'])) {
                                 </div>
                             </div>
                             <nav style="display: flex; gap: 20px; flex-shrink: 0; align-items: center;">
-                                <span style="font-size: 14px; font-weight: bold; color: #2B53EC; font-family: 'Plus Jakarta Sans', sans-serif;">About</span>
-                                <span style="font-size: 14px; font-weight: bold; color: #2B53EC; font-family: 'Plus Jakarta Sans', sans-serif;">Article</span>
-                                <span style="font-size: 14px; font-weight: bold; color: #2B53EC; font-family: 'Plus Jakarta Sans', sans-serif;">Contact</span>
+                                <span style="font-size: 14px; font-weight: bold; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;">About</span>
+                                <span style="font-size: 14px; font-weight: bold; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;">Article</span>
+                                <span style="font-size: 14px; font-weight: bold; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;">Contact</span>
                             </nav>
                         </div>
                     </div>
@@ -368,6 +368,10 @@ if (isset($_GET['component_preview'])) {
                             opacity: 1;
                             visibility: visible;
                             transform: translateY(0);
+                        }
+                        #c-header-demo-box.has-scrolled-fv {
+                            background: rgba(0, 0, 0, 0.9) !important;
+                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
                         }
                     </style>
                 </div>
@@ -1913,7 +1917,7 @@ if (isset($_GET['component_preview'])) {
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-header'); ?>" class="showcase-iframe" data-comp="c-header" style="height: 240px;"></iframe>
                         </div>
                         <div class="showcase-code-box">
-                            <pre><code class="html-code">&lt;!-- TOPページのbodyに.has-scrolled-fvクラスが付与されることで、ロゴがフェードイン表示されます --&gt;
+                            <pre><code class="html-code">&lt;!-- TOPページのbodyに.has-scrolled-fvクラスが付与されることで、ロゴがフェードインし、ヘッダーに黒い帯（背景）が表示されます --&gt;
 &lt;body class="home has-scrolled-fv"&gt;
   &lt;header id="masthead" class="site-header"&gt;
     &lt;div class="header-logo-wrapper"&gt;
