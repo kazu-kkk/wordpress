@@ -121,6 +121,17 @@ body.single .site-content {
       color: #000;
     }
 
+    a:not(.wp-block-button__link):not(.button):not(.btn) {
+      color: #2B53EC;
+      text-decoration: underline;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 0.8;
+        text-decoration: none;
+      }
+    }
+
 
   /* Table Style */
   .wp-block-table {

@@ -440,18 +440,21 @@
 
 ---
 
-### 18. `.about-content` — Aboutページ本文
-**ファイル**: `_bento.scss`
+### 18. `.about-content` — Aboutページ本文およびインラインリンク仕様
+**ファイル**: `_bento.scss`, `_single.scss`
 
 ```html
 <div class="about-content">
   <h2>見出し</h2>
-  <p>テキスト</p>
+  <p>テキストの中の<a href="#">リンクテキスト</a></p>
+</div>
+<div class="article-text">
+  <p>記事内の<a href="#">リンクテキスト</a></p>
 </div>
 ```
 
 - `h2` に青いアクセントライン（`.article-text h2` と同デザイン）
-- 内部リンク: ブランドブルー + アンダーライン
+- インラインリンク共通仕様 (`a:not(...)`): ブランドブルー (`#2B53EC`) + アンダーライン。ホバー時は滑らかに不透明度が変化 (`opacity: 0.8`) し、下線が非表示になります。
 
 ---
 

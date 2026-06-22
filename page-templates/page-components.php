@@ -122,7 +122,7 @@ if (isset($_GET['component_preview'])) {
 
                         <div class="article-text">
                             <h2>1. 基本的な見出しの装飾（H2）</h2>
-                            <p>見出し2の下部には太いグレーのボーダーが表示され、左側にはブランドブルーのショートアクセントラインが重ねられます。</p>
+                            <p>見出し2の下部には太いグレーのボーダーが表示され、左側にはブランドブルーのショートアクセントラインが重ねられます。詳細は<a href="#" onclick="return false;">こちらのテスト用インラインリンク（ブランドブルー・下線付き）</a>からご確認ください。</p>
                             
                             <h3>1-1. 詳細を掘り下げるための見出し（H3）</h3>
                             <p>見出し3はシンプルなボールドテキストで、記事の流れを階層的に整理します。</p>
@@ -1406,7 +1406,7 @@ if (isset($_GET['component_preview'])) {
                         <span class="showcase-section-meta">_single.scss</span>
                     </div>
                     <div class="showcase-desc">
-                        シングル記事ページで使用するタイトル、日付、見出し(H2: PC 28px/SP 22px, H3: PC 24px/SP 20px)およびテーブル(PC版・縦ヘッダー)などの装飾です。
+                        シングル記事ページで使用するタイトル、日付、見出し(H2: PC 28px/SP 22px, H3: PC 24px/SP 20px)、テーブル(PC版・縦ヘッダー)、およびインラインリンクなどの装飾です。
                     </div>
                     <div class="showcase-preview-wrapper">
                         <div class="showcase-control-bar">
@@ -1438,9 +1438,10 @@ if (isset($_GET['component_preview'])) {
     &lt;/ul&gt;
 &lt;/div&gt;
 
-&lt;!-- 本文内見出しとテーブル --&gt;
+&lt;!-- 本文内見出しとテーブル、リンク --&gt;
 &lt;div class="article-text"&gt;
     &lt;h2&gt;見出し2（アクセント線付き）&lt;/h2&gt;
+    &lt;p&gt;通常のテキスト中に表示される&lt;a href="#"&gt;インラインリンク（青色・下線付き）&lt;/a&gt;のスタイルです。&lt;/p&gt;
     &lt;h3&gt;見出し3&lt;/h3&gt;
     
     &lt;!-- 縦ヘッダーテーブル --&gt;
