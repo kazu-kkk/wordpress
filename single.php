@@ -30,6 +30,8 @@ get_header(); ?>
                         </div>
                     </div>
 
+                    <?php get_template_part('template-parts/share-buttons'); ?>
+
                     <!-- ここにサムネイルを追加 -->
                     <?php if (has_post_thumbnail()) : ?>
                         <div class="article-sub-thumbnail">
@@ -41,6 +43,8 @@ get_header(); ?>
                     <div class="article-text">
                         <?php the_content(); ?>
                     </div>
+
+                    <?php get_template_part('template-parts/share-buttons'); ?>
 
                     <?php
                     // ── 関連記事セクション ──────────────────────────────────────

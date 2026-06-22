@@ -190,13 +190,21 @@ function inspiro_child_enqueue_scripts() {
         );
     }
 
-    // 記事ページ（single）でのみ目次JSを読み込む
+    // 記事ページ（single）でのみ目次JSとシェアJSを読み込む
     if (is_single()) {
         wp_enqueue_script(
             'inspiro-toc',
             get_stylesheet_directory_uri() . '/assets/js/toc.js',
             array(),
             filemtime(get_stylesheet_directory() . '/assets/js/toc.js'),
+            true
+        );
+
+        wp_enqueue_script(
+            'inspiro-share',
+            get_stylesheet_directory_uri() . '/assets/js/share.js',
+            array(),
+            filemtime(get_stylesheet_directory() . '/assets/js/share.js'),
             true
         );
     }
@@ -524,3 +532,84 @@ function inspiro_child_auto_toc($content) {
     return $new_content;
 }
 add_filter('the_content', 'inspiro_child_auto_toc', 20);
+
+/**
+ * Add OGP Meta Tags to Head
+ */
+function inspiro_child_add_ogp()
+{
+    if (is_admin()) {
+        return;
+    }
+
+    $og_title       = get_bloginfo('name');
+    $og_description = 'デザペディアは、デザイナーやクリエイターのための情報メディアサイトです。最新のデザインニュース、クリエイティブなインスピレーション、業界のトレンド、役立つツールやチュートリアルを提供し、あなたのクリエイティブな活動をサポートします。';
+    $og_url         = home_url('/');
+    $og_type        = 'website';
+    $og_image       = '';
+
+    // デフォルト画像の設定（ロゴなど）
+    if (has_custom_logo()) {
+        $custom_logo_id = get_theme_mod('custom_logo');
+        $logo_img_src = wp_get_attachment_image_src($custom_logo_id, 'full');
+        if ($logo_img_src) {
+            $og_image = $logo_img_src[0];
+        }
+    }
+    
+    // カスタムロゴが取得できない、または設定がない場合はデフォルトのブログロゴ画像を設定
+    if (empty($og_image)) {
+        $og_image = home_url('/wp-content/uploads/2025/01/ブログロゴ.png');
+    }
+
+    if (is_single() || is_page()) {
+        $post_id = get_the_ID();
+        $post = get_post($post_id);
+        if ($post) {
+            $og_title       = get_the_title($post_id);
+            $og_url         = get_permalink($post_id);
+            $og_type        = 'article';
+
+            // 抜粋があれば使用し、なければ本文から120文字を自動生成
+            $excerpt = $post->post_excerpt;
+            if (empty($excerpt)) {
+                $plain_content = wp_strip_all_tags(strip_shortcodes($post->post_content));
+                $excerpt       = mb_substr($plain_content, 0, 120, 'UTF-8');
+                if (mb_strlen($plain_content, 'UTF-8') > 120) {
+                    $excerpt .= '…';
+                }
+            }
+            $og_description = esc_attr($excerpt);
+
+            if (has_post_thumbnail($post_id)) {
+                $thumbnail_src = wp_get_attachment_image_src(get_post_thumbnail_id($post_id), 'full');
+                if ($thumbnail_src) {
+                    $og_image = $thumbnail_src[0];
+                }
+            }
+        }
+    }
+
+    // OGP タグの出力
+    echo "\n" . '<!-- OGP Meta Tags -->' . "\n";
+    echo '<meta name="description" content="' . esc_attr($og_description) . '" />' . "\n";
+    echo '<meta property="og:title" content="' . esc_attr($og_title) . '" />' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr($og_description) . '" />' . "\n";
+    echo '<meta property="og:url" content="' . esc_url($og_url) . '" />' . "\n";
+    echo '<meta property="og:type" content="' . esc_attr($og_type) . '" />' . "\n";
+    echo '<meta property="og:site_name" content="' . esc_attr(get_bloginfo('name')) . '" />' . "\n";
+    if (!empty($og_image)) {
+        echo '<meta property="og:image" content="' . esc_url($og_image) . '" />' . "\n";
+    }
+    
+    // Twitter Card
+    echo '<meta name="twitter:card" content="summary_large_image" />' . "\n";
+    echo '<meta name="twitter:title" content="' . esc_attr($og_title) . '" />' . "\n";
+    echo '<meta name="twitter:description" content="' . esc_attr($og_description) . '" />' . "\n";
+    if (!empty($og_image)) {
+        echo '<meta name="twitter:image" content="' . esc_url($og_image) . '" />' . "\n";
+    }
+    echo '<!-- /OGP Meta Tags -->' . "\n";
+}
+add_action('wp_head', 'inspiro_child_add_ogp');
+

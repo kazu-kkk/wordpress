@@ -377,6 +377,14 @@ if (isset($_GET['component_preview'])) {
                 </div>
                 <?php
                 break;
+
+            case 'c-share':
+                ?>
+                <div style="max-width: 600px; margin: 0 auto; padding: 20px 0;">
+                    <?php get_template_part('template-parts/share-buttons'); ?>
+                </div>
+                <?php
+                break;
         }
         ?>
         <?php wp_footer(); ?>
@@ -1124,6 +1132,7 @@ if (isset($_GET['component_preview'])) {
                     <a href="#c-footer"><i class="fa-solid fa-window-minimize"></i> 12. Footer</a>
                     <a href="#c-contact"><i class="fa-solid fa-envelope"></i> 13. Contact Form</a>
                     <a href="#c-header"><i class="fa-solid fa-eye-slash"></i> 14. Header Logo Scroll</a>
+                    <a href="#c-share"><i class="fa-solid fa-share-nodes"></i> 15. Share Buttons</a>
                 </div>
             </aside>
 
@@ -1930,6 +1939,61 @@ if (isset($_GET['component_preview'])) {
                     </div>
                 </section>
 
+                <!-- 15. Share Buttons -->
+                <section id="c-share" class="showcase-section">
+                    <div class="showcase-section-title">
+                        <span class="title-group">
+                            <span class="section-num">15</span>
+                            <span>記事シェアボタン (.c-share)</span>
+                        </span>
+                        <span class="showcase-section-meta">_share.scss</span>
+                    </div>
+                    <div class="showcase-desc">
+                        各種SNSへの共有リンク（X, Facebook, LINE）とクリップボードコピーボタンです。通常時はシンプルな細枠の白背景ですが、ホバー時に各SNSのブランドカラーへ滑らかに変化します。
+                    </div>
+                    <div class="showcase-preview-wrapper">
+                        <div class="showcase-control-bar">
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">Width:</span>
+                                <button class="showcase-ctrl-btn active" data-width="100%">PC</button>
+                                <button class="showcase-ctrl-btn" data-width="768px">Tablet</button>
+                                <button class="showcase-ctrl-btn" data-width="375px">Mobile</button>
+                            </div>
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">BG:</span>
+                                <button class="showcase-bg-btn active" data-bg="default"></button>
+                                <button class="showcase-bg-btn" data-bg="white"></button>
+                                <button class="showcase-bg-btn" data-bg="gray"></button>
+                                <button class="showcase-bg-btn" data-bg="dark"></button>
+                            </div>
+                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                        </div>
+                        <div class="showcase-preview-box">
+                            <iframe src="<?php echo add_query_arg('component_preview', 'c-share'); ?>" class="showcase-iframe" data-comp="c-share" style="height: 160px;"></iframe>
+                        </div>
+                        <div class="showcase-code-box">
+                            <pre><code class="html-code">&lt;!-- 記事詳細ページ（single.php）のタイトル下および本文下に表示されます --&gt;
+&lt;div class="c-share"&gt;
+    &lt;p class="c-share__title"&gt;SHARE&lt;/p&gt;
+    &lt;ul class="c-share__list"&gt;
+        &lt;li class="c-share__item c-share__item--twitter"&gt;
+            &lt;a href="..." target="_blank" rel="nofollow noopener" aria-label="Xでシェア"&gt;
+                &lt;svg class="c-share__icon"&gt;...&lt;/svg&gt;
+            &lt;/&gt;
+        &lt;/li&gt;
+        &lt;!-- 他のSNSリンク... --&gt;
+        &lt;li class="c-share__item c-share__item--copy"&gt;
+            &lt;button class="c-share__copy-btn js-share-copy" data-url="[URL]" aria-label="URLをコピー"&gt;
+                &lt;svg class="c-share__icon"&gt;...&lt;/svg&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                        </div>
+                    </div>
+                </section>
+
             </main>
         </div>
     </div>
@@ -1962,6 +2026,7 @@ if (isset($_GET['component_preview'])) {
             <a href="#c-footer"><i class="fa-solid fa-window-minimize"></i> 12. Footer</a>
             <a href="#c-contact"><i class="fa-solid fa-envelope"></i> 13. Contact Form</a>
             <a href="#c-header"><i class="fa-solid fa-eye-slash"></i> 14. Header Logo Scroll</a>
+            <a href="#c-share"><i class="fa-solid fa-share-nodes"></i> 15. Share Buttons</a>
         </div>
     </div>
 </div>
