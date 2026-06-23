@@ -34,9 +34,11 @@
   color: #333;
   cursor: pointer;
 
-  &:hover {
-    transform: scale(1.02); /* Slight scale */
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  @media (hover: hover) {
+    &:hover {
+      transform: scale(1.02); /* Slight scale */
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    }
   }
 }
 
@@ -53,9 +55,11 @@
   cursor: default;
   margin-bottom: 0 !important;
 
-  &:hover {
-    transform: none;
-    box-shadow: none;
+  @media (hover: hover) {
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
   }
 
   .profile-content {
@@ -132,8 +136,10 @@
   border: 1px solid #FCDFE9;
   color: #E1306C;
   
-  &:hover {
-    opacity: 1; 
+  @media (hover: hover) {
+    &:hover {
+      opacity: 1; 
+    }
   }
 }
 
@@ -251,8 +257,10 @@ body.page-template-default .entry-content {
     color: #2B53EC;
     text-decoration: underline;
 
-    &:hover {
-      text-decoration: none;
+    @media (hover: hover) {
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
 }

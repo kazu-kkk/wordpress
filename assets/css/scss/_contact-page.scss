@@ -14,9 +14,11 @@
     color: inherit; /* リンクの色を継承 */
 }
 
-.page-id-616 .instagram-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+@media (hover: hover) {
+    .page-id-616 .instagram-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
 }
 
 .page-id-616 .instagram-avatar img {

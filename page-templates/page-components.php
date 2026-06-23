@@ -220,7 +220,6 @@ if (isset($_GET['component_preview'])) {
                         <div class="blogcard_content">
                             <p class="blogcard_title">デザペディア — デザインやクリエイティブを学ぶ情報メディア</p>
                             <p class="blogcard_excerpt">UIデザインからWordPressテーマカスタマイズ、開発の効率化まで幅広く学べるデジタルマガジンです。</p>
-                            <p class="blogcard_link">ds-pedia.com</p>
                         </div>
                     </a>
                 </div>
@@ -1584,7 +1583,7 @@ if (isset($_GET['component_preview'])) {
                         <span class="showcase-section-meta">_blogcard.scss</span>
                     </div>
                     <div class="showcase-desc">
-                        記事本文内で関連記事などの内部リンクをリッチにアピールするためのブログカードです。サムネイルとタイトル・抜粋・ドメインを一体化してスマートに表現します。
+                        記事本文内で関連記事などの内部リンクをリッチにアピールするためのブログカードです。サムネイルとタイトル・抜粋・ドメインを一体化してスマートに表現します。記事本文内のリンク下線（underline）の指定を受けないよう、下線が非表示に保護されています。
                     </div>
                     <div class="showcase-preview-wrapper">
                         <div class="showcase-control-bar">
@@ -1615,7 +1614,6 @@ if (isset($_GET['component_preview'])) {
     &lt;div class="blogcard_content"&gt;
       &lt;p class="blogcard_title"&gt;記事タイトル&lt;/p&gt;
       &lt;p class="blogcard_excerpt"&gt;記事の抜粋文がここに入ります。&lt;/p&gt;
-      &lt;p class="blogcard_link"&gt;example.com&lt;/p&gt;
     &lt;/div&gt;
   &lt;/a&gt;
 &lt;/div&gt;</code></pre>

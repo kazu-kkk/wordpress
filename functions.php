@@ -111,7 +111,6 @@ function show_Linkcard($atts)
             <div class="blogcard_content">
                 <div class="blogcard_title">' . esc_html($Link_title) . '</div>
                 <div class="blogcard_excerpt">' . esc_html($Link_description) . '</div>
-                <div class="blogcard_link">' . esc_url($atts['url']) . '</div>
             </div>
             <div class="clear"></div>
         </a>

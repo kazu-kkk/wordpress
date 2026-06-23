@@ -16,6 +16,10 @@
 > - 本文: `"Verdana", "Hiragino Sans", "Meiryo", sans-serif`
 > - フッター: `"Inter", "Helvetica Neue", Arial, sans-serif`
 > - ベント: `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, …`
+>
+> **ホバー挙動の共通仕様**
+>
+> - スマートフォンやタブレット等のタッチデバイス操作時における「タップ時の意図しないホバー状態の残留（背景色の変化や画像の拡大など）」を防ぐため、すべての `:hover` アニメーション・スタイルは `@media (hover: hover)` メディアクエリで囲まれています。マウスなどのポインティングデバイスが利用可能な環境でのみホバー演出が発生し、タッチデバイスでの操作時はホバー演出が無効化されます。
 
 ---
 
@@ -285,7 +289,6 @@
     <div class="blogcard_content">
       <p class="blogcard_title">記事タイトル</p>
       <p class="blogcard_excerpt">抜粋テキスト</p>
-      <p class="blogcard_link">example.com</p>
     </div>
   </a>
 </div>
@@ -294,6 +297,7 @@
 - PC: サムネイル幅 `180px`固定 + テキスト横並び
 - SP: サムネイル幅 `110px`
 - ホバー: カードが上に浮き上がる
+- **リンク下線の打ち消し**: 記事本文（`.article-text`）などのインラインリンク下線（`underline`）指定の影響を受けないよう、非ホバー・ホバー時ともに下線が表示されないようにスタイルを設定。
 
 ---
 

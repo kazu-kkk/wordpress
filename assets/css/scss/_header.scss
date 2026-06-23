@@ -96,15 +96,17 @@
             transition: all 0.3s ease;
         }
 
-        &:hover {
-            background-color: #2B53EC;
-            color: #fff;
-            box-shadow: 0 6px 15px rgba(43, 83, 236, 0.2);
-            transform: translateY(-2px);
+        @media (hover: hover) {
+            &:hover {
+                background-color: #2B53EC;
+                color: #fff;
+                box-shadow: 0 6px 15px rgba(43, 83, 236, 0.2);
+                transform: translateY(-2px);
 
-            &::after {
-                border-color: #fff;
-                transform: rotate(45deg) translate(2px, -2px);
+                &::after {
+                    border-color: #fff;
+                    transform: rotate(45deg) translate(2px, -2px);
+                }
             }
         }
     }
@@ -212,15 +214,17 @@
                         transition: all 0.3s ease;
                     }
 
-                    &:hover {
-                        background-color: #2B53EC;
-                        color: #fff;
-                        box-shadow: 0 4px 12px rgba(43, 83, 236, 0.25);
-                        transform: translateY(-2px);
+                    @media (hover: hover) {
+                        &:hover {
+                            background-color: #2B53EC;
+                            color: #fff;
+                            box-shadow: 0 4px 12px rgba(43, 83, 236, 0.25);
+                            transform: translateY(-2px);
 
-                        &::after {
-                            border-color: #fff;
-                            transform: rotate(45deg) translate(2px, -2px);
+                            &::after {
+                                border-color: #fff;
+                                transform: rotate(45deg) translate(2px, -2px);
+                            }
                         }
                     }
                 }
@@ -286,7 +290,7 @@
             }
 
             /* アクティブな項目（キーボード操作用） */
-            &.active, &:hover {
+            &.active {
                 background-color: #f0f4ff;
                 
                 a {
@@ -294,6 +298,18 @@
                     background-color: transparent !important;
                     box-shadow: none !important;
                     transform: none !important;
+                }
+            }
+            @media (hover: hover) {
+                &:hover {
+                    background-color: #f0f4ff;
+                    
+                    a {
+                        color: #2B53EC !important;
+                        background-color: transparent !important;
+                        box-shadow: none !important;
+                        transform: none !important;
+                    }
                 }
             }
             
@@ -335,10 +351,12 @@
                     font-weight: bold;
                 }
                 
-                &:hover {
-                    background-color: transparent !important;
-                    transform: none !important;
-                    box-shadow: none !important;
+                @media (hover: hover) {
+                    &:hover {
+                        background-color: transparent !important;
+                        transform: none !important;
+                        box-shadow: none !important;
+                    }
                 }
             }
         }

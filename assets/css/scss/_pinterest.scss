@@ -18,9 +18,11 @@
         display: inline-block;
         transition: transform 0.3s ease, opacity 0.3s ease;
         
-        &:hover {
-            transform: scale(1.02);
-            opacity: 0.9;
+        @media (hover: hover) {
+            &:hover {
+                transform: scale(1.02);
+                opacity: 0.9;
+            }
         }
     }
 

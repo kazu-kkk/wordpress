@@ -75,11 +75,13 @@ img {
   transition: all 0.5s ease;
 }
 
-.button:hover {
-  color: #2b53ec;
-  background-color: #fff;
-  border: 2px solid #2b53ec;
-  /* 枠線を明示的に指定 */
+@media (hover: hover) {
+  .button:hover {
+    color: #2b53ec;
+    background-color: #fff;
+    border: 2px solid #2b53ec;
+    /* 枠線を明示的に指定 */
+  }
 }
 
 
@@ -429,13 +431,15 @@ img {
     background-color: #fff;
     border-radius: 8px;
 
-    &:hover {
-      .fv-article-text__title {
-        color: #2b53ec;
-      }
+    @media (hover: hover) {
+      &:hover {
+        .fv-article-text__title {
+          color: #2b53ec;
+        }
 
-      .fv-article-image img {
-        transform: scale(1.05);
+        .fv-article-image img {
+          transform: scale(1.05);
+        }
       }
     }
   }
@@ -514,13 +518,15 @@ img {
     overflow: hidden;
     border-radius: 8px;
 
-    &:hover {
-      .pickup-article-text__title {
-        color: #2b53ec;
-      }
+    @media (hover: hover) {
+      &:hover {
+        .pickup-article-text__title {
+          color: #2b53ec;
+        }
 
-      .pickup-article__image img {
-        transform: scale(1.05);
+        .pickup-article__image img {
+          transform: scale(1.05);
+        }
       }
     }
 
@@ -592,13 +598,15 @@ img {
     text-align: left;
     border-radius: 8px;
 
-    &:hover {
-      .new-article-text__title {
-        color: #2b53ec;
-      }
+    @media (hover: hover) {
+      &:hover {
+        .new-article-text__title {
+          color: #2b53ec;
+        }
 
-      .new-article__image img {
-        transform: scale(1.05);
+        .new-article__image img {
+          transform: scale(1.05);
+        }
       }
     }
 
@@ -881,13 +889,15 @@ img {
     background-color: #484948;
     border-radius: 8px;
 
-    &:hover {
-      .fv-article-text__title {
-        color: #2b53ec;
-      }
+    @media (hover: hover) {
+      &:hover {
+        .fv-article-text__title {
+          color: #2b53ec;
+        }
 
-      .fv-article-image img {
-        transform: scale(1.05);
+        .fv-article-image img {
+          transform: scale(1.05);
+        }
       }
     }
   }
@@ -952,13 +962,15 @@ img {
     overflow: hidden;
     border-radius: 8px;
 
-    &:hover {
-      .pickup-article-text__title {
-        color: #2b53ec;
-      }
+    @media (hover: hover) {
+      &:hover {
+        .pickup-article-text__title {
+          color: #2b53ec;
+        }
 
-      .pickup-article__image img {
-        transform: scale(1.05);
+        .pickup-article__image img {
+          transform: scale(1.05);
+        }
       }
     }
 
@@ -1023,13 +1035,15 @@ img {
     overflow: hidden;
     border-radius: 8px;
 
-    &:hover {
-      .new-article-text__title {
-        color: #2b53ec;
-      }
+    @media (hover: hover) {
+      &:hover {
+        .new-article-text__title {
+          color: #2b53ec;
+        }
 
-      .new-article__image img {
-        transform: scale(1.05);
+        .new-article__image img {
+          transform: scale(1.05);
+        }
       }
     }
 
@@ -1206,14 +1220,16 @@ img {
    ========================================= */
 .top-page-article {
 
-  /* 記事ラッパー全体にホバーした際に発火 */
-  &:hover {
-    .entry-title a {
-      color: #2b53ec;
-    }
+  @media (hover: hover) {
+    /* 記事ラッパー全体にホバーした際に発火 */
+    &:hover {
+      .entry-title a {
+        color: #2b53ec;
+      }
 
-    .post-thumbnail img {
-      transform: scale(1.05);
+      .post-thumbnail img {
+        transform: scale(1.05);
+      }
     }
   }
 
@@ -1255,10 +1271,12 @@ body {
         transition: all 0.3s ease;
 
         /* ホバー時の挙動 */
-        &:hover {
-          background-color: #EFF4FF;
-          color: #2B53EC;
-          border-color: #2B53EC;
+        @media (hover: hover) {
+          &:hover {
+            background-color: #EFF4FF;
+            color: #2B53EC;
+            border-color: #2B53EC;
+          }
         }
 
         /* 活性（現在地）のデザイン */

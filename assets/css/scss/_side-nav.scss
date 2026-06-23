@@ -61,15 +61,17 @@
     }
 }
 
-#custom-side-nav a:hover {
-    background-color: #2B53EC; /* テーマカラーのブルー */
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(43, 83, 236, 0.25);
-    transform: translateY(-2px); /* 少し浮き上がる動き */
+@media (hover: hover) {
+    #custom-side-nav a:hover {
+        background-color: #2B53EC; /* テーマカラーのブルー */
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(43, 83, 236, 0.25);
+        transform: translateY(-2px); /* 少し浮き上がる動き */
 
-    &::after {
-        border-color: #fff;
-        transform: rotate(45deg) translate(2px, -2px);
+        &::after {
+            border-color: #fff;
+            transform: rotate(45deg) translate(2px, -2px);
+        }
     }
 }
 
@@ -135,9 +137,11 @@
     box-shadow: 0 2px 6px rgba(43, 83, 236, 0.3);
 }
 
-.profile-social .social-button:hover {
-    background-color: #1a3db8;
-    transform: translateY(-2px);
+@media (hover: hover) {
+    .profile-social .social-button:hover {
+        background-color: #1a3db8;
+        transform: translateY(-2px);
+    }
 }
 
 .profile-social .social-button img {
@@ -210,11 +214,20 @@
         }
 
         /* アクティブな項目（キーボード操作用） */
-        &.active, &:hover {
+        &.active {
             background-color: #f0f4ff;
             
             a {
                 color: #2B53EC !important;
+            }
+        }
+        @media (hover: hover) {
+            &:hover {
+                background-color: #f0f4ff;
+                
+                a {
+                    color: #2B53EC !important;
+                }
             }
         }
         

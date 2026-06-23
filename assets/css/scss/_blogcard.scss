@@ -43,8 +43,10 @@
         padding: 0;
     }
     
-    .blogcard:hover .blogcard_thumbnail img {
-        transform: scale(1.05);
+    @media (hover: hover) {
+        .blogcard:hover .blogcard_thumbnail img {
+            transform: scale(1.05);
+        }
     }
     
     .blogcard_content {
@@ -91,9 +93,11 @@
         text-overflow: ellipsis;
     }
     
-    .blogcard:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    @media (hover: hover) {
+        .blogcard:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
     }
     
 }
@@ -202,3 +206,18 @@
         }
     }
 }
+
+// 記事本文などでのリンク下線強制適用を防ぐ
+.article-text .blogcard a:not(.wp-block-button__link):not(.button):not(.btn),
+.blogcard a {
+    text-decoration: none;
+    border-bottom: none;
+    
+    @media (hover: hover) {
+        &:hover {
+            text-decoration: none;
+            border-bottom: none;
+        }
+    }
+}
+

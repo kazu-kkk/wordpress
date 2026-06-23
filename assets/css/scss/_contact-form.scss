@@ -87,9 +87,11 @@ body.page-template-contact-page .entry-content div.wpcf7,
         cursor: pointer;
         transition: all 0.5s ease;
 
-        &:hover {
-            color: #2b53ec;
-            background-color: #fff;
+        @media (hover: hover) {
+            &:hover {
+                color: #2b53ec;
+                background-color: #fff;
+            }
         }
 
         @media screen and (max-width: 767px) {
