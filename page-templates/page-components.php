@@ -384,6 +384,88 @@ if (isset($_GET['component_preview'])) {
                 </div>
                 <?php
                 break;
+
+            case 'c-pickup':
+                ?>
+                <section class="pickup" style="margin: 0; width: 100%;">
+                    <ul class="pickup-list">
+                        <li class="pickup-article">
+                            <a href="#" class="pickup-article-link" onclick="return false;">
+                                <div class="pickup-article__image" style="background: #ccc; height: 160px; display: flex; align-items: center; justify-content: center;">
+                                    <span style="font-size:12px; color:#999;">Dummy Image 1</span>
+                                </div>
+                                <div class="pickup-article-text">
+                                    <p class="pickup-article-text__title">Dial-Up Delightとは？洗練されすぎた画面に疲れたZ世代が選ぶWebデザイン</p>
+                                    <p class="pickup-article-text__date">2026.06.25</p>
+                                    <div class="pickup-article-text__category">
+                                        <span class="tag">デザイン</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="pickup-article">
+                            <a href="#" class="pickup-article-link" onclick="return false;">
+                                <div class="pickup-article__image" style="background: #ccc; height: 160px; display: flex; align-items: center; justify-content: center;">
+                                    <span style="font-size:12px; color:#999;">Dummy Image 2</span>
+                                </div>
+                                <div class="pickup-article-text">
+                                    <p class="pickup-article-text__title">UI/UXカラー設計のベストプラクティスと実例紹介</p>
+                                    <p class="pickup-article-text__date">2026.06.24</p>
+                                    <div class="pickup-article-text__category">
+                                        <span class="tag">UI/UX</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+                <?php
+                break;
+
+            case 'c-new-list':
+                ?>
+                <section class="new" style="margin: 0; width: 100%;">
+                    <div class="new-article-list">
+                        <article class="new-article">
+                            <a class="new-article-link" href="#" onclick="return false;">
+                                <div class="new-article__image" style="background: #ccc; height: 160px; display: flex; align-items: center; justify-content: center;">
+                                    <span style="font-size:12px; color:#999;">Dummy Image 1</span>
+                                </div>
+                                <div class="new-article-text">
+                                    <div class="new-article-text-inner">
+                                        <p class="new-article-text__title">世界基準に学ぶ「伝わるデザイン」の基礎体力と、日常を変えるヒント</p>
+                                        <p class="new-article-text__date">2026.06.25</p>
+                                        <div class="new-article-text-meta">
+                                            <div class="new-article-text__category">
+                                                <span class="tag">画像・ガイドライン</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
+                        <article class="new-article">
+                            <a class="new-article-link" href="#" onclick="return false;">
+                                <div class="new-article__image" style="background: #ccc; height: 160px; display: flex; align-items: center; justify-content: center;">
+                                    <span style="font-size:12px; color:#999;">Dummy Image 2</span>
+                                </div>
+                                <div class="new-article-text">
+                                    <div class="new-article-text-inner">
+                                        <p class="new-article-text__title">Sass/SCSSの構成管理とインポート戦略を極める</p>
+                                        <p class="new-article-text__date">2026.06.24</p>
+                                        <div class="new-article-text-meta">
+                                            <div class="new-article-text__category">
+                                                <span class="tag">ツール・実践導入</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
+                    </div>
+                </section>
+                <?php
+                break;
         }
         ?>
         <?php wp_footer(); ?>
@@ -915,6 +997,11 @@ if (isset($_GET['component_preview'])) {
 }
 
 .token-color-preview.brand { background-color: #2B53EC; }
+.token-color-preview.brand-palette-1 { background-color: #180074; }
+.token-color-preview.brand-palette-2 { background-color: #0f00a0; }
+.token-color-preview.brand-palette-3 { background-color: #325df7; }
+.token-color-preview.brand-palette-4 { background-color: #77b1ff; }
+.token-color-preview.brand-palette-5 { background-color: #a0deff; }
 .token-color-preview.bg-light { background-color: #F5F7FF; }
 .token-color-preview.bg-dark { background-color: #1a1a1a; }
 .token-color-preview.text-main { background-color: #333333; }
@@ -1132,6 +1219,8 @@ if (isset($_GET['component_preview'])) {
                     <a href="#c-contact"><i class="fa-solid fa-envelope"></i> 13. Contact Form</a>
                     <a href="#c-header"><i class="fa-solid fa-eye-slash"></i> 14. Header Logo Scroll</a>
                     <a href="#c-share"><i class="fa-solid fa-share-nodes"></i> 15. Share Buttons</a>
+                    <a href="#c-pickup"><i class="fa-solid fa-grip-vertical"></i> 16. Pickup Articles</a>
+                    <a href="#c-new-list"><i class="fa-solid fa-list"></i> 17. New Articles / Trends</a>
                 </div>
             </aside>
 
@@ -1159,6 +1248,46 @@ if (isset($_GET['component_preview'])) {
                             <div class="token-info">
                                 <span class="token-name">ブランドブルー</span>
                                 <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#2B53EC</code> <i class="fa-regular fa-copy"></i></span>
+                            </div>
+                        </div>
+                        <!-- Brand Palette 1 -->
+                        <div class="token-card">
+                            <div class="token-color-preview brand-palette-1"></div>
+                            <div class="token-info">
+                                <span class="token-name">パレット 1</span>
+                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#180074</code> <i class="fa-regular fa-copy"></i></span>
+                            </div>
+                        </div>
+                        <!-- Brand Palette 2 -->
+                        <div class="token-card">
+                            <div class="token-color-preview brand-palette-2"></div>
+                            <div class="token-info">
+                                <span class="token-name">パレット 2</span>
+                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#0f00a0</code> <i class="fa-regular fa-copy"></i></span>
+                            </div>
+                        </div>
+                        <!-- Brand Palette 3 -->
+                        <div class="token-card">
+                            <div class="token-color-preview brand-palette-3"></div>
+                            <div class="token-info">
+                                <span class="token-name">パレット 3</span>
+                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#325df7</code> <i class="fa-regular fa-copy"></i></span>
+                            </div>
+                        </div>
+                        <!-- Brand Palette 4 -->
+                        <div class="token-card">
+                            <div class="token-color-preview brand-palette-4"></div>
+                            <div class="token-info">
+                                <span class="token-name">パレット 4</span>
+                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#77b1ff</code> <i class="fa-regular fa-copy"></i></span>
+                            </div>
+                        </div>
+                        <!-- Brand Palette 5 -->
+                        <div class="token-card">
+                            <div class="token-color-preview brand-palette-5"></div>
+                            <div class="token-info">
+                                <span class="token-name">パレット 5</span>
+                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#a0deff</code> <i class="fa-regular fa-copy"></i></span>
                             </div>
                         </div>
                         <!-- Content BG -->
@@ -1993,6 +2122,123 @@ if (isset($_GET['component_preview'])) {
                     </div>
                 </section>
 
+                <!-- 16. Pickup Articles -->
+                <section id="c-pickup" class="showcase-section">
+                    <div class="showcase-section-title">
+                          <span class="title-group">
+                              <span class="section-num">16</span>
+                              <span>ピックアップ記事リスト (.pickup)</span>
+                          </span>
+                        <span class="showcase-section-meta">style_add.scss</span>
+                    </div>
+                    <div class="showcase-desc">
+                        おすすめ記事をカルーセル形式で表示するコンポーネントです。SP表示時はトバログ風の横スクロール（スワイプ）レイアウトとなり、左右の負のマージンによって画面端までスクロール領域が広がります。また、SP表示でも白背景・黒文字デザインが維持されます。
+                    </div>
+                    <div class="showcase-preview-wrapper">
+                        <div class="showcase-control-bar">
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">Width:</span>
+                                <button class="showcase-ctrl-btn active" data-width="100%">PC</button>
+                                <button class="showcase-ctrl-btn" data-width="768px">Tablet</button>
+                                <button class="showcase-ctrl-btn" data-width="375px">Mobile</button>
+                            </div>
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">BG:</span>
+                                <button class="showcase-bg-btn active" data-bg="default"></button>
+                                <button class="showcase-bg-btn" data-bg="white"></button>
+                                <button class="showcase-bg-btn" data-bg="gray"></button>
+                                <button class="showcase-bg-btn" data-bg="dark"></button>
+                            </div>
+                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                        </div>
+                        <div class="showcase-preview-box">
+                            <iframe src="<?php echo add_query_arg('component_preview', 'c-pickup'); ?>" class="showcase-iframe" data-comp="c-pickup" style="height: 380px;"></iframe>
+                        </div>
+                        <div class="showcase-code-box">
+                            <pre><code class="html-code">&lt;!-- TOPページのメインコンテンツエリア上部（フル幅）に配置されます --&gt;
+&lt;section class="pickup"&gt;
+    &lt;h2 class="title-h2__text title-h2__text--pick-up"&gt;ピックアップ&lt;/h2&gt;
+    &lt;ul class="pickup-list"&gt;
+        &lt;li class="pickup-article"&gt;
+            &lt;a href="#" class="pickup-article-link"&gt;
+                &lt;div class="pickup-article__image"&gt;
+                    &lt;img src="..." alt="Image"&gt;
+                &lt;/div&gt;
+                &lt;div class="pickup-article-text"&gt;
+                    &lt;p class="pickup-article-text__title"&gt;記事タイトル&lt;/p&gt;
+                    &lt;p class="pickup-article-text__date"&gt;2026.06.25&lt;/p&gt;
+                    &lt;div class="pickup-article-text__category"&gt;
+                        &lt;span class="tag"&gt;カテゴリ&lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/a&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/section&gt;</code></pre>
+                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 17. New Articles / Trends -->
+                <section id="c-new-list" class="showcase-section">
+                    <div class="showcase-section-title">
+                          <span class="title-group">
+                              <span class="section-num">17</span>
+                              <span>最新の投稿 / トレンド (.new-article-list)</span>
+                          </span>
+                        <span class="showcase-section-meta">style_add.scss</span>
+                    </div>
+                    <div class="showcase-desc">
+                        最新の投稿やカテゴリ別トレンド記事を表示するコンポーネントです。SP表示時はトバログ風の横スクロール（スワイプ）レイアウトとなり、左右の負のマージンによって画面端までスクロール領域が広がります。また、SP表示でもカード型（白背景・黒文字）デザインが維持されます。
+                    </div>
+                    <div class="showcase-preview-wrapper">
+                        <div class="showcase-control-bar">
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">Width:</span>
+                                <button class="showcase-ctrl-btn active" data-width="100%">PC</button>
+                                <button class="showcase-ctrl-btn" data-width="768px">Tablet</button>
+                                <button class="showcase-ctrl-btn" data-width="375px">Mobile</button>
+                            </div>
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">BG:</span>
+                                <button class="showcase-bg-btn active" data-bg="default"></button>
+                                <button class="showcase-bg-btn" data-bg="white"></button>
+                                <button class="showcase-bg-btn" data-bg="gray"></button>
+                                <button class="showcase-bg-btn" data-bg="dark"></button>
+                            </div>
+                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                        </div>
+                        <div class="showcase-preview-box">
+                            <iframe src="<?php echo add_query_arg('component_preview', 'c-new-list'); ?>" class="showcase-iframe" data-comp="c-new-list" style="height: 380px;"></iframe>
+                        </div>
+                        <div class="showcase-code-box">
+                            <pre><code class="html-code">&lt;!-- 2カラムエリアのメインコンテンツエリア内に配置されます --&gt;
+&lt;div class="new-article-list"&gt;
+    &lt;article class="new-article"&gt;
+        &lt;a href="#" class="new-article-link"&gt;
+            &lt;div class="new-article__image"&gt;
+                &lt;img src="..." alt="Image"&gt;
+            &lt;/div&gt;
+            &lt;div class="new-article-text"&gt;
+                &lt;div class="new-article-text-inner"&gt;
+                    &lt;p class="new-article-text__title"&gt;記事タイトル&lt;/p&gt;
+                    &lt;p class="new-article-text__date"&gt;2026.06.25&lt;/p&gt;
+                    &lt;div class="new-article-text-meta"&gt;
+                        &lt;div class="new-article-text__category"&gt;
+                            &lt;span class="tag"&gt;カテゴリ&lt;/span&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/a&gt;
+    &lt;/article&gt;
+&lt;/div&gt;</code></pre>
+                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                        </div>
+                    </div>
+                </section>
+
             </main>
         </div>
     </div>
@@ -2026,6 +2272,8 @@ if (isset($_GET['component_preview'])) {
             <a href="#c-contact"><i class="fa-solid fa-envelope"></i> 13. Contact Form</a>
             <a href="#c-header"><i class="fa-solid fa-eye-slash"></i> 14. Header Logo Scroll</a>
             <a href="#c-share"><i class="fa-solid fa-share-nodes"></i> 15. Share Buttons</a>
+            <a href="#c-pickup"><i class="fa-solid fa-grip-vertical"></i> 16. Pickup Articles</a>
+            <a href="#c-new-list"><i class="fa-solid fa-list"></i> 17. New Articles / Trends</a>
         </div>
     </div>
 </div>

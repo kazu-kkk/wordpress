@@ -1,13 +1,4 @@
 @charset "UTF-8";
-/* 共通部分 */
-body.single #masthead,
-body.single .site-header,
-body.single .header,
-body.single .navbar {
-  background-color: #000 !important;
-  background-image: none !important;
-}
-
 /* 隙間の白い部分をグレーで塗りつぶす */
 body.single,
 body.single #page,
@@ -3015,11 +3006,14 @@ img {
   a.tag {
     display: inline-block;
     padding: 5px 8px;
+    margin-bottom: 8px;
+    margin-right: 4px;
     font-size: 13px;
     font-weight: bold;
-    color: #fff;
-    background-color: #2b53ec;
+    color: #333333;
+    background-color: #D8F2FF;
     border-radius: 5px;
+    line-height: 1.4;
   }
   .header {
     position: fixed;
@@ -3208,7 +3202,7 @@ img {
   }
   .contents-inner {
     display: flex;
-    gap: 84px;
+    gap: 40px;
     width: 1100px;
     margin: 0 auto;
   }
@@ -3218,7 +3212,7 @@ img {
   }
   .new-article {
     display: flex;
-    width: 659px;
+    width: 703px;
     height: 150px;
     margin-top: 30px;
     overflow: hidden;
@@ -3271,13 +3265,19 @@ img {
     font-size: 13px;
     color: #000;
   }
-  .new-article-text__category {
+  .new-article-text-meta {
     display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
     margin-top: 15px;
+    align-items: flex-start;
+    overflow: hidden;
+    height: 30px;
   }
-  .new-article-text__tag {
-    display: flex;
-    margin-top: 15px;
+  .new-article-text__category, .new-article-text__tag {
+    display: block;
+    flex-shrink: 0;
+    line-height: 1.4;
   }
   .right-contents {
     width: 357px;
@@ -3295,6 +3295,7 @@ img {
   }
   .popular-tag-list {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
   }
   .sns {
@@ -3461,7 +3462,8 @@ img {
     width: 350px;
     margin: 0 auto;
     overflow: hidden;
-    background-color: #484948;
+    background-color: #fff;
+    border: 1px solid #e2e8f0;
     border-radius: 8px;
   }
 }
@@ -3489,17 +3491,18 @@ img {
     align-items: center;
     justify-content: center;
     padding: 15px 15px 30px;
+    background-color: #fff;
   }
   .fv-article-text__title {
     font-size: 18px;
     font-weight: bold;
     line-height: 1.5;
-    color: #fff;
+    color: #000;
   }
   .fv-article-text__date {
     margin-top: 6px;
     font-size: 14px;
-    color: #fff;
+    color: #666;
   }
   .fv-article-text-category {
     display: flex;
@@ -3511,19 +3514,33 @@ img {
     background-color: #ebff40;
   }
   .pickup {
-    width: 350px;
+    width: 100%;
     margin: 40px auto 0;
   }
   .pickup-list {
-    gap: 20px;
-    align-content: space-between;
-    margin: 0 auto;
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 16px;
+    padding: 0 16px 16px;
+    margin: 0 -16px;
+    width: calc(100% + 32px);
+    list-style: none;
+  }
+  .pickup-list::-webkit-scrollbar {
+    display: none;
+  }
+  .pickup-list {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
   .pickup-article {
-    width: 354px;
-    margin-top: 30px;
+    flex-shrink: 0;
+    width: 280px;
+    margin-top: 0;
     overflow: hidden;
     border-radius: 8px;
+    border: 1px solid #e2e8f0;
   }
 }
 @media screen and (width <= 767px) and (hover: hover) {
@@ -3537,7 +3554,7 @@ img {
 @media screen and (width <= 767px) {
   .pickup-article__image {
     width: 100%;
-    height: 207px;
+    height: 160px;
     overflow: hidden;
   }
   .pickup-article__image img {
@@ -3547,23 +3564,23 @@ img {
     transition: transform 0.4s ease;
   }
   .pickup-article-text {
-    padding: 22px 20px;
-    background-color: #484948;
+    padding: 16px;
+    background-color: #fff;
   }
   .pickup-article-text__title {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
-    line-height: 1.5;
-    color: #fff;
+    line-height: 1.4;
+    color: #000;
   }
   .pickup-article-text__date {
     margin-top: 6px;
-    font-size: 13px;
-    color: #fff;
+    font-size: 12px;
+    color: #666;
   }
   .pickup-article-text__category {
     display: flex;
-    margin-top: 16px;
+    margin-top: 12px;
   }
   .contents {
     width: 350px;
@@ -3580,11 +3597,30 @@ img {
     width: 100%;
     margin-top: 40px;
   }
+  .new-article-list {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 16px;
+    padding: 0 16px 16px;
+    margin: 0 -16px;
+    width: calc(100% + 32px);
+    list-style: none;
+  }
+  .new-article-list::-webkit-scrollbar {
+    display: none;
+  }
+  .new-article-list {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
   .new-article {
-    width: 100%;
-    margin-top: 30px;
+    flex-shrink: 0;
+    width: 280px;
+    margin-top: 0 !important;
     overflow: hidden;
     border-radius: 8px;
+    border: 1px solid #e2e8f0;
   }
 }
 @media screen and (width <= 767px) and (hover: hover) {
@@ -3596,9 +3632,13 @@ img {
   }
 }
 @media screen and (width <= 767px) {
+  .new-article-link {
+    display: block;
+    width: 100%;
+  }
   .new-article__image {
     width: 100%;
-    height: 100%;
+    height: 160px;
     overflow: hidden;
   }
   .new-article__image img {
@@ -3614,23 +3654,34 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 15px 20px;
-    background-color: #484948;
+    padding: 16px;
+    background-color: #fff;
   }
   .new-article-text__title {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
-    line-height: 1.5;
-    color: #fff;
+    line-height: 1.4;
+    color: #000;
   }
   .new-article-text__date {
     margin-top: 5px;
-    font-size: 13px;
-    color: #fff;
+    font-size: 12px;
+    color: #666;
   }
-  .new-article-text__category {
+  .new-article-text-meta {
     display: flex;
-    margin-top: 15px;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+    align-items: flex-start;
+    overflow: hidden;
+    height: 30px;
+  }
+  .new-article-text__category, .new-article-text__tag {
+    display: block;
+    margin-top: 0;
+    flex-shrink: 0;
+    line-height: 1.4;
   }
   .category {
     margin-top: 40px;
@@ -3648,6 +3699,7 @@ img {
   }
   .popular-tag-list {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
   }
   .sns {
@@ -3809,4 +3861,522 @@ body .pagination .nav-links .page-numbers.current {
   background-color: #2B53EC;
   color: #ffffff;
   border-color: #2B53EC;
-}/*# sourceMappingURL=style_add.css.map */
+}
+
+@media screen and (max-width: 767px) {
+  html body.page-template-page-top-preview span.tag,
+  html body.page-template-page-top-preview a.tag,
+  html body.home span.tag,
+  html body.home a.tag,
+  html body span.tag,
+  html body a.tag {
+    display: inline-block;
+    padding: 3px 6px;
+    margin-bottom: 4px;
+    margin-right: 0;
+    font-size: 11px;
+    font-weight: bold;
+    color: #333333 !important;
+    background-color: #D8F2FF !important;
+    border-radius: 4px;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup,
+  html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup,
+  html body.page-template-page-top-preview div.inner-wrap section.pickup,
+  html body.page-template-page-top-preview section.pickup,
+  html body.home div#primary main#main.top-page-content section.pickup,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup,
+  html body.home div.inner-wrap section.pickup,
+  html body.home section.pickup,
+  html body div#primary main#main.top-page-content section.pickup,
+  html body div.preview-content-wrapper div.inner-wrap section.pickup,
+  html body div.inner-wrap section.pickup,
+  html body section.pickup {
+    width: 100%;
+    margin: 40px auto 0;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list,
+  html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list,
+  html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list,
+  html body.page-template-page-top-preview section.pickup ul.pickup-list,
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list,
+  html body.home div.inner-wrap section.pickup ul.pickup-list,
+  html body.home section.pickup ul.pickup-list,
+  html body div#primary main#main.top-page-content section.pickup ul.pickup-list,
+  html body div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list,
+  html body div.inner-wrap section.pickup ul.pickup-list,
+  html body section.pickup ul.pickup-list {
+    display: flex;
+    flex-direction: column; /* 縦積みに変更 */
+    gap: 16px;
+    list-style: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 0;
+    padding-bottom: 16px;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body.page-template-page-top-preview section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body.home div.inner-wrap section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body.home section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body div#primary main#main.top-page-content section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body div.inner-wrap section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body section.pickup ul.pickup-list::-webkit-scrollbar {
+    display: none;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list,
+  html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list,
+  html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list,
+  html body.page-template-page-top-preview section.pickup ul.pickup-list,
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list,
+  html body.home div.inner-wrap section.pickup ul.pickup-list,
+  html body.home section.pickup ul.pickup-list,
+  html body div#primary main#main.top-page-content section.pickup ul.pickup-list,
+  html body div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list,
+  html body div.inner-wrap section.pickup ul.pickup-list,
+  html body section.pickup ul.pickup-list {
+    scrollbar-width: none;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article,
+  html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article,
+  html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article,
+  html body.page-template-page-top-preview section.pickup ul.pickup-list li.pickup-article,
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article,
+  html body.home section.pickup ul.pickup-list li.pickup-article,
+  html body div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article,
+  html body div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article,
+  html body div.inner-wrap section.pickup ul.pickup-list li.pickup-article,
+  html body section.pickup ul.pickup-list li.pickup-article {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 0;
+    overflow: hidden;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body.page-template-page-top-preview section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body.home section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body div.inner-wrap section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body section.pickup ul.pickup-list li.pickup-article:first-child {
+    margin-left: 0;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body.page-template-page-top-preview section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body.home section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body div.inner-wrap section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body section.pickup ul.pickup-list li.pickup-article:last-child {
+    border-bottom: none;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body.page-template-page-top-preview section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body.home section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body div.inner-wrap section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body section.pickup ul.pickup-list li.pickup-article a.pickup-article-link {
+    display: flex;
+    flex-direction: row-reverse; /* 右画像・左テキスト */
+    flex-grow: 1;
+    width: 100%;
+    text-decoration: none;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body.page-template-page-top-preview section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body.home section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body section.pickup ul.pickup-list li.pickup-article div.pickup-article__image {
+    width: 90px;
+    height: 90px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body.page-template-page-top-preview section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body.home section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body.page-template-page-top-preview section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body.home section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body section.pickup ul.pickup-list li.pickup-article div.pickup-article-text {
+    padding: 0;
+    background-color: transparent;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 102px);
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body.page-template-page-top-preview section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body.home section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title {
+    font-size: 15px;
+    color: #333;
+    font-weight: bold;
+    line-height: 1.4;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 2行で省略 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body.page-template-page-top-preview section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body.home section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date {
+    color: #666;
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body.page-template-page-top-preview section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body.home section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  html body.page-template-page-top-preview h2.title-h2__text--new,
+  html body.page-template-page-top-preview h2.title-h2__text--category,
+  html body.home h2.title-h2__text--new,
+  html body.home h2.title-h2__text--category,
+  html body h2.title-h2__text--new,
+  html body h2.title-h2__text--category {
+    margin-top: 40px;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list,
+  html body.page-template-page-top-preview div#primary .new-article-list,
+  html body.page-template-page-top-preview .new-article-list,
+  html body.home div#primary main#main.top-page-content .new-article-list,
+  html body.home div#primary .new-article-list,
+  html body.home .new-article-list,
+  html body div#primary main#main.top-page-content .new-article-list,
+  html body div#primary .new-article-list,
+  html body .new-article-list {
+    display: flex;
+    flex-direction: column; /* 縦積みに変更 */
+    gap: 16px;
+    list-style: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 0;
+    padding-bottom: 16px;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list::-webkit-scrollbar,
+  html body.page-template-page-top-preview div#primary .new-article-list::-webkit-scrollbar,
+  html body.page-template-page-top-preview .new-article-list::-webkit-scrollbar,
+  html body.home div#primary main#main.top-page-content .new-article-list::-webkit-scrollbar,
+  html body.home div#primary .new-article-list::-webkit-scrollbar,
+  html body.home .new-article-list::-webkit-scrollbar,
+  html body div#primary main#main.top-page-content .new-article-list::-webkit-scrollbar,
+  html body div#primary .new-article-list::-webkit-scrollbar,
+  html body .new-article-list::-webkit-scrollbar {
+    display: none;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list,
+  html body.page-template-page-top-preview div#primary .new-article-list,
+  html body.page-template-page-top-preview .new-article-list,
+  html body.home div#primary main#main.top-page-content .new-article-list,
+  html body.home div#primary .new-article-list,
+  html body.home .new-article-list,
+  html body div#primary main#main.top-page-content .new-article-list,
+  html body div#primary .new-article-list,
+  html body .new-article-list {
+    scrollbar-width: none;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article,
+  html body.page-template-page-top-preview div#primary .new-article-list .new-article,
+  html body.page-template-page-top-preview .new-article-list .new-article,
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article,
+  html body.home div#primary .new-article-list .new-article,
+  html body.home .new-article-list .new-article,
+  html body div#primary main#main.top-page-content .new-article-list .new-article,
+  html body div#primary .new-article-list .new-article,
+  html body .new-article-list .new-article {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 0;
+    overflow: hidden;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article:first-child,
+  html body.page-template-page-top-preview div#primary .new-article-list .new-article:first-child,
+  html body.page-template-page-top-preview .new-article-list .new-article:first-child,
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article:first-child,
+  html body.home div#primary .new-article-list .new-article:first-child,
+  html body.home .new-article-list .new-article:first-child,
+  html body div#primary main#main.top-page-content .new-article-list .new-article:first-child,
+  html body div#primary .new-article-list .new-article:first-child,
+  html body .new-article-list .new-article:first-child {
+    margin-left: 0;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article:last-child,
+  html body.page-template-page-top-preview div#primary .new-article-list .new-article:last-child,
+  html body.page-template-page-top-preview .new-article-list .new-article:last-child,
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article:last-child,
+  html body.home div#primary .new-article-list .new-article:last-child,
+  html body.home .new-article-list .new-article:last-child,
+  html body div#primary main#main.top-page-content .new-article-list .new-article:last-child,
+  html body div#primary .new-article-list .new-article:last-child,
+  html body .new-article-list .new-article:last-child {
+    border-bottom: none;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-link,
+  html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-link,
+  html body.page-template-page-top-preview .new-article-list .new-article .new-article-link,
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-link,
+  html body.home div#primary .new-article-list .new-article .new-article-link,
+  html body.home .new-article-list .new-article .new-article-link,
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-link,
+  html body div#primary .new-article-list .new-article .new-article-link,
+  html body .new-article-list .new-article .new-article-link {
+    display: flex;
+    flex-direction: row-reverse; /* 右画像・左テキスト */
+    flex-grow: 1;
+    width: 100%;
+    text-decoration: none;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article__image,
+  html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article__image,
+  html body.page-template-page-top-preview .new-article-list .new-article .new-article__image,
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article__image,
+  html body.home div#primary .new-article-list .new-article .new-article__image,
+  html body.home .new-article-list .new-article .new-article__image,
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article__image,
+  html body div#primary .new-article-list .new-article .new-article__image,
+  html body .new-article-list .new-article .new-article__image {
+    width: 90px;
+    height: 90px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img,
+  html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article__image img,
+  html body.page-template-page-top-preview .new-article-list .new-article .new-article__image img,
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img,
+  html body.home div#primary .new-article-list .new-article .new-article__image img,
+  html body.home .new-article-list .new-article .new-article__image img,
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img,
+  html body div#primary .new-article-list .new-article .new-article__image img,
+  html body .new-article-list .new-article .new-article__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-text,
+  html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-text,
+  html body.page-template-page-top-preview .new-article-list .new-article .new-article-text,
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text,
+  html body.home div#primary .new-article-list .new-article .new-article-text,
+  html body.home .new-article-list .new-article .new-article-text,
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-text,
+  html body div#primary .new-article-list .new-article .new-article-text,
+  html body .new-article-list .new-article .new-article-text {
+    padding: 0;
+    background-color: transparent;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 102px);
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-inner,
+  html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-text-inner,
+  html body.page-template-page-top-preview .new-article-list .new-article .new-article-text-inner,
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-inner,
+  html body.home div#primary .new-article-list .new-article .new-article-text-inner,
+  html body.home .new-article-list .new-article .new-article-text-inner,
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-inner,
+  html body div#primary .new-article-list .new-article .new-article-text-inner,
+  html body .new-article-list .new-article .new-article-text-inner {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__title,
+  html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-text__title,
+  html body.page-template-page-top-preview .new-article-list .new-article .new-article-text__title,
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__title,
+  html body.home div#primary .new-article-list .new-article .new-article-text__title,
+  html body.home .new-article-list .new-article .new-article-text__title,
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__title,
+  html body div#primary .new-article-list .new-article .new-article-text__title,
+  html body .new-article-list .new-article .new-article-text__title {
+    font-size: 15px;
+    color: #333;
+    font-weight: bold;
+    line-height: 1.4;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 2行で省略 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__date,
+  html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-text__date,
+  html body.page-template-page-top-preview .new-article-list .new-article .new-article-text__date,
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__date,
+  html body.home div#primary .new-article-list .new-article .new-article-text__date,
+  html body.home .new-article-list .new-article .new-article-text__date,
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__date,
+  html body div#primary .new-article-list .new-article .new-article-text__date,
+  html body .new-article-list .new-article .new-article-text__date {
+    color: #666;
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-meta,
+  html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-text-meta,
+  html body.page-template-page-top-preview .new-article-list .new-article .new-article-text-meta,
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-meta,
+  html body.home div#primary .new-article-list .new-article .new-article-text-meta,
+  html body.home .new-article-list .new-article .new-article-text-meta,
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-meta,
+  html body div#primary .new-article-list .new-article .new-article-text-meta,
+  html body .new-article-list .new-article .new-article-text-meta {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: flex-start;
+    overflow: hidden;
+    height: auto;
+  }
+  html body.page-template-page-top-preview section.fv div.fv-article,
+  html body.page-template-page-top-preview div.hero-background-preview div.fv-article,
+  html body.home section.fv div.fv-article,
+  html body.home div.hero-background-preview div.fv-article,
+  html body section.fv div.fv-article,
+  html body div.hero-background-preview div.fv-article {
+    background-color: #fff;
+    border: 1px solid #e2e8f0;
+  }
+  html body.page-template-page-top-preview section.fv div.fv-article div.fv-article-text,
+  html body.page-template-page-top-preview div.hero-background-preview div.fv-article div.fv-article-text,
+  html body.home section.fv div.fv-article div.fv-article-text,
+  html body.home div.hero-background-preview div.fv-article div.fv-article-text,
+  html body section.fv div.fv-article div.fv-article-text,
+  html body div.hero-background-preview div.fv-article div.fv-article-text {
+    background-color: #fff;
+  }
+  html body.page-template-page-top-preview section.fv div.fv-article div.fv-article-text p.fv-article-text__title,
+  html body.page-template-page-top-preview div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__title,
+  html body.home section.fv div.fv-article div.fv-article-text p.fv-article-text__title,
+  html body.home div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__title,
+  html body section.fv div.fv-article div.fv-article-text p.fv-article-text__title,
+  html body div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__title {
+    color: #000;
+  }
+  html body.page-template-page-top-preview section.fv div.fv-article div.fv-article-text p.fv-article-text__date,
+  html body.page-template-page-top-preview div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__date,
+  html body.home section.fv div.fv-article div.fv-article-text p.fv-article-text__date,
+  html body.home div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__date,
+  html body section.fv div.fv-article div.fv-article-text p.fv-article-text__date,
+  html body div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__date {
+    color: #666;
+  }
+}
+
+/*# sourceMappingURL=style_add.css.map */

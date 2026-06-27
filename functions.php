@@ -612,3 +612,14 @@ function inspiro_child_add_ogp()
 }
 add_action('wp_head', 'inspiro_child_add_ogp');
 
+/**
+ * 強制キャッシュ破り: style_add.cssのバージョンパラメータを動的（タイムスタンプ）に変換
+ */
+add_filter('style_loader_src', function($src, $handle) {
+    if ($handle === 'inspiro-child-style' || $handle === 'additional-style' || strpos($src, 'style_add.css') !== false) {
+        $src = remove_query_arg('ver', $src);
+        $src = add_query_arg('ver', time(), $src);
+    }
+    return $src;
+}, 9999, 2);
+
