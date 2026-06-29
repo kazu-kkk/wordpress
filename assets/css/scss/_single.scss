@@ -127,6 +127,44 @@ body.single .site-content {
       }
     }
 
+    blockquote,
+    .wp-block-quote {
+      position: relative;
+      background-color: #EFF4FF; /* 薄いブランドブルー */
+      color: #333; /* テキストは黒系 */
+      padding: 32px 40px;
+      border-radius: 8px;
+      margin: 40px 0;
+      overflow: hidden;
+      border: none;
+
+      &::before {
+        display: none;
+      }
+
+      p {
+        font-size: 18px;
+        line-height: 1.8;
+        margin: 0;
+        position: relative;
+        z-index: 1;
+        font-weight: 500;
+        font-style: normal;
+      }
+
+      cite, 
+      .wp-block-quote__citation {
+        display: block;
+        margin-top: 20px;
+        font-size: 13px;
+        color: #666;
+        font-style: normal;
+        text-align: right;
+        position: relative;
+        z-index: 1;
+      }
+    }
+
 
   /* Table Style */
   .wp-block-table {
@@ -351,6 +389,22 @@ body.single .site-content {
         font-size: 16px;
         line-height: 1.7;
         margin-bottom: 12px;
+      }
+
+      blockquote,
+      .wp-block-quote {
+        margin: 32px 0;
+        padding: 24px 20px; /* SPではパディングを少し狭く */
+
+        p {
+          font-size: 15px; /* SPでは少し小さくして読みやすく */
+        }
+
+        cite, 
+        .wp-block-quote__citation {
+          font-size: 12px;
+          margin-top: 16px;
+        }
       }
     }
   }

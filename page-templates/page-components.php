@@ -127,6 +127,11 @@ if (isset($_GET['component_preview'])) {
                             <h3>1-1. 詳細を掘り下げるための見出し（H3）</h3>
                             <p>見出し3はシンプルなボールドテキストで、記事の流れを階層的に整理します。</p>
 
+                            <blockquote class="wp-block-quote">
+                                <p>デザインは単なる見た目ではなく、機能である。</p>
+                                <cite>Steve Jobs</cite>
+                            </blockquote>
+
                             <!-- テーブル -->
                             <div class="wp-block-table is-vertical-header" style="margin: 20px 0;">
                                 <table>
@@ -1585,6 +1590,12 @@ if (isset($_GET['component_preview'])) {
     &lt;h2&gt;見出し2（アクセント線付き）&lt;/h2&gt;
     &lt;p&gt;通常のテキスト中に表示される&lt;a href="#"&gt;インラインリンク（青色・下線付き）&lt;/a&gt;のスタイルです。&lt;/p&gt;
     &lt;h3&gt;見出し3&lt;/h3&gt;
+    
+    &lt;!-- 引用ブロック --&gt;
+    &lt;blockquote class="wp-block-quote"&gt;
+        &lt;p&gt;デザインは単なる見た目ではなく、機能である。&lt;/p&gt;
+        &lt;cite&gt;Steve Jobs&lt;/cite&gt;
+    &lt;/blockquote&gt;
     
     &lt;!-- 縦ヘッダーテーブル --&gt;
     &lt;div class="wp-block-table is-vertical-header"&gt;

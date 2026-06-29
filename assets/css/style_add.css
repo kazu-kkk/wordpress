@@ -114,6 +114,44 @@ body.single .site-content {
     text-decoration: none;
   }
 }
+.article-text blockquote,
+.article-text .wp-block-quote {
+  position: relative;
+  background-color: #EFF4FF; /* 薄いブランドブルー */
+  color: #333; /* テキストは黒系 */
+  padding: 32px 40px;
+  border-radius: 8px;
+  margin: 40px 0;
+  overflow: hidden;
+  border: none;
+}
+.article-text blockquote::before,
+.article-text .wp-block-quote::before {
+  display: none;
+}
+.article-text blockquote p,
+.article-text .wp-block-quote p {
+  font-size: 18px;
+  line-height: 1.8;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  font-weight: 500;
+  font-style: normal;
+}
+.article-text blockquote cite,
+.article-text blockquote .wp-block-quote__citation,
+.article-text .wp-block-quote cite,
+.article-text .wp-block-quote .wp-block-quote__citation {
+  display: block;
+  margin-top: 20px;
+  font-size: 13px;
+  color: #666;
+  font-style: normal;
+  text-align: right;
+  position: relative;
+  z-index: 1;
+}
 .article-text {
   /* Table Style */
 }
@@ -300,6 +338,22 @@ body.single .site-content {
     font-size: 16px;
     line-height: 1.7;
     margin-bottom: 12px;
+  }
+  .article-text blockquote,
+  .article-text .wp-block-quote {
+    margin: 32px 0;
+    padding: 24px 20px; /* SPではパディングを少し狭く */
+  }
+  .article-text blockquote p,
+  .article-text .wp-block-quote p {
+    font-size: 15px; /* SPでは少し小さくして読みやすく */
+  }
+  .article-text blockquote cite,
+  .article-text blockquote .wp-block-quote__citation,
+  .article-text .wp-block-quote cite,
+  .article-text .wp-block-quote .wp-block-quote__citation {
+    font-size: 12px;
+    margin-top: 16px;
   }
 }
 .related-posts {
@@ -4454,4 +4508,6 @@ body .pagination .nav-links .page-numbers.current {
   html body div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__date {
     color: #666;
   }
-}/*# sourceMappingURL=style_add.css.map */
+}
+
+/*# sourceMappingURL=style_add.css.map */

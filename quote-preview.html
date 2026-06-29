@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blockquote Design Options</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    background-color: #F5F7FF;
+    font-family: "Verdana", "Hiragino Sans", "Meiryo", sans-serif;
+    color: #333;
+    padding: 40px;
+    margin: 0;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+  }
+  .option-wrapper {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  }
+  .option-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 24px;
+    color: #2B53EC;
+    border-bottom: 2px solid #E8E8E8;
+    padding-bottom: 12px;
+  }
+
+  /* Option A: Floating Card (SaaS Style) */
+  .quote-a {
+    position: relative;
+    background: #ffffff;
+    padding: 32px 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(43, 83, 236, 0.08), 0 1px 3px rgba(0,0,0,0.05);
+    margin: 20px 0;
+    border: 1px solid rgba(43, 83, 236, 0.1);
+  }
+  .quote-a::before {
+    content: "“";
+    position: absolute;
+    top: -20px;
+    left: 32px;
+    background: #2B53EC;
+    color: #fff;
+    font-size: 40px;
+    font-family: serif;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    line-height: 1;
+    padding-top: 10px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(43, 83, 236, 0.3);
+  }
+  .quote-a p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin: 0;
+    color: #444;
+  }
+  .quote-a cite {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #888;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .quote-a cite::before {
+    content: "";
+    display: inline-block;
+    width: 24px;
+    height: 2px;
+    background: #2B53EC;
+    margin-right: 12px;
+  }
+
+  /* Option B: Editorial / Magazine (Note/Medium Style) */
+  .quote-b {
+    position: relative;
+    padding: 12px 0 12px 32px;
+    margin: 32px 0;
+  }
+  .quote-b::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #2B53EC, #77b1ff);
+    border-radius: 3px;
+  }
+  .quote-b p {
+    font-size: 22px;
+    line-height: 1.6;
+    margin: 0;
+    color: #111;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+  }
+  .quote-b cite {
+    display: block;
+    margin-top: 16px;
+    font-size: 13px;
+    color: #666;
+    font-style: normal;
+  }
+
+  /* Option C: High Contrast Pull Quote (Zenn/Dev Style) */
+  .quote-c {
+    position: relative;
+    background: #2B53EC;
+    color: #ffffff;
+    padding: 32px 40px;
+    border-radius: 8px;
+    margin: 32px 0;
+    overflow: hidden;
+  }
+  .quote-c::after {
+    content: "”";
+    position: absolute;
+    bottom: -60px;
+    right: 20px;
+    font-size: 200px;
+    color: rgba(255, 255, 255, 0.1);
+    font-family: serif;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .quote-c p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+    font-weight: 500;
+  }
+  .quote-c cite {
+    display: block;
+    margin-top: 20px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    font-style: normal;
+    text-align: right;
+    position: relative;
+    z-index: 1;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1 style="text-align: center; margin-bottom: 20px;">Modern Blockquote Proposals</h1>
+    
+    <div class="option-wrapper">
+      <div class="option-title">Option A: Floating Card (SaaS/Tech Blog Style)</div>
+      <p style="font-size: 14px; color: #666; margin-bottom: 30px;">最新のSaaS企業ブログ（StripeやVercelなど）で見られる、UIコンポーネントのように独立して美しく浮かび上がるスタイル。アイコンがカードからはみ出しているのがポイントです。</p>
+      
+      <blockquote class="quote-a">
+        <p>デザインは単なる見た目や感覚ではない。デザインとは、それがどのように機能するかだ。</p>
+        <cite>Steve Jobs</cite>
+      </blockquote>
+    </div>
+
+    <div class="option-wrapper">
+      <div class="option-title">Option B: Editorial Typography (Note / Medium Style)</div>
+      <p style="font-size: 14px; color: #666; margin-bottom: 30px;">Noteや海外のMediumなど、文字（タイポグラフィ）そのものの美しさを際立たせるスタイル。あえて背景色は敷かず、大きな文字サイズと美しいグラデーションの左線だけで魅せます。</p>
+      
+      <blockquote class="quote-b">
+        <p>シンプルさは究極の洗練である。</p>
+        <cite>Leonardo da Vinci</cite>
+      </blockquote>
+    </div>
+
+    <div class="option-wrapper">
+      <div class="option-title">Option C: High Contrast Pull Quote (Zenn / Dev Blog Style)</div>
+      <p style="font-size: 14px; color: #666; margin-bottom: 30px;">Zennなどのデベロッパー向けブログで用いられる「絶対に読ませる」ためのハイコントラストなスタイル。ブランドブルーで塗りつぶし、背景に巨大な透かしクォートを入れています。</p>
+      
+      <blockquote class="quote-c">
+        <p>良いデザインは革新的であり、製品を理解しやすくし、そして目立たない。</p>
+        <cite>Dieter Rams</cite>
+      </blockquote>
+    </div>
+  </div>
+</body>
+</html>
