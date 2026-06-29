@@ -2293,6 +2293,83 @@ body.page-template-default .entry-content a:not(.wp-block-button__link):not(.but
   }
 }
 
+.article-text .article-summary,
+.article-summary {
+  margin: 2em 0;
+  padding: 24px 32px;
+  background-color: #f5f7ff;
+  border-left: 4px solid #2b53ec;
+  border-radius: 4px;
+}
+.article-text .article-summary .article-summary__title,
+.article-summary .article-summary__title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+.article-text .article-summary .article-summary__list,
+.article-summary .article-summary__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.article-text .article-summary .article-summary__list li.article-summary__item,
+.article-summary .article-summary__list li.article-summary__item {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  list-style: none;
+  margin-left: 0;
+}
+.article-text .article-summary .article-summary__list li.article-summary__item:last-child,
+.article-summary .article-summary__list li.article-summary__item:last-child {
+  margin-bottom: 0;
+}
+.article-text .article-summary .article-summary__list li.article-summary__item::before,
+.article-summary .article-summary__list li.article-summary__item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  background-color: #2b53ec;
+  border-radius: 50%;
+}
+@media screen and (max-width: 767px) {
+  .article-text .article-summary,
+  .article-summary {
+    padding: 16px 20px;
+    margin: 1.2em 0;
+  }
+  .article-text .article-summary .article-summary__title,
+  .article-summary .article-summary__title {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .article-text .article-summary .article-summary__list li.article-summary__item,
+  .article-summary .article-summary__list li.article-summary__item {
+    font-size: 16px;
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+  .article-text .article-summary .article-summary__list li.article-summary__item:last-child,
+  .article-summary .article-summary__list li.article-summary__item:last-child {
+    margin-bottom: 0;
+  }
+  .article-text .article-summary .article-summary__list li.article-summary__item::before,
+  .article-summary .article-summary__list li.article-summary__item::before {
+    width: 6px;
+    height: 6px;
+    top: 8px;
+  }
+}
+
 body.page-template-contact-page .entry-content {
   display: flex !important;
   flex-direction: column !important;
@@ -4377,6 +4454,4 @@ body .pagination .nav-links .page-numbers.current {
   html body div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__date {
     color: #666;
   }
-}
-
-/*# sourceMappingURL=style_add.css.map */
+}/*# sourceMappingURL=style_add.css.map */

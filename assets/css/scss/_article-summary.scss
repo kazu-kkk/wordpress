@@ -1,0 +1,79 @@
+// _article-summary.scss
+
+// .article-text などの親要素に上書きされないように詳細度を強化
+.article-text .article-summary,
+.article-summary {
+  margin: 2em 0;
+  padding: 24px 32px;
+  background-color: #f5f7ff;
+  border-left: 4px solid #2b53ec;
+  border-radius: 4px;
+
+  .article-summary__title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+
+  .article-summary__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    // 詳細度を上げて上書きを防ぐ
+    li.article-summary__item {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 12px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #333;
+      list-style: none;
+      margin-left: 0;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 8px;
+        width: 8px;
+        height: 8px;
+        background-color: #2b53ec;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 16px 20px;
+    margin: 1.2em 0;
+    
+    .article-summary__title {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+    
+    .article-summary__list li.article-summary__item {
+      font-size: 16px;
+      padding-left: 20px;
+      margin-bottom: 10px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      &::before {
+        width: 6px;
+        height: 6px;
+        top: 8px;
+      }
+    }
+  }
+}
+

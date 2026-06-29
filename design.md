@@ -526,6 +526,28 @@
 
 ---
 
+### 21. `.article-summary` — 記事要約ブロック
+**ファイル**: `_article-summary.scss`
+
+```html
+<div class="article-summary">
+  <div class="article-summary__title">この記事の要約</div>
+  <ul class="article-summary__list">
+    <li class="article-summary__item">要約テキスト1</li>
+    <li class="article-summary__item">要約テキスト2</li>
+    <li class="article-summary__item">要約テキスト3</li>
+  </ul>
+</div>
+```
+
+- ショートコード: `[article_summary point1="要約1" point2="要約2" point3="要約3"]`
+- ブランドブルーの左ボーダー (`border-left: 4px solid #2B53EC`)、背景色 (`#F5F7FF`)
+- 各アイテム: 青い丸の箇条書きスタイル（疑似要素）
+- SP: `padding` および `font-size` を最適化
+- 引数が省略された項目は非表示（トルツメ）となります。
+
+---
+
 ## ユーティリティ・グローバル設定
 
 | クラス / セレクタ | 説明 |

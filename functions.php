@@ -217,6 +217,41 @@ add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_scripts');
 
 
 /**
+ * Article Summary Component (Shortcode)
+ */
+function inspiro_child_article_summary($atts) {
+    $atts = shortcode_atts(array(
+        'point1' => '',
+        'point2' => '',
+        'point3' => '',
+    ), $atts);
+
+    $html = '<div class="article-summary">';
+    $html .= '<div class="article-summary__title">この記事の要約</div>';
+    
+    $has_points = false;
+    $points_html = '<ul class="article-summary__list">';
+    
+    for ($i = 1; $i <= 3; $i++) {
+        $point = $atts['point' . $i];
+        if (!empty($point)) {
+            $has_points = true;
+            $points_html .= '<li class="article-summary__item">' . esc_html($point) . '</li>';
+        }
+    }
+    $points_html .= '</ul>';
+
+    if ($has_points) {
+        $html .= $points_html;
+    }
+
+    $html .= '</div>';
+
+    return $html;
+}
+add_shortcode('article_summary', 'inspiro_child_article_summary');
+
+/**
  * Target Audience Component (Shortcode)
  */
 function inspiro_child_target_audience($atts) {

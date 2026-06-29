@@ -466,6 +466,19 @@ if (isset($_GET['component_preview'])) {
                 </section>
                 <?php
                 break;
+
+            case 'c-article-summary':
+                ?>
+                <div class="article-summary" style="margin: 0;">
+                    <div class="article-summary__title">この記事の要約</div>
+                    <ul class="article-summary__list">
+                        <li class="article-summary__item">要約テキスト1：ここに記事の要約のポイントが入ります。</li>
+                        <li class="article-summary__item">要約テキスト2：重要な要素を箇条書きで分かりやすく伝えます。</li>
+                        <li class="article-summary__item">要約テキスト3：3つまでフリースペースで記述可能です。</li>
+                    </ul>
+                </div>
+                <?php
+                break;
         }
         ?>
         <?php wp_footer(); ?>
@@ -1221,6 +1234,7 @@ if (isset($_GET['component_preview'])) {
                     <a href="#c-share"><i class="fa-solid fa-share-nodes"></i> 15. Share Buttons</a>
                     <a href="#c-pickup"><i class="fa-solid fa-grip-vertical"></i> 16. Pickup Articles</a>
                     <a href="#c-new-list"><i class="fa-solid fa-list"></i> 17. New Articles / Trends</a>
+                    <a href="#c-article-summary"><i class="fa-solid fa-list-check"></i> 18. Article Summary</a>
                 </div>
             </aside>
 
@@ -2239,6 +2253,43 @@ if (isset($_GET['component_preview'])) {
                     </div>
                 </section>
 
+                <!-- 18. Article Summary -->
+                <section id="c-article-summary" class="showcase-section">
+                    <h2 class="showcase-section-title">
+                        <span class="title-group"><span class="section-num">18</span> Article Summary</span>
+                        <span class="showcase-section-meta">_article-summary.scss / functions.php</span>
+                    </h2>
+                    <p class="showcase-desc">
+                        記事冒頭に挿入する、記事内容の要約を記載するためのコンポーネントです。[article_summary point1="要約1" point2="要約2" point3="要約3"] というショートコードで呼び出し、指定したテキストのみ箇条書き（トルツメ）で表示されます。
+                    </p>
+
+                    <div class="showcase-preview-wrapper" data-comp="c-article-summary">
+                        <div class="showcase-control-bar">
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">Width:</span>
+                                <button class="showcase-ctrl-btn" data-width="100%">PC</button>
+                                <button class="showcase-ctrl-btn" data-width="768px">Tablet</button>
+                                <button class="showcase-ctrl-btn" data-width="375px">Mobile</button>
+                            </div>
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">BG:</span>
+                                <button class="showcase-bg-btn active" data-bg="default"></button>
+                                <button class="showcase-bg-btn" data-bg="white"></button>
+                                <button class="showcase-bg-btn" data-bg="gray"></button>
+                                <button class="showcase-bg-btn" data-bg="dark"></button>
+                            </div>
+                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                        </div>
+                        <div class="showcase-preview-box">
+                            <iframe src="<?php echo add_query_arg('component_preview', 'c-article-summary'); ?>" class="showcase-iframe" data-comp="c-article-summary" style="height: 200px;"></iframe>
+                        </div>
+                        <div class="showcase-code-box">
+                            <pre><code class="html-code">[article_summary point1="要約テキスト1：ここに記事の要約のポイントが入ります。" point2="要約テキスト2：重要な要素を箇条書きで分かりやすく伝えます。" point3="要約テキスト3：3つまでフリースペースで記述可能です。"]</code></pre>
+                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                        </div>
+                    </div>
+                </section>
+
             </main>
         </div>
     </div>
@@ -2274,6 +2325,7 @@ if (isset($_GET['component_preview'])) {
             <a href="#c-share"><i class="fa-solid fa-share-nodes"></i> 15. Share Buttons</a>
             <a href="#c-pickup"><i class="fa-solid fa-grip-vertical"></i> 16. Pickup Articles</a>
             <a href="#c-new-list"><i class="fa-solid fa-list"></i> 17. New Articles / Trends</a>
+            <a href="#c-article-summary"><i class="fa-solid fa-list-check"></i> 18. Article Summary</a>
         </div>
     </div>
 </div>
