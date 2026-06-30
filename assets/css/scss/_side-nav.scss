@@ -34,8 +34,17 @@
     margin-bottom: 12px;
 }
 
+/* タグリスト内の余白は flex の gap に任せるため、li と a.tag のマージンをリセット */
+#custom-side-nav .popular-tag-list li {
+    margin-bottom: 0;
+}
+
+#custom-side-nav .popular-tag-list a.tag {
+    margin: 0;
+}
+
 /* カテゴリリンク - カード型デザイン */
-#custom-side-nav a {
+#custom-side-nav .side-nav-category-list a {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -62,7 +71,7 @@
 }
 
 @media (hover: hover) {
-    #custom-side-nav a:hover {
+    #custom-side-nav .side-nav-category-list a:hover {
         background-color: #2B53EC; /* テーマカラーのブルー */
         color: #fff;
         box-shadow: 0 4px 12px rgba(43, 83, 236, 0.25);

@@ -97,6 +97,8 @@
 
 			<?php
 			// Heroエリアを表示する条件
+			// ※front-page.php側で専用のHeroを出力するため、header.php側の出力は無効化しています。
+			/*
 			if (! is_page_template('page-templates/homepage-no-hero.php')) {
 				if (isset($paged) && $paged < 2 && $hero_show) {
 					if (is_front_page() && is_home()) { // Default homepage.
@@ -156,5 +158,6 @@
 					}
 				}
 			}
+			*/
 			?>
 			<div id="content" class="site-content">

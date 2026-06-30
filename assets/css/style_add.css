@@ -501,7 +501,7 @@ body.single .site-content {
 /* Footer Grid */
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 0.8fr 1.8fr 1fr;
   gap: 40px;
   margin-bottom: 50px;
   /* タブレット (768px - 1024px付近) */
@@ -1007,8 +1007,17 @@ body.single .site-content {
   margin-bottom: 12px;
 }
 
+/* タグリスト内の余白は flex の gap に任せるため、li と a.tag のマージンをリセット */
+#custom-side-nav .popular-tag-list li {
+  margin-bottom: 0;
+}
+
+#custom-side-nav .popular-tag-list a.tag {
+  margin: 0;
+}
+
 /* カテゴリリンク - カード型デザイン */
-#custom-side-nav a {
+#custom-side-nav .side-nav-category-list a {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1022,7 +1031,7 @@ body.single .site-content {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   /* 矢印アイコン装飾 */
 }
-#custom-side-nav a::after {
+#custom-side-nav .side-nav-category-list a::after {
   content: "";
   display: block;
   width: 6px;
@@ -1034,13 +1043,13 @@ body.single .site-content {
 }
 
 @media (hover: hover) {
-  #custom-side-nav a:hover {
+  #custom-side-nav .side-nav-category-list a:hover {
     background-color: #2B53EC; /* テーマカラーのブルー */
     color: #fff;
     box-shadow: 0 4px 12px rgba(43, 83, 236, 0.25);
     transform: translateY(-2px); /* 少し浮き上がる動き */
   }
-  #custom-side-nav a:hover::after {
+  #custom-side-nav .side-nav-category-list a:hover::after {
     border-color: #fff;
     transform: rotate(45deg) translate(2px, -2px);
   }
@@ -3058,7 +3067,7 @@ img {
     width: 34px;
     height: 34px;
     content: "";
-    background-image: url("images/ico_article.svg");
+    background-image: url("images/ico_pin.svg?v=2");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
@@ -3073,7 +3082,22 @@ img {
     width: 34px;
     height: 34px;
     content: "";
-    background-image: url("images/ico_article.svg");
+    background-image: url("images/ico_article.svg?v=2");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    transition: all 0.3s;
+    transform: translateY(-50%);
+  }
+  .title-h2__text--trend::before {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: block;
+    width: 34px;
+    height: 34px;
+    content: "";
+    background-image: url("images/ico_trend.svg?v=4");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
@@ -3088,7 +3112,7 @@ img {
     width: 34px;
     height: 34px;
     content: "";
-    background-image: url("images/ico_shape.svg");
+    background-image: url("images/ico_shape.svg?v=2");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
@@ -3103,7 +3127,7 @@ img {
     width: 34px;
     height: 34px;
     content: "";
-    background-image: url("images/ico_tag.svg");
+    background-image: url("images/ico_tag.svg?v=2");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
@@ -3118,7 +3142,7 @@ img {
     width: 34px;
     height: 34px;
     content: "";
-    background-image: url("images/ico_connection.svg");
+    background-image: url("images/ico_connection.svg?v=2");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
@@ -3893,6 +3917,7 @@ img {
 
 .title-h2__text--pick-up::before,
 .title-h2__text--new::before,
+.title-h2__text--trend::before,
 .title-h2__text--category::before,
 .title-h2__text--popular-tag::before,
 .title-h2__text--sns::before {
@@ -3909,21 +3934,28 @@ img {
   transform: translateY(-50%);
 }
 
-.title-h2__text--pick-up::before,
+.title-h2__text--pick-up::before {
+  background-image: url("images/ico_pin.svg?v=2");
+}
+
 .title-h2__text--new::before {
-  background-image: url("images/ico_article.svg");
+  background-image: url("images/ico_article.svg?v=2");
+}
+
+.title-h2__text--trend::before {
+  background-image: url("images/ico_trend.svg?v=4");
 }
 
 .title-h2__text--category::before {
-  background-image: url("images/ico_shape.svg");
+  background-image: url("images/ico_shape.svg?v=2");
 }
 
 .title-h2__text--popular-tag::before {
-  background-image: url("images/ico_tag.svg");
+  background-image: url("images/ico_tag.svg?v=2");
 }
 
 .title-h2__text--sns::before {
-  background-image: url("images/ico_connection.svg");
+  background-image: url("images/ico_connection.svg?v=2");
 }
 
 /* =========================================
@@ -3995,6 +4027,10 @@ body .pagination .nav-links .page-numbers.current {
 }
 
 @media screen and (max-width: 767px) {
+  html body.home span.tag,
+  html body.home a.tag,
+  html body.front-page span.tag,
+  html body.front-page a.tag,
   html body.page-template-page-top-preview span.tag,
   html body.page-template-page-top-preview a.tag,
   html body.home span.tag,
@@ -4011,6 +4047,14 @@ body .pagination .nav-links .page-numbers.current {
     background-color: #D8F2FF !important;
     border-radius: 4px;
   }
+  html body.home div#primary main#main.top-page-content section.pickup,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup,
+  html body.home div.inner-wrap section.pickup,
+  html body.home section.pickup,
+  html body.front-page div#primary main#main.top-page-content section.pickup,
+  html body.front-page div.preview-content-wrapper div.inner-wrap section.pickup,
+  html body.front-page div.inner-wrap section.pickup,
+  html body.front-page section.pickup,
   html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup,
   html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup,
   html body.page-template-page-top-preview div.inner-wrap section.pickup,
@@ -4026,6 +4070,14 @@ body .pagination .nav-links .page-numbers.current {
     width: 100%;
     margin: 40px auto 0;
   }
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list,
+  html body.home div.inner-wrap section.pickup ul.pickup-list,
+  html body.home section.pickup ul.pickup-list,
+  html body.front-page div#primary main#main.top-page-content section.pickup ul.pickup-list,
+  html body.front-page div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list,
+  html body.front-page div.inner-wrap section.pickup ul.pickup-list,
+  html body.front-page section.pickup ul.pickup-list,
   html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list,
   html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list,
   html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list,
@@ -4052,6 +4104,14 @@ body .pagination .nav-links .page-numbers.current {
     padding-right: 0;
     width: 100%;
   }
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body.home div.inner-wrap section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body.home section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body.front-page div#primary main#main.top-page-content section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body.front-page div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body.front-page div.inner-wrap section.pickup ul.pickup-list::-webkit-scrollbar,
+  html body.front-page section.pickup ul.pickup-list::-webkit-scrollbar,
   html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list::-webkit-scrollbar,
   html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list::-webkit-scrollbar,
   html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list::-webkit-scrollbar,
@@ -4066,6 +4126,14 @@ body .pagination .nav-links .page-numbers.current {
   html body section.pickup ul.pickup-list::-webkit-scrollbar {
     display: none;
   }
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list,
+  html body.home div.inner-wrap section.pickup ul.pickup-list,
+  html body.home section.pickup ul.pickup-list,
+  html body.front-page div#primary main#main.top-page-content section.pickup ul.pickup-list,
+  html body.front-page div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list,
+  html body.front-page div.inner-wrap section.pickup ul.pickup-list,
+  html body.front-page section.pickup ul.pickup-list,
   html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list,
   html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list,
   html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list,
@@ -4080,6 +4148,14 @@ body .pagination .nav-links .page-numbers.current {
   html body section.pickup ul.pickup-list {
     scrollbar-width: none;
   }
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article,
+  html body.home section.pickup ul.pickup-list li.pickup-article,
+  html body.front-page div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article,
+  html body.front-page div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article,
+  html body.front-page div.inner-wrap section.pickup ul.pickup-list li.pickup-article,
+  html body.front-page section.pickup ul.pickup-list li.pickup-article,
   html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article,
   html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article,
   html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article,
@@ -4101,6 +4177,14 @@ body .pagination .nav-links .page-numbers.current {
     border: none;
     border-bottom: 1px solid #e2e8f0;
   }
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body.home section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body.front-page div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body.front-page div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body.front-page div.inner-wrap section.pickup ul.pickup-list li.pickup-article:first-child,
+  html body.front-page section.pickup ul.pickup-list li.pickup-article:first-child,
   html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article:first-child,
   html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article:first-child,
   html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article:first-child,
@@ -4115,6 +4199,14 @@ body .pagination .nav-links .page-numbers.current {
   html body section.pickup ul.pickup-list li.pickup-article:first-child {
     margin-left: 0;
   }
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body.home section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body.front-page div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body.front-page div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body.front-page div.inner-wrap section.pickup ul.pickup-list li.pickup-article:last-child,
+  html body.front-page section.pickup ul.pickup-list li.pickup-article:last-child,
   html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article:last-child,
   html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article:last-child,
   html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article:last-child,
@@ -4129,6 +4221,14 @@ body .pagination .nav-links .page-numbers.current {
   html body section.pickup ul.pickup-list li.pickup-article:last-child {
     border-bottom: none;
   }
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body.home section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body.front-page div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body.front-page div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body.front-page div.inner-wrap section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
+  html body.front-page section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
   html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
   html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
   html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article a.pickup-article-link,
@@ -4150,6 +4250,14 @@ body .pagination .nav-links .page-numbers.current {
     gap: 12px;
     padding: 12px 0;
   }
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body.home section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body.front-page div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body.front-page div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body.front-page div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
+  html body.front-page section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
   html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
   html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
   html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image,
@@ -4168,6 +4276,14 @@ body .pagination .nav-links .page-numbers.current {
     border-radius: 6px;
     overflow: hidden;
   }
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body.home section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body.front-page div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body.front-page div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body.front-page div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
+  html body.front-page section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
   html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
   html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
   html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article__image img,
@@ -4184,6 +4300,14 @@ body .pagination .nav-links .page-numbers.current {
     height: 100%;
     object-fit: cover;
   }
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body.home section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body.front-page div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body.front-page div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body.front-page div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
+  html body.front-page section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
   html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
   html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
   html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text,
@@ -4203,6 +4327,14 @@ body .pagination .nav-links .page-numbers.current {
     flex-direction: column;
     width: calc(100% - 102px);
   }
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body.home section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body.front-page div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body.front-page div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body.front-page div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
+  html body.front-page section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
   html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
   html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
   html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__title,
@@ -4225,6 +4357,14 @@ body .pagination .nav-links .page-numbers.current {
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body.home section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body.front-page div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body.front-page div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body.front-page div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
+  html body.front-page section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
   html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
   html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
   html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text p.pickup-article-text__date,
@@ -4241,6 +4381,14 @@ body .pagination .nav-links .page-numbers.current {
     font-size: 12px;
     margin-bottom: 8px;
   }
+  html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body.home div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body.home section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body.front-page div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body.front-page div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body.front-page div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
+  html body.front-page section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
   html body.page-template-page-top-preview div#primary main#main.top-page-content section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
   html body.page-template-page-top-preview div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
   html body.page-template-page-top-preview div.inner-wrap section.pickup ul.pickup-list li.pickup-article div.pickup-article-text div.pickup-article-text__category,
@@ -4258,14 +4406,29 @@ body .pagination .nav-links .page-numbers.current {
     flex-wrap: wrap;
     gap: 4px;
   }
+  html body.home h2.title-h2__text--new,
+  html body.home h2.title-h2__text--trend,
+  html body.home h2.title-h2__text--category,
+  html body.front-page h2.title-h2__text--new,
+  html body.front-page h2.title-h2__text--trend,
+  html body.front-page h2.title-h2__text--category,
   html body.page-template-page-top-preview h2.title-h2__text--new,
+  html body.page-template-page-top-preview h2.title-h2__text--trend,
   html body.page-template-page-top-preview h2.title-h2__text--category,
   html body.home h2.title-h2__text--new,
+  html body.home h2.title-h2__text--trend,
   html body.home h2.title-h2__text--category,
   html body h2.title-h2__text--new,
+  html body h2.title-h2__text--trend,
   html body h2.title-h2__text--category {
     margin-top: 40px;
   }
+  html body.home div#primary main#main.top-page-content .new-article-list,
+  html body.home div#primary .new-article-list,
+  html body.home .new-article-list,
+  html body.front-page div#primary main#main.top-page-content .new-article-list,
+  html body.front-page div#primary .new-article-list,
+  html body.front-page .new-article-list,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list,
   html body.page-template-page-top-preview div#primary .new-article-list,
   html body.page-template-page-top-preview .new-article-list,
@@ -4289,6 +4452,12 @@ body .pagination .nav-links .page-numbers.current {
     padding-right: 0;
     width: 100%;
   }
+  html body.home div#primary main#main.top-page-content .new-article-list::-webkit-scrollbar,
+  html body.home div#primary .new-article-list::-webkit-scrollbar,
+  html body.home .new-article-list::-webkit-scrollbar,
+  html body.front-page div#primary main#main.top-page-content .new-article-list::-webkit-scrollbar,
+  html body.front-page div#primary .new-article-list::-webkit-scrollbar,
+  html body.front-page .new-article-list::-webkit-scrollbar,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list::-webkit-scrollbar,
   html body.page-template-page-top-preview div#primary .new-article-list::-webkit-scrollbar,
   html body.page-template-page-top-preview .new-article-list::-webkit-scrollbar,
@@ -4300,6 +4469,12 @@ body .pagination .nav-links .page-numbers.current {
   html body .new-article-list::-webkit-scrollbar {
     display: none;
   }
+  html body.home div#primary main#main.top-page-content .new-article-list,
+  html body.home div#primary .new-article-list,
+  html body.home .new-article-list,
+  html body.front-page div#primary main#main.top-page-content .new-article-list,
+  html body.front-page div#primary .new-article-list,
+  html body.front-page .new-article-list,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list,
   html body.page-template-page-top-preview div#primary .new-article-list,
   html body.page-template-page-top-preview .new-article-list,
@@ -4311,6 +4486,12 @@ body .pagination .nav-links .page-numbers.current {
   html body .new-article-list {
     scrollbar-width: none;
   }
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article,
+  html body.home div#primary .new-article-list .new-article,
+  html body.home .new-article-list .new-article,
+  html body.front-page div#primary main#main.top-page-content .new-article-list .new-article,
+  html body.front-page div#primary .new-article-list .new-article,
+  html body.front-page .new-article-list .new-article,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article,
   html body.page-template-page-top-preview div#primary .new-article-list .new-article,
   html body.page-template-page-top-preview .new-article-list .new-article,
@@ -4329,6 +4510,12 @@ body .pagination .nav-links .page-numbers.current {
     border: none;
     border-bottom: 1px solid #e2e8f0;
   }
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article:first-child,
+  html body.home div#primary .new-article-list .new-article:first-child,
+  html body.home .new-article-list .new-article:first-child,
+  html body.front-page div#primary main#main.top-page-content .new-article-list .new-article:first-child,
+  html body.front-page div#primary .new-article-list .new-article:first-child,
+  html body.front-page .new-article-list .new-article:first-child,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article:first-child,
   html body.page-template-page-top-preview div#primary .new-article-list .new-article:first-child,
   html body.page-template-page-top-preview .new-article-list .new-article:first-child,
@@ -4340,6 +4527,12 @@ body .pagination .nav-links .page-numbers.current {
   html body .new-article-list .new-article:first-child {
     margin-left: 0;
   }
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article:last-child,
+  html body.home div#primary .new-article-list .new-article:last-child,
+  html body.home .new-article-list .new-article:last-child,
+  html body.front-page div#primary main#main.top-page-content .new-article-list .new-article:last-child,
+  html body.front-page div#primary .new-article-list .new-article:last-child,
+  html body.front-page .new-article-list .new-article:last-child,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article:last-child,
   html body.page-template-page-top-preview div#primary .new-article-list .new-article:last-child,
   html body.page-template-page-top-preview .new-article-list .new-article:last-child,
@@ -4351,6 +4544,12 @@ body .pagination .nav-links .page-numbers.current {
   html body .new-article-list .new-article:last-child {
     border-bottom: none;
   }
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-link,
+  html body.home div#primary .new-article-list .new-article .new-article-link,
+  html body.home .new-article-list .new-article .new-article-link,
+  html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article-link,
+  html body.front-page div#primary .new-article-list .new-article .new-article-link,
+  html body.front-page .new-article-list .new-article .new-article-link,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-link,
   html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-link,
   html body.page-template-page-top-preview .new-article-list .new-article .new-article-link,
@@ -4369,6 +4568,12 @@ body .pagination .nav-links .page-numbers.current {
     gap: 12px;
     padding: 12px 0;
   }
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article__image,
+  html body.home div#primary .new-article-list .new-article .new-article__image,
+  html body.home .new-article-list .new-article .new-article__image,
+  html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article__image,
+  html body.front-page div#primary .new-article-list .new-article .new-article__image,
+  html body.front-page .new-article-list .new-article .new-article__image,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article__image,
   html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article__image,
   html body.page-template-page-top-preview .new-article-list .new-article .new-article__image,
@@ -4384,6 +4589,12 @@ body .pagination .nav-links .page-numbers.current {
     border-radius: 6px;
     overflow: hidden;
   }
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img,
+  html body.home div#primary .new-article-list .new-article .new-article__image img,
+  html body.home .new-article-list .new-article .new-article__image img,
+  html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img,
+  html body.front-page div#primary .new-article-list .new-article .new-article__image img,
+  html body.front-page .new-article-list .new-article .new-article__image img,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img,
   html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article__image img,
   html body.page-template-page-top-preview .new-article-list .new-article .new-article__image img,
@@ -4397,6 +4608,12 @@ body .pagination .nav-links .page-numbers.current {
     height: 100%;
     object-fit: cover;
   }
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text,
+  html body.home div#primary .new-article-list .new-article .new-article-text,
+  html body.home .new-article-list .new-article .new-article-text,
+  html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article-text,
+  html body.front-page div#primary .new-article-list .new-article .new-article-text,
+  html body.front-page .new-article-list .new-article .new-article-text,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-text,
   html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-text,
   html body.page-template-page-top-preview .new-article-list .new-article .new-article-text,
@@ -4413,6 +4630,12 @@ body .pagination .nav-links .page-numbers.current {
     flex-direction: column;
     width: calc(100% - 102px);
   }
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-inner,
+  html body.home div#primary .new-article-list .new-article .new-article-text-inner,
+  html body.home .new-article-list .new-article .new-article-text-inner,
+  html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-inner,
+  html body.front-page div#primary .new-article-list .new-article .new-article-text-inner,
+  html body.front-page .new-article-list .new-article .new-article-text-inner,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-inner,
   html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-text-inner,
   html body.page-template-page-top-preview .new-article-list .new-article .new-article-text-inner,
@@ -4426,6 +4649,12 @@ body .pagination .nav-links .page-numbers.current {
     flex-direction: column;
     flex-grow: 1;
   }
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__title,
+  html body.home div#primary .new-article-list .new-article .new-article-text__title,
+  html body.home .new-article-list .new-article .new-article-text__title,
+  html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__title,
+  html body.front-page div#primary .new-article-list .new-article .new-article-text__title,
+  html body.front-page .new-article-list .new-article .new-article-text__title,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__title,
   html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-text__title,
   html body.page-template-page-top-preview .new-article-list .new-article .new-article-text__title,
@@ -4445,6 +4674,12 @@ body .pagination .nav-links .page-numbers.current {
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__date,
+  html body.home div#primary .new-article-list .new-article .new-article-text__date,
+  html body.home .new-article-list .new-article .new-article-text__date,
+  html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__date,
+  html body.front-page div#primary .new-article-list .new-article .new-article-text__date,
+  html body.front-page .new-article-list .new-article .new-article-text__date,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__date,
   html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-text__date,
   html body.page-template-page-top-preview .new-article-list .new-article .new-article-text__date,
@@ -4458,6 +4693,12 @@ body .pagination .nav-links .page-numbers.current {
     font-size: 12px;
     margin-bottom: 8px;
   }
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-meta,
+  html body.home div#primary .new-article-list .new-article .new-article-text-meta,
+  html body.home .new-article-list .new-article .new-article-text-meta,
+  html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-meta,
+  html body.front-page div#primary .new-article-list .new-article .new-article-text-meta,
+  html body.front-page .new-article-list .new-article .new-article-text-meta,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-meta,
   html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-text-meta,
   html body.page-template-page-top-preview .new-article-list .new-article .new-article-text-meta,
@@ -4475,6 +4716,10 @@ body .pagination .nav-links .page-numbers.current {
     overflow: hidden;
     height: auto;
   }
+  html body.home section.fv div.fv-article,
+  html body.home div.hero-background-preview div.fv-article,
+  html body.front-page section.fv div.fv-article,
+  html body.front-page div.hero-background-preview div.fv-article,
   html body.page-template-page-top-preview section.fv div.fv-article,
   html body.page-template-page-top-preview div.hero-background-preview div.fv-article,
   html body.home section.fv div.fv-article,
@@ -4484,6 +4729,10 @@ body .pagination .nav-links .page-numbers.current {
     background-color: #fff;
     border: 1px solid #e2e8f0;
   }
+  html body.home section.fv div.fv-article div.fv-article-text,
+  html body.home div.hero-background-preview div.fv-article div.fv-article-text,
+  html body.front-page section.fv div.fv-article div.fv-article-text,
+  html body.front-page div.hero-background-preview div.fv-article div.fv-article-text,
   html body.page-template-page-top-preview section.fv div.fv-article div.fv-article-text,
   html body.page-template-page-top-preview div.hero-background-preview div.fv-article div.fv-article-text,
   html body.home section.fv div.fv-article div.fv-article-text,
@@ -4492,6 +4741,10 @@ body .pagination .nav-links .page-numbers.current {
   html body div.hero-background-preview div.fv-article div.fv-article-text {
     background-color: #fff;
   }
+  html body.home section.fv div.fv-article div.fv-article-text p.fv-article-text__title,
+  html body.home div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__title,
+  html body.front-page section.fv div.fv-article div.fv-article-text p.fv-article-text__title,
+  html body.front-page div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__title,
   html body.page-template-page-top-preview section.fv div.fv-article div.fv-article-text p.fv-article-text__title,
   html body.page-template-page-top-preview div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__title,
   html body.home section.fv div.fv-article div.fv-article-text p.fv-article-text__title,
@@ -4500,6 +4753,10 @@ body .pagination .nav-links .page-numbers.current {
   html body div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__title {
     color: #000;
   }
+  html body.home section.fv div.fv-article div.fv-article-text p.fv-article-text__date,
+  html body.home div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__date,
+  html body.front-page section.fv div.fv-article div.fv-article-text p.fv-article-text__date,
+  html body.front-page div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__date,
   html body.page-template-page-top-preview section.fv div.fv-article div.fv-article-text p.fv-article-text__date,
   html body.page-template-page-top-preview div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__date,
   html body.home section.fv div.fv-article div.fv-article-text p.fv-article-text__date,
@@ -4508,6 +4765,4 @@ body .pagination .nav-links .page-numbers.current {
   html body div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__date {
     color: #666;
   }
-}
-
-/*# sourceMappingURL=style_add.css.map */
+}/*# sourceMappingURL=style_add.css.map */

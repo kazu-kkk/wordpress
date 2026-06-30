@@ -1,8 +1,5 @@
 <?php
-/**
- * Template Name: TOP Renewal Preview
- * Description: A temporary template to preview the TOP page renewal layout with dummy data.
- */
+// 本番用TOPページ（front-page.php）
 
 // プレビューページ専用スタイルを wp_head フックで <head> 内の後方に追加
 // （enqueueされた style_add.css より後に出力されるよう priority=20 を指定）
@@ -10,14 +7,14 @@ add_action( 'wp_head', function() { ?>
 <style>
 
     /* --- #contentの背景を透明にして、背後のFVが見えるようにする --- */
-    body.page-template-page-top-preview #content.site-content {
+    body #content.site-content {
         background-color: transparent;
         position: relative;
         z-index: auto;
     }
     
     /* --- プレビューページ専用の透明ヘッダー・ロゴフェードイン制御 --- */
-    body.page-template-page-top-preview .header-logo-wrapper {
+    body .header-logo-wrapper {
         opacity: 0;
         visibility: hidden;
         transform: translateY(-5px);
@@ -25,12 +22,12 @@ add_action( 'wp_head', function() { ?>
     }
     
     /* 初期表示時（スクロール前）のヘッダースタイル */
-    body.page-template-page-top-preview:not(.has-scrolled-fv) .site-header {
+    body:not(.has-scrolled-fv) .site-header {
         background: transparent;
         box-shadow: none;
     }
     
-    body.page-template-page-top-preview:not(.has-scrolled-fv) .site-header .navbar {
+    body:not(.has-scrolled-fv) .site-header .navbar {
         background: transparent;
         background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 1%, rgba(0, 0, 0, 0) 100%);
         padding: 18px 0;
@@ -38,13 +35,13 @@ add_action( 'wp_head', function() { ?>
     }
     
     /* スクロール後（FV通過後）のヘッダースタイル */
-    body.page-template-page-top-preview.has-scrolled-fv .header-logo-wrapper {
+    body.has-scrolled-fv .header-logo-wrapper {
         opacity: 1;
         visibility: visible;
         transform: translateY(0);
     }
 
-    body.page-template-page-top-preview.has-scrolled-fv .site-header .navbar {
+    body.has-scrolled-fv .site-header .navbar {
         background: rgba(0, 0, 0, 0.9);
         box-shadow: 0px 0px 18px 1px rgba(0, 0, 0, 0.1);
         padding: 12px 0;
@@ -52,15 +49,15 @@ add_action( 'wp_head', function() { ?>
     }
     
     /* 親要素の余計な余白をリセットし、FVが画面の一番上から始まるようにする */
-    body.page-template-page-top-preview .site-content,
-    body.page-template-page-top-preview #primary.content-area,
-    body.page-template-page-top-preview .inner-wrap {
+    body .site-content,
+    body #primary.content-area,
+    body .inner-wrap {
         padding-top: 0 !important;
         margin-top: 0 !important;
     }
 
     /* --- プレビュー用のFV背景スタイル --- */
-    body.page-template-page-top-preview .hero-background-preview {
+    body .hero-background-preview {
         background-color: #2B53EC;
         text-align: center;
         padding: 90px 0 50px; /* ヘッダー分を考慮した上部余白 */
@@ -87,7 +84,7 @@ add_action( 'wp_head', function() { ?>
     }
     
     /* コンテンツエリア（FVの上に被さる） */
-    body.page-template-page-top-preview .preview-content-wrapper {
+    body .preview-content-wrapper {
         position: relative;
         z-index: 2;
         background-color: #F6F8FC;
@@ -95,7 +92,7 @@ add_action( 'wp_head', function() { ?>
     }
     
     /* 上部バウンス時の見切れ防止 */
-    body.page-template-page-top-preview .hero-background-preview::before {
+    body .hero-background-preview::before {
         content: '';
         position: absolute;
         top: -500px;
@@ -107,7 +104,7 @@ add_action( 'wp_head', function() { ?>
     }
     
     /* プレビュー用FV内のロゴ・テキスト --- */
-    body.page-template-page-top-preview .hero-background-preview__content {
+    body .hero-background-preview__content {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -118,7 +115,7 @@ add_action( 'wp_head', function() { ?>
         box-sizing: border-box;
     }
     
-    body.page-template-page-top-preview .hero-background-preview .hero-text {
+    body .hero-background-preview .hero-text {
         font-size: 20px;
         font-weight: bold;
         color: #fff;
@@ -126,7 +123,7 @@ add_action( 'wp_head', function() { ?>
         text-align: center;
     }
     
-    body.page-template-page-top-preview .hero-background-preview img {
+    body .hero-background-preview img {
         max-width: 100%;
         width: auto;
         height: auto;
@@ -135,7 +132,7 @@ add_action( 'wp_head', function() { ?>
     }
     
     /* --- コンテンツ全体を覆う幅100%の重ね合わせ用ラッパー --- */
-    body.page-template-page-top-preview .preview-content-wrapper {
+    body .preview-content-wrapper {
         position: relative;
         z-index: 2;
         background-color: #F5F7FF;
@@ -144,7 +141,7 @@ add_action( 'wp_head', function() { ?>
     }
 
     /* --- コンテンツエリアの重ね合わせ --- */
-    body.page-template-page-top-preview .inner-wrap--preview {
+    body #page .inner-wrap--preview {
         position: relative;
         z-index: 2;
         background-color: transparent;
@@ -156,17 +153,17 @@ add_action( 'wp_head', function() { ?>
 
     /* --- PC時のカードサイズとフレックス構造の厳格な制御 --- */
     @media screen and (min-width: 768px) {
-        body.page-template-page-top-preview .inner-wrap--preview {
+        body #page .inner-wrap--preview {
             padding: 40px 30px 120px;
         }
         
-        body.page-template-page-top-preview .pickup {
+        body #page .pickup {
             width: 100%;
             max-width: 1100px;
             margin: 0 auto 50px;
         }
 
-        body.page-template-page-top-preview .pickup-list {
+        body #page .pickup-list {
             padding-left: 0;
             padding-right: 0;
             margin: 0;
@@ -175,13 +172,13 @@ add_action( 'wp_head', function() { ?>
             gap: 20px;
         }
 
-        body.page-template-page-top-preview .pickup-article {
+        body #page .pickup-article {
             flex: 1;
             min-width: 0;
             width: auto;
         }
 
-        body.page-template-page-top-preview .inner-wrap--preview .content-area {
+        body #page .inner-wrap--preview .content-area {
             display: flex;
             gap: 40px;
             width: 100%;
@@ -194,14 +191,14 @@ add_action( 'wp_head', function() { ?>
         }
 
         /* 親テーマの body:not(.page-layout-sidebar-right) #primary { padding-left: 10px } をリセット */
-        body.page-template-page-top-preview #primary.content-area {
+        body #page #primary.content-area {
             padding-left: 0;
             padding-right: 0;
             max-width: 1100px;
             margin: 0 auto;
         }
 
-        body.page-template-page-top-preview .inner-wrap--preview #main.top-page-content {
+        body #page .inner-wrap--preview #main.top-page-content {
             flex: 1;
             min-width: 0;
             margin: 0;
@@ -210,7 +207,7 @@ add_action( 'wp_head', function() { ?>
             width: auto;
         }
         
-        body.page-template-page-top-preview .inner-wrap--preview .right-contents {
+        body #page .inner-wrap--preview .right-contents {
             width: 300px;
             flex-shrink: 0;
             margin: 0;
@@ -218,7 +215,7 @@ add_action( 'wp_head', function() { ?>
             float: none;
         }
 
-        body.page-template-page-top-preview .new-article {
+        body #page .new-article {
             height: 150px;
             overflow: hidden;
             display: flex;
@@ -227,27 +224,27 @@ add_action( 'wp_head', function() { ?>
             margin-top: 30px;
         }
         
-        body.page-template-page-top-preview .new-article-link {
+        body #page .new-article-link {
             display: flex;
             width: 100%;
             height: 150px;
             text-decoration: none;
         }
         
-        body.page-template-page-top-preview .new-article__image {
+        body #page .new-article__image {
             width: 200px;
             height: 150px;
             flex-shrink: 0;
             overflow: hidden;
         }
         
-        body.page-template-page-top-preview .new-article__image img {
+        body #page .new-article__image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
         
-        body.page-template-page-top-preview .new-article-text {
+        body #page .new-article-text {
             width: 100%;
             height: 150px;
             box-sizing: border-box;
@@ -259,12 +256,12 @@ add_action( 'wp_head', function() { ?>
             overflow: hidden;
         }
         
-        body.page-template-page-top-preview .new-article-text-inner {
+        body #page .new-article-text-inner {
             width: 100%;
             display: block;
         }
         
-        body.page-template-page-top-preview .new-article-text__title {
+        body #page .new-article-text__title {
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 2;
@@ -276,13 +273,13 @@ add_action( 'wp_head', function() { ?>
             color: #000;
         }
         
-        body.page-template-page-top-preview .new-article-text__date {
+        body #page .new-article-text__date {
             font-size: 13px;
             color: #000;       /* scss: #000 */
             margin: 0 0 5px 0;
         }
         
-        body.page-template-page-top-preview .new-article-text-meta {
+        body #page .new-article-text-meta {
             margin-top: 15px;
             display: flex;
             flex-wrap: wrap;
@@ -292,8 +289,8 @@ add_action( 'wp_head', function() { ?>
             height: 30px;
         }
 
-        body.page-template-page-top-preview .new-article-text__category,
-        body.page-template-page-top-preview .new-article-text__tag {
+        body #page .new-article-text__category,
+        body #page .new-article-text__tag {
             flex-shrink: 0;
             line-height: 1.4;
         }
@@ -302,39 +299,39 @@ add_action( 'wp_head', function() { ?>
     /* --- SP（スマホ）表示時の最適化とはみ出し防止 --- */
     @media screen and (max-width: 767px) {
         /* SP用のFVサイズ調整 */
-        body.page-template-page-top-preview .hero-background-preview {
+        body #page .hero-background-preview {
             padding: 70px 16px 40px;
             min-height: 240px;
         }
-        body.page-template-page-top-preview .preview-content-wrapper {
+        body #page .preview-content-wrapper {
             margin-top: 0;
             padding-top: 40px;
         }
-        body.page-template-page-top-preview .hero-background-preview .hero-text {
+        body #page .hero-background-preview .hero-text {
             font-size: 14px;
             font-weight: bold;
             color: #fff;
             margin: 0 0 15px 0;
             line-height: 1.5;
         }
-        body.page-template-page-top-preview .hero-background-preview img {
+        body #page .hero-background-preview img {
             max-height: 60px;
             width: auto;
         }
 
-        body.page-template-page-top-preview .inner-wrap--preview {
+        body #page .inner-wrap--preview {
             padding: 20px 16px 60px;
         }
 
         /* 親テーマの #primary padding をSP時もリセット */
-        body.page-template-page-top-preview #primary.content-area {
+        body #page #primary.content-area {
             padding-left: 0;
             padding-right: 0;
             max-width: 100%;
             margin: 0;
         }
 
-        body.page-template-page-top-preview .inner-wrap--preview .content-area {
+        body #page .inner-wrap--preview .content-area {
             display: block;
             width: 100%;
             max-width: 100%;
@@ -344,7 +341,7 @@ add_action( 'wp_head', function() { ?>
             float: none;
         }
 
-        body.page-template-page-top-preview .inner-wrap--preview #main.top-page-content {
+        body #page .inner-wrap--preview #main.top-page-content {
             width: 100%;
             max-width: 100%;
             padding: 0;
@@ -352,7 +349,7 @@ add_action( 'wp_head', function() { ?>
             float: none;
         }
 
-        body.page-template-page-top-preview .inner-wrap--preview .right-contents {
+        body #page .inner-wrap--preview .right-contents {
             width: 100%;
             margin-top: 40px;
             padding: 0;
@@ -361,7 +358,7 @@ add_action( 'wp_head', function() { ?>
 
         /* SP用のピックアップ記事と最新の投稿レイアウト・配色は style_add.scss (style_add.css) 側の定義が適用されるため、ここでは上書きを削除 */
 
-        body.page-template-page-top-preview #custom-side-nav {
+        body #page #custom-side-nav {
             width: 100%;
             padding: 0;
         }

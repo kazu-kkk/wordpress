@@ -229,7 +229,6 @@ img {
     object-fit: contain;
   }
 
-
   .title-h2__text {
     position: relative;
     padding-left: 40px;
@@ -247,7 +246,7 @@ img {
         width: 34px;
         height: 34px;
         content: "";
-        background-image: url("images/ico_article.svg");
+        background-image: url("images/ico_pin.svg?v=2");
         background-repeat: no-repeat;
         background-position: center center;
         background-size: contain;
@@ -265,7 +264,25 @@ img {
         width: 34px;
         height: 34px;
         content: "";
-        background-image: url("images/ico_article.svg");
+        background-image: url("images/ico_article.svg?v=2");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        transition: all 0.3s;
+        transform: translateY(-50%);
+      }
+    }
+
+    &--trend {
+      &::before {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        display: block;
+        width: 34px;
+        height: 34px;
+        content: "";
+        background-image: url("images/ico_trend.svg?v=4");
         background-repeat: no-repeat;
         background-position: center center;
         background-size: contain;
@@ -283,7 +300,7 @@ img {
         width: 34px;
         height: 34px;
         content: "";
-        background-image: url("images/ico_shape.svg");
+        background-image: url("images/ico_shape.svg?v=2");
         background-repeat: no-repeat;
         background-position: center center;
         background-size: contain;
@@ -301,7 +318,7 @@ img {
         width: 34px;
         height: 34px;
         content: "";
-        background-image: url("images/ico_tag.svg");
+        background-image: url("images/ico_tag.svg?v=2");
         background-repeat: no-repeat;
         background-position: center center;
         background-size: contain;
@@ -319,7 +336,7 @@ img {
         width: 34px;
         height: 34px;
         content: "";
-        background-image: url("images/ico_connection.svg");
+        background-image: url("images/ico_connection.svg?v=2");
         background-repeat: no-repeat;
         background-position: center center;
         background-size: contain;
@@ -1250,6 +1267,7 @@ img {
 
 .title-h2__text--pick-up::before,
 .title-h2__text--new::before,
+.title-h2__text--trend::before,
 .title-h2__text--category::before,
 .title-h2__text--popular-tag::before,
 .title-h2__text--sns::before {
@@ -1266,21 +1284,28 @@ img {
   transform: translateY(-50%);
 }
 
-.title-h2__text--pick-up::before,
+.title-h2__text--pick-up::before {
+  background-image: url("images/ico_pin.svg?v=2");
+}
+
 .title-h2__text--new::before {
-  background-image: url("images/ico_article.svg");
+  background-image: url("images/ico_article.svg?v=2");
+}
+
+.title-h2__text--trend::before {
+  background-image: url("images/ico_trend.svg?v=4");
 }
 
 .title-h2__text--category::before {
-  background-image: url("images/ico_shape.svg");
+  background-image: url("images/ico_shape.svg?v=2");
 }
 
 .title-h2__text--popular-tag::before {
-  background-image: url("images/ico_tag.svg");
+  background-image: url("images/ico_tag.svg?v=2");
 }
 
 .title-h2__text--sns::before {
-  background-image: url("images/ico_connection.svg");
+  background-image: url("images/ico_connection.svg?v=2");
 }
 
 /* =========================================
@@ -1362,6 +1387,8 @@ body {
 // SPカラー＆レイアウト強制上書き（詳細度高・!important不使用）
 // =====================================================
 @media screen and (max-width: 767px) {
+  html body.home,
+  html body.front-page,
   html body.page-template-page-top-preview,
   html body.home,
   html body {
@@ -1485,6 +1512,7 @@ body {
 
     // 各セクションの余白感を統一（最新の投稿、トレンド）
     h2.title-h2__text--new,
+    h2.title-h2__text--trend,
     h2.title-h2__text--category {
       margin-top: 40px;
     }
