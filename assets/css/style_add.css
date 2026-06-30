@@ -3309,16 +3309,6 @@ img {
     overflow: hidden;
     border-radius: 8px;
   }
-}
-@media screen and (width >= 767px) and (hover: hover) {
-  .pickup-article:hover .pickup-article-text__title {
-    color: #2b53ec;
-  }
-  .pickup-article:hover .pickup-article__image img {
-    transform: scale(1.05);
-  }
-}
-@media screen and (width >= 767px) {
   .pickup-article__image {
     width: 100%;
     height: 207px;
@@ -3374,16 +3364,6 @@ img {
     text-align: left;
     border-radius: 8px;
   }
-}
-@media screen and (width >= 767px) and (hover: hover) {
-  .new-article:hover .new-article-text__title {
-    color: #2b53ec;
-  }
-  .new-article:hover .new-article__image img {
-    transform: scale(1.05);
-  }
-}
-@media screen and (width >= 767px) {
   .new-article__image {
     width: 200px;
     height: 100%;
@@ -3697,16 +3677,6 @@ img {
     border-radius: 8px;
     border: 1px solid #e2e8f0;
   }
-}
-@media screen and (width <= 767px) and (hover: hover) {
-  .pickup-article:hover .pickup-article-text__title {
-    color: #2b53ec;
-  }
-  .pickup-article:hover .pickup-article__image img {
-    transform: scale(1.05);
-  }
-}
-@media screen and (width <= 767px) {
   .pickup-article__image {
     width: 100%;
     height: 160px;
@@ -3777,16 +3747,6 @@ img {
     border-radius: 8px;
     border: 1px solid #e2e8f0;
   }
-}
-@media screen and (width <= 767px) and (hover: hover) {
-  .new-article:hover .new-article-text__title {
-    color: #2b53ec;
-  }
-  .new-article:hover .new-article__image img {
-    transform: scale(1.05);
-  }
-}
-@media screen and (width <= 767px) {
   .new-article-link {
     display: block;
     width: 100%;
@@ -3904,6 +3864,21 @@ img {
   overflow: hidden;
 }
 
+/* 記事カードのホバー時の挙動を統一・詳細度強化（SP用強制上書きセレクタに打ち勝つため） */
+@media (hover: hover) {
+  .pickup-article a.pickup-article-link:hover .pickup-article-text__title,
+  html body div#primary main#main.top-page-content .new-article-list .new-article a.new-article-link:hover .new-article-text__title,
+  html body div#primary .new-article-list .new-article a.new-article-link:hover .new-article-text__title,
+  .new-article a.new-article-link:hover .new-article-text__title {
+    color: #2b53ec;
+  }
+  .pickup-article a.pickup-article-link:hover .pickup-article__image img,
+  html body div#primary main#main.top-page-content .new-article-list .new-article a.new-article-link:hover .new-article__image img,
+  html body div#primary .new-article-list .new-article a.new-article-link:hover .new-article__image img,
+  .new-article a.new-article-link:hover .new-article__image img {
+    transform: scale(1.05);
+  }
+}
 /* TOP h2 Styles */
 .title-h2__text {
   position: relative;

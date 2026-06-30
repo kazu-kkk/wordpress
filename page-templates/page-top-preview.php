@@ -405,16 +405,54 @@ get_header(); ?>
         <ul class="pickup-list">
             <?php
             $pickup_post_ids = array(); // ピックアップ記事のIDを保持する配列
-            $pickup_query = new WP_Query(array(
+            
+            // 1. pickupタグ記事を取得
+            $tag_query = new WP_Query(array(
                 'post_type'      => 'post',
                 'posts_per_page' => 3,
-                // 'tag'            => 'pickup', // 本番運用時に「pickup」タグが付いた記事を抽出する場合はコメントアウトを外す
+                'tag'            => 'pickup',
                 'orderby'        => 'date',
                 'order'          => 'DESC'
             ));
+            if ($tag_query->have_posts()) {
+                while ($tag_query->have_posts()) {
+                    $tag_query->the_post();
+                    $pickup_post_ids[] = get_the_ID();
+                }
+                wp_reset_postdata();
+            }
+
+            // 2. 足りない分を最新記事で補完
+            if (count($pickup_post_ids) < 3) {
+                $args = array(
+                    'post_type'      => 'post',
+                    'posts_per_page' => 3 - count($pickup_post_ids),
+                    'orderby'        => 'date',
+                    'order'          => 'DESC'
+                );
+                if (!empty($pickup_post_ids)) {
+                    $args['post__not_in'] = $pickup_post_ids;
+                }
+                $latest_query = new WP_Query($args);
+                if ($latest_query->have_posts()) {
+                    while ($latest_query->have_posts()) {
+                        $latest_query->the_post();
+                        $pickup_post_ids[] = get_the_ID();
+                    }
+                    wp_reset_postdata();
+                }
+            }
+
+            // 3. 表示用クエリ
+            $pickup_query = new WP_Query(array(
+                'post_type'      => 'post',
+                'post__in'       => !empty($pickup_post_ids) ? $pickup_post_ids : array(0),
+                'orderby'        => 'post__in',
+                'posts_per_page' => 3
+            ));
+
             if ($pickup_query->have_posts()) :
                 while ($pickup_query->have_posts()) : $pickup_query->the_post();
-                    $pickup_post_ids[] = get_the_ID(); // 表示した記事のIDを保存
                     $thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : get_stylesheet_directory_uri() . '/assets/images/no_image.png';
             ?>
             <li class="pickup-article">
@@ -609,7 +647,8 @@ get_header(); ?>
                 <div class="search-widget">
                     <h2 class="widget-title">SEARCH</h2>
                     <div class="search-container">
-                        <input type="text" placeholder="キーワード検索..." autocomplete="off">
+                        <input type="text" id="article-search-input" placeholder="キーワード検索..." autocomplete="off">
+                        <ul id="search-suggestions" class="search-suggestions"></ul>
                     </div>
                 </div>
 

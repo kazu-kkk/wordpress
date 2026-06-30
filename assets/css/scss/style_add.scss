@@ -545,17 +545,7 @@ img {
     overflow: hidden;
     border-radius: 8px;
 
-    @media (hover: hover) {
-      &:hover {
-        .pickup-article-text__title {
-          color: #2b53ec;
-        }
 
-        .pickup-article__image img {
-          transform: scale(1.05);
-        }
-      }
-    }
 
     &__image {
       width: 100%;
@@ -625,17 +615,7 @@ img {
     text-align: left;
     border-radius: 8px;
 
-    @media (hover: hover) {
-      &:hover {
-        .new-article-text__title {
-          color: #2b53ec;
-        }
 
-        .new-article__image img {
-          transform: scale(1.05);
-        }
-      }
-    }
 
     &__image {
       width: 200px;
@@ -1009,17 +989,7 @@ img {
     border-radius: 8px;
     border: 1px solid #e2e8f0;
 
-    @media (hover: hover) {
-      &:hover {
-        .pickup-article-text__title {
-          color: #2b53ec;
-        }
 
-        .pickup-article__image img {
-          transform: scale(1.05);
-        }
-      }
-    }
 
     &__image {
       width: 100%;
@@ -1101,17 +1071,7 @@ img {
     border-radius: 8px;
     border: 1px solid #e2e8f0;
 
-    @media (hover: hover) {
-      &:hover {
-        .new-article-text__title {
-          color: #2b53ec;
-        }
 
-        .new-article__image img {
-          transform: scale(1.05);
-        }
-      }
-    }
 
     &-link {
       display: block;
@@ -1252,6 +1212,23 @@ img {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
+}
+
+/* 記事カードのホバー時の挙動を統一・詳細度強化（SP用強制上書きセレクタに打ち勝つため） */
+@media (hover: hover) {
+  .pickup-article a.pickup-article-link:hover .pickup-article-text__title,
+  html body div#primary main#main.top-page-content .new-article-list .new-article a.new-article-link:hover .new-article-text__title,
+  html body div#primary .new-article-list .new-article a.new-article-link:hover .new-article-text__title,
+  .new-article a.new-article-link:hover .new-article-text__title {
+    color: #2b53ec;
+  }
+
+  .pickup-article a.pickup-article-link:hover .pickup-article__image img,
+  html body div#primary main#main.top-page-content .new-article-list .new-article a.new-article-link:hover .new-article__image img,
+  html body div#primary .new-article-list .new-article a.new-article-link:hover .new-article__image img,
+  .new-article a.new-article-link:hover .new-article__image img {
+    transform: scale(1.05);
+  }
 }
 
 /* TOP h2 Styles */
