@@ -4740,4 +4740,70 @@ body .pagination .nav-links .page-numbers.current {
   html body div.hero-background-preview div.fv-article div.fv-article-text p.fv-article-text__date {
     color: #666;
   }
+}
+/* =========================================
+   TOPページ・記事一覧ページ共通レイアウト
+   ========================================= */
+@media screen and (min-width: 768px) {
+  body #page .inner-wrap--top-page .content-area {
+    display: flex;
+    gap: 40px;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-left: 0;
+    padding-right: 0;
+    float: none;
+  }
+  body #page #primary.content-area {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  body #page .inner-wrap--top-page #main.top-page-content {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    float: none;
+    width: auto;
+  }
+  body #page .inner-wrap--top-page .right-contents {
+    width: 300px;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    float: none;
+  }
+}
+@media screen and (max-width: 767px) {
+  body #page #primary.content-area {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: 100%;
+    margin: 0;
+  }
+  body #page .inner-wrap--top-page .content-area {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0;
+    float: none;
+  }
+  body #page .inner-wrap--top-page #main.top-page-content {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    float: none;
+  }
+  body #page .inner-wrap--top-page .right-contents {
+    width: 100%;
+    margin-top: 40px;
+    padding: 0;
+    float: none;
+  }
 }/*# sourceMappingURL=style_add.css.map */
