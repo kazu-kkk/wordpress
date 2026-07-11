@@ -430,6 +430,7 @@ get_header(); ?>
                             $tags = get_the_tags();
                             if (!empty($tags)) {
                                 foreach ($tags as $tag) {
+                                    if (strtolower($tag->name) === 'pickup') continue;
                                     if (in_array($tag->name, $displayed_terms)) continue;
                                     echo '<div class="pickup-article-text__tag" style="margin: 0; display: block; flex-shrink: 0; line-height: 1.4;"><span class="tag">' . esc_html($tag->name) . '</span></div>';
                                     $displayed_terms[] = $tag->name;
@@ -495,6 +496,7 @@ get_header(); ?>
                                         $tags = get_the_tags();
                                         if (!empty($tags)) {
                                             foreach ($tags as $tag) {
+                                                if (strtolower($tag->name) === 'pickup') continue;
                                                 if (in_array($tag->name, $displayed_terms)) continue;
                                                 echo '<div class="new-article-text__tag"><span class="tag">' . esc_html($tag->name) . '</span></div>';
                                                 $displayed_terms[] = $tag->name;
@@ -567,6 +569,7 @@ get_header(); ?>
                                         $tags = get_the_tags();
                                         if (!empty($tags)) {
                                             foreach ($tags as $tag) {
+                                                if (strtolower($tag->name) === 'pickup') continue;
                                                 if (in_array($tag->name, $displayed_terms)) continue;
                                                 echo '<div class="new-article-text__tag"><span class="tag">' . esc_html($tag->name) . '</span></div>';
                                                 $displayed_terms[] = $tag->name;

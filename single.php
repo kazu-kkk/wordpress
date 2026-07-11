@@ -26,7 +26,19 @@ get_header(); ?>
                     <div class="article-sub">
                         <p class="article-sub-date"><?php the_time('Y年m月d日'); ?></p>
                         <div>
-                            <?php the_tags('<ul><li>', '</li><li>', '</li></ul>'); ?>
+                            <?php
+                            $tags = get_the_tags();
+                            if ($tags) {
+                                $tag_links = array();
+                                foreach ($tags as $tag) {
+                                    if (strtolower($tag->name) === 'pickup') continue;
+                                    $tag_links[] = '<a href="' . esc_url(get_tag_link($tag->term_id)) . '" rel="tag">' . esc_html($tag->name) . '</a>';
+                                }
+                                if (!empty($tag_links)) {
+                                    echo '<ul><li>' . implode('</li><li>', $tag_links) . '</li></ul>';
+                                }
+                            }
+                            ?>
                         </div>
                     </div>
 

@@ -60,6 +60,11 @@
                     $post_tags = get_the_tags();
                     if (!empty($post_tags)) {
                         foreach ($post_tags as $tag) {
+                            // "pickup"タグは内部ロジック用のため除外
+                            if (strtolower($tag->name) === 'pickup') {
+                                continue;
+                            }
+                            
                             if (!isset($tag_counts[$tag->term_id])) {
                                 $tag_counts[$tag->term_id] = array(
                                     'term_id' => $tag->term_id,

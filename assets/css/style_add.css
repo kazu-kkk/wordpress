@@ -1004,12 +1004,6 @@ body.single .site-content {
     transition: transform 0.4s ease;
   }
 }
-@media screen and (min-width: 768px) {
-  /* 記事一覧ページ等で、PC表示時は日付（執筆日）を非表示にする */
-  .top-page-article-date {
-    display: none !important;
-  }
-}
 /* サイドナビの全体スタイル */
 #custom-side-nav {
   background-color: transparent !important;
@@ -4073,23 +4067,75 @@ img {
 }
 
 /* =========================================
-   ページネーションの緑色をブランドカラーの青に上書き
+   ページネーションのスタイル（デザペディアのトンマナに合わせる）
    ========================================= */
+body .navigation.pagination,
+body .pagination {
+  margin: 60px auto 80px;
+}
+@media screen and (max-width: 767px) {
+  body .navigation.pagination,
+  body .pagination {
+    margin: 40px auto 60px;
+  }
+}
+body .navigation.pagination .screen-reader-text,
+body .pagination .screen-reader-text {
+  display: none;
+}
+body .navigation.pagination .nav-links,
+body .pagination .nav-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+@media screen and (max-width: 767px) {
+  body .navigation.pagination .nav-links,
+  body .pagination .nav-links {
+    gap: 8px;
+  }
+}
 body .navigation.pagination .nav-links .page-numbers,
 body .pagination .nav-links .page-numbers {
   /* 通常時のボーダーとテキスト */
-  border: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border: 1px solid transparent;
   background-color: #ffffff;
   color: #333;
+  border-radius: 8px; /* サイトのトンマナ（角丸8px）に合わせる */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
   transition: all 0.3s ease;
+}
+@media screen and (max-width: 767px) {
+  body .navigation.pagination .nav-links .page-numbers,
+  body .pagination .nav-links .page-numbers {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 8px;
+    font-size: 14px;
+  }
+}
+body .navigation.pagination .nav-links .page-numbers,
+body .pagination .nav-links .page-numbers {
   /* ホバー時の挙動 */
 }
 @media (hover: hover) {
-  body .navigation.pagination .nav-links .page-numbers:hover,
-  body .pagination .nav-links .page-numbers:hover {
+  body .navigation.pagination .nav-links .page-numbers:hover:not(.dots),
+  body .pagination .nav-links .page-numbers:hover:not(.dots) {
     background-color: #EFF4FF;
     color: #2B53EC;
     border-color: #2B53EC;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(43, 83, 236, 0.08);
   }
 }
 body .navigation.pagination .nav-links .page-numbers,
@@ -4101,6 +4147,19 @@ body .pagination .nav-links .page-numbers.current {
   background-color: #2B53EC;
   color: #ffffff;
   border-color: #2B53EC;
+  box-shadow: 0 4px 8px rgba(43, 83, 236, 0.12);
+}
+body .navigation.pagination .nav-links .page-numbers,
+body .pagination .nav-links .page-numbers {
+  /* ドット（...）のデザイン */
+}
+body .navigation.pagination .nav-links .page-numbers.dots,
+body .pagination .nav-links .page-numbers.dots {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  color: #999;
+  min-width: auto;
 }
 
 @media screen and (max-width: 767px) {

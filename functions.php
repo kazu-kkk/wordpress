@@ -189,8 +189,16 @@ function inspiro_child_enqueue_scripts() {
         );
     }
 
-    // 記事ページ（single）でのみ目次JSとシェアJSを読み込む
+    // 記事ページ（single）でのみ各種スクリプトを読み込む
     if (is_single()) {
+        wp_enqueue_script(
+            'inspiro-scroll-tracking',
+            get_stylesheet_directory_uri() . '/assets/js/scroll-tracking.js',
+            array(),
+            filemtime(get_stylesheet_directory() . '/assets/js/scroll-tracking.js'),
+            true
+        );
+
         wp_enqueue_script(
             'inspiro-toc',
             get_stylesheet_directory_uri() . '/assets/js/toc.js',
@@ -663,7 +671,6 @@ if ( ! function_exists( 'inspiro_entry_meta' ) ) {
 	function inspiro_entry_meta() {
 		?>
 		<div class="top-page-article-meta" style="display: flex; flex-direction: column; align-items: flex-start; margin-top: auto;">
-			<p class="top-page-article-date" style="color: #666; font-size: 12px; margin: 0 0 6px 0; padding: 0; line-height: 1;"><?php the_time('Y.m.d'); ?></p>
 			<div class="top-page-article-tags" style="display: flex; flex-wrap: wrap; gap: 4px; align-items: flex-start;">
 				<?php
 				$displayed_terms = array(); // 表示済みタグ名を記録
@@ -679,6 +686,7 @@ if ( ! function_exists( 'inspiro_entry_meta' ) ) {
 				$tags = get_the_tags();
 				if (!empty($tags)) {
 					foreach ($tags as $tag) {
+						if (strtolower($tag->name) === 'pickup') continue;
 						if (in_array($tag->name, $displayed_terms)) continue;
 						echo '<span class="tag" style="margin:0;">' . esc_html($tag->name) . '</span>';
 						$displayed_terms[] = $tag->name;

@@ -157,10 +157,3 @@
         }
     }
 }
-
-@media screen and (min-width: 768px) {
-    /* 記事一覧ページ等で、PC表示時は日付（執筆日）を非表示にする */
-    .top-page-article-date {
-        display: none !important;
-    }
-}
