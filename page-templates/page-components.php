@@ -484,6 +484,18 @@ if (isset($_GET['component_preview'])) {
                 </div>
                 <?php
                 break;
+            case 'c-trend-word':
+                ?>
+                <div class="trend-word-widget" style="margin: 0;">
+                    <h2 class="widget-title">今日のトレンドワード</h2>
+                    <div class="trend-word-card">
+                        <h3 class="trend-word-title">グラスモーフィズム (Glassmorphism)</h3>
+                        <p class="trend-word-desc">すりガラスのような半透明の背景と背景ぼかし(backdrop-filter)を活用したUIデザイン手法。奥行き感とモダンな印象を与えます。</p>
+                        <a href="#" class="trend-word-link" onclick="return false;">この記事を読む</a>
+                    </div>
+                </div>
+                <?php
+                break;
         }
         ?>
         <?php wp_footer(); ?>
@@ -1240,6 +1252,7 @@ if (isset($_GET['component_preview'])) {
                     <a href="#c-pickup"><i class="fa-solid fa-grip-vertical"></i> 16. Pickup Articles</a>
                     <a href="#c-new-list"><i class="fa-solid fa-list"></i> 17. New Articles / Trends</a>
                     <a href="#c-article-summary"><i class="fa-solid fa-list-check"></i> 18. Article Summary</a>
+                    <a href="#c-trend-word"><i class="fa-solid fa-lightbulb"></i> 19. Trend Word Widget</a>
                 </div>
             </aside>
 
@@ -2301,6 +2314,48 @@ if (isset($_GET['component_preview'])) {
                     </div>
                 </section>
 
+                <!-- 19. Trend Word Widget -->
+                <section id="c-trend-word" class="showcase-section">
+                    <h2 class="showcase-section-title">
+                        <span class="title-group"><span class="section-num">19</span> Trend Word Widget</span>
+                        <span class="showcase-section-meta">_side-nav.scss / side-nav.php</span>
+                    </h2>
+                    <p class="showcase-desc">TOPページのサイドバー最下部に表示される、今日のデザイントレンドをランダムで表示するウィジェットです。</p>
+                    
+                    <div class="showcase-preview-wrapper" data-comp="c-trend-word">
+                        <div class="showcase-control-bar">
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">Width:</span>
+                                <button class="showcase-ctrl-btn" data-width="100%">PC</button>
+                                <button class="showcase-ctrl-btn" data-width="768px">Tablet</button>
+                                <button class="showcase-ctrl-btn" data-width="375px">Mobile</button>
+                            </div>
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">BG:</span>
+                                <button class="showcase-bg-btn active" data-bg="default"></button>
+                                <button class="showcase-bg-btn" data-bg="white"></button>
+                                <button class="showcase-bg-btn" data-bg="gray"></button>
+                                <button class="showcase-bg-btn" data-bg="dark"></button>
+                            </div>
+                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                        </div>
+                        <div class="showcase-preview-box">
+                            <iframe src="<?php echo add_query_arg('component_preview', 'c-trend-word'); ?>" class="showcase-iframe" data-comp="c-trend-word" style="height: 250px;"></iframe>
+                        </div>
+                        <div class="showcase-code-box">
+                            <pre><code class="html-code">&lt;div class="trend-word-widget"&gt;
+    &lt;h2 class="widget-title"&gt;今日のトレンドワード&lt;/h2&gt;
+    &lt;div class="trend-word-card"&gt;
+        &lt;h3 class="trend-word-title"&gt;ワード&lt;/h3&gt;
+        &lt;p class="trend-word-desc"&gt;説明文&lt;/p&gt;
+        &lt;a href="#" class="trend-word-link"&gt;この記事を読む&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                        </div>
+                    </div>
+                </section>
+
             </main>
         </div>
     </div>
@@ -2337,6 +2392,7 @@ if (isset($_GET['component_preview'])) {
             <a href="#c-pickup"><i class="fa-solid fa-grip-vertical"></i> 16. Pickup Articles</a>
             <a href="#c-new-list"><i class="fa-solid fa-list"></i> 17. New Articles / Trends</a>
             <a href="#c-article-summary"><i class="fa-solid fa-list-check"></i> 18. Article Summary</a>
+            <a href="#c-trend-word"><i class="fa-solid fa-lightbulb"></i> 19. Trend Word Widget</a>
         </div>
     </div>
 </div>

@@ -60,71 +60,107 @@
 
 @media screen and (width <=767px) {
     .top-page-content {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
     }
-
-
 
     .top-page-article {
         display: flex;
-        gap: 16px;
-        align-items: center; /* 画像とテキストを中央揃えにするか、上揃え(flex-start)にするか。今回は中央揃え寄りの方が綺麗に見えやすい */
-        background-color: #fff; /* 白背景でカード化 */
-        border-radius: 12px; /* カード全体の角丸 */
-        padding: 12px; /* カード内の余白 */
-        margin-bottom: 20px; /* カード同士の間隔 */
+        flex-direction: row-reverse; /* 右画像・左テキスト */
+        align-items: flex-start;
+        gap: 12px;
+        padding: 12px 0;
+        margin-bottom: 0;
+        background-color: transparent;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid #e2e8f0;
+        overflow: hidden;
+
+        &:last-child {
+            border-bottom: none;
+        }
 
         .entry-header {
-            flex: 1;
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            width: calc(100% - 102px);
             margin: 0;
             padding: 0;
         }
 
         .entry-title {
-            margin: 0;
+            margin: 0 0 6px 0;
             padding: 0;
         }
 
         .entry-title a {
             font-size: 15px;
-            font-weight: bold; /* タイトルを太くしてメリハリを */
-            color: #333; /* 真っ黒より少し柔らかい濃いグレー */
-            line-height: 1.5;
+            font-weight: bold;
+            color: #333;
+            line-height: 1.4;
             display: -webkit-box;
             -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2; /* スマホの横並びなら2行がすっきりする */
+            -webkit-line-clamp: 2;
             overflow: hidden;
+            transition: color 0.4s ease;
         }
         
-        .entry-meta {
-            display: none; /* メタ情報がない場合、空のブロックが下余白を作ってしまうため非表示 */
+        body & .entry-meta {
+            margin-top: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            align-items: flex-start;
+            font-size: 12px;
+            color: #666;
+
+            span {
+                display: inline-block;
+            }
+        }
+    }
+
+    @media (hover: hover) {
+        .top-page-article:hover .entry-title a {
+            color: #2b53ec;
+        }
+        .top-page-article:hover .post-thumbnail img {
+            transform: scale(1.05);
         }
     }
 
     .post-thumbnail {
-        width: 100px; /* 幅を固定してテキストエリアを広く保つ */
+        width: 90px;
+        height: 90px;
         flex-shrink: 0;
         margin: 0;
+        border-radius: 6px;
+        overflow: hidden;
 
         a {
             display: block;
-            border-radius: 8px; /* 画像にも角丸をつけて柔らかく */
+            border-radius: 0;
             overflow: hidden;
             margin: 0;
             padding: 0;
+            height: 100%;
         }
 
         img {
             width: 100%;
             height: 100%;
-            aspect-ratio: 1 / 1; /* 正方形にトリミングすることでモダンな印象に */
             object-fit: cover;
+            transition: transform 0.4s ease;
         }
     }
+}
 
-
-
+@media screen and (min-width: 768px) {
+    /* 記事一覧ページ等で、PC表示時は日付（執筆日）を非表示にする */
+    .top-page-article-date {
+        display: none !important;
+    }
 }

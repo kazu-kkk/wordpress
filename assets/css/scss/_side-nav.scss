@@ -447,3 +447,61 @@ body.side-nav-open .site {
 .side-nav__scrollable-container {
     transition: transform 0.4s ease !important;
 }
+
+/* =========================================
+   デザイントレンドウィジェット
+   ========================================= */
+.trend-word-widget {
+    margin-top: 40px;
+    margin-bottom: 24px;
+}
+
+.trend-word-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.trend-word-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.trend-word-desc {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+#custom-side-nav .trend-word-link {
+    display: inline-block;
+    font-size: 13px;
+    color: #fff;
+    background-color: #2B53EC;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(43, 83, 236, 0.2);
+
+    /* カテゴリリストの矢印などが出ないようにする */
+    &::after {
+        display: none;
+    }
+
+    @media (hover: hover) {
+        &:hover {
+            background-color: #1a3db8;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(43, 83, 236, 0.3);
+        }
+    }
+}

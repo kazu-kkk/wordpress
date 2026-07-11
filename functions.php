@@ -658,3 +658,35 @@ add_filter('style_loader_src', function($src, $handle) {
     return $src;
 }, 9999, 2);
 
+// オーバーライド: アーカイブページ等でのメタ情報出力 (TOPページと同じスタイル)
+if ( ! function_exists( 'inspiro_entry_meta' ) ) {
+	function inspiro_entry_meta() {
+		?>
+		<div class="top-page-article-meta" style="display: flex; flex-direction: column; align-items: flex-start; margin-top: auto;">
+			<p class="top-page-article-date" style="color: #666; font-size: 12px; margin: 0 0 6px 0; padding: 0; line-height: 1;"><?php the_time('Y.m.d'); ?></p>
+			<div class="top-page-article-tags" style="display: flex; flex-wrap: wrap; gap: 4px; align-items: flex-start;">
+				<?php
+				$displayed_terms = array(); // 表示済みタグ名を記録
+				$categories = get_the_category();
+				if (!empty($categories)) {
+					foreach ($categories as $cat) {
+						if ($cat->name === '記事') continue;
+						if (in_array($cat->name, $displayed_terms)) continue;
+						echo '<span class="tag" style="margin:0;">' . esc_html($cat->name) . '</span>';
+						$displayed_terms[] = $cat->name;
+					}
+				}
+				$tags = get_the_tags();
+				if (!empty($tags)) {
+					foreach ($tags as $tag) {
+						if (in_array($tag->name, $displayed_terms)) continue;
+						echo '<span class="tag" style="margin:0;">' . esc_html($tag->name) . '</span>';
+						$displayed_terms[] = $tag->name;
+					}
+				}
+				?>
+			</div>
+		</div>
+		<?php
+	}
+}

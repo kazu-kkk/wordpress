@@ -68,6 +68,13 @@ img {
   display: none;
 }
 
+/* 親テーマのスタイル（.entry-meta span+span::before の「 / 」）をタグ要素では打ち消す */
+.entry-meta span.tag::before,
+.entry-meta span.tag + span.tag::before {
+  content: none !important;
+  display: none !important;
+}
+
 .button {
   display: block;
   width: 228px;

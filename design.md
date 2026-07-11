@@ -554,6 +554,26 @@
 
 ---
 
+### 22. `.trend-word-widget` — デザイントレンドウィジェット（TOPサイドバー用）
+**ファイル**: `_side-nav.scss`, `side-nav.php`
+
+```html
+<div class="trend-word-widget">
+  <h2 class="widget-title">今日のトレンドワード</h2>
+  <div class="trend-word-card">
+    <h3 class="trend-word-title">ワード</h3>
+    <p class="trend-word-desc">説明文</p>
+    <a href="#" class="trend-word-link">この記事を読む</a>
+  </div>
+</div>
+```
+
+- TOPページ（`front-page.php`）のサイドバー最下部に表示されるウィジェット。
+- 白背景のカード型デザイン (`border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05)`)
+- リンクボタンはブランドブルー (`#2B53EC`) ベース。ホバー時は `@media (hover: hover)` に則り、色を濃くして少し上に浮き上がるアニメーションを付与。
+
+---
+
 ## ユーティリティ・グローバル設定
 
 | クラス / セレクタ | 説明 |
