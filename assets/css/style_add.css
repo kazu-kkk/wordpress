@@ -1328,6 +1328,18 @@ body.single .site-content {
   .search-widget {
     margin-bottom: 30px;
   }
+  /* SPサイドナビの広告はみ出し対策 */
+  #custom-side-nav-mobile .ad-widget {
+    margin-left: -16px;
+    margin-right: -16px;
+    text-align: center;
+    overflow: hidden; /* 万が一のはみ出しも隠す */
+  }
+  #custom-side-nav-mobile .ad-widget > div[id^=im-] {
+    zoom: 0.85; /* 300px以上の広告を縮小して収める */
+    margin: 0 auto;
+    display: inline-block;
+  }
 }
 /* サイドナビのラッパー（左右余白） */
 .side-nav__wrap {
@@ -4087,6 +4099,11 @@ img {
   -webkit-line-clamp: 3;
   overflow: hidden;
 }
+@media screen and (max-width: 767px) {
+  .top-page-article .entry-title a {
+    -webkit-line-clamp: 2;
+  }
+}
 
 /* =========================================
    ページネーションのスタイル（デザペディアのトンマナに合わせる）
@@ -4204,6 +4221,18 @@ body .pagination .nav-links .page-numbers.dots {
     color: #333333 !important;
     background-color: #D8F2FF !important;
     border-radius: 4px;
+  }
+  html body.home span.tag:nth-of-type(n+3),
+  html body.home a.tag:nth-of-type(n+3),
+  html body.front-page span.tag:nth-of-type(n+3),
+  html body.front-page a.tag:nth-of-type(n+3),
+  html body.page-template-page-top-preview span.tag:nth-of-type(n+3),
+  html body.page-template-page-top-preview a.tag:nth-of-type(n+3),
+  html body.home span.tag:nth-of-type(n+3),
+  html body.home a.tag:nth-of-type(n+3),
+  html body span.tag:nth-of-type(n+3),
+  html body a.tag:nth-of-type(n+3) {
+    display: none !important;
   }
   html body.home div#primary main#main.top-page-content section.pickup,
   html body.home div.preview-content-wrapper div.inner-wrap section.pickup,

@@ -1342,6 +1342,10 @@ img {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     overflow: hidden;
+
+    @media screen and (max-width: 767px) {
+      -webkit-line-clamp: 2;
+    }
   }
 }
 
@@ -1450,6 +1454,12 @@ body {
       color: $color-tag-text !important;
       background-color: $color-tag-bg !important;
       border-radius: 4px;
+    }
+
+    // SP時はタグの表示を最大2つまでに制限してスッキリさせる
+    span.tag:nth-of-type(n+3),
+    a.tag:nth-of-type(n+3) {
+      display: none !important;
     }
 
     // ピックアップセクションの横スクロール化と白背景

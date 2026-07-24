@@ -342,6 +342,20 @@
     .search-widget {
         margin-bottom: 30px;
     }
+
+    /* SPサイドナビの広告はみ出し対策 */
+    #custom-side-nav-mobile .ad-widget {
+        margin-left: -16px;
+        margin-right: -16px;
+        text-align: center;
+        overflow: hidden; /* 万が一のはみ出しも隠す */
+    }
+
+    #custom-side-nav-mobile .ad-widget > div[id^="im-"] {
+        zoom: 0.85; /* 300px以上の広告を縮小して収める */
+        margin: 0 auto;
+        display: inline-block;
+    }
 }
 
 /* サイドナビのラッパー（左右余白） */
