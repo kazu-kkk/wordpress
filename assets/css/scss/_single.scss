@@ -385,7 +385,7 @@ body.single .site-content {
         margin-bottom: 24px;
       }
 
-      li {
+      li:not(.toc__item) {
         font-size: 16px;
         line-height: 1.7;
         margin-bottom: 12px;

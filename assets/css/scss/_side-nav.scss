@@ -12,7 +12,8 @@
 }
 
 /* サイドナビのタイトル */
-#custom-side-nav .widget-title {
+#custom-side-nav .widget-title,
+#custom-side-nav-mobile .widget-title {
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 16px;
@@ -24,13 +25,15 @@
 }
 
 /* サイドナビのリスト */
-#custom-side-nav ul {
+#custom-side-nav ul,
+#custom-side-nav-mobile ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-#custom-side-nav li {
+#custom-side-nav li,
+#custom-side-nav-mobile li {
     margin-bottom: 12px;
 }
 
@@ -44,7 +47,8 @@
 }
 
 /* カテゴリリンク - カード型デザイン */
-#custom-side-nav .side-nav-category-list a {
+#custom-side-nav .side-nav-category-list a,
+#custom-side-nav-mobile .side-nav-category-list a {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -71,7 +75,8 @@
 }
 
 @media (hover: hover) {
-    #custom-side-nav .side-nav-category-list a:hover {
+    #custom-side-nav .side-nav-category-list a:hover,
+    #custom-side-nav-mobile .side-nav-category-list a:hover {
         background-color: #2B53EC; /* テーマカラーのブルー */
         color: #fff;
         box-shadow: 0 4px 12px rgba(43, 83, 236, 0.25);
@@ -86,7 +91,8 @@
 
 
 /* プロフィールカード */
-#custom-side-nav .profile-card {
+#custom-side-nav .profile-card,
+#custom-side-nav-mobile .profile-card {
     text-align: center;
     padding: 30px 20px;
     border: none;
@@ -288,7 +294,8 @@
     }
 
     /* プロフィールカードを横並び（グリッド）に変更 */
-    #custom-side-nav .profile-card {
+    #custom-side-nav .profile-card,
+    #custom-side-nav-mobile .profile-card {
         display: grid;
         grid-template-columns: 80px 1fr;
         grid-template-rows: auto auto; /* 名前とバイオ用の2行 */
@@ -416,6 +423,11 @@ body.side-nav-open .side-nav-overlay {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     will-change: transform; /* translateZの代わりにwill-changeを使用して上書きを防止 */
+}
+
+/* 内部の横スクロール防止 */
+.side-nav__scrollable-container {
+    overflow-x: hidden !important;
 }
 
 /* JS側の短いタイマー（0.18s）でアニメーション途中にサイドバーが消えるのを防ぐ */

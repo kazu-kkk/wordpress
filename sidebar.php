@@ -60,7 +60,7 @@
 
                         <!-- カテゴリ一覧 -->
                         <h2 class="widget-title">カテゴリ</h2>
-                        <ul>
+                        <ul class="side-nav-category-list">
                             <?php
                             // 除外するカテゴリIDを指定
                             $exclude_ids = array(2, 4, 5); // 除外したいカテゴリのID

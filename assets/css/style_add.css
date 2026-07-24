@@ -334,7 +334,7 @@ body.single .site-content {
     margin-top: 0;
     margin-bottom: 24px;
   }
-  .article-text li {
+  .article-text li:not(.toc__item) {
     font-size: 16px;
     line-height: 1.7;
     margin-bottom: 12px;
@@ -1009,7 +1009,8 @@ body.single .site-content {
 }
 
 /* サイドナビのタイトル */
-#custom-side-nav .widget-title {
+#custom-side-nav .widget-title,
+#custom-side-nav-mobile .widget-title {
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 16px;
@@ -1021,13 +1022,15 @@ body.single .site-content {
 }
 
 /* サイドナビのリスト */
-#custom-side-nav ul {
+#custom-side-nav ul,
+#custom-side-nav-mobile ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-#custom-side-nav li {
+#custom-side-nav li,
+#custom-side-nav-mobile li {
   margin-bottom: 12px;
 }
 
@@ -1041,7 +1044,8 @@ body.single .site-content {
 }
 
 /* カテゴリリンク - カード型デザイン */
-#custom-side-nav .side-nav-category-list a {
+#custom-side-nav .side-nav-category-list a,
+#custom-side-nav-mobile .side-nav-category-list a {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1055,7 +1059,8 @@ body.single .site-content {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   /* 矢印アイコン装飾 */
 }
-#custom-side-nav .side-nav-category-list a::after {
+#custom-side-nav .side-nav-category-list a::after,
+#custom-side-nav-mobile .side-nav-category-list a::after {
   content: "";
   display: block;
   width: 6px;
@@ -1067,19 +1072,22 @@ body.single .site-content {
 }
 
 @media (hover: hover) {
-  #custom-side-nav .side-nav-category-list a:hover {
+  #custom-side-nav .side-nav-category-list a:hover,
+  #custom-side-nav-mobile .side-nav-category-list a:hover {
     background-color: #2B53EC; /* テーマカラーのブルー */
     color: #fff;
     box-shadow: 0 4px 12px rgba(43, 83, 236, 0.25);
     transform: translateY(-2px); /* 少し浮き上がる動き */
   }
-  #custom-side-nav .side-nav-category-list a:hover::after {
+  #custom-side-nav .side-nav-category-list a:hover::after,
+  #custom-side-nav-mobile .side-nav-category-list a:hover::after {
     border-color: #fff;
     transform: rotate(45deg) translate(2px, -2px);
   }
 }
 /* プロフィールカード */
-#custom-side-nav .profile-card {
+#custom-side-nav .profile-card,
+#custom-side-nav-mobile .profile-card {
   text-align: center;
   padding: 30px 20px;
   border: none;
@@ -1277,7 +1285,8 @@ body.single .site-content {
     max-width: 100%;
   }
   /* プロフィールカードを横並び（グリッド）に変更 */
-  #custom-side-nav .profile-card {
+  #custom-side-nav .profile-card,
+  #custom-side-nav-mobile .profile-card {
     display: grid;
     grid-template-columns: 80px 1fr;
     grid-template-rows: auto auto; /* 名前とバイオ用の2行 */
@@ -1397,6 +1406,11 @@ body.side-nav-open .side-nav-overlay {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   will-change: transform; /* translateZの代わりにwill-changeを使用して上書きを防止 */
+}
+
+/* 内部の横スクロール防止 */
+.side-nav__scrollable-container {
+  overflow-x: hidden !important;
 }
 
 /* JS側の短いタイマー（0.18s）でアニメーション途中にサイドバーが消えるのを防ぐ */
@@ -2501,7 +2515,7 @@ body.page-template-default .entry-content a:not(.wp-block-button__link):not(.but
   }
   .article-text .article-summary .article-summary__list li.article-summary__item,
   .article-summary .article-summary__list li.article-summary__item {
-    font-size: 16px;
+    font-size: 14px;
     padding-left: 20px;
     margin-bottom: 10px;
   }
