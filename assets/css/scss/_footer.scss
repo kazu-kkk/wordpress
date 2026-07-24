@@ -8,7 +8,7 @@
     background-color: #1a1a1a;
     color: #e0e0e0;
     padding: 60px 0 20px;
-    font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Gen Interface JP", sans-serif;
     margin-top: 0;
     border-top: none; /* 既存のボーダーを削除 */
     box-shadow: none; /* 既存のシャドウを削除 */
@@ -74,23 +74,13 @@
 /* 1. Brand */
 .footer-brand {
     .footer-logo {
-        display: flex;
-        align-items: center;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
 
-        img {
-            width: 40px;
-            height: 40px;
-            object-fit: cover;
-            margin-right: 12px;
-            border-radius: 50%;
-        }
-
-        .site-name {
-            font-size: 20px;
-            font-weight: 800;
-            color: #fff;
-            letter-spacing: -0.02em;
+        .footer-main-logo {
+            display: block;
+            width: 200px;
+            max-width: 100%;
+            height: auto;
         }
     }
 

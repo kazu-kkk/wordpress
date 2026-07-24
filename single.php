@@ -88,6 +88,21 @@ get_header(); ?>
                     }
 
                     if ($related_posts) : ?>
+                    <!-- 記事下広告 -->
+                    <div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
+                        <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
+                        <?php if ( wp_is_mobile() ) : ?>
+                        <div id="im-1eae1085f45c43698d0a456571986d00-bottom">
+                            <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+                            <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00-bottom"})</script>
+                        </div>
+                        <?php else : ?>
+                        <div id="im-91b0abf8dd8043e3a85b798346681f1d-bottom">
+                            <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+                            <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d-bottom"})</script>
+                        </div>
+                        <?php endif; ?>
+                    </div>
                     <section class="related-posts">
                         <h2 class="related-posts__title">この記事も読まれています</h2>
                         <div class="related-posts__grid">

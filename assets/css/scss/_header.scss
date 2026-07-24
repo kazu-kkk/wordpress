@@ -14,9 +14,14 @@
     }
 
     /* PCではメニュー内の検索フォームを非表示 */
-    /* PCではメニュー内の検索フォームを非表示 */
     .mobile-side-nav-content {
         display: none;
+    }
+
+    /* PC環境で昔のサイドナビ（およびオーバーレイ）が誤作動で表示されるのを完全に防ぐ */
+    #side-nav,
+    .side-nav-overlay {
+        display: none !important;
     }
 
 }

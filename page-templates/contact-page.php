@@ -30,7 +30,7 @@ get_header(); ?>
 
                         <!-- Instagramリンク -->
                         <div class="instagram-card-container">
-                            <a href="https://www.instagram.com/yundigola/"
+                            <a href="https://www.instagram.com/dspedia_byyuny?igsh=MW1kZnF1YWc5aHpoag%3D%3D&utm_source=qr"
                                 class="instagram-card"
                                 target="_blank"
                                 rel="noopener noreferrer">

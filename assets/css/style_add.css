@@ -475,7 +475,7 @@ body.single .site-content {
   background-color: #1a1a1a;
   color: #e0e0e0;
   padding: 60px 0 20px;
-  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Gen Interface JP", sans-serif;
   margin-top: 0;
   border-top: none; /* 既存のボーダーを削除 */
   box-shadow: none; /* 既存のシャドウを削除 */
@@ -539,22 +539,13 @@ body.single .site-content {
 
 /* 1. Brand */
 .footer-brand .footer-logo {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
-.footer-brand .footer-logo img {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  margin-right: 12px;
-  border-radius: 50%;
-}
-.footer-brand .footer-logo .site-name {
-  font-size: 20px;
-  font-weight: 800;
-  color: #fff;
-  letter-spacing: -0.02em;
+.footer-brand .footer-logo .footer-main-logo {
+  display: block;
+  width: 200px;
+  max-width: 100%;
+  height: auto;
 }
 .footer-brand .footer-desc {
   font-size: 13px;
@@ -1506,9 +1497,13 @@ body.side-nav-open .site {
     display: none;
   }
   /* PCではメニュー内の検索フォームを非表示 */
-  /* PCではメニュー内の検索フォームを非表示 */
   .mobile-side-nav-content {
     display: none;
+  }
+  /* PC環境で昔のサイドナビ（およびオーバーレイ）が誤作動で表示されるのを完全に防ぐ */
+  #side-nav,
+  .side-nav-overlay {
+    display: none !important;
   }
 }
 @media screen and (max-width: 767px) {
@@ -2031,7 +2026,7 @@ body.page-id-616 .entry-content {
   max-width: 900px; /* Slightly narrower for tight feel */
   margin: 60px auto;
   padding: 0 20px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: "Gen Interface JP", sans-serif;
   color: #000;
 }
 
@@ -2837,7 +2832,7 @@ body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-response-output,
 .c-share__title {
   margin-bottom: 0.75rem;
   color: #888888;
-  font-family: "Inter", sans-serif;
+  font-family: "Gen Interface JP", sans-serif;
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -2985,7 +2980,7 @@ html {
   }
 }
 body {
-  font-family: "Verdana", "Hiragino Sans", "Meiryo", sans-serif;
+  font-family: "Gen Interface JP", sans-serif;
   background-color: #1a1a1a;
   /* フッターの背景色と同じ黒系を指定し、下部バウンス時の白い見切れを防止 */
 }
@@ -3005,6 +3000,19 @@ img {
 .entry-meta span.tag + span.tag::before {
   content: none !important;
   display: none !important;
+}
+
+/* Visually hide elements for screen readers / SEO */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 .button {
@@ -3034,7 +3042,7 @@ img {
   /* 最大幅 */
   margin: 0 auto;
   /* 水平方向の中央揃え */
-  font-family: "Arial", sans-serif;
+  font-family: "Gen Interface JP", sans-serif;
   /* シンプルなフォント */
 }
 

@@ -53,7 +53,7 @@ html {
 
 
 body {
-  font-family: "Verdana", "Hiragino Sans", "Meiryo", sans-serif;
+  font-family: "Gen Interface JP", sans-serif;
   background-color: #1a1a1a;
   /* フッターの背景色と同じ黒系を指定し、下部バウンス時の白い見切れを防止 */
 }
@@ -73,6 +73,19 @@ img {
 .entry-meta span.tag + span.tag::before {
   content: none !important;
   display: none !important;
+}
+
+/* Visually hide elements for screen readers / SEO */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 .button {
@@ -106,7 +119,7 @@ img {
   /* 最大幅 */
   margin: 0 auto;
   /* 水平方向の中央揃え */
-  font-family: 'Arial', sans-serif;
+  font-family: "Gen Interface JP", sans-serif;
   /* シンプルなフォント */
 }
 

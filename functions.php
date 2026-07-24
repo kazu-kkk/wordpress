@@ -118,19 +118,13 @@ function show_Linkcard($atts)
 }
 add_shortcode('sc_Linkcard', 'show_Linkcard');
 
-/**
- * Include content-excerpt template part
- */
-function include_content_excerpt()
-{
-    get_template_part('content', 'excerpt');
-}
-add_action('wp_footer', 'include_content_excerpt');
 
-// Googleフォントを追加
+// Googleフォントとカスタムフォントを追加
 function inspiro_child_enqueue_google_fonts()
 {
     wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap', [], null);
+    wp_enqueue_style('gen-interface-jp-400', 'https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.0/cdn/400.css', [], null);
+    wp_enqueue_style('gen-interface-jp-700', 'https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.0/cdn/700.css', [], null);
 }
 add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_google_fonts');
 
@@ -165,11 +159,19 @@ add_action('pre_get_posts', 'inspiro_child_add_cpt_to_archives');
  * Enqueue scripts for search suggestions
  */
 function inspiro_child_enqueue_scripts() {
+    $theme_version = wp_get_theme()->get('Version');
+    
+    // ヘルパー関数: ファイルが存在する場合は更新日時を、存在しない場合はテーマバージョンを返す
+    $get_file_version = function($relative_path) use ($theme_version) {
+        $absolute_path = get_stylesheet_directory() . $relative_path;
+        return file_exists($absolute_path) ? filemtime($absolute_path) : $theme_version;
+    };
+
     wp_enqueue_script(
         'inspiro-search-suggestion',
         get_stylesheet_directory_uri() . '/assets/js/search-suggestion.js',
         array(),
-        filemtime(get_stylesheet_directory() . '/assets/js/search-suggestion.js'),
+        $get_file_version('/assets/js/search-suggestion.js'),
         true
     );
 
@@ -184,7 +186,7 @@ function inspiro_child_enqueue_scripts() {
             'inspiro-header-logo',
             get_stylesheet_directory_uri() . '/assets/js/header-logo.js',
             array(),
-            filemtime(get_stylesheet_directory() . '/assets/js/header-logo.js'),
+            $get_file_version('/assets/js/header-logo.js'),
             true
         );
     }
@@ -195,7 +197,7 @@ function inspiro_child_enqueue_scripts() {
             'inspiro-scroll-tracking',
             get_stylesheet_directory_uri() . '/assets/js/scroll-tracking.js',
             array(),
-            filemtime(get_stylesheet_directory() . '/assets/js/scroll-tracking.js'),
+            $get_file_version('/assets/js/scroll-tracking.js'),
             true
         );
 
@@ -203,7 +205,7 @@ function inspiro_child_enqueue_scripts() {
             'inspiro-toc',
             get_stylesheet_directory_uri() . '/assets/js/toc.js',
             array(),
-            filemtime(get_stylesheet_directory() . '/assets/js/toc.js'),
+            $get_file_version('/assets/js/toc.js'),
             true
         );
 
@@ -211,10 +213,19 @@ function inspiro_child_enqueue_scripts() {
             'inspiro-share',
             get_stylesheet_directory_uri() . '/assets/js/share.js',
             array(),
-            filemtime(get_stylesheet_directory() . '/assets/js/share.js'),
+            $get_file_version('/assets/js/share.js'),
             true
         );
     }
+
+    // 全ページ共通のアナリティクスイベント計測JS
+    wp_enqueue_script(
+        'inspiro-analytics-events',
+        get_stylesheet_directory_uri() . '/assets/js/analytics-events.js',
+        array(),
+        $get_file_version('/assets/js/analytics-events.js'),
+        true
+    );
 }
 add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_scripts');
 
@@ -568,8 +579,28 @@ function inspiro_child_auto_toc($content) {
     </div>
 </div>';
 
-    // 最初の h2 の直前に目次を挿入
-    $new_content = preg_replace('/<h2/', $toc_html . '<h2', $new_content, 1);
+    if ( wp_is_mobile() ) {
+        $ad_html = '
+<div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
+    <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
+    <div id="im-1eae1085f45c43698d0a456571986d00">
+        <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00"})</script>
+    </div>
+</div>';
+    } else {
+        $ad_html = '
+<div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
+    <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
+    <div id="im-91b0abf8dd8043e3a85b798346681f1d">
+        <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d"})</script>
+    </div>
+</div>';
+    }
+
+    // 最初の h2 の直前に目次と広告を挿入
+    $new_content = preg_replace('/<h2/', $toc_html . $ad_html . '<h2', $new_content, 1);
 
     return $new_content;
 }
@@ -584,8 +615,12 @@ function inspiro_child_add_ogp()
         return;
     }
 
-    $og_title       = get_bloginfo('name');
-    $og_description = 'デザペディアは、デザイナーやクリエイターのための情報メディアサイトです。最新のデザインニュース、クリエイティブなインスピレーション、業界のトレンド、役立つツールやチュートリアルを提供し、あなたのクリエイティブな活動をサポートします。';
+    if (is_front_page() || is_home()) {
+        $og_title = 'デザペディア - Webデザイン・UI/UX・チュートリアルの情報メディアサイト';
+    } else {
+        $og_title = get_bloginfo('name');
+    }
+    $og_description = 'デザペディアは、Webデザイン、UI/UX、チュートリアルなど、デザイナーやクリエイターのための情報メディアサイトです。最新のデザインニュース、クリエイティブなインスピレーション、業界のトレンド、役立つツールを提供し、あなたのクリエイティブな活動をサポートします。';
     $og_url         = home_url('/');
     $og_type        = 'website';
     $og_image       = '';
@@ -656,6 +691,17 @@ function inspiro_child_add_ogp()
 add_action('wp_head', 'inspiro_child_add_ogp');
 
 /**
+ * Optimize Title Tag for SEO
+ */
+add_filter('document_title_parts', function($title) {
+    if (is_front_page() || is_home()) {
+        $title['title'] = 'デザペディア - Webデザイン・UI/UX・チュートリアルの情報メディアサイト';
+        unset($title['tagline']); // サイトのキャッチフレーズ部分を削除してスッキリさせる
+    }
+    return $title;
+});
+
+/**
  * 強制キャッシュ破り: style_add.cssのバージョンパラメータを動的（タイムスタンプ）に変換
  */
 add_filter('style_loader_src', function($src, $handle) {
@@ -698,3 +744,44 @@ if ( ! function_exists( 'inspiro_entry_meta' ) ) {
 		<?php
 	}
 }
+
+/**
+ * 記事本文の中段（3段落目の後）に広告を挿入する
+ */
+function inspiro_child_mid_content_ad( $content ) {
+    if ( ! is_single() ) {
+        return $content;
+    }
+
+    if ( wp_is_mobile() ) {
+        $ad_html = '
+<div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
+    <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
+    <div id="im-1eae1085f45c43698d0a456571986d00-mid">
+        <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00-mid"})</script>
+    </div>
+</div>';
+    } else {
+        $ad_html = '
+<div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
+    <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
+    <div id="im-91b0abf8dd8043e3a85b798346681f1d-mid">
+        <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d-mid"})</script>
+    </div>
+</div>';
+    }
+
+    // </p> タグで分割して3段落目の後に挿入
+    $paragraphs = preg_split( '/(<\/p>)/i', $content, -1, PREG_SPLIT_DELIM_CAPTURE );
+    $insert_after = 6; // "</p>"を含め2要素ずつなので3段落目 = index 6
+
+    if ( count( $paragraphs ) > $insert_after ) {
+        $paragraphs[ $insert_after ] .= $ad_html;
+    }
+
+    return implode( '', $paragraphs );
+}
+add_filter( 'the_content', 'inspiro_child_mid_content_ad', 25 );
+
