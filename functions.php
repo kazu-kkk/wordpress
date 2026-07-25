@@ -616,11 +616,11 @@ function inspiro_child_add_ogp()
     }
 
     if (is_front_page() || is_home()) {
-        $og_title = 'デザペディア - Webデザイン・UI/UX・チュートリアルの情報メディアサイト';
+        $og_title = 'デザペディア - Webデザイン・UX・UI・チュートリアルの情報メディアサイト';
     } else {
         $og_title = get_bloginfo('name');
     }
-    $og_description = 'デザペディアは、Webデザイン、UI/UX、チュートリアルなど、デザイナーやクリエイターのための情報メディアサイトです。最新のデザインニュース、クリエイティブなインスピレーション、業界のトレンド、役立つツールを提供し、あなたのクリエイティブな活動をサポートします。';
+    $og_description = 'デザペディアは、Webデザイン、UX・UI、チュートリアルなど、デザイナーやクリエイターのための情報メディアサイトです。最新のデザインニュース、クリエイティブなインスピレーション、業界のトレンド、役立つツールを提供し、あなたのクリエイティブな活動をサポートします。';
     $og_url         = home_url('/');
     $og_type        = 'website';
     $og_image       = '';
@@ -695,7 +695,7 @@ add_action('wp_head', 'inspiro_child_add_ogp');
  */
 add_filter('document_title_parts', function($title) {
     if (is_front_page() || is_home()) {
-        $title['title'] = 'デザペディア - Webデザイン・UI/UX・チュートリアルの情報メディアサイト';
+        $title['title'] = 'デザペディア - Webデザイン・UX・UI・チュートリアルの情報メディアサイト';
         unset($title['tagline']); // サイトのキャッチフレーズ部分を削除してスッキリさせる
     }
     return $title;

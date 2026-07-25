@@ -276,7 +276,7 @@ body.single .site-content {
     box-shadow: none;
   }
   .article-title {
-    font-size: 26px;
+    font-size: 22px;
     line-height: 1.4;
     margin: 16px 0 16px;
   }
@@ -311,15 +311,15 @@ body.single .site-content {
     margin-bottom: 40px;
   }
   .article-text h2 {
-    font-size: 22px;
+    font-size: 20px;
     line-height: 1.4;
-    margin: 48px 0 24px;
+    margin: 32px 0 24px;
     padding-bottom: 12px;
   }
   .article-text h3 {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 1.5;
-    margin: 32px 0 16px;
+    margin: 24px 0 16px;
     text-align: left;
     color: #000;
     font-weight: bold;
@@ -355,6 +355,24 @@ body.single .site-content {
     font-size: 12px;
     margin-top: 16px;
   }
+  .article-text {
+    /* テーブルの見切れ防止（SP向け調整） */
+  }
+  .article-text .wp-block-table {
+    margin: 32px 0;
+  }
+  .article-text .wp-block-table table {
+    /* 横スクロールは維持（元々の min-width: 600px を継承するため上書きなし） */
+  }
+  .article-text .wp-block-table table thead tr th {
+    white-space: normal; /* ヘッダーの文字が長すぎる場合に折り返しを許可 */
+    font-size: 14px;
+    padding: 12px 8px;
+  }
+  .article-text .wp-block-table table tbody tr td {
+    font-size: 14px;
+    padding: 12px 8px;
+  }
 }
 .related-posts {
   margin: 64px auto 48px;
@@ -377,93 +395,13 @@ body.single .site-content {
   width: 30%;
   border-bottom: 3px solid #2B53EC;
 }
-.related-posts__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-.related-posts__card {
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-@media (hover: hover) {
-  .related-posts__card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
-  }
-}
-.related-posts__thumb {
-  width: 100%;
-  aspect-ratio: 16/9;
-  overflow: hidden;
-  background: #e0e0e0;
-}
-.related-posts__thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.3s ease;
-}
-@media (hover: hover) {
-  .related-posts__thumb:hover img {
-    transform: scale(1.04);
-  }
-}
-.related-posts__thumb-fallback {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #dde4f7 0%, #c5d0f0 100%);
-}
-.related-posts__body {
-  padding: 12px 14px 16px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.related-posts__date {
-  font-size: 12px;
-  color: #888;
-  margin: 0;
-}
-.related-posts__name {
-  font-size: 14px;
-  font-weight: bold;
-  color: #111;
-  line-height: 1.5;
-  margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
 
 @media screen and (max-width: 767px) {
   .related-posts {
-    margin: 48px 20px 32px;
+    margin: 48px 0 32px;
   }
   .related-posts__title {
     font-size: 18px;
-  }
-  .related-posts__grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-  .related-posts__name {
-    font-size: 13px;
-  }
-}
-@media screen and (max-width: 480px) {
-  .related-posts__grid {
-    grid-template-columns: 1fr;
   }
 }
 /* ==============================================
@@ -2366,18 +2304,18 @@ body.page-template-default .entry-content a:not(.wp-block-button__link):not(.but
   }
   .about-content,
   body.page-template-default .entry-content {
-    margin-top: 48px;
+    margin-top: 24px;
   }
   .about-content h2,
   body.page-template-default .entry-content h2 {
-    font-size: 24px;
+    font-size: 20px;
     line-height: 1.4;
-    margin: 40px 0 24px; /* スマホでも少し広げる */
+    margin: 24px 0 24px;
   }
   .about-content h3,
   body.page-template-default .entry-content h3 {
-    font-size: 22px;
-    margin: 32px 0 20px;
+    font-size: 18px;
+    margin: 24px 0 20px;
   }
   .about-content p,
   body.page-template-default .entry-content p {

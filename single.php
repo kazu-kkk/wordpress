@@ -105,21 +105,45 @@ get_header(); ?>
                     </div>
                     <section class="related-posts">
                         <h2 class="related-posts__title">この記事も読まれています</h2>
-                        <div class="related-posts__grid">
+                        <div class="new-article-list">
                             <?php foreach ($related_posts as $post) : setup_postdata($post); ?>
-                            <a href="<?php the_permalink(); ?>" class="related-posts__card">
-                                <div class="related-posts__thumb">
-                                    <?php if (has_post_thumbnail()) : ?>
-                                        <?php the_post_thumbnail('medium'); ?>
-                                    <?php else : ?>
-                                        <div class="related-posts__thumb-fallback"></div>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="related-posts__body">
-                                    <p class="related-posts__date"><?php echo get_the_date('Y年m月d日'); ?></p>
-                                    <p class="related-posts__name"><?php the_title(); ?></p>
-                                </div>
-                            </a>
+                            <?php $thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : get_stylesheet_directory_uri() . '/assets/images/no_image.png'; ?>
+                            <article class="new-article">
+                                <a href="<?php the_permalink(); ?>" class="new-article-link">
+                                    <div class="new-article__image">
+                                        <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
+                                    </div>
+                                    <div class="new-article-text">
+                                        <div class="new-article-text-inner">
+                                            <p class="new-article-text__title"><?php the_title(); ?></p>
+                                            <p class="new-article-text__date"><?php the_time('Y.m.d'); ?></p>
+                                            <div class="new-article-text-meta">
+                                                <?php
+                                                $displayed_terms = array(); // 表示済みタグ名を記録
+                                                $categories = get_the_category();
+                                                if (!empty($categories)) {
+                                                    foreach ($categories as $cat) {
+                                                        if ($cat->name === '記事') continue;
+                                                        if (in_array($cat->name, $displayed_terms)) continue;
+                                                        echo '<div class="new-article-text__category"><span class="tag">' . esc_html($cat->name) . '</span></div>';
+                                                        $displayed_terms[] = $cat->name;
+                                                    }
+                                                }
+                                                $tags = get_the_tags();
+                                                if (!empty($tags)) {
+                                                    foreach ($tags as $tag) {
+                                                        if (strtolower($tag->name) === 'pickup') continue;
+                                                        if (in_array($tag->name, $displayed_terms)) continue;
+                                                        echo '<div class="new-article-text__tag"><span class="tag">' . esc_html($tag->name) . '</span></div>';
+                                                        $displayed_terms[] = $tag->name;
+                                                    }
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </article>
                             <?php endforeach; wp_reset_postdata(); ?>
                         </div>
                     </section>

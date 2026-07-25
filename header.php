@@ -120,7 +120,7 @@
 								?>
 							<?php else : ?>
 								<div>
-									<p class="hero-text">UI/UX・デジタルクリエイティブの専門メディア</p>
+									<p class="hero-text">UX・UI・デジタルクリエイティブの専門メディア</p>
 									<a href="<?php echo esc_url(home_url('/')); ?>" rel="home">
 										<img src="/wp-content/uploads/2025/01/ブログロゴ.png" alt="Default Logo" loading="eager" fetchpriority="high">
 									</a>
@@ -147,7 +147,7 @@
 								?>
 							<?php else : ?>
 								<div>
-									<p class="hero-text">UI/UX・デジタルクリエイティブの専門メディア</p>
+									<p class="hero-text">UX・UI・デジタルクリエイティブの専門メディア</p>
 									<a href="<?php echo esc_url(home_url('/')); ?>" rel="home">
 										<img src="https://www.ds-pedia.com/wp-content/uploads/2025/01/logo.png" alt="Default Logo" loading="eager" fetchpriority="high">
 									</a>
