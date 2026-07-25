@@ -21,7 +21,7 @@ get_header(); ?>
 							</div>
 							<div class="profile-text">
 								<h1>Yuny</h1>
-								<p>UX・UI Designer</p>
+								<p>UX / UI Designer</p>
 							</div>
 						</div>
 					</div>

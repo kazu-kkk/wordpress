@@ -101,7 +101,7 @@ if (isset($_GET['component_preview'])) {
                 <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;">
                     <span class="tag">デザイン</span>
                     <a href="#" class="tag" onclick="return false;">WordPress</a>
-                    <span class="tag">UX・UI</span>
+                    <span class="tag">UX / UI</span>
                 </div>
                 <?php
                 break;
@@ -265,7 +265,7 @@ if (isset($_GET['component_preview'])) {
                                 </div>
                                 <div class="profile-text">
                                     <h1 style="font-size: 20px; line-height: 1.2;">Yuny</h1>
-                                    <p style="font-size: 13px;">UX・UI Designer</p>
+                                    <p style="font-size: 13px;">UX / UI Designer</p>
                                 </div>
                             </div>
                         </div>
@@ -414,10 +414,10 @@ if (isset($_GET['component_preview'])) {
                                     <span style="font-size:12px; color:#999;">Dummy Image 2</span>
                                 </div>
                                 <div class="pickup-article-text">
-                                    <p class="pickup-article-text__title">UX・UIカラー設計のベストプラクティスと実例紹介</p>
+                                    <p class="pickup-article-text__title">UX / UIカラー設計のベストプラクティスと実例紹介</p>
                                     <p class="pickup-article-text__date">2026.06.24</p>
                                     <div class="pickup-article-text__category">
-                                        <span class="tag">UX・UI</span>
+                                        <span class="tag">UX / UI</span>
                                     </div>
                                 </div>
                             </a>
@@ -1918,7 +1918,7 @@ if (isset($_GET['component_preview'])) {
         &lt;div class="profile-image"&gt;&lt;img src="avatar.jpg" alt="Yuny"&gt;&lt;/div&gt;
         &lt;div class="profile-text"&gt;
           &lt;h1&gt;Yuny&lt;/h1&gt;
-          &lt;p&gt;UX・UI Designer&lt;/p&gt;
+          &lt;p&gt;UX / UI Designer&lt;/p&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;

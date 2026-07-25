@@ -305,8 +305,8 @@ get_header(); ?>
 
 <section class="hero-background-preview">
     <div class="hero-background-preview__content">
-        <h1 class="sr-only">デザペディア - Webデザイン・UX・UI・チュートリアルの情報メディアサイト</h1>
-        <p class="hero-text">UX・UI・デジタルクリエイティブの専門メディア</p>
+        <h1 class="sr-only">デザペディア - Webデザイン・UX / UI・チュートリアルの情報メディアサイト</h1>
+        <p class="hero-text">UX / UI・デジタルクリエイティブの専門メディア</p>
         <a href="#" onclick="return false;">
             <?php if (has_custom_logo()) : ?>
                 <?php

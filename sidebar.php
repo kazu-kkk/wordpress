@@ -46,7 +46,7 @@
                                 alt="プロフィール画像" class="profile-avatar">
 
                             <h2 class="profile-name">Yuny</h2>
-                            <p class="profile-bio">UX・UI/グラフィックデザイナー<br>モーションや写真、映像や3Dも時々触ります</p>
+                            <p class="profile-bio">UX / UI/グラフィックデザイナー<br>モーションや写真、映像や3Dも時々触ります</p>
                         </div>
 
                         <!-- 記事検索 -->

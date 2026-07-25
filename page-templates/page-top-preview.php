@@ -330,7 +330,7 @@ get_header(); ?>
 
 <section class="hero-background-preview">
     <div class="hero-background-preview__content">
-        <p class="hero-text">UX・UI・デジタルクリエイティブの専門メディア</p>
+        <p class="hero-text">UX / UI・デジタルクリエイティブの専門メディア</p>
         <a href="#" onclick="return false;">
             <?php if (has_custom_logo()) : ?>
                 <?php

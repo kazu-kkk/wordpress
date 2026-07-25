@@ -5,7 +5,7 @@
         <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/yuny_logo.png"
             alt="プロフィール画像" class="profile-avatar">
         <h2 class="profile-name">Yuny</h2>
-        <p class="profile-bio">UX・UI/グラフィックデザイナー<br>モーションや写真、映像や3Dも時々触ります</p>
+        <p class="profile-bio">UX / UI/グラフィックデザイナー<br>モーションや写真、映像や3Dも時々触ります</p>
     </div>
     <?php endif; ?>
 
@@ -199,7 +199,7 @@
             ),
             array(
                 'word' => 'ライブ・コマース・デザイン',
-                'desc' => 'ライブ配信とオンラインショッピングを融合させたUX・UI設計。視聴者の熱量をそのまま購買行動へと繋げる導線が重要です。',
+                'desc' => 'ライブ配信とオンラインショッピングを融合させたUX / UI設計。視聴者の熱量をそのまま購買行動へと繋げる導線が重要です。',
                 'url'  => ''
             ),
             array(
