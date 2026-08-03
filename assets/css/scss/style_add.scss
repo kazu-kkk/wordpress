@@ -387,6 +387,16 @@ img {
     background-color: $color-tag-bg;
     border-radius: 5px;
     line-height: 1.4;
+    transition: all 0.3s ease;
+  }
+
+  @media (hover: hover) {
+    a.tag:hover {
+      background-color: #2b53ec;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(43, 83, 236, 0.2);
+    }
   }
 
   // ヘッダー

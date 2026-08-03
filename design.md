@@ -182,6 +182,7 @@
 
 - ブランドブルー背景、白文字、`border-radius: 5px`
 - `font-size: 13px; padding: 5px 8px`
+- ホバー: 背景がブランドブルー (`#2B53EC`) に反転し、少し浮き上がる (`translateY(-2px)`) とともに影が付与される
 
 ---
 
@@ -321,14 +322,18 @@
 **ファイル**: `_checklist.scss`
 
 ```html
-<ul class="checklist">
-  <li>チェック項目A</li>
-  <li>チェック項目B</li>
-</ul>
+<div class="checklist-wrapper">
+  <div class="checklist-title">ここにタイトルが入ります</div>
+  <ul class="checklist">
+    <li>チェック項目A</li>
+    <li>チェック項目B</li>
+  </ul>
+</div>
 ```
 
-- `::before` でブランドブルーの ✔ アイコン
-- PC: `font-size: 16px` / SP: `14px`
+- `::before` でブランドブルーのSVGチェックアイコン
+- `title`属性を指定した場合、`.checklist-title`が付与され、背景色（`#f5f7ff`）と淡いブルーの細いボーダー（`border: 1px solid #c4d2f6`）がある角丸の枠線でグループ化されます。
+- PC: `font-size: 18px` / SP: `16px` (本文と統一)
 
 ---
 

@@ -103,13 +103,13 @@ body.single .site-content {
   margin-left: 20px;
   color: #000;
 }
-.article-text a:not(.wp-block-button__link):not(.button):not(.btn) {
+.article-text a:not(.wp-block-button__link):not(.button):not(.btn):not(.toc__link) {
   color: #2B53EC;
   text-decoration: underline;
   transition: opacity 0.3s ease;
 }
 @media (hover: hover) {
-  .article-text a:not(.wp-block-button__link):not(.button):not(.btn):hover {
+  .article-text a:not(.wp-block-button__link):not(.button):not(.btn):not(.toc__link):hover {
     opacity: 0.8;
     text-decoration: none;
   }
@@ -394,6 +394,72 @@ body.single .site-content {
   left: 0;
   width: 30%;
   border-bottom: 3px solid #2B53EC;
+}
+.related-posts {
+  /* PC向け: 関連記事セクションの3カラムレイアウトオーバーライド */
+}
+@media screen and (min-width: 768px) {
+  .related-posts .new-article-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  .related-posts .new-article {
+    width: 100%;
+    height: 100%;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.3s ease;
+  }
+  .related-posts .new-article:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  .related-posts .new-article-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .related-posts .new-article__image {
+    width: 100%;
+    height: 130px;
+    border-radius: 8px 8px 0 0;
+  }
+  .related-posts .new-article-text {
+    width: 100%;
+    padding: 16px 16px 10px; /* 下余白を狭めてスッキリさせる */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .related-posts .new-article-text-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+  .related-posts .new-article-text__title {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 8px; /* 日付との間隔も少し詰める */
+    /* 3行で三点リーダー表示 */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .related-posts .new-article-text__date {
+    margin-top: auto;
+    font-size: 11px;
+  }
+  .related-posts .new-article-text-meta {
+    display: none; /* 狭いのでタグ類は非表示にする */
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -1844,45 +1910,98 @@ body.home.has-scrolled-fv .site-header .navbar {
 }
 
 /* --- 共通部分（PC・SP共通のスタイル） --- */
+.article-text .checklist-wrapper,
+.checklist-wrapper {
+  margin: 32px 0; /* 周囲（本文など）との空白を確保し、浮かないように調整 */
+}
+
+/* タイトルがある場合は背景を敷いてグルーピング感を出す */
+.article-text .checklist-wrapper.has-title,
+.checklist-wrapper.has-title {
+  background-color: #f5f7ff;
+  padding: 24px 32px;
+  border-radius: 8px; /* 角丸を戻して柔らかさを出す */
+  border: 1px solid #c4d2f6; /* 引用に見えないよう四方を囲みつつ、誘目性を抑えた細く淡いボーダー */
+}
+
+.article-text .checklist-title,
+.checklist-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+@media screen and (max-width: 767px) {
+  .article-text .checklist-title,
+  .checklist-title {
+    font-size: 18px;
+  }
+  .article-text .checklist-wrapper.has-title,
+  .checklist-wrapper.has-title {
+    padding: 20px;
+  }
+}
+.article-text ul.checklist,
 ul.checklist {
   list-style: none;
   padding: 0;
-  margin: 0 0 24px 0; /* 左マージンは0（アイコンの左端を通常テキストと揃える） */
+  margin: 32px 0; /* 単体使用時の保険 */
 }
 
+.article-text .checklist-wrapper ul.checklist,
+.checklist-wrapper ul.checklist {
+  margin: 0; /* ラッパー側でマージンを持つためリセット */
+}
+
+.article-text ul.checklist li,
 ul.checklist li {
   display: flex; /* Flexboxでアイコンとテキストを横並びに */
   align-items: flex-start; /* 上端で揃える */
-  margin-bottom: 12px;
   list-style-type: none;
-  line-height: 1.6;
+  margin-left: 0;
 }
 
 /* チェックマークのスタイル（共通） */
+.article-text ul.checklist li::before,
 ul.checklist li::before {
-  content: "✔"; /* チェックマーク */
-  color: #2b53ec; /* サイトのメインカラー（青）に変更 */
+  content: ""; /* 文字ではなくSVGでシャープなアイコンを描画 */
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="%232b53ec" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
   flex-shrink: 0; /* アイコンが潰れないようにする */
-  margin-right: 8px; /* アイコンとテキストの間の余白 */
-  margin-top: 2px; /* 少しだけ下に下げてテキストの垂直中央と視覚的に合わせる */
+  margin-right: 12px; /* アイコンとテキストの間の余白を広げて見やすく */
 }
 
 /* PC向けスタイル */
 @media screen and (min-width: 768px) {
+  .article-text ul.checklist li,
   ul.checklist li {
-    font-size: 16px; /* 18pxから16pxへ縮小 */
+    font-size: 18px; /* 本文と同じサイズに統一 */
+    line-height: 1.75;
+    margin-bottom: 8px;
   }
+  .article-text ul.checklist li::before,
   ul.checklist li::before {
-    font-size: 1.2em; /* 1.4emから1.2emへ縮小 */
+    margin-top: 0.325em; /* テキストの1行目とぴったり高さを合わせる (1.75 - 1.1) / 2 */
   }
 }
+/* SP向けスタイル */
 @media screen and (max-width: 767px) {
+  .article-text ul.checklist li,
   ul.checklist li {
-    font-size: 14px; /* 16pxから14pxへ縮小 */
+    font-size: 16px; /* SPの本文と同じサイズに統一 */
+    line-height: 1.7;
+    margin-bottom: 12px;
   }
+  .article-text ul.checklist li::before,
   ul.checklist li::before {
-    font-size: 1.1em; /* 1.2emから1.1emへ縮小 */
-    margin-top: 1px;
+    margin-top: 0.3em; /* テキストの1行目とぴったり高さを合わせる (1.7 - 1.1) / 2 */
   }
 }
 /* contact-page.php専用のスタイル */
@@ -2672,9 +2791,20 @@ body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-response-output,
   font-weight: bold;
   color: #333;
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* アイコンと文字の隙間 */
 }
 .toc__title::before {
-  content: "📋 ";
+  content: "";
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  /* FontAwesomeの list-ul アイコンをブランドブルーで指定 */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%232b53ec" d="M64 144a48 48 0 1 0 0-96 48 48 0 1 0 0 96zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H512c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H512c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H512c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM64 464a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm48-208a48 48 0 1 0 -96 0 48 48 0 1 0 96 0z"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .toc__toggle {
   font-size: 13px;
@@ -2729,15 +2859,18 @@ body.page-template-contact-page .entry-content div.wpcf7 .wpcf7-response-output,
 .toc__link {
   display: block;
   font-size: 14px;
-  color: #2B53EC;
   line-height: 1.6;
   padding: 3px 0;
-  text-decoration: none;
-  transition: opacity 0.2s ease;
+  transition: color 0.2s ease, opacity 0.2s ease;
+  /* 詳細度を上げてグローバルの青リンク・下線を上書きする */
+}
+.toc__link, .article-text .toc__link {
+  color: #555; /* 青リンクをやめてグレーに変更 */
+  text-decoration: none; /* デフォルトの下線を消す */
 }
 @media (hover: hover) {
-  .toc__link:hover {
-    opacity: 0.7;
+  .toc__link:hover, .article-text .toc__link:hover {
+    color: #222; /* ホバー時は少し濃いグレーにして反応を示す */
     text-decoration: underline;
   }
 }
@@ -3237,7 +3370,18 @@ img {
     background-color: #D8F2FF;
     border-radius: 5px;
     line-height: 1.4;
+    transition: all 0.3s ease;
   }
+}
+@media screen and (width >= 767px) and (hover: hover) {
+  a.tag:hover {
+    background-color: #2b53ec;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(43, 83, 236, 0.2);
+  }
+}
+@media screen and (width >= 767px) {
   .header {
     position: fixed;
     z-index: 10;

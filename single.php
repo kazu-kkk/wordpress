@@ -62,30 +62,8 @@ get_header(); ?>
                     // ── 関連記事セクション ──────────────────────────────────────
                     $related_posts = [];
 
-                    // 1) タグで検索
-                    $tags = wp_get_post_tags(get_the_ID());
-                    if ($tags) {
-                        $tag_ids = wp_list_pluck($tags, 'term_id');
-                        $related_posts = get_posts([
-                            'tag__in'        => $tag_ids,
-                            'post__not_in'   => [get_the_ID()],
-                            'posts_per_page' => 3,
-                            'post_status'    => 'publish',
-                        ]);
-                    }
-
-                    // 2) タグで足りなければカテゴリでフォールバック
-                    if (empty($related_posts)) {
-                        $cats = wp_get_post_categories(get_the_ID());
-                        if ($cats) {
-                            $related_posts = get_posts([
-                                'category__in'   => $cats,
-                                'post__not_in'   => [get_the_ID()],
-                                'posts_per_page' => 3,
-                                'post_status'    => 'publish',
-                            ]);
-                        }
-                    }
+                    // クリティカルに刺さる関連記事を取得（手動指定優先 ＋ タグ一致数スコアリング）
+                    $related_posts = inspiro_child_get_critical_related_posts(get_the_ID(), 3);
 
                     if ($related_posts) : ?>
                     <!-- 記事下広告 -->

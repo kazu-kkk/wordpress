@@ -1,46 +1,100 @@
 /* --- 共通部分（PC・SP共通のスタイル） --- */
-ul.checklist {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 24px 0; /* 左マージンは0（アイコンの左端を通常テキストと揃える） */
+.article-text .checklist-wrapper,
+.checklist-wrapper {
+    margin: 32px 0; /* 周囲（本文など）との空白を確保し、浮かないように調整 */
 }
-  
-ul.checklist li {
-    display: flex; /* Flexboxでアイコンとテキストを横並びに */
-    align-items: flex-start; /* 上端で揃える */
-    margin-bottom: 12px;
-    list-style-type: none;
-    line-height: 1.6;
+
+/* タイトルがある場合は背景を敷いてグルーピング感を出す */
+.article-text .checklist-wrapper.has-title,
+.checklist-wrapper.has-title {
+    background-color: #f5f7ff;
+    padding: 24px 32px;
+    border-radius: 8px; /* 角丸を戻して柔らかさを出す */
+    border: 1px solid #c4d2f6; /* 引用に見えないよう四方を囲みつつ、誘目性を抑えた細く淡いボーダー */
 }
-  
-/* チェックマークのスタイル（共通） */
-ul.checklist li::before {
-    content: "✔"; /* チェックマーク */
-    color: #2b53ec; /* サイトのメインカラー（青）に変更 */
-    flex-shrink: 0; /* アイコンが潰れないようにする */
-    margin-right: 8px; /* アイコンとテキストの間の余白 */
-    margin-top: 2px; /* 少しだけ下に下げてテキストの垂直中央と視覚的に合わせる */
+
+.article-text .checklist-title,
+.checklist-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 16px;
+    line-height: 1.5;
 }
-  
-  
-/* PC向けスタイル */
-@media screen and (min-width: 768px) {
-    ul.checklist li {
-        font-size: 16px; /* 18pxから16pxへ縮小 */
+
+@media screen and (max-width: 767px) {
+    .article-text .checklist-title,
+    .checklist-title {
+        font-size: 18px;
     }
     
-    ul.checklist li::before {
-        font-size: 1.2em; /* 1.4emから1.2emへ縮小 */
+    .article-text .checklist-wrapper.has-title,
+    .checklist-wrapper.has-title {
+        padding: 20px;
     }
 }
 
-@media screen and (max-width: 767px)  {
+.article-text ul.checklist,
+ul.checklist {
+    list-style: none;
+    padding: 0;
+    margin: 32px 0; /* 単体使用時の保険 */
+}
+
+.article-text .checklist-wrapper ul.checklist,
+.checklist-wrapper ul.checklist {
+    margin: 0; /* ラッパー側でマージンを持つためリセット */
+}
+  
+.article-text ul.checklist li,
+ul.checklist li {
+    display: flex; /* Flexboxでアイコンとテキストを横並びに */
+    align-items: flex-start; /* 上端で揃える */
+    list-style-type: none;
+    margin-left: 0;
+}
+  
+/* チェックマークのスタイル（共通） */
+.article-text ul.checklist li::before,
+ul.checklist li::before {
+    content: ""; /* 文字ではなくSVGでシャープなアイコンを描画 */
+    display: inline-block;
+    width: 1.1em;
+    height: 1.1em;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="%232b53ec" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0; /* アイコンが潰れないようにする */
+    margin-right: 12px; /* アイコンとテキストの間の余白を広げて見やすく */
+}
+  
+/* PC向けスタイル */
+@media screen and (min-width: 768px) {
+    .article-text ul.checklist li,
     ul.checklist li {
-        font-size: 14px; /* 16pxから14pxへ縮小 */
+        font-size: 18px; /* 本文と同じサイズに統一 */
+        line-height: 1.75;
+        margin-bottom: 8px;
     }
     
+    .article-text ul.checklist li::before,
     ul.checklist li::before {
-        font-size: 1.1em; /* 1.2emから1.1emへ縮小 */
-        margin-top: 1px;
+        margin-top: 0.325em; /* テキストの1行目とぴったり高さを合わせる (1.75 - 1.1) / 2 */
+    }
+}
+
+/* SP向けスタイル */
+@media screen and (max-width: 767px)  {
+    .article-text ul.checklist li,
+    ul.checklist li {
+        font-size: 16px; /* SPの本文と同じサイズに統一 */
+        line-height: 1.7;
+        margin-bottom: 12px;
+    }
+    
+    .article-text ul.checklist li::before,
+    ul.checklist li::before {
+        margin-top: 0.3em; /* テキストの1行目とぴったり高さを合わせる (1.7 - 1.1) / 2 */
     }
 }

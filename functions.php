@@ -128,15 +128,6 @@ function inspiro_child_enqueue_google_fonts()
 }
 add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_google_fonts');
 
-/**
- * Custom Favicon
- */
-function inspiro_child_custom_favicon() {
-    $favicon_url = get_stylesheet_directory_uri() . '/assets/images/yuny_logo.png';
-    echo '<link rel="shortcut icon" href="' . esc_url($favicon_url) . '" />' . "\n";
-    echo '<link rel="apple-touch-icon" href="' . esc_url($favicon_url) . '" />' . "\n";
-}
-add_action('wp_head', 'inspiro_child_custom_favicon');
 
 /**
  * Identify Custom Post Types in Archives
@@ -349,11 +340,31 @@ add_filter('body_class', 'inspiro_child_remove_header_image_class', 999);
  * Checklist Shortcodes
  */
 function inspiro_child_checklist_shortcode($atts, $content = null) {
-    // do_shortcodeで[check]を展開
+    $a = shortcode_atts(array(
+        'title' => '',
+    ), $atts);
+
+    // [check]テキスト[/check] の閉じタグありを処理
+    $content = preg_replace('/\[check\](.*?)\[\/check\]/is', '<li>$1</li>', $content);
+    // [check]テキスト の閉じタグなし（改行まで）を処理
+    $content = preg_replace('/\[check\]([^\n\r]*)/i', '<li>$1</li>', $content);
+
+    // 他のショートコードがあれば展開
     $content = do_shortcode($content);
     // wpautopによって追加される可能性のある不要な<p>や<br>を削除
     $content = str_replace(array('<p>', '</p>', '<br />', '<br>'), '', $content);
-    return '<ul class="checklist">' . trim($content) . '</ul>';
+    
+    $title_html = '';
+    $wrapper_class = 'checklist-wrapper';
+    
+    if (!empty($a['title'])) {
+        $title_html = '<div class="checklist-title">' . esc_html($a['title']) . '</div>';
+        $wrapper_class .= ' has-title';
+    } else {
+        $wrapper_class .= ' no-title';
+    }
+
+    return '<div class="' . esc_attr($wrapper_class) . '">' . $title_html . '<ul class="checklist">' . trim($content) . '</ul></div>';
 }
 add_shortcode('checklist', 'inspiro_child_checklist_shortcode');
 
@@ -773,15 +784,124 @@ function inspiro_child_mid_content_ad( $content ) {
 </div>';
     }
 
-    // </p> タグで分割して3段落目の後に挿入
-    $paragraphs = preg_split( '/(<\/p>)/i', $content, -1, PREG_SPLIT_DELIM_CAPTURE );
-    $insert_after = 6; // "</p>"を含め2要素ずつなので3段落目 = index 6
-
-    if ( count( $paragraphs ) > $insert_after ) {
-        $paragraphs[ $insert_after ] .= $ad_html;
+    // 文の流れを壊さないよう、2番目の <h2> タグの直前に挿入する
+    $pattern = '/<h2/i';
+    
+    $count_h2 = 0;
+    $new_content = preg_replace_callback( $pattern, function($matches) use (&$count_h2, $ad_html) {
+        $count_h2++;
+        if ( $count_h2 === 2 ) {
+            return $ad_html . $matches[0];
+        }
+        return $matches[0];
+    }, $content, -1, $count );
+    
+    // <h2>が2つ以上存在した場合は挿入したコンテンツを返す。ない場合は無理に挿入しない。
+    if ( $count_h2 >= 2 ) {
+        return $new_content;
     }
 
-    return implode( '', $paragraphs );
+    return $content;
 }
 add_filter( 'the_content', 'inspiro_child_mid_content_ad', 25 );
 
+
+/**
+ * クリティカルに刺さる関連記事を取得する
+ * 1. 手動指定 (カスタムフィールド: manual_related_posts)
+ * 2. タグ一致数スコアリング (共通のタグが多い順)
+ * 3. 同じカテゴリ (フォールバック)
+ */
+function inspiro_child_get_critical_related_posts($post_id, $limit = 3) {
+    global $wpdb;
+    $related_posts = array();
+    $exclude_ids = array($post_id);
+
+    // 1. 手動指定
+    $manual_ids_string = get_post_meta($post_id, 'manual_related_posts', true);
+    if (!empty($manual_ids_string) && is_string($manual_ids_string)) {
+        // "123, 456" などのカンマ区切りを想定
+        $manual_ids = array_map('intval', explode(',', $manual_ids_string));
+        $manual_ids = array_filter($manual_ids);
+        
+        if (!empty($manual_ids)) {
+            $manual_posts = get_posts(array(
+                'post__in' => $manual_ids,
+                'post_status' => 'publish',
+                'posts_per_page' => $limit,
+                'orderby' => 'post__in'
+            ));
+            
+            foreach ($manual_posts as $mp) {
+                $related_posts[] = $mp;
+                $exclude_ids[] = $mp->ID;
+            }
+        }
+    }
+
+    $remaining_limit = $limit - count($related_posts);
+
+    // 2. タグ一致数スコアリング
+    if ($remaining_limit > 0) {
+        $tags = wp_get_post_tags($post_id);
+        if (!empty($tags)) {
+            $tag_ids = wp_list_pluck($tags, 'term_id');
+            $tag_ids_csv = implode(',', array_map('intval', $tag_ids));
+            $exclude_ids_csv = implode(',', array_map('intval', $exclude_ids));
+
+            // カスタムクエリ: 共通のタグを持つ記事を抽出し、共通するタグの数(tag_count)が多い順に並べる
+            $sql = "
+                SELECT p.ID, COUNT(t.term_taxonomy_id) AS tag_count
+                FROM {$wpdb->posts} p
+                INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
+                INNER JOIN {$wpdb->term_taxonomy} t ON tr.term_taxonomy_id = t.term_taxonomy_id
+                WHERE t.term_id IN ({$tag_ids_csv})
+                AND p.ID NOT IN ({$exclude_ids_csv})
+                AND p.post_status = 'publish'
+                AND p.post_type = 'post'
+                GROUP BY p.ID
+                ORDER BY tag_count DESC, p.post_date DESC
+                LIMIT " . intval($remaining_limit) . "
+            ";
+            
+            $tag_scored_ids = $wpdb->get_col($sql);
+            
+            if (!empty($tag_scored_ids)) {
+                $tag_posts = get_posts(array(
+                    'post__in' => $tag_scored_ids,
+                    'post_status' => 'publish',
+                    'posts_per_page' => $remaining_limit,
+                    'orderby' => 'post__in'
+                ));
+                
+                foreach ($tag_posts as $tp) {
+                    $related_posts[] = $tp;
+                    $exclude_ids[] = $tp->ID;
+                }
+            }
+        }
+    }
+
+    $remaining_limit = $limit - count($related_posts);
+
+    // 3. カテゴリでのフォールバック
+    if ($remaining_limit > 0) {
+        $cats = wp_get_post_categories($post_id);
+        if (!empty($cats)) {
+            $cat_posts = get_posts(array(
+                'category__in' => $cats,
+                'post__not_in' => $exclude_ids,
+                'post_status' => 'publish',
+                'posts_per_page' => $remaining_limit,
+                'orderby' => 'date'
+            ));
+            
+            foreach ($cat_posts as $cp) {
+                $related_posts[] = $cp;
+                $exclude_ids[] = $cp->ID;
+            }
+        }
+    }
+
+    return $related_posts;
+}

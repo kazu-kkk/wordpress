@@ -233,11 +233,14 @@ if (isset($_GET['component_preview'])) {
 
             case 'c-checklist':
                 ?>
-                <ul class="checklist">
-                    <li>ユーザー体験を意識した情報設計</li>
-                    <li>統一されたカラーパレットと余白ルール</li>
-                    <li>レスポンシブデザインによる完璧なモバイル最適化</li>
-                </ul>
+                <div class="checklist-wrapper">
+                    <div class="checklist-title">ここにタイトルが入ります</div>
+                    <ul class="checklist">
+                        <li>ユーザー体験を意識した情報設計</li>
+                        <li>統一されたカラーパレットと余白ルール</li>
+                        <li>レスポンシブデザインによる完璧なモバイル最適化</li>
+                    </ul>
+                </div>
                 <?php
                 break;
 
@@ -1822,11 +1825,14 @@ if (isset($_GET['component_preview'])) {
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-checklist'); ?>" class="showcase-iframe" data-comp="c-checklist" style="height: 180px;"></iframe>
                         </div>
                         <div class="showcase-code-box">
-                            <pre><code class="html-code">&lt;ul class="checklist"&gt;
-  &lt;li&gt;チェック項目1&lt;/li&gt;
-  &lt;li&gt;チェック項目2&lt;/li&gt;
-  &lt;li&gt;チェック項目3&lt;/li&gt;
-&lt;/ul&gt;</code></pre>
+                            <pre><code class="html-code">&lt;div class="checklist-wrapper"&gt;
+  &lt;div class="checklist-title"&gt;ここにタイトルが入ります&lt;/div&gt;
+  &lt;ul class="checklist"&gt;
+    &lt;li&gt;チェック項目1&lt;/li&gt;
+    &lt;li&gt;チェック項目2&lt;/li&gt;
+    &lt;li&gt;チェック項目3&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
                             <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
                         </div>
                     </div>
