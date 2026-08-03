@@ -1,6 +1,5 @@
 @charset "UTF-8";
 /* 隙間の白い部分をグレーで塗りつぶす */
-body.single,
 body.single #page,
 body.single .site-content-contain,
 body.single .site-content {
@@ -455,7 +454,9 @@ body.single .site-content {
   }
   .related-posts .new-article-text__date {
     margin-top: auto;
+    margin-bottom: 0;
     font-size: 11px;
+    line-height: 1;
   }
   .related-posts .new-article-text-meta {
     display: none; /* 狭いのでタグ類は非表示にする */
