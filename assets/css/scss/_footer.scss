@@ -1,78 +1,226 @@
-/* デフォルトスタイル（全画面サイズ共通） */
-.site-footer {
-    background-color: #f8f9fa; /* 明るいグレーの背景 */
-    text-align: center; /* 中央揃え */
-    border-top: 1px solid #e9ecef; /* 上部に薄い線 */
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* 上部に軽い影 */
-  }
-  
-  .site-footer p {
-    font-size: 14px; /* 小さめのフォント */
-    color: #6c757d; /* グレーの文字色 */
-    margin-bottom: 15px; /* 下に余白 */
-  }
-  
-  .footer-navigation ul {
-    list-style: none; /* リストマーカーを非表示 */
-    padding: 0; /* 内側の余白をリセット */
-    margin: 0; /* 外側の余白をリセット */
-    display: flex; /* デフォルトで横並び */
-    gap: 15px; /* リンク間のスペース */
-  }
-  
-  .footer-navigation a {
-    text-decoration: none; /* 下線を非表示 */
-    color: #000; /* 黒に設定 */
-    font-size: 16px; /* フォントサイズ */
-    transition: color 0.3s ease; /* カラーのスムーズな切り替え */
-  }
-  
-  .footer-navigation a:hover {
-    color: #555; /* 少し明るい黒 (ダークグレー) */
-  }
-  
-  .footer-navigation a:active {
-    color: #333; /* 中間の黒 */
-  }
-  
-  /* タブレット以上の画面幅 (768px以上) */
-  @media screen and (min-width: 768px) {
-    .site-footer {
-      padding: 20px; /* 内側の余白 */
+/* ==============================================
+   Rich Footer Styles
+   ============================================== */
+
+   .site-footer-rich {
+    position: relative; /* z-indexを有効化するために追加 */
+    z-index: 2; /* 背後の.hero-backgroundより上に重ねるために追加 */
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    padding: 60px 0 20px;
+    font-family: "Gen Interface JP", sans-serif;
+    margin-top: 0;
+    border-top: none; /* 既存のボーダーを削除 */
+    box-shadow: none; /* 既存のシャドウを削除 */
+
+    .inner-wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        /* グローバルの干渉を防ぐためのリセット */
+        display: block; 
     }
 
-    .footer-navigation ul {
-        justify-content: center; /* PCで中央揃え */
+    a {
+        color: #b0b0b0;
+        text-decoration: none;
+        transition: color 0.3s ease, transform 0.2s ease;
+
+        @media (hover: hover) {
+            &:hover {
+                color: #fff;
+            }
+        }
     }
-  }
-  
-  /* スマートフォン向けのスタイル (768px以下) */
-  @media screen and (max-width: 767px) {
-    .site-footer {
-      padding: 20px 15px;
+}
+
+/* Footer Grid */
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 0.8fr 1.8fr 1fr;
+    gap: 40px;
+    margin-bottom: 50px;
+
+    /* タブレット (768px - 1024px付近) */
+    @media screen and (max-width: 1024px) {
+        grid-template-columns: 1fr 1fr; /* 2列に変更 */
+        gap: 30px;
     }
 
-    .site-footer .inner-wrap {
-        padding: 0 !important; /* グローバルのinner-wrap余白を打ち消し */
+    /* スマートフォン (767px以下) */
+    @media screen and (max-width: 767px) {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+}
+
+/* Columns */
+.footer-col {
+    .footer-heading {
+        font-size: 16px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 20px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        border-left: 3px solid #6c5ce7; /* アクセントカラー */
+        padding-left: 10px;
+        line-height: 1.2;
+    }
+}
+
+/* 1. Brand */
+.footer-brand {
+    .footer-logo {
+        margin-bottom: 20px;
+
+        .footer-main-logo {
+            display: block;
+            width: 200px;
+            max-width: 100%;
+            height: auto;
+        }
     }
 
-    .footer-navigation {
-        margin-bottom: 40px; /* contactと権利テキストの間隔 (広めに調整) */
+    .footer-desc {
+        font-size: 13px;
+        line-height: 1.7;
+        color: #a0a0a0;
+        margin-bottom: 20px;
     }
-  
-    .site-footer p {
-        margin-bottom: 0; /* 下の余白はfooterのpaddingで確保 */
-        font-size: 11px;
+
+    .footer-sns {
+        display: flex;
+        gap: 12px;
+
+        a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+
+            svg {
+                width: 20px;
+                height: 20px;
+                fill: #e0e0e0;
+                transition: fill 0.3s ease;
+            }
+
+            @media (hover: hover) {
+                &:hover {
+                    background-color: #6c5ce7;
+                    transform: translateY(-3px);
+                    
+                    svg {
+                        fill: #fff;
+                    }
+                }
+            }
+        }
     }
-  
-    .footer-navigation ul {
-      flex-direction: column; /* リンクを縦並びに変更 */
-      align-items: center; /* 中央揃え */
-      gap: 16px; /* リンク間のスペース */
+}
+
+/* 2 & 4. Menu Lists */
+.footer-menu, .footer-info {
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            margin-bottom: 12px;
+            padding: 0;
+
+            a {
+                font-size: 14px;
+                display: block;
+                position: relative;
+                
+                @media (hover: hover) {
+                    &:hover {
+                        color: #fff;
+                        padding-left: 5px; /* ホバー時に少し右に動く */
+                    }
+                }
+            }
+        }
     }
-  
-    .footer-navigation a {
-      font-size: 13px;
+}
+
+/* 3. Tags */
+.footer-tags {
+    .tag-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        .tag-link, a { /* aタグも対象に */
+            font-size: 12px;
+            padding: 6px 12px;
+            background-color: #333;
+            border-radius: 20px;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-block; /* インラインブロックで崩れ防止 */
+
+            @media (hover: hover) {
+                &:hover {
+                    background-color: #6c5ce7;
+                    color: #fff;
+                }
+            }
+        }
     }
-  }
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    border-top: 1px solid #333;
+    padding-top: 25px;
+    text-align: center;
+
+    .copyright {
+        font-size: 12px;
+        color: #666;
+        margin: 0;
+        letter-spacing: 0.05em;
+    }
+}
+
+/* Responsive Overrides */
+@media screen and (max-width: 767px) {
+    .site-footer-rich {
+        padding: 40px 0 30px;
+
+        /* SP時のinner-wrap余白調整（打ち消し用） */
+        .inner-wrap {
+            padding: 0 20px !important;
+        }
+    }
+    
+    .footer-col {
+        text-align: left; /* 左揃えで統一 */
+    }
+
+    /* 各カラムの下部にボーダーを入れて区切りを見やすくする場合のオプション */
+    /*
+    .footer-col:not(:last-child) {
+        border-bottom: 1px solid #2a2a2a;
+        padding-bottom: 30px;
+    }
+    */
+    
+    .footer-brand {
+        .footer-desc {
+            font-size: 14px;
+        }
+    }
+}
   

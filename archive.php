@@ -53,7 +53,9 @@ get_header(); ?>
 		</main><!-- #main -->
 
 		<!-- サイドナビを挿入 -->
-		<?php get_template_part('side-nav'); ?>
+		<aside class="right-contents">
+			<?php get_template_part('side-nav'); ?>
+		</aside>
 	</div><!-- #primary -->
 
 	<?php if ('side-right' === inspiro_get_theme_mod('layout_blog_page') && is_active_sidebar('blog-sidebar')) : ?>

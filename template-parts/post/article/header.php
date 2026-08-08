@@ -53,13 +53,39 @@ if ((is_single() || (is_page() && ! inspiro_is_frontpage())) && has_post_thumbna
 	}
 
 	if ('post' === get_post_type()) {
-		echo '<div class="entry-meta">';
 		if (is_single()) {
+			echo '<div class="entry-meta">';
 			inspiro_single_entry_meta();
+			echo '</div><!-- .entry-meta -->';
 		} else {
-			echo inspiro_entry_meta(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		};
-		echo '</div><!-- .entry-meta -->';
+			?>
+			<div class="top-page-article-meta" style="display: flex; flex-direction: column; align-items: flex-start; margin-top: auto;">
+				<div class="top-page-article-tags" style="display: flex; flex-wrap: wrap; gap: 4px; align-items: flex-start;">
+					<?php
+					$displayed_terms = array(); // 表示済みタグ名を記録
+					$categories = get_the_category();
+					if (!empty($categories)) {
+						foreach ($categories as $cat) {
+							if ($cat->name === '記事') continue;
+							if (in_array($cat->name, $displayed_terms)) continue;
+							echo '<span class="tag" style="margin:0;">' . esc_html($cat->name) . '</span>';
+							$displayed_terms[] = $cat->name;
+						}
+					}
+					$tags = get_the_tags();
+					if (!empty($tags)) {
+						foreach ($tags as $tag) {
+							if (strtolower($tag->name) === 'pickup') continue;
+							if (in_array($tag->name, $displayed_terms)) continue;
+							echo '<span class="tag" style="margin:0;">' . esc_html($tag->name) . '</span>';
+							$displayed_terms[] = $tag->name;
+						}
+					}
+					?>
+				</div>
+			</div>
+			<?php
+		}
 	}
 
 	if ((is_single() || (is_page() && ! inspiro_is_frontpage()))) {

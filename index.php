@@ -55,14 +55,7 @@ get_header(); ?>
 			</div>
 
 			<?php
-			// Place pagination outside of the content wrapper.
-			if (have_posts()) {
-				the_posts_pagination(
-					array(
-						'prev_next' => false,
-					)
-				);
-			}
+			// トップページのページネーションは不要なため削除（表示しない）
 			?>
 
 
@@ -70,7 +63,9 @@ get_header(); ?>
 
 		</main><!-- #main -->
 		<!-- サイドナビを挿入 -->
-		<?php get_template_part('side-nav'); ?>
+		<aside class="right-contents">
+			<?php get_template_part('side-nav'); ?>
+		</aside>
 	</div><!-- #primary -->
 
 

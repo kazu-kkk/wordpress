@@ -1,0 +1,171 @@
+@charset "UTF-8";
+
+// 記事シェアコンポーネント
+.c-share {
+    margin: 2.5rem 0;
+    text-align: center;
+
+    &__title {
+        margin-bottom: 0.75rem;
+        color: #888888;
+        font-family: "Gen Interface JP", sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+    }
+
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    &__item {
+        a,
+        .c-share__copy-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 46px;
+            height: 46px;
+            padding: 0;
+            border: 1px solid #e8e8e8;
+            border-radius: 50%;
+            background-color: #ffffff;
+            color: #666666;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+            @media (hover: hover) {
+                &:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                }
+            }
+
+            &:active {
+                transform: translateY(0);
+            }
+        }
+
+        .c-share__icon {
+            display: block;
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        @media (hover: hover) {
+            &:hover {
+                .c-share__icon {
+                    transform: scale(1.05);
+                }
+            }
+        }
+
+        // X (Twitter)
+        &--twitter {
+            @media (hover: hover) {
+                a:hover {
+                    border-color: #000000;
+                    background-color: #000000;
+                    color: #ffffff;
+                }
+            }
+        }
+
+        // Facebook
+        &--facebook {
+            @media (hover: hover) {
+                a:hover {
+                    border-color: #1877f2;
+                    background-color: #1877f2;
+                    color: #ffffff;
+                }
+            }
+        }
+
+        // LINE
+        &--line {
+            @media (hover: hover) {
+                a:hover {
+                    border-color: #06c755;
+                    background-color: #06c755;
+                    color: #ffffff;
+                }
+            }
+        }
+
+        // Hatena
+        &--hatena {
+            @media (hover: hover) {
+                a:hover {
+                    border-color: #00a4de;
+                    background-color: #00a4de;
+                    color: #ffffff;
+                }
+            }
+        }
+
+        // Copy URL
+        &--copy {
+            @media (hover: hover) {
+                .c-share__copy-btn:hover {
+                    border-color: #2b53ec; // サイトのブランドブルー
+                    background-color: #2b53ec;
+                    color: #ffffff;
+                }
+            }
+        }
+    }
+}
+
+// コピー成功時のトースト通知
+.c-toast {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    z-index: 9999;
+    padding: 12px 24px;
+    border-radius: 30px;
+    background-color: rgba(26, 26, 26, 0.9);
+    color: #ffffff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(-50%) translateY(15px);
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+
+    &.is-show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+// レスポンシブ調整 (SP)
+@media (max-width: 767px) {
+    .c-share {
+        margin: 2rem 0;
+
+        &__list {
+            gap: 10px;
+        }
+
+        &__item {
+            a,
+            .c-share__copy-btn {
+                width: 44px;
+                height: 44px;
+            }
+        }
+    }
+}

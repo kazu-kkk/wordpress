@@ -1,4 +1,10 @@
-/* 共通部分 */
+/* 隙間の白い部分をグレーで塗りつぶす */
+body.single #page,
+body.single .site-content-contain,
+body.single .site-content {
+    background-color: #F5F7FF !important;
+}
+
 .article-title {
     color: #000;
     font-size: 36px;
@@ -31,8 +37,10 @@
             text-decoration: none;
             transition: opacity 0.3s;
 
-            &:hover {
-              opacity: 0.8;
+            @media (hover: hover) {
+                &:hover {
+                  opacity: 0.8;
+                }
             }
 
             &::before {
@@ -47,6 +55,7 @@
   .article-sub-date {
     color: #000;
     margin: 0;
+    white-space: nowrap;
   }
   
   .article-fv {
@@ -95,13 +104,64 @@
       margin-top: 32px;
     }
   
-    li {
+    li:not(.toc__item) {
       font-size: 18px;
       line-height: 1.75;
       margin-bottom: 8px;
       list-style-type: disc;
       margin-left: 20px;
       color: #000;
+    }
+
+    a:not(.wp-block-button__link):not(.button):not(.btn):not(.toc__link) {
+      color: #2B53EC;
+      text-decoration: underline;
+      transition: opacity 0.3s ease;
+
+      @media (hover: hover) {
+          &:hover {
+            opacity: 0.8;
+            text-decoration: none;
+          }
+      }
+    }
+
+    blockquote,
+    .wp-block-quote {
+      position: relative;
+      background-color: #EFF4FF; /* 薄いブランドブルー */
+      color: #333; /* テキストは黒系 */
+      padding: 32px 40px;
+      border-radius: 8px;
+      margin: 40px 0;
+      overflow: hidden;
+      border: none;
+
+      &::before {
+        display: none;
+      }
+
+      p {
+        font-size: 18px;
+        line-height: 1.8;
+        margin: 0;
+        position: relative;
+        z-index: 1;
+        font-weight: 500;
+        font-style: normal;
+      }
+
+      cite, 
+      .wp-block-quote__citation {
+        display: block;
+        margin-top: 20px;
+        font-size: 13px;
+        color: #666;
+        font-style: normal;
+        text-align: right;
+        position: relative;
+        z-index: 1;
+      }
     }
 
 
@@ -116,12 +176,15 @@
         border-spacing: 2px; /* セル間の隙間を線として表現 */
         width: 100%;
         min-width: 600px; /* 横スクロール対応のため最小幅を指定 */
+        background-color: #e2e8f0; /* セル間の境界線となるグレー */
+        border-radius: 6px;
+        overflow: hidden;
 
         thead {
           tr {
             th {
-              background-color: #EFF4FF; /* 薄い青グレー（サイトトーンに合わせる） */
-              color: #2B53EC; /* アクセントカラー */
+              background-color: #2B53EC; /* ブランドの青でヘッダーをくっきり際立たせる */
+              color: #ffffff; /* 文字色は白 */
               font-weight: bold;
               border: none;
               padding: 16px;
@@ -137,7 +200,7 @@
         tbody {
           tr {
             td {
-              background-color: #F9F9F9; /* 淡いグレー背景 */
+              background-color: #ffffff; /* セル背景を純白にして、#f7f7f7背景からくっきり浮かび上がらせる */
               color: #333;
               border: none;
               padding: 16px;
@@ -152,7 +215,7 @@
     /* 縦方向のヘッダー用クラス */
     &.is-vertical-header {
       table tbody tr td:first-child {
-        background-color: #EFF4FF;
+        background-color: #EFF4FF; /* 縦ヘッダーは上品な薄い青に */
         color: #2B53EC;
         font-weight: bold;
         border: none;
@@ -194,7 +257,7 @@
     }
 
     .article-sub {
-      align-items: center;
+      align-items: flex-start;
     }
   
     .article-fv {
@@ -208,8 +271,8 @@
       h3 {
         font-size: 24px;
         line-height: 1.5;
-        margin: 16px 0 14px;
-        padding-bottom: 8px;
+        margin: 40px 0 20px;
+        padding-bottom: 0;
       }
   
       img {
@@ -222,9 +285,9 @@
   
   /* SP向けスタイル */
   @media screen and (max-width: 767px) {
-    // ページ全体の背景を白にする（グレー背景を無効化）
+    // ページ全体の背景をグレーにする（PC版と統一）
     body.single .site-content-contain {
-       background-color: #fff;
+       background-color: #F5F7FF;
     }
 
     // 左右の余白を削除（Bootstrapなどのpaddingを打ち消し）
@@ -236,7 +299,7 @@
     body.single .content-wrapper {
       width: 100%;
       margin: 0;
-      padding: 80px 0 48px;
+      padding: 30px 0 48px;
       background-color: transparent;
       box-shadow: none;
       border: none;
@@ -250,7 +313,7 @@
     }
 
     .article-title {
-      font-size: 26px;
+      font-size: 22px;
       line-height: 1.4;
       margin: 16px 0 16px;
     }
@@ -294,16 +357,16 @@
   
     .article-text {
       h2 {
-        font-size: 24px;
+        font-size: 20px;
         line-height: 1.4;
-        margin: 48px 0 24px;
+        margin: 32px 0 24px;
         padding-bottom: 12px;
       }
   
       h3 {
-        font-size: 22px;
+        font-size: 18px;
         line-height: 1.5;
-        margin: 32px 0 16px;
+        margin: 24px 0 16px;
         text-align: left;
         color: #000;
         font-weight: bold;
@@ -321,11 +384,156 @@
         margin-bottom: 24px;
       }
 
-      li {
+      li:not(.toc__item) {
         font-size: 16px;
         line-height: 1.7;
         margin-bottom: 12px;
       }
+
+      blockquote,
+      .wp-block-quote {
+        margin: 32px 0;
+        padding: 24px 20px; /* SPではパディングを少し狭く */
+
+        p {
+          font-size: 15px; /* SPでは少し小さくして読みやすく */
+        }
+
+        cite, 
+        .wp-block-quote__citation {
+          font-size: 12px;
+          margin-top: 16px;
+        }
+      }
+
+      /* テーブルの見切れ防止（SP向け調整） */
+      .wp-block-table {
+        margin: 32px 0;
+        table {
+          /* 横スクロールは維持（元々の min-width: 600px を継承するため上書きなし） */
+          thead tr th {
+            white-space: normal; /* ヘッダーの文字が長すぎる場合に折り返しを許可 */
+            font-size: 14px;
+            padding: 12px 8px;
+          }
+          tbody tr td {
+            font-size: 14px;
+            padding: 12px 8px;
+          }
+        }
+      }
     }
   }
   
+// ── 関連記事セクション ────────────────────────────────────
+.related-posts {
+  margin: 64px auto 48px;
+  max-width: 720px;
+
+  &__title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 24px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #E8E8E8;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 30%;
+      border-bottom: 3px solid #2B53EC;
+    }
+  }
+
+  /* PC向け: 関連記事セクションの3カラムレイアウトオーバーライド */
+  @media screen and (min-width: 768px) {
+    .new-article-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+
+    .new-article {
+      width: 100%;
+      height: 100%;
+      margin: 0 !important;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.3s ease;
+
+      &:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      }
+
+      &-link {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      &__image {
+        width: 100%;
+        height: 130px;
+        border-radius: 8px 8px 0 0;
+      }
+
+      &-text {
+        width: 100%;
+        padding: 16px 16px 10px; /* 下余白を狭めてスッキリさせる */
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        &-inner {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          width: 100%;
+        }
+
+        &__title {
+          font-size: 14px;
+          line-height: 1.5;
+          margin-bottom: 8px; /* 日付との間隔も少し詰める */
+          /* 3行で三点リーダー表示 */
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        &__date {
+          margin-top: auto;
+          margin-bottom: 0;
+          font-size: 11px;
+          line-height: 1;
+        }
+
+        &-meta {
+          display: none; /* 狭いのでタグ類は非表示にする */
+        }
+      }
+    }
+  }
+
+}
+
+// SP向け：2列 → 1列
+@media screen and (max-width: 767px) {
+  .related-posts {
+    margin: 48px 0 32px;
+
+    &__title {
+      font-size: 18px;
+    }
+  }
+}

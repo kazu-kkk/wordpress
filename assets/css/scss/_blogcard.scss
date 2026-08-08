@@ -1,7 +1,9 @@
 //PC
 @media screen and (width >=767px) {
     .blogcard {
+        display: flex;
         width: 100%;
+        min-height: 140px;
         background: #ffffff;
         border: 1px solid #e0e0e0;
         border-radius: 8px;
@@ -11,6 +13,7 @@
     }
     
     .blogcard a {
+        flex: 1;
         text-decoration: none;
         color: inherit;
         display: flex;
@@ -18,24 +21,32 @@
     }
     
     .blogcard_thumbnail {
-        flex: 0 0 240px;
-        width: 240px;
+        flex: 0 0 180px;
+        width: 180px;
+        min-height: 120px;
+        position: relative;
         overflow: hidden;
         border-right: 1px solid #eee;
+        align-self: stretch;
     }
     
     .blogcard .blogcard_thumbnail img {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
+        display: block;
         transition: transform 0.3s ease;
         margin: 0;
         padding: 0;
-        vertical-align: bottom;
     }
     
-    .blogcard:hover .blogcard_thumbnail img {
-        transform: scale(1.05);
+    @media (hover: hover) {
+        .blogcard:hover .blogcard_thumbnail img {
+            transform: scale(1.05);
+        }
     }
     
     .blogcard_content {
@@ -45,6 +56,8 @@
         flex-direction: column;
         justify-content: center;
         min-width: 0; /* Flexbox text overflow fix */
+        overflow: hidden;
+        width: 0; /* force flex child to shrink */
     }
     
     .blogcard_title {
@@ -53,6 +66,11 @@
         color: #333;
         margin-bottom: 10px;
         line-height: 1.4;
+        word-break: break-all;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
     
     .blogcard_excerpt {
@@ -60,6 +78,7 @@
         color: #666;
         margin-bottom: 12px;
         line-height: 1.6;
+        word-break: break-all;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
@@ -68,15 +87,17 @@
     
     .blogcard_link {
         font-size: 0.8rem;
-        color: #007BFF;
+        color: #999;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
     
-    .blogcard:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    @media (hover: hover) {
+        .blogcard:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
     }
     
 }
@@ -84,8 +105,10 @@
 //SP
 @media screen and (width <=767px) {
     .blogcard {
+        display: flex;
         width: 100%;
         max-width: 100%;
+        min-height: 110px;
         margin: 10px auto;
         background: #ffffff;
         border: 1px solid #e0e0e0;
@@ -95,23 +118,27 @@
     }
     
     .blogcard a {
+        flex: 1;
         text-decoration: none;
         color: inherit;
         display: flex;
         align-items: stretch;
-        height: 100%;
     }
     
     .blogcard_thumbnail {
         flex: 0 0 110px;
         width: 110px;
+        min-height: 90px;
+        position: relative;
         overflow: hidden;
         border-right: 1px solid #f0f0f0;
-        position: relative;
-        line-height: 0; /* 画像下の隙間対策 */
+        align-self: stretch;
     }
     
     .blogcard .blogcard_thumbnail img {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -127,6 +154,8 @@
         flex-direction: column;
         justify-content: center;
         min-width: 0;
+        overflow: hidden;
+        width: 0; /* force flex child to shrink */
     }
     
     .blogcard_title {
@@ -154,7 +183,7 @@
     
     .blogcard_link {
         font-size: 0.7rem;
-        color: #007BFF;
+        color: #999;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -177,3 +206,18 @@
         }
     }
 }
+
+// 記事本文などでのリンク下線強制適用を防ぐ
+.article-text .blogcard a:not(.wp-block-button__link):not(.button):not(.btn),
+.blogcard a {
+    text-decoration: none;
+    border-bottom: none;
+    
+    @media (hover: hover) {
+        &:hover {
+            text-decoration: none;
+            border-bottom: none;
+        }
+    }
+}
+

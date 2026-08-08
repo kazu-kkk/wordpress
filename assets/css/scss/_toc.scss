@@ -1,0 +1,181 @@
+// ── 目次（Table of Contents）────────────────────────────────────
+.toc {
+    max-width: 720px;
+    margin: 40px auto 32px;
+    padding: 0;
+    background-color: #F5F7FF;
+    border: 1px solid #D6DCFA;
+    border-radius: 8px;
+    overflow: hidden;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 20px;
+        cursor: pointer;
+        user-select: none;
+
+        @media (hover: hover) {
+            &:hover {
+                background-color: #eef1fd;
+            }
+        }
+    }
+
+    &__title {
+        font-size: 15px;
+        font-weight: bold;
+        color: #333;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px; /* アイコンと文字の隙間 */
+
+        &::before {
+            content: "";
+            display: inline-block;
+            width: 1.1em;
+            height: 1.1em;
+            /* FontAwesomeの list-ul アイコンをブランドブルーで指定 */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%232b53ec" d="M64 144a48 48 0 1 0 0-96 48 48 0 1 0 0 96zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H512c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H512c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H512c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM64 464a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm48-208a48 48 0 1 0 -96 0 48 48 0 1 0 96 0z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    }
+
+    &__toggle {
+        font-size: 13px;
+        color: #2B53EC;
+        font-weight: bold;
+        white-space: nowrap;
+        padding: 4px 10px;
+        border: 1px solid #2B53EC;
+        border-radius: 4px;
+        transition: background-color 0.2s ease, color 0.2s ease;
+
+        .toc.is-open & {
+            background-color: #2B53EC;
+            color: #fff;
+        }
+    }
+
+    &__body {
+        display: none;
+        border-top: 1px solid #D6DCFA;
+        padding: 16px 20px 18px;
+
+        .toc.is-open & {
+            display: block;
+        }
+    }
+
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &__item {
+        margin: 0;
+        padding: 0;
+
+        &--h2 {
+            margin-bottom: 6px;
+        }
+
+        &--h3 {
+            padding-left: 16px;
+            margin-bottom: 4px;
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                left: 6px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+                background-color: #aab4d0;
+            }
+        }
+    }
+
+    &__link {
+        display: block;
+        font-size: 14px;
+        line-height: 1.6;
+        padding: 3px 0;
+        transition: color 0.2s ease, opacity 0.2s ease;
+
+        /* 詳細度を上げてグローバルの青リンク・下線を上書きする */
+        &,
+        .article-text & {
+            color: #555; /* 青リンクをやめてグレーに変更 */
+            text-decoration: none; /* デフォルトの下線を消す */
+        }
+
+        @media (hover: hover) {
+            &:hover,
+            .article-text &:hover {
+                color: #222; /* ホバー時は少し濃いグレーにして反応を示す */
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+// SP向け
+@media screen and (max-width: 767px) {
+    .toc {
+        margin: 24px 0 20px;
+        border-radius: 6px;
+
+        &__header {
+            padding: 12px 14px;
+        }
+
+        &__title {
+            font-size: 14px;
+        }
+
+        &__toggle {
+            font-size: 12px;
+            padding: 3px 8px;
+        }
+
+        &__body {
+            padding: 10px 14px 12px;
+        }
+
+        &__list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        &__item {
+            list-style-type: none;
+            margin-left: 0;
+        }
+
+        &__link {
+            font-size: 13px;
+        }
+    }
+}
+
+// ── アンカー到達時のハイライトアニメーション ──────────────────────
+@keyframes toc-highlight-flash {
+    0%   { background-color: transparent; }
+    20%  { background-color: rgba(43, 83, 236, 0.12); }
+    100% { background-color: transparent; }
+}
+
+.toc-highlight {
+    animation: toc-highlight-flash 1.2s ease-out forwards;
+    border-radius: 4px;
+}

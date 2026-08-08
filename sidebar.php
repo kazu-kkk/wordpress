@@ -46,7 +46,7 @@
                                 alt="プロフィール画像" class="profile-avatar">
 
                             <h2 class="profile-name">Yuny</h2>
-                            <p class="profile-bio">UI/UX/グラフィックデザイナー<br>モーションや写真、映像や3Dも時々触ります</p>
+                            <p class="profile-bio">UX / UI/グラフィックデザイナー<br>モーションや写真、映像や3Dも時々触ります</p>
                         </div>
 
                         <!-- 記事検索 -->
@@ -60,7 +60,7 @@
 
                         <!-- カテゴリ一覧 -->
                         <h2 class="widget-title">カテゴリ</h2>
-                        <ul>
+                        <ul class="side-nav-category-list">
                             <?php
                             // 除外するカテゴリIDを指定
                             $exclude_ids = array(2, 4, 5); // 除外したいカテゴリのID
@@ -76,15 +76,19 @@
                             }
                             ?>
                         </ul>
+
+                        <!-- 広告エリア -->
+                        <div class="ad-widget" style="margin-top: 30px; text-align: center;">
+                            <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
+                            <div id="im-1eae1085f45c43698d0a456571986d00">
+                                <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+                                <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00"})</script>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
 			<?php endif ?>
-			<?php
-			if ( is_active_sidebar( 'sidebar' ) ) {
-				dynamic_sidebar( 'sidebar' );
-			}
-			?>
 		</div>
 	</div>
 </aside>

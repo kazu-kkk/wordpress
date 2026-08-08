@@ -4,7 +4,7 @@
   max-width: 900px; /* Slightly narrower for tight feel */
   margin: 60px auto;
   padding: 0 20px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: "Gen Interface JP", sans-serif;
   color: #000;
 }
 
@@ -34,61 +34,67 @@
   color: #333;
   cursor: pointer;
 
-  &:hover {
-    transform: scale(1.02); /* Slight scale */
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  @media (hover: hover) {
+    &:hover {
+      transform: scale(1.02); /* Slight scale */
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    }
   }
 }
 
-/* Profile Section - Spans 2x2 area on PC */
+/* Profile Section - Spans 2x1 area on PC */
 .profile-card {
   grid-column: span 2;
-  grid-row: span 2;
-  background-color: transparent; /* No background */
-  box-shadow: none; /* No shadow */
-  border: none; /* No border */
-  align-items: flex-start;
+  grid-row: span 1;
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  align-items: center;
   text-align: left;
-  padding: 32px; /* Reduced from 40px to match base */
-  cursor: default; /* Profile usually not a link */
-  margin-bottom: 0 !important; /* Explicitly remove bottom margin */
+  padding: 0 16px;
+  cursor: default;
+  margin-bottom: 0 !important;
 
-  &:hover {
-    transform: none; /* No hover effect for profile */
-    box-shadow: none;
+  @media (hover: hover) {
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
   }
 
   .profile-content {
     display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center vertically */
+    flex-direction: row; /* Horizontal alignment */
+    align-items: center;
+    justify-content: flex-start;
     height: 100%;
-    gap: 16px; /* Reduced gap */
+    gap: 24px; 
     width: 100%;
   }
 
   .profile-image img {
-    width: 100px;
-    height: 100px;
-    border-radius: 28px; /* Slightly squircle */
+    width: 110px;
+    height: 110px;
+    border-radius: 50%; /* Circle looks cleaner for horizontal layout */
     object-fit: cover;
-    margin-bottom: 0; /* Ensure no margin */
+    margin-bottom: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   }
 
   h1 {
     font-size: 32px;
     font-weight: 800;
-    margin: 0 0 8px 0; /* Reduced margin */
+    margin: 0 0 4px 0;
     color: #000;
     line-height: 1.1;
   }
 
   p {
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.5;
     color: #666;
     font-weight: 500;
-    margin: 0; /* Reset margin */
+    margin: 0;
   }
 }
 
@@ -96,56 +102,44 @@
 .social-card {
   font-weight: 700;
   font-size: 18px;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   padding: 24px;
 
   /* Icon styles */
   .card-icon {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 12px;
-    font-size: 20px;
+    font-size: 16px;
     width: 100%;
-    height: 100%;
-    justify-content: space-between;
+    justify-content: center;
   }
   
   /* Icon inside svg */
   svg {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
   }
   
   span {
-    font-size: 20px;
+    font-size: 16px;
   }
 }
-
 
 /* Specific Colors */
 .instagram {
   grid-column: span 1;
-  grid-row: span 2; /* Tall card */
+  grid-row: span 1; /* Changed to 1x1 */
   background-color: #FEEBF1;
-  border: 1px solid #FCDFE9; /* Matching subtle border */
+  border: 1px solid #FCDFE9;
   color: #E1306C;
   
-  /* Remove default hover opacity, rely on scale */
-  &:hover {
-    opacity: 1; 
-  }
-  
-  .card-icon {
-      justify-content: center;
-      align-items: center;
-  }
-  
-  svg {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 10px;
+  @media (hover: hover) {
+    &:hover {
+      opacity: 1; 
+    }
   }
 }
 
@@ -155,27 +149,15 @@
   background-color: #fcf4f4;
   color: #ff0000;
   border: 1px solid #ecdcdc;
-  
-  .card-icon {
-      justify-content: center;
-      align-items: center;
-  }
 }
 
 .note {
   grid-column: span 1;
   grid-row: span 1;
-  /* background-color: #fcfcfc; Inherits */
-  /* border: 1px solid #ececec; Inherits */
   color: #2cb696;
   
-  .card-icon {
-      justify-content: center;
-      align-items: center;
-  }
-  
   .card-label {
-      margin-top: auto;
+      margin-top: 12px;
       font-size: 14px;
       color: #999;
   }
@@ -184,19 +166,12 @@
 .twitter { /* X */
   grid-column: span 1;
   grid-row: span 1;
-  /* Inherit base background and border */
   color: #000;
-  
-  .card-icon {
-      justify-content: center;
-      align-items: center;
-  }
 }
 
 .despedia {
   grid-column: span 2;
   grid-row: span 1;
-  /* background-color: #fcfcfc; inherits */
   color: #2b53ec;
   align-items: center;
   justify-content: center;
@@ -221,6 +196,74 @@
   }
 }
 
+/* WordPress Content Area (About Profile & Default Pages) */
+.about-content,
+body.page-template-default .entry-content {
+  margin-top: 64px;
+  color: #000;
+
+  h2 {
+    border-bottom: solid 3px #E8E8E8;
+    font-size: 28px;
+    line-height: 36px;
+    margin: 48px 0 32px; /* 余裕をもたせる（上48px, 下32px） */
+    padding-bottom: 12px;
+    position: relative;
+    font-weight: bold;
+  }
+  
+  h2:after {
+    position: absolute;
+    content: "";
+    display: block;
+    border-bottom: solid 3px #2B53EC;
+    bottom: -3px;
+    width: 30%;
+    left: 0;
+  }
+
+  h3 {
+    font-size: 24px;
+    line-height: 1.5;
+    margin: 40px 0 24px; /* 余裕をもたせる（上40px, 下24px） */
+    padding-bottom: 8px;
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 18px;
+    line-height: 2.0;
+    letter-spacing: 0.04em;
+    margin-top: 32px;
+    margin-bottom: 32px;
+  }
+
+  ul {
+    margin-top: 32px;
+    margin-bottom: 32px;
+  }
+
+  li {
+    font-size: 18px;
+    line-height: 2.0;
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+    list-style-type: disc;
+    margin-left: 24px;
+    color: #000;
+  }
+
+  a:not(.wp-block-button__link):not(.button):not(.btn) {
+    color: #2B53EC;
+    text-decoration: underline;
+
+    @media (hover: hover) {
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}
 
 /* Responsive - SP */
 @media screen and (max-width: 768px) {
@@ -243,17 +286,17 @@
 
   .profile-card {
     grid-column: span 2; /* Full width */
-    grid-row: auto;
-    padding: 32px 24px;
+    grid-row: span 1;
+    padding: 24px;
     
     .profile-content {
-        gap: 20px;
+        gap: 16px;
     }
     
     .profile-image img {
       width: 80px;
       height: 80px;
-      border-radius: 20px;
+      border-radius: 50%; /* Circle */
     }
 
     h1 {
@@ -265,18 +308,18 @@
     }
   }
 
-  /* Arrange items to fill gaps nicely */
+  /* Arrange items to fill gaps nicely without holes */
   .instagram {
     grid-column: span 1;
-    grid-row: span 2; 
+    grid-row: span 1; /* Changed to 1x1 for perfect grid */
     
     svg {
-        width: 60px;
-        height: 60px;
+        width: 36px;
+        height: 36px;
     }
     
     span {
-        font-size: 16px;
+        font-size: 14px;
     }
   }
 
@@ -298,5 +341,36 @@
   .despedia {
       grid-column: span 2; /* Full width */
       grid-row: span 1;
+  }
+
+  .about-content,
+  body.page-template-default .entry-content {
+    margin-top: 24px;
+
+    h2 {
+      font-size: 20px;
+      line-height: 1.4;
+      margin: 24px 0 24px;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin: 24px 0 20px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 2.0;
+      letter-spacing: 0.04em;
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }
+
+    li {
+      font-size: 16px;
+      line-height: 2.0;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
   }
 }
