@@ -51,6 +51,21 @@ class OpenGraph implements Iterator
      */
     static public function fetch($URI)
     {
+        if (function_exists('wp_remote_get')) {
+            $response = wp_remote_get(esc_url_raw($URI), array(
+                'timeout'     => 15,
+                'redirection' => 5,
+                'sslverify'   => false,
+            ));
+            if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
+                $body = wp_remote_retrieve_body($response);
+                if (!empty($body)) {
+                    return self::_parse($body);
+                }
+            }
+            return false;
+        }
+
         $curl = curl_init($URI);
 
         curl_setopt($curl, CURLOPT_FAILONERROR, true);
@@ -59,7 +74,9 @@ class OpenGraph implements Iterator
         curl_setopt($curl, CURLOPT_TIMEOUT, 15);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
+            curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+        }
 
         $response = curl_exec($curl);
 
@@ -131,15 +148,55 @@ class OpenGraph implements Iterator
         }
 
         //Fallback to use image_src if ogp::image isn't set.
-        if (!isset($page->values['image'])) {
+        if (!isset($page->_values['image'])) {
             $domxpath = new DOMXPath($doc);
-            $elements = $domxpath->query("//link[@rel='image_src']");
-
-            if ($elements->length > 0) {
-                $domattr = $elements->item(0)->attributes->getNamedItem('href');
+            
+            // 1. Try twitter:image
+            $twitter_image = $domxpath->query("//meta[@name='twitter:image']");
+            if ($twitter_image->length > 0) {
+                $domattr = $twitter_image->item(0)->attributes->getNamedItem('content');
                 if ($domattr) {
                     $page->_values['image'] = $domattr->value;
-                    $page->_values['image_src'] = $domattr->value;
+                }
+            }
+            
+            // 2. Try link rel='image_src'
+            if (!isset($page->_values['image'])) {
+                $elements = $domxpath->query("//link[@rel='image_src']");
+                if ($elements->length > 0) {
+                    $domattr = $elements->item(0)->attributes->getNamedItem('href');
+                    if ($domattr) {
+                        $page->_values['image'] = $domattr->value;
+                        $page->_values['image_src'] = $domattr->value;
+                    }
+                }
+            }
+
+            // 3. Fallback to first actual <img> tag (exclude base64, lazyload placeholders, logos, and headers)
+            if (!isset($page->_values['image'])) {
+                $imgs = $doc->getElementsByTagName('img');
+                foreach ($imgs as $img) {
+                    $src = $img->getAttribute('src');
+                    // check if it has a real data-src (lazy loaded)
+                    if ($img->hasAttribute('data-src')) {
+                        $data_src = $img->getAttribute('data-src');
+                        if (!empty($data_src) && strpos($data_src, 'data:image') === false) {
+                            $src = $data_src;
+                        }
+                    }
+                    
+                    $classes = $img->getAttribute('class') ?? '';
+                    
+                    if (!empty($src) && 
+                        strpos($src, 'data:image') === false && 
+                        strpos($src, 'logo') === false && 
+                        strpos($src, 'header') === false && 
+                        strpos($src, 'icon') === false &&
+                        strpos($classes, 'avatar') === false
+                    ) {
+                        $page->_values['image'] = $src;
+                        break;
+                    }
                 }
             }
         }

@@ -71,7 +71,7 @@ function show_Linkcard($atts)
     }
 
     // トランジェントキーを生成（URL単位でキャッシュ）
-    $cache_key = 'ogp_' . md5($atts['url']);
+    $cache_key = 'ogp_v4_' . md5($atts['url']);
     $ogp_data  = get_transient($cache_key);
 
     if ($ogp_data === false) {
@@ -79,15 +79,25 @@ function show_Linkcard($atts)
         require_once get_stylesheet_directory() . '/OpenGraph.php';
         $graph = OpenGraph::fetch($atts['url']);
 
-        $ogp_data = array(
-            'title'       => $graph->title ?? '',
-            'image'       => $graph->image ?? '',
-            'description' => $graph->description ?? '',
-        );
-
-        // 24時間キャッシュ（画像が取れなかった場合は1時間後に再試行）
-        $ttl = !empty($ogp_data['image']) ? DAY_IN_SECONDS : HOUR_IN_SECONDS;
-        set_transient($cache_key, $ogp_data, $ttl);
+        if ($graph !== false) {
+            $ogp_data = array(
+                'title'       => $graph->title ?? '',
+                'image'       => $graph->image ?? '',
+                'description' => $graph->description ?? '',
+            );
+            
+            // 24時間キャッシュ（画像が取れなかった場合は1時間後に再試行）
+            $ttl = !empty($ogp_data['image']) ? DAY_IN_SECONDS : HOUR_IN_SECONDS;
+            set_transient($cache_key, $ogp_data, $ttl);
+        } else {
+            // 取得失敗時はデフォルト値を設定し、短時間（5分）だけキャッシュする
+            $ogp_data = array(
+                'title'       => '',
+                'image'       => '',
+                'description' => '',
+            );
+            set_transient($cache_key, $ogp_data, 5 * MINUTE_IN_SECONDS);
+        }
     }
 
     // タイトル・説明文・画像（ショートコードの引数が指定されていれば優先）
