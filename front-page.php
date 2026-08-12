@@ -294,36 +294,6 @@ add_action( 'wp_head', function() { ?>
         }
     }
 
-    /* --- インフィード広告の表示制御 --- */
-    body .infeed-ad-container {
-        display: block;
-        margin: 30px 0;
-        background: #fff;
-        padding: 20px 10px;
-        border-radius: 8px;
-        text-align: center;
-        border-bottom: none;
-        width: 100%;
-        box-sizing: border-box;
-    }
-    body .infeed-ad-container .ad-widget-content {
-        margin: 0 auto;
-        display: inline-block;
-        overflow: hidden;
-    }
-    @media screen and (max-width: 767px) {
-        /* 広告に面する2件目の記事の下線を消す */
-        body .new-article-list .new-article:nth-child(2) {
-            border-bottom: none !important;
-        }
-        
-        body .infeed-ad-container {
-            margin: 16px 0 30px; /* 上は少し詰めて、下は余白を取る */
-        }
-        body .infeed-ad-container .ad-widget-content {
-            zoom: 0.85; /* はみ出し防止用 */
-        }
-    }
 
 </style>
 <?php }, 20 ); // end wp_head action
@@ -625,14 +595,14 @@ get_header(); ?>
                 <div style="font-size: 10px; color: #999; margin-bottom: 5px; text-align: center;">スポンサーリンク</div>
                 <div class="ad-widget-content">
                     <?php if ( wp_is_mobile() ) : ?>
-                    <div id="im-1eae1085f45c43698d0a456571986d00">
+                    <div id="im-1eae1085f45c43698d0a456571986d00_2">
                         <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00"})</script>
+                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00_2"})</script>
                     </div>
                     <?php else : ?>
-                    <div id="im-91b0abf8dd8043e3a85b798346681f1d">
+                    <div id="im-91b0abf8dd8043e3a85b798346681f1d_2">
                         <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d"})</script>
+                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d_2"})</script>
                     </div>
                     <?php endif; ?>
                 </div>
@@ -712,14 +682,14 @@ get_header(); ?>
                 <div style="font-size: 10px; color: #999; margin-bottom: 5px; text-align: center;">スポンサーリンク</div>
                 <div class="ad-widget-content">
                     <?php if ( wp_is_mobile() ) : ?>
-                    <div id="im-1eae1085f45c43698d0a456571986d00">
+                    <div id="im-1eae1085f45c43698d0a456571986d00_3">
                         <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00"})</script>
+                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00_3"})</script>
                     </div>
                     <?php else : ?>
-                    <div id="im-91b0abf8dd8043e3a85b798346681f1d">
+                    <div id="im-91b0abf8dd8043e3a85b798346681f1d_3">
                         <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d"})</script>
+                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d_3"})</script>
                     </div>
                     <?php endif; ?>
                 </div>
