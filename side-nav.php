@@ -1,14 +1,4 @@
 <aside id="custom-side-nav" class="widget-area">
-    <?php if ( is_front_page() || is_page_template('page-templates/page-top-preview.php') ) : ?>
-    <!-- プロフィールカード -->
-    <div class="profile-card">
-        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/yuny_logo.png"
-            alt="プロフィール画像" class="profile-avatar">
-        <h2 class="profile-name">Yuny</h2>
-        <p class="profile-bio">UX/UI/グラフィックデザイナー<br>モーションや写真、映像や3Dも時々触ります</p>
-    </div>
-    <?php endif; ?>
-
     <!-- 記事検索 -->
     <div class="search-widget">
         <h2 class="widget-title">SEARCH</h2>
@@ -34,6 +24,8 @@
         ?>
     </ul>
 
+    <!-- スクロール追従エリア -->
+    <div class="sticky-sidebar-wrapper">
     <!-- 人気タグ -->
     <div class="popular-tag">
         <h2 class="widget-title">人気のタグ</h2>
@@ -98,8 +90,16 @@
         </ul>
     </div>
 
-    <!-- スクロール追従エリア -->
-    <div class="sticky-sidebar-wrapper">
+    <?php if ( is_front_page() || is_page_template('page-templates/page-top-preview.php') ) : ?>
+    <!-- プロフィールカード -->
+    <div class="profile-card">
+        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/yuny_logo.png"
+            alt="プロフィール画像" class="profile-avatar">
+        <h2 class="profile-name">Yuny</h2>
+        <p class="profile-bio">UX/UI/グラフィックデザイナー<br>モーションや写真、映像や3Dも時々触ります</p>
+    </div>
+    <?php endif; ?>
+
         <?php if ( is_front_page() || is_page_template('page-templates/page-top-preview.php') ) : ?>
         <!-- デザイントレンド -->
         <div class="trend-word-widget">

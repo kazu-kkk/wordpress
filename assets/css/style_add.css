@@ -1173,7 +1173,7 @@ body.single .site-content {
    ========================================= */
 .search-widget {
   margin-bottom: 24px;
-  margin-top: 40px;
+  margin-top: 0;
 }
 
 .search-container {
@@ -1523,7 +1523,7 @@ body.side-nav-open .site {
   }
   #custom-side-nav .sticky-sidebar-wrapper {
     position: sticky;
-    top: 100px; /* ヘッダーの高さなどを考慮して調整 */
+    top: 130px; /* ヘッダーの高さ＋見出し上部の余白を考慮して調整 */
     z-index: 10;
     /* 余白を整える */
     padding-bottom: 20px;
@@ -4047,20 +4047,16 @@ img {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   margin-bottom: 16px; /* ピックアップ等のためにデフォルトは16pxに戻す */
   font-size: 20px;
   color: #000;
   text-align: left;
   font-weight: bold;
+  /* Lucideによって <i> は <svg> に置換されるため、直接 svg を指定する */
 }
-.title-h2__text i {
-  color: #2B53EC;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.title-h2__text i svg {
+.title-h2__text svg {
+  color: #2B53EC; /* strokeがcurrentColorなのでcolorで色がつく */
   width: 28px;
   height: 28px;
   stroke-width: 2.25;
@@ -4616,8 +4612,24 @@ body .pagination .nav-links .page-numbers.dots {
   html body h2.title-h2__text--trend,
   html body h2.title-h2__text--category,
   html body h2.title-h2__text--pick-up {
-    margin-top: 40px;
+    margin-top: 0;
     margin-bottom: 0; /* アイコンの高さとカード上部のpaddingがあるため、見出し自体の下マージンは0にする */
+  }
+  html body.home .title-h2__text,
+  html body.front-page .title-h2__text,
+  html body.page-template-page-top-preview .title-h2__text,
+  html body.home .title-h2__text,
+  html body .title-h2__text {
+    font-size: 16px;
+    gap: 6px;
+  }
+  html body.home .title-h2__text svg,
+  html body.front-page .title-h2__text svg,
+  html body.page-template-page-top-preview .title-h2__text svg,
+  html body.home .title-h2__text svg,
+  html body .title-h2__text svg {
+    width: 18px;
+    height: 18px;
   }
   html body.home div#primary main#main.top-page-content .new-article-list,
   html body.home div#primary .new-article-list,
@@ -4989,6 +5001,10 @@ body .pagination .nav-links .page-numbers.dots {
     padding: 0;
     float: none;
     width: auto;
+    /* 各セクションの下余白 (PC) */
+  }
+  body #page .inner-wrap--top-page #main.top-page-content section, body #page .inner-wrap--top-page #main.top-page-content .infeed-ad-container {
+    margin-bottom: 40px;
   }
   body #page .inner-wrap--top-page .right-contents {
     width: 300px;
@@ -5021,6 +5037,10 @@ body .pagination .nav-links .page-numbers.dots {
     padding: 0;
     margin: 0;
     float: none;
+    /* 各セクションの下余白 (SP) */
+  }
+  body #page .inner-wrap--top-page #main.top-page-content section, body #page .inner-wrap--top-page #main.top-page-content .infeed-ad-container {
+    margin-bottom: 24px;
   }
   body #page .inner-wrap--top-page .right-contents {
     width: 100%;

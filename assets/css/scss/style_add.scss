@@ -1184,24 +1184,19 @@ img {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   margin-bottom: 16px; /* ピックアップ等のためにデフォルトは16pxに戻す */
   font-size: 20px;
   color: #000;
   text-align: left;
   font-weight: bold;
 
-  i {
-    color: #2B53EC;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    svg {
-      width: 28px;
-      height: 28px;
-      stroke-width: 2.25;
-    }
+  /* Lucideによって <i> は <svg> に置換されるため、直接 svg を指定する */
+  svg {
+    color: #2B53EC; /* strokeがcurrentColorなのでcolorで色がつく */
+    width: 28px;
+    height: 28px;
+    stroke-width: 2.25;
   }
 }
 
@@ -1467,13 +1462,24 @@ body {
       }
     }
 
-    // 各セクションの余白感を統一（最新の投稿、トレンド）
+    // 各セクションの見出し下余白を統一
     h2.title-h2__text--new,
     h2.title-h2__text--trend,
     h2.title-h2__text--category,
     h2.title-h2__text--pick-up {
-      margin-top: 40px;
+      margin-top: 0;
       margin-bottom: 0; /* アイコンの高さとカード上部のpaddingがあるため、見出し自体の下マージンは0にする */
+    }
+
+    // SP時の見出し（ピックアップなど）のスタイル調整：フォントサイズ縮小とアイコンとの余白詰め
+    .title-h2__text {
+      font-size: 16px;
+      gap: 6px;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
     }
     // 最新の投稿（new-article）の横スクロール化と白背景化
     div#primary main#main.top-page-content .new-article-list,
@@ -1631,6 +1637,11 @@ body {
         padding: 0;
         float: none;
         width: auto;
+
+        /* 各セクションの下余白 (PC) */
+        section, .infeed-ad-container {
+            margin-bottom: 40px;
+        }
     }
     
     body #page .inner-wrap--top-page .right-contents {
@@ -1667,6 +1678,11 @@ body {
         padding: 0;
         margin: 0;
         float: none;
+
+        /* 各セクションの下余白 (SP) */
+        section, .infeed-ad-container {
+            margin-bottom: 24px;
+        }
     }
 
     body #page .inner-wrap--top-page .right-contents {

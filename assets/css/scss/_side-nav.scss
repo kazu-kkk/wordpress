@@ -176,7 +176,7 @@
    ========================================= */
 .search-widget {
     margin-bottom: 24px;
-    margin-top: 40px;
+    margin-top: 0;
 }
 
 .search-container {
@@ -543,7 +543,7 @@ body.side-nav-open .site {
     
     #custom-side-nav .sticky-sidebar-wrapper {
         position: sticky;
-        top: 100px; /* ヘッダーの高さなどを考慮して調整 */
+        top: 130px; /* ヘッダーの高さ＋見出し上部の余白を考慮して調整 */
         z-index: 10;
         /* 余白を整える */
         padding-bottom: 20px;
