@@ -71,7 +71,7 @@ function show_Linkcard($atts)
     }
 
     // トランジェントキーを生成（URL単位でキャッシュ）
-    $cache_key = 'ogp_v4_' . md5($atts['url']);
+    $cache_key = 'ogp_v5_' . md5($atts['url']);
     $ogp_data  = get_transient($cache_key);
 
     if ($ogp_data === false) {
@@ -833,3 +833,124 @@ function inspiro_child_get_critical_related_posts($post_id, $limit = 3) {
 
     return $related_posts;
 }
+
+
+
+/**
+ * Add OGP Meta Tags to Head
+ */
+function inspiro_child_add_ogp()
+{
+    if (is_admin()) {
+        return;
+    }
+
+    if (is_front_page() || is_home()) {
+        $og_title = 'デザペディア - Webデザイン・UX / UI・チュートリアルの情報メディアサイト';
+    } else {
+        $og_title = get_bloginfo('name');
+    }
+    $og_description = 'デザペディアは、Webデザイン、UX / UI、チュートリアルなど、デザイナーやクリエイターのための情報メディアサイトです。最新のデザインニュース、クリエイティブなインスピレーション、業界のトレンド、役立つツールを提供し、あなたのクリエイティブな活動をサポートします。';
+    $og_url         = home_url('/');
+    $og_type        = 'website';
+    $og_image       = '';
+
+    // デフォルト画像の設定（ロゴなど）
+    if (has_custom_logo()) {
+        $custom_logo_id = get_theme_mod('custom_logo');
+        $logo_img_src = wp_get_attachment_image_src($custom_logo_id, 'full');
+        if ($logo_img_src) {
+            $og_image = $logo_img_src[0];
+        }
+    }
+    
+    // カスタムロゴが取得できない、または設定がない場合はデフォルトのブログロゴ画像を設定
+    if (empty($og_image)) {
+        $og_image = home_url('/wp-content/uploads/2025/01/ブログロゴ.png');
+    }
+
+    if (is_single() || is_page()) {
+        $post_id = get_the_ID();
+        $post = get_post($post_id);
+        if ($post) {
+            $og_title       = get_the_title($post_id);
+            $og_url         = get_permalink($post_id);
+            $og_type        = 'article';
+
+            // 抜粋があれば使用し、なければ本文から120文字を自動生成
+            $excerpt = $post->post_excerpt;
+            if (empty($excerpt)) {
+                $plain_content = wp_strip_all_tags(strip_shortcodes($post->post_content));
+                $excerpt       = mb_substr($plain_content, 0, 120, 'UTF-8');
+                if (mb_strlen($plain_content, 'UTF-8') > 120) {
+                    $excerpt .= '…';
+                }
+            }
+            $og_description = esc_attr($excerpt);
+
+            if (has_post_thumbnail($post_id)) {
+                $thumbnail_src = wp_get_attachment_image_src(get_post_thumbnail_id($post_id), 'full');
+                if ($thumbnail_src) {
+                    $og_image = $thumbnail_src[0];
+                }
+            } else if (is_single()) {
+                // OGP/Twitter Card Image Fallback (When Featured Image is missing)
+                $first_img = '';
+                if (preg_match_all('/<img[^>]+>/i', $post->post_content, $matches)) {
+                    foreach ($matches[0] as $img_tag) {
+                        if (preg_match('/src=[\'"]([^\'"]+)[\'"]/i', $img_tag, $src_match)) {
+                            $src = $src_match[1];
+                            if (preg_match('/data-src=[\'"]([^\'"]+)[\'"]/i', $img_tag, $data_src_match)) {
+                                $src = $data_src_match[1];
+                            }
+                            $classes = '';
+                            if (preg_match('/class=[\'"]([^\'"]+)[\'"]/i', $img_tag, $class_match)) {
+                                $classes = $class_match[1];
+                            }
+                            if (
+                                strpos($src, 'data:image') === false &&
+                                strpos($src, 'logo') === false &&
+                                strpos($src, 'header') === false &&
+                                strpos($src, 'icon') === false &&
+                                strpos($classes, 'avatar') === false
+                            ) {
+                                $first_img = preg_replace('/-\d+x\d+(?=\.[a-z]+$)/i', '', $src);
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (!empty($first_img)) {
+                    $og_image = $first_img;
+                } else {
+                    $og_image = get_stylesheet_directory_uri() . '/assets/images/no_image.png';
+                }
+            }
+        }
+    }
+
+    // OGP タグの出力
+    echo "\n" . '<!-- OGP Meta Tags -->' . "\n";
+    echo '<meta name="description" content="' . esc_attr($og_description) . '" />' . "\n";
+    echo '<meta property="og:title" content="' . esc_attr($og_title) . '" />' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr($og_description) . '" />' . "\n";
+    echo '<meta property="og:url" content="' . esc_url($og_url) . '" />' . "\n";
+    echo '<meta property="og:type" content="' . esc_attr($og_type) . '" />' . "\n";
+    echo '<meta property="og:site_name" content="' . esc_attr(get_bloginfo('name')) . '" />' . "\n";
+    if (!empty($og_image)) {
+        if (strpos($og_image, 'http') !== 0 && strpos($og_image, '//') !== 0) {
+            $og_image = home_url($og_image);
+        }
+        echo '<meta property="og:image" content="' . esc_url($og_image) . '" />' . "\n";
+    }
+    
+    // Twitter Card
+    echo '<meta name="twitter:card" content="summary_large_image" />' . "\n";
+    echo '<meta name="twitter:title" content="' . esc_attr($og_title) . '" />' . "\n";
+    echo '<meta name="twitter:description" content="' . esc_attr($og_description) . '" />' . "\n";
+    if (!empty($og_image)) {
+        echo '<meta name="twitter:image" content="' . esc_url($og_image) . '" />' . "\n";
+    }
+    echo '<!-- /OGP Meta Tags -->' . "\n";
+}
+add_action('wp_head', 'inspiro_child_add_ogp');

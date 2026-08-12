@@ -294,7 +294,36 @@ add_action( 'wp_head', function() { ?>
         }
     }
 
-
+    /* --- インフィード広告の表示制御 --- */
+    body .infeed-ad-container {
+        display: block;
+        margin: 30px 0;
+        background: #fff;
+        padding: 20px 10px;
+        border-radius: 8px;
+        text-align: center;
+        border-bottom: none;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    body .infeed-ad-container .ad-widget-content {
+        margin: 0 auto;
+        display: inline-block;
+        overflow: hidden;
+    }
+    @media screen and (max-width: 767px) {
+        /* 広告に面する2件目の記事の下線を消す */
+        body .new-article-list .new-article:nth-child(2) {
+            border-bottom: none !important;
+        }
+        
+        body .infeed-ad-container {
+            margin: 16px 0 30px; /* 上は少し詰めて、下は余白を取る */
+        }
+        body .infeed-ad-container .ad-widget-content {
+            zoom: 0.85; /* はみ出し防止用 */
+        }
+    }
 
 </style>
 <?php }, 20 ); // end wp_head action
@@ -444,7 +473,9 @@ get_header(); ?>
                         'post__not_in'   => $pickup_post_ids, // ピックアップ記事を除外
                     ));
                     if ($new_query->have_posts()) :
+                        $new_article_count = 0;
                         while ($new_query->have_posts()) : $new_query->the_post();
+                            $new_article_count++;
                             $latest_post_ids[] = get_the_ID(); // IDを保存
                             $thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : get_stylesheet_directory_uri() . '/assets/images/no_image.png';
                     ?>
@@ -485,6 +516,28 @@ get_header(); ?>
                         </a>
                     </article>
                     <?php
+                            // インフィード広告を挿入（2件目の後）
+                            if ( $new_article_count == 2 ) :
+                    ?>
+                    <!-- インフィード広告 -->
+                    <div class="infeed-ad-container">
+                        <div style="font-size: 10px; color: #999; margin-bottom: 5px; text-align: center;">スポンサーリンク</div>
+                        <div class="ad-widget-content">
+                            <?php if ( wp_is_mobile() ) : ?>
+                            <div id="im-1eae1085f45c43698d0a456571986d00">
+                                <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+                                <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00"})</script>
+                            </div>
+                            <?php else : ?>
+                            <div id="im-91b0abf8dd8043e3a85b798346681f1d">
+                                <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+                                <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d"})</script>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <?php
+                            endif;
                         endwhile;
                         wp_reset_postdata();
                     else :
@@ -495,29 +548,31 @@ get_header(); ?>
             </section>
 
             <!-- 4. トレンドセクション -->
+            <?php
+            // 以前取得したピックアップ記事と最新の投稿記事のIDをマージ
+            $exclude_post_ids = array_merge($pickup_post_ids, $latest_post_ids);
+
+            // 「デザイントレンド」カテゴリに属する最新の記事を取得
+            $trend_query = new WP_Query(array(
+                'post_type'      => 'post',
+                'posts_per_page' => 4,
+                'orderby'        => 'date',
+                'order'          => 'DESC',
+                'post__not_in'   => $exclude_post_ids, // ピックアップ記事と最新の投稿を除外
+                'tax_query'      => array(
+                    array(
+                        'taxonomy' => 'category',
+                        'field'    => 'name',
+                        'terms'    => 'デザイントレンド',
+                    ),
+                ),
+            ));
+            if ($trend_query->have_posts()) :
+            ?>
             <section style="margin-bottom: 40px;">
                 <h2 class="title-h2__text title-h2__text--trend">デザイントレンド</h2>
                 <div class="new-article-list">
                     <?php
-                    // 以前取得したピックアップ記事と最新の投稿記事のIDをマージ
-                    $exclude_post_ids = array_merge($pickup_post_ids, $latest_post_ids);
-
-                    // 「デザイントレンド」カテゴリに属する最新の記事を取得
-                    $trend_query = new WP_Query(array(
-                        'post_type'      => 'post',
-                        'posts_per_page' => 4,
-                        'orderby'        => 'date',
-                        'order'          => 'DESC',
-                        'post__not_in'   => $exclude_post_ids, // ピックアップ記事と最新の投稿を除外
-                        'tax_query'      => array(
-                            array(
-                                'taxonomy' => 'category',
-                                'field'    => 'name',
-                                'terms'    => 'デザイントレンド',
-                            ),
-                        ),
-                    ));
-                    if ($trend_query->have_posts()) :
                         while ($trend_query->have_posts()) : $trend_query->the_post();
                             $thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : get_stylesheet_directory_uri() . '/assets/images/no_image.png';
                     ?>
@@ -560,12 +615,253 @@ get_header(); ?>
                     <?php
                         endwhile;
                         wp_reset_postdata();
-                    else :
-                        echo '<p style="padding: 20px;">記事がありません。</p>';
-                    endif;
                     ?>
                 </div>
             </section>
+            <?php endif; ?>
+
+                        <!-- セクション間広告 -->
+            <div class="infeed-ad-container" style="margin-bottom: 40px;">
+                <div style="font-size: 10px; color: #999; margin-bottom: 5px; text-align: center;">スポンサーリンク</div>
+                <div class="ad-widget-content">
+                    <?php if ( wp_is_mobile() ) : ?>
+                    <div id="im-1eae1085f45c43698d0a456571986d00">
+                        <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00"})</script>
+                    </div>
+                    <?php else : ?>
+                    <div id="im-91b0abf8dd8043e3a85b798346681f1d">
+                        <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d"})</script>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <!-- 5. デザインナレッジセクション -->
+            <?php
+            $knowledge_query = new WP_Query(array(
+                'post_type'      => 'post',
+                'posts_per_page' => 4,
+                'orderby'        => 'date',
+                'order'          => 'DESC',
+                'post__not_in'   => $exclude_post_ids,
+                'tax_query'      => array(
+                    array(
+                        'taxonomy' => 'category',
+                        'field'    => 'name',
+                        'terms'    => 'デザインナレッジ',
+                    ),
+                ),
+            ));
+            if ($knowledge_query->have_posts()) :
+            ?>
+            <section style="margin-bottom: 40px;">
+                <h2 class="title-h2__text title-h2__text--category">デザインナレッジ</h2>
+                <div class="new-article-list">
+                    <?php
+                        while ($knowledge_query->have_posts()) : $knowledge_query->the_post();
+                            $thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : get_stylesheet_directory_uri() . '/assets/images/no_image.png';
+                    ?>
+                    <article class="new-article">
+                        <a href="<?php the_permalink(); ?>" class="new-article-link">
+                            <div class="new-article__image">
+                                <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
+                            </div>
+                            <div class="new-article-text">
+                                <div class="new-article-text-inner">
+                                    <p class="new-article-text__title"><?php the_title(); ?></p>
+                                    <p class="new-article-text__date"><?php the_time('Y.m.d'); ?></p>
+                                    <div class="new-article-text-meta">
+                                        <?php
+                                        $displayed_terms = array(); // 表示済みタグ名を記録
+                                        $categories = get_the_category();
+                                        if (!empty($categories)) {
+                                            foreach ($categories as $cat) {
+                                                if ($cat->name === '記事') continue;
+                                                if (in_array($cat->name, $displayed_terms)) continue;
+                                                echo '<div class="new-article-text__category"><span class="tag">' . esc_html($cat->name) . '</span></div>';
+                                                $displayed_terms[] = $cat->name;
+                                            }
+                                        }
+                                        $tags = get_the_tags();
+                                        if (!empty($tags)) {
+                                            foreach ($tags as $tag) {
+                                                if (strtolower($tag->name) === 'pickup') continue;
+                                                if (in_array($tag->name, $displayed_terms)) continue;
+                                                echo '<div class="new-article-text__tag"><span class="tag">' . esc_html($tag->name) . '</span></div>';
+                                                $displayed_terms[] = $tag->name;
+                                            }
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    <?php
+                        endwhile;
+                        wp_reset_postdata();
+                    ?>
+                </div>
+            </section>
+            <?php endif; ?>
+
+                        <!-- セクション間広告 -->
+            <div class="infeed-ad-container" style="margin-bottom: 40px;">
+                <div style="font-size: 10px; color: #999; margin-bottom: 5px; text-align: center;">スポンサーリンク</div>
+                <div class="ad-widget-content">
+                    <?php if ( wp_is_mobile() ) : ?>
+                    <div id="im-1eae1085f45c43698d0a456571986d00">
+                        <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00"})</script>
+                    </div>
+                    <?php else : ?>
+                    <div id="im-91b0abf8dd8043e3a85b798346681f1d">
+                        <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d"})</script>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <!-- 6. ツール・開発環境セクション -->
+            <?php
+            $tool_query = new WP_Query(array(
+                'post_type'      => 'post',
+                'posts_per_page' => 4,
+                'orderby'        => 'date',
+                'order'          => 'DESC',
+                'post__not_in'   => $exclude_post_ids,
+                'tax_query'      => array(
+                    array(
+                        'taxonomy' => 'category',
+                        'field'    => 'name',
+                        'terms'    => 'ツール・開発環境',
+                    ),
+                ),
+            ));
+            if ($tool_query->have_posts()) :
+            ?>
+            <section style="margin-bottom: 40px;">
+                <h2 class="title-h2__text title-h2__text--category">ツール・開発環境</h2>
+                <div class="new-article-list">
+                    <?php
+                        while ($tool_query->have_posts()) : $tool_query->the_post();
+                            $thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : get_stylesheet_directory_uri() . '/assets/images/no_image.png';
+                    ?>
+                    <article class="new-article">
+                        <a href="<?php the_permalink(); ?>" class="new-article-link">
+                            <div class="new-article__image">
+                                <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
+                            </div>
+                            <div class="new-article-text">
+                                <div class="new-article-text-inner">
+                                    <p class="new-article-text__title"><?php the_title(); ?></p>
+                                    <p class="new-article-text__date"><?php the_time('Y.m.d'); ?></p>
+                                    <div class="new-article-text-meta">
+                                        <?php
+                                        $displayed_terms = array();
+                                        $categories = get_the_category();
+                                        if (!empty($categories)) {
+                                            foreach ($categories as $cat) {
+                                                if ($cat->name === '記事') continue;
+                                                if (in_array($cat->name, $displayed_terms)) continue;
+                                                echo '<div class="new-article-text__category"><span class="tag">' . esc_html($cat->name) . '</span></div>';
+                                                $displayed_terms[] = $cat->name;
+                                            }
+                                        }
+                                        $tags = get_the_tags();
+                                        if (!empty($tags)) {
+                                            foreach ($tags as $tag) {
+                                                if (strtolower($tag->name) === 'pickup') continue;
+                                                if (in_array($tag->name, $displayed_terms)) continue;
+                                                echo '<div class="new-article-text__tag"><span class="tag">' . esc_html($tag->name) . '</span></div>';
+                                                $displayed_terms[] = $tag->name;
+                                            }
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    <?php
+                        endwhile;
+                        wp_reset_postdata();
+                    ?>
+                </div>
+            </section>
+            <?php endif; ?>
+
+            <!-- 7. ビジネス・キャリアセクション -->
+            <?php
+            $career_query = new WP_Query(array(
+                'post_type'      => 'post',
+                'posts_per_page' => 4,
+                'orderby'        => 'date',
+                'order'          => 'DESC',
+                'post__not_in'   => $exclude_post_ids,
+                'tax_query'      => array(
+                    array(
+                        'taxonomy' => 'category',
+                        'field'    => 'name',
+                        'terms'    => 'ビジネス・キャリア',
+                    ),
+                ),
+            ));
+            if ($career_query->have_posts()) :
+            ?>
+            <section style="margin-bottom: 40px;">
+                <h2 class="title-h2__text title-h2__text--category">ビジネス・キャリア</h2>
+                <div class="new-article-list">
+                    <?php
+                        while ($career_query->have_posts()) : $career_query->the_post();
+                            $thumbnail_url = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : get_stylesheet_directory_uri() . '/assets/images/no_image.png';
+                    ?>
+                    <article class="new-article">
+                        <a href="<?php the_permalink(); ?>" class="new-article-link">
+                            <div class="new-article__image">
+                                <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
+                            </div>
+                            <div class="new-article-text">
+                                <div class="new-article-text-inner">
+                                    <p class="new-article-text__title"><?php the_title(); ?></p>
+                                    <p class="new-article-text__date"><?php the_time('Y.m.d'); ?></p>
+                                    <div class="new-article-text-meta">
+                                        <?php
+                                        $displayed_terms = array();
+                                        $categories = get_the_category();
+                                        if (!empty($categories)) {
+                                            foreach ($categories as $cat) {
+                                                if ($cat->name === '記事') continue;
+                                                if (in_array($cat->name, $displayed_terms)) continue;
+                                                echo '<div class="new-article-text__category"><span class="tag">' . esc_html($cat->name) . '</span></div>';
+                                                $displayed_terms[] = $cat->name;
+                                            }
+                                        }
+                                        $tags = get_the_tags();
+                                        if (!empty($tags)) {
+                                            foreach ($tags as $tag) {
+                                                if (strtolower($tag->name) === 'pickup') continue;
+                                                if (in_array($tag->name, $displayed_terms)) continue;
+                                                echo '<div class="new-article-text__tag"><span class="tag">' . esc_html($tag->name) . '</span></div>';
+                                                $displayed_terms[] = $tag->name;
+                                            }
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    <?php
+                        endwhile;
+                        wp_reset_postdata();
+                    ?>
+                </div>
+            </section>
+            <?php endif; ?>
         </main>
 
         <!-- 5. プレビュー用サイドバー -->

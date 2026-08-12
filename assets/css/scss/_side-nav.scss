@@ -531,3 +531,21 @@ body.side-nav-open .site {
         }
     }
 }
+
+/* =========================================
+   PC版サイドバー広告の追従（スティッキー）化
+   ========================================= */
+@media screen and (min-width: 768px) {
+    #custom-side-nav {
+        /* 子要素のstickyを有効にするため、親要素に高さ100%を持たせる */
+        height: 100%;
+    }
+    
+    #custom-side-nav .sticky-sidebar-wrapper {
+        position: sticky;
+        top: 100px; /* ヘッダーの高さなどを考慮して調整 */
+        z-index: 10;
+        /* 余白を整える */
+        padding-bottom: 20px;
+    }
+}

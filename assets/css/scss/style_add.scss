@@ -1746,6 +1746,7 @@ body {
         margin: 0;
         padding: 0;
         float: none;
+        align-self: stretch; /* メインコンテンツと同じ高さまで伸ばすことでstickyを有効にする */
     }
 }
 

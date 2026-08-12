@@ -194,7 +194,8 @@ class OpenGraph implements Iterator
                         strpos($src, 'icon') === false &&
                         strpos($classes, 'avatar') === false
                     ) {
-                        $page->_values['image'] = $src;
+                        // Remove WP image size suffixes like -300x168 to get the original full-size image
+                        $page->_values['image'] = preg_replace('/-\d+x\d+(?=\.[a-z]+$)/i', '', $src);
                         break;
                     }
                 }

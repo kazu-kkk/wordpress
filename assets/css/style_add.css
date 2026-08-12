@@ -677,8 +677,7 @@ body.single .site-content {
     background: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, border-color 0.2s ease;
     overflow: hidden;
   }
   .blogcard a {
@@ -760,7 +759,7 @@ body.single .site-content {
 @media screen and (width >= 767px) and (hover: hover) {
   .blogcard:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    border-color: #c4d2f6;
   }
 }
 @media screen and (width <= 767px) {
@@ -773,7 +772,6 @@ body.single .site-content {
     background: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
   }
   .blogcard a {
@@ -1515,6 +1513,22 @@ body.side-nav-open .site {
   }
 }
 
+/* =========================================
+   PC版サイドバー広告の追従（スティッキー）化
+   ========================================= */
+@media screen and (min-width: 768px) {
+  #custom-side-nav {
+    /* 子要素のstickyを有効にするため、親要素に高さ100%を持たせる */
+    height: 100%;
+  }
+  #custom-side-nav .sticky-sidebar-wrapper {
+    position: sticky;
+    top: 100px; /* ヘッダーの高さなどを考慮して調整 */
+    z-index: 10;
+    /* 余白を整える */
+    padding-bottom: 20px;
+  }
+}
 @media screen and (width >= 767px) {
   .custom-logo-link img {
     display: inline-block;
@@ -2455,16 +2469,16 @@ body.page-template-default .entry-content a:not(.wp-block-button__link):not(.but
 }
 .target-audience {
   margin: 2em 0;
-  padding: 24px 32px;
-  background-color: #f5f7ff;
+  padding: 32px;
+  background-color: #ffffff;
   border: 2px solid #2b53ec;
   border-radius: 8px;
 }
 .target-audience__title {
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 600;
   color: #2b53ec;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   text-align: center;
   border-bottom: 2px solid #2b53ec;
   padding-bottom: 12px;
@@ -2481,7 +2495,7 @@ body.page-template-default .entry-content a:not(.wp-block-button__link):not(.but
   font-size: 16px;
   line-height: 1.6;
   color: #333;
-  font-weight: bold;
+  font-weight: normal;
   list-style: none;
   margin-left: 0;
 }
@@ -2501,26 +2515,27 @@ body.page-template-default .entry-content a:not(.wp-block-button__link):not(.but
 }
 @media screen and (max-width: 767px) {
   .target-audience {
-    padding: 16px 20px;
-    margin: 1.2em 0;
+    padding: 20px 16px;
+    margin: 24px 0;
   }
   .target-audience__title {
     font-size: 16px;
-    margin-bottom: 14px;
-    padding-bottom: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    line-height: 1.4;
   }
   .target-audience .target-audience__list li.target-audience__item {
-    font-size: 16px;
-    padding-left: 28px;
-    margin-bottom: 10px;
+    font-size: 14px;
+    padding-left: 24px;
+    margin-bottom: 12px;
   }
   .target-audience .target-audience__list li.target-audience__item:last-child {
     margin-bottom: 0;
   }
   .target-audience .target-audience__list li.target-audience__item::before {
-    width: 18px;
-    height: 18px;
-    top: 4px;
+    width: 16px;
+    height: 16px;
+    top: 3px;
   }
 }
 
@@ -5070,6 +5085,7 @@ body .pagination .nav-links .page-numbers.dots {
     margin: 0;
     padding: 0;
     float: none;
+    align-self: stretch; /* メインコンテンツと同じ高さまで伸ばすことでstickyを有効にする */
   }
 }
 @media screen and (max-width: 767px) {

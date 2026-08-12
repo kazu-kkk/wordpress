@@ -1,4 +1,3 @@
-<?php ini_set("display_errors", 1); error_reporting(E_ALL); ?>
 <?php
 
 /**
@@ -16,7 +15,7 @@
 
 ?>
 <!DOCTYPE html>
-<html <?php language_attributes(); ?> class="no-js">
+<html <?php language_attributes(); ?> prefix="og: http://ogp.me/ns#" class="no-js">
 
 <head>
 	<meta charset="<?php bloginfo('charset'); ?>" />
