@@ -262,24 +262,14 @@ add_action( 'wp_head', function() { ?>
     /* --- SP（スマホ）表示時の最適化とはみ出し防止 --- */
     @media screen and (max-width: 767px) {
         /* SP用のFVサイズ調整 */
-        body #page .hero-background-preview {
-            padding: 70px 16px 40px;
-            min-height: 240px;
-        }
-        body #page .preview-content-wrapper {
-            margin-top: 0;
-            padding-top: 40px;
-        }
+
+
         body #page .hero-background-preview .hero-text {
             font-size: 14px;
             font-weight: bold;
             color: #fff;
             margin: 0 0 15px 0;
             line-height: 1.5;
-        }
-        body #page .hero-background-preview img {
-            max-height: 60px;
-            width: auto;
         }
 
         body #page .inner-wrap--preview {

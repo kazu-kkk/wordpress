@@ -665,6 +665,9 @@ body.single .site-content {
       padding-bottom: 30px;
   }
   */
+  .footer-brand .footer-logo .footer-main-logo {
+    width: 134px; /* PC(200px)の約2/3 */
+  }
   .footer-brand .footer-desc {
     font-size: 14px;
   }
@@ -4254,7 +4257,7 @@ body .pagination .nav-links .page-numbers.dots {
   html body div.inner-wrap section.pickup,
   html body section.pickup {
     width: 100%;
-    margin: 40px auto 0;
+    margin: 26px auto 0;
   }
   html body.home div#primary main#main.top-page-content section.pickup ul.pickup-list,
   html body.home div.preview-content-wrapper div.inner-wrap section.pickup ul.pickup-list,
@@ -5085,5 +5088,17 @@ body .infeed-ad-container .ad-widget-content {
   }
   body .infeed-ad-container .ad-widget-content {
     zoom: 0.85; /* はみ出し防止用 */
+  }
+  body #page .hero-background-preview img {
+    max-height: 28px;
+    width: auto;
+  }
+  body #page .hero-background-preview {
+    padding: 70px 16px 20px;
+    min-height: 180px;
+  }
+  body #page .preview-content-wrapper {
+    margin-top: 0;
+    padding-top: 26px;
   }
 }/*# sourceMappingURL=style_add.css.map */

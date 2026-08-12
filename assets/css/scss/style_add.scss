@@ -1364,7 +1364,7 @@ body {
     div.inner-wrap section.pickup,
     section.pickup {
       width: 100%;
-      margin: 40px auto 0;
+      margin: 26px auto 0;
 
       ul.pickup-list {
         display: flex;
@@ -1730,5 +1730,20 @@ body .infeed-ad-container .ad-widget-content {
     }
     body .infeed-ad-container .ad-widget-content {
         zoom: 0.85; /* はみ出し防止用 */
+    }
+
+    body #page .hero-background-preview img {
+        max-height: 28px;
+        width: auto;
+    }
+
+    body #page .hero-background-preview {
+        padding: 70px 16px 20px;
+        min-height: 180px;
+    }
+
+    body #page .preview-content-wrapper {
+        margin-top: 0;
+        padding-top: 26px;
     }
 }
