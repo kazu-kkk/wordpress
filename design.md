@@ -190,11 +190,11 @@
 **ファイル**: `style_add.scss`
 
 ```html
-<h2 class="title-h2__text title-h2__text--pick-up">ピックアップ</h2>
-<h2 class="title-h2__text title-h2__text--new">新着記事</h2>
-<h2 class="title-h2__text title-h2__text--category">カテゴリ</h2>
-<h2 class="title-h2__text title-h2__text--popular-tag">人気タグ</h2>
-<h2 class="title-h2__text title-h2__text--sns">SNS</h2>
+<h2 class="title-h2__text title-h2__text--pick-up"><i data-lucide="pen-tool"></i> ピックアップ</h2>
+<h2 class="title-h2__text title-h2__text--new"><i data-lucide="file-text"></i> 新着記事</h2>
+<h2 class="title-h2__text title-h2__text--category"><i data-lucide="shapes"></i> カテゴリ</h2>
+<h2 class="title-h2__text title-h2__text--popular-tag"><i data-lucide="tag"></i> 人気タグ</h2>
+<h2 class="title-h2__text title-h2__text--sns"><i data-lucide="share-2"></i> SNS</h2>
 ```
 
 - `padding-left: 40px` で左にSVGアイコン (`::before`)
@@ -632,4 +632,17 @@
 5. **HTMLコードボックスのアコーディオン開閉**
    - プレビュー上部右側の `Show Code` ボタンをクリックすると、HTMLコードのソースボックスが滑らかにスライド展開します。
    - ソースコード内の `COPY` ボタンを押すことで、WordPressへのコピペ用コードを即座に取得できます。初期状態で折りたたまれているため、ページ全体のスクロール量を劇的に削減し、一覧性を高めています。
+
+---
+
+## アイコンライブラリ比較プレビュー
+
+トンマナ調整のためのアイコンライブラリ候補です。VSCode等のMarkdownプレビューで各アイコンのビジュアルを比較できます。
+
+| ライブラリ名 | Home | User | Search | Settings | Check |
+|---|:---:|:---:|:---:|:---:|:---:|
+| **Remix Icon** | <img src="https://raw.githubusercontent.com/Remix-Design/RemixIcon/master/icons/System/home-line.svg" width="32"> | <img src="https://raw.githubusercontent.com/Remix-Design/RemixIcon/master/icons/User/user-line.svg" width="32"> | <img src="https://raw.githubusercontent.com/Remix-Design/RemixIcon/master/icons/System/search-line.svg" width="32"> | <img src="https://raw.githubusercontent.com/Remix-Design/RemixIcon/master/icons/System/settings-3-line.svg" width="32"> | <img src="https://raw.githubusercontent.com/Remix-Design/RemixIcon/master/icons/System/check-line.svg" width="32"> |
+| **Phosphor Icons**<br>(Regular) | <img src="https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/house.svg" width="32"> | <img src="https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/user.svg" width="32"> | <img src="https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/magnifying-glass.svg" width="32"> | <img src="https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/gear.svg" width="32"> | <img src="https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/check.svg" width="32"> |
+| **Lucide Icons** | <img src="https://unpkg.com/lucide-static@0.428.0/icons/home.svg" width="32"> | <img src="https://unpkg.com/lucide-static@0.428.0/icons/user.svg" width="32"> | <img src="https://unpkg.com/lucide-static@0.428.0/icons/search.svg" width="32"> | <img src="https://unpkg.com/lucide-static@0.428.0/icons/settings.svg" width="32"> | <img src="https://unpkg.com/lucide-static@0.428.0/icons/check.svg" width="32"> |
+| **Material Design**<br>(MDI) | <img src="https://raw.githubusercontent.com/Templarian/MaterialDesign/master/svg/home-outline.svg" width="32"> | <img src="https://raw.githubusercontent.com/Templarian/MaterialDesign/master/svg/account-outline.svg" width="32"> | <img src="https://raw.githubusercontent.com/Templarian/MaterialDesign/master/svg/magnify.svg" width="32"> | <img src="https://raw.githubusercontent.com/Templarian/MaterialDesign/master/svg/cog-outline.svg" width="32"> | <img src="https://raw.githubusercontent.com/Templarian/MaterialDesign/master/svg/check.svg" width="32"> |
 

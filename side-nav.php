@@ -469,9 +469,9 @@
                 <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00"})</script>
             </div>
             <?php else : ?>
-            <div id="im-91b0abf8dd8043e3a85b798346681f1d">
+            <div id="im-98bf980afdd441d4bc3b1e401abe25ba">
                 <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d"})</script>
+                <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1940488,type:"banner",display:"inline",elementid:"im-98bf980afdd441d4bc3b1e401abe25ba"})</script>
             </div>
             <?php endif; ?>
         </div>

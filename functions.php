@@ -168,6 +168,8 @@ function inspiro_child_enqueue_scripts() {
         return file_exists($absolute_path) ? filemtime($absolute_path) : $theme_version;
     };
 
+    // Lucide Icons はフッターで確実に出力するため、ここでは enqueue しない
+
     wp_enqueue_script(
         'inspiro-search-suggestion',
         get_stylesheet_directory_uri() . '/assets/js/search-suggestion.js',
@@ -228,7 +230,31 @@ function inspiro_child_enqueue_scripts() {
         true
     );
 }
-add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_scripts', 20);
+
+/**
+ * Initialize Lucide Icons in footer
+ */
+function inspiro_child_init_lucide_icons() {
+    ?>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        // DOMContentLoaded と、遅延した場合のための即時実行の両方で対応
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof lucide !== "undefined") {
+                lucide.createIcons();
+            }
+        });
+        // 既にDOMが構築済みの場合は即実行
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            if (typeof lucide !== "undefined") {
+                lucide.createIcons();
+            }
+        }
+    </script>
+    <?php
+}
+add_action('wp_footer', 'inspiro_child_init_lucide_icons', 100);
 
 
 /**
@@ -604,18 +630,18 @@ function inspiro_child_auto_toc($content) {
         $ad_html = '
 <div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
     <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
-    <div id="im-1eae1085f45c43698d0a456571986d00">
+    <div id="im-b379ae08e658400daf60492490c57be3">
         <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00"})</script>
+        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1940491,type:"banner",display:"inline",elementid:"im-b379ae08e658400daf60492490c57be3"})</script>
     </div>
 </div>';
     } else {
         $ad_html = '
 <div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
     <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
-    <div id="im-91b0abf8dd8043e3a85b798346681f1d">
+    <div id="im-659427e020b640f3b9e1dde8573c061a">
         <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d"})</script>
+        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1940485,type:"banner",display:"inline",elementid:"im-659427e020b640f3b9e1dde8573c061a"})</script>
     </div>
 </div>';
     }
@@ -696,18 +722,18 @@ function inspiro_child_mid_content_ad( $content ) {
         $ad_html = '
 <div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
     <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
-    <div id="im-1eae1085f45c43698d0a456571986d00-mid">
+    <div id="im-3466812c78e74fe0b5e01955bfb6b059">
         <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00-mid"})</script>
+        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1940492,type:"banner",display:"inline",elementid:"im-3466812c78e74fe0b5e01955bfb6b059"})</script>
     </div>
 </div>';
     } else {
         $ad_html = '
 <div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
     <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
-    <div id="im-91b0abf8dd8043e3a85b798346681f1d-mid">
+    <div id="im-85786e2981794fb492a0489b6f3c5181">
         <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d-mid"})</script>
+        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1940486,type:"banner",display:"inline",elementid:"im-85786e2981794fb492a0489b6f3c5181"})</script>
     </div>
 </div>';
     }

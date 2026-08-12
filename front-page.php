@@ -184,7 +184,7 @@ add_action( 'wp_head', function() { ?>
             display: flex;
             background-color: #fff;
             border-radius: 8px;
-            margin-top: 30px;
+            margin-top: 0; /* gap で隙間を作るため margin-top は 0 にする */
         }
         
         body #page .new-article-link {
@@ -328,12 +328,12 @@ get_header(); ?>
 
     <!-- 2. ピックアップ記事（フル幅） -->
     <section class="pickup" style="margin-bottom: 40px;">
-        <h2 class="title-h2__text title-h2__text--pick-up">ピックアップ</h2>
+        <h2 class="title-h2__text title-h2__text--pick-up"><i data-lucide="pen-tool"></i> ピックアップ</h2>
         <ul class="pickup-list">
             <?php
             $pickup_post_ids = array(); // ピックアップ記事のIDを保持する配列
             
-            // 1. pickupタグ記事を取得
+            // 1. pickupタグ記事を取得 (sync trigger)
             $tag_query = new WP_Query(array(
                 'post_type'      => 'post',
                 'posts_per_page' => 3,
@@ -431,7 +431,7 @@ get_header(); ?>
         <main id="main" class="top-page-content" role="main">
             <!-- 3. 最新の投稿 -->
             <section style="margin-bottom: 40px;">
-                <h2 class="title-h2__text title-h2__text--new">最新の投稿</h2>
+                <h2 class="title-h2__text title-h2__text--new"><i data-lucide="file-text"></i> 最新の投稿</h2>
                 <div class="new-article-list">
                     <?php
                     $latest_post_ids = array(); // 最新の投稿記事のIDを保持する配列
@@ -494,14 +494,14 @@ get_header(); ?>
                         <div style="font-size: 10px; color: #999; margin-bottom: 5px; text-align: center;">スポンサーリンク</div>
                         <div class="ad-widget-content">
                             <?php if ( wp_is_mobile() ) : ?>
-                            <div id="im-1eae1085f45c43698d0a456571986d00">
+                            <div id="im-87f8b9da487a4aa7a4ecc361036180bc">
                                 <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                                <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00"})</script>
+                                <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1940482,type:"banner",display:"inline",elementid:"im-87f8b9da487a4aa7a4ecc361036180bc"})</script>
                             </div>
                             <?php else : ?>
-                            <div id="im-91b0abf8dd8043e3a85b798346681f1d">
+                            <div id="im-42e3cb914a244a71a0305ec5dc1febc2">
                                 <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                                <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d"})</script>
+                                <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1940481,type:"banner",display:"inline",elementid:"im-42e3cb914a244a71a0305ec5dc1febc2"})</script>
                             </div>
                             <?php endif; ?>
                         </div>
@@ -540,7 +540,7 @@ get_header(); ?>
             if ($trend_query->have_posts()) :
             ?>
             <section style="margin-bottom: 40px;">
-                <h2 class="title-h2__text title-h2__text--trend">デザイントレンド</h2>
+                <h2 class="title-h2__text title-h2__text--trend"><i data-lucide="trending-up"></i> デザイントレンド</h2>
                 <div class="new-article-list">
                     <?php
                         while ($trend_query->have_posts()) : $trend_query->the_post();
@@ -595,14 +595,14 @@ get_header(); ?>
                 <div style="font-size: 10px; color: #999; margin-bottom: 5px; text-align: center;">スポンサーリンク</div>
                 <div class="ad-widget-content">
                     <?php if ( wp_is_mobile() ) : ?>
-                    <div id="im-1eae1085f45c43698d0a456571986d00_2">
+                    <div id="im-79bc582a444246aca87dc93cdca59754">
                         <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00_2"})</script>
+                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1940489,type:"banner",display:"inline",elementid:"im-79bc582a444246aca87dc93cdca59754"})</script>
                     </div>
                     <?php else : ?>
-                    <div id="im-91b0abf8dd8043e3a85b798346681f1d_2">
+                    <div id="im-d21c5cac14d24098af92ac795a9e0632">
                         <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d_2"})</script>
+                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1940483,type:"banner",display:"inline",elementid:"im-d21c5cac14d24098af92ac795a9e0632"})</script>
                     </div>
                     <?php endif; ?>
                 </div>
@@ -627,7 +627,7 @@ get_header(); ?>
             if ($knowledge_query->have_posts()) :
             ?>
             <section style="margin-bottom: 40px;">
-                <h2 class="title-h2__text title-h2__text--category">デザインナレッジ</h2>
+                <h2 class="title-h2__text title-h2__text--category"><i data-lucide="shapes"></i> デザインナレッジ</h2>
                 <div class="new-article-list">
                     <?php
                         while ($knowledge_query->have_posts()) : $knowledge_query->the_post();
@@ -682,14 +682,14 @@ get_header(); ?>
                 <div style="font-size: 10px; color: #999; margin-bottom: 5px; text-align: center;">スポンサーリンク</div>
                 <div class="ad-widget-content">
                     <?php if ( wp_is_mobile() ) : ?>
-                    <div id="im-1eae1085f45c43698d0a456571986d00_3">
+                    <div id="im-78fd508d0d2d4686a3e4941ddd3e1b4a">
                         <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00_3"})</script>
+                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1940490,type:"banner",display:"inline",elementid:"im-78fd508d0d2d4686a3e4941ddd3e1b4a"})</script>
                     </div>
                     <?php else : ?>
-                    <div id="im-91b0abf8dd8043e3a85b798346681f1d_3">
+                    <div id="im-47fc6e67012047d7b4fd161dcf83f4da">
                         <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d_3"})</script>
+                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1940484,type:"banner",display:"inline",elementid:"im-47fc6e67012047d7b4fd161dcf83f4da"})</script>
                     </div>
                     <?php endif; ?>
                 </div>
@@ -714,7 +714,7 @@ get_header(); ?>
             if ($tool_query->have_posts()) :
             ?>
             <section style="margin-bottom: 40px;">
-                <h2 class="title-h2__text title-h2__text--category">ツール・開発環境</h2>
+                <h2 class="title-h2__text title-h2__text--category"><i data-lucide="shapes"></i> ツール・開発環境</h2>
                 <div class="new-article-list">
                     <?php
                         while ($tool_query->have_posts()) : $tool_query->the_post();
@@ -783,7 +783,7 @@ get_header(); ?>
             if ($career_query->have_posts()) :
             ?>
             <section style="margin-bottom: 40px;">
-                <h2 class="title-h2__text title-h2__text--category">ビジネス・キャリア</h2>
+                <h2 class="title-h2__text title-h2__text--category"><i data-lucide="shapes"></i> ビジネス・キャリア</h2>
                 <div class="new-article-list">
                     <?php
                         while ($career_query->have_posts()) : $career_query->the_post();

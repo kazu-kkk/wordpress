@@ -19,6 +19,10 @@ if (isset($_GET['component_preview'])) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Component Preview</title>
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css" rel="stylesheet">
+        <script src="https://unpkg.com/@phosphor-icons/web"></script>
+        <script src="https://unpkg.com/lucide@latest"></script>
         <?php wp_head(); ?>
         <style>
             /* WordPress管理バーおよびインライン余白の徹底排除 */
@@ -92,7 +96,7 @@ if (isset($_GET['component_preview'])) {
                 <h2 class="title-h2__text title-h2__text--new" style="margin-bottom: 20px;">新着記事</h2>
                 <h2 class="title-h2__text title-h2__text--category" style="margin-bottom: 20px;">カテゴリ</h2>
                 <h2 class="title-h2__text title-h2__text--popular-tag" style="margin-bottom: 20px;">人気タグ</h2>
-                <h2 class="title-h2__text title-h2__text--sns">SNS</h2>
+                <h2 class="title-h2__text title-h2__text--sns"><i data-lucide="share-2"></i> SNS</h2>
                 <?php
                 break;
 
@@ -332,6 +336,7 @@ if (isset($_GET['component_preview'])) {
                         <p style="margin-bottom: 0;">
                             <input type="submit" value="送信する">
                         </p>
+                    </form>
                 </div>
                 <?php
                 break;
@@ -343,7 +348,7 @@ if (isset($_GET['component_preview'])) {
                         ※下のボックスは固定ヘッダーのデモです。ボタンを押してクラス切り替え（フェードイン）を確認できます。
                     </p>
                     <button class="showcase-ctrl-btn" onclick="document.getElementById('c-header-demo-box').classList.toggle('has-scrolled-fv');" style="margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; justify-content: center; width: auto; font-family: 'Plus Jakarta Sans', sans-serif;">
-                        <i class="fa-solid fa-eye"></i> スクロール状態をトグル (has-scrolled-fv)
+                        <i data-lucide="eye"></i> スクロール状態をトグル (has-scrolled-fv)
                     </button>
                     
                     <div id="c-header-demo-box" class="navbar" style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 15px; background: none; background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 1%, rgba(0, 0, 0, 0) 100%); box-shadow: none; max-width: 600px; margin: 0 auto; transition: background 0.4s ease-out, box-shadow 0.4s ease-out;">
@@ -497,6 +502,93 @@ if (isset($_GET['component_preview'])) {
                         <a href="#" class="trend-word-link" onclick="return false;">この記事を読む</a>
                     </div>
                 </div>
+                <?php
+                break;
+
+            case 'c-icons':
+                ?>
+                <style>
+                    .icon-compare-table { width: 100%; border-collapse: collapse; text-align: center; font-family: 'Plus Jakarta Sans', sans-serif; }
+                    .icon-compare-table th, .icon-compare-table td { padding: 12px; border: 1px solid #e2e8f0; }
+                    .icon-compare-table th { background: #f8fafc; font-size: 12px; color: #475569; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+                    .icon-compare-table td { font-size: 24px; color: #334155; }
+                    .icon-compare-table td svg { width: 24px; height: 24px; display: inline-block; vertical-align: middle; }
+                </style>
+                <div style="padding: 24px; background: #fff; border-radius: 12px; border: 1px solid #e2e8f0;">
+                    <h3 style="margin-top:0; margin-bottom: 24px; font-size: 18px; color: #1e293b; text-align: center; font-family: 'Plus Jakarta Sans', sans-serif;">アイコンライブラリ比較 (一覧)</h3>
+                    <div style="overflow-x: auto;">
+                        <table class="icon-compare-table">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:left;">Library</th>
+                                    <th>Home</th>
+                                    <th>User</th>
+                                    <th>Search</th>
+                                    <th>Settings</th>
+                                    <th>Check</th>
+                                    <th>Arrow</th>
+                                    <th>Menu</th>
+                                    <th>Heart</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Remix Icon -->
+                                <tr>
+                                    <td style="font-size:14px; font-weight:bold; text-align:left;">Remix Icon<br><span style="font-size:11px; font-weight:normal; color:#64748b;">(Line)</span></td>
+                                    <td><i class="ri-home-4-line"></i></td>
+                                    <td><i class="ri-user-line"></i></td>
+                                    <td><i class="ri-search-line"></i></td>
+                                    <td><i class="ri-settings-3-line"></i></td>
+                                    <td><i class="ri-check-line"></i></td>
+                                    <td><i class="ri-arrow-right-line"></i></td>
+                                    <td><i class="ri-menu-line"></i></td>
+                                    <td><i class="ri-heart-line"></i></td>
+                                </tr>
+                                <!-- Phosphor Icons -->
+                                <tr>
+                                    <td style="font-size:14px; font-weight:bold; text-align:left;">Phosphor<br><span style="font-size:11px; font-weight:normal; color:#64748b;">(Regular)</span></td>
+                                    <td><i class="ph ph-house"></i></td>
+                                    <td><i class="ph ph-user"></i></td>
+                                    <td><i class="ph ph-magnifying-glass"></i></td>
+                                    <td><i class="ph ph-gear"></i></td>
+                                    <td><i class="ph ph-check"></i></td>
+                                    <td><i class="ph ph-arrow-right"></i></td>
+                                    <td><i class="ph ph-list"></i></td>
+                                    <td><i class="ph ph-heart"></i></td>
+                                </tr>
+                                <!-- Lucide Icons -->
+                                <tr>
+                                    <td style="font-size:14px; font-weight:bold; text-align:left;">Lucide</td>
+                                    <td><i data-lucide="home"></i></td>
+                                    <td><i data-lucide="user"></i></td>
+                                    <td><i data-lucide="search"></i></td>
+                                    <td><i data-lucide="settings"></i></td>
+                                    <td><i data-lucide="check"></i></td>
+                                    <td><i data-lucide="arrow-right"></i></td>
+                                    <td><i data-lucide="menu"></i></td>
+                                    <td><i data-lucide="heart"></i></td>
+                                </tr>
+                                <!-- Material Design Icons -->
+                                <tr>
+                                    <td style="font-size:14px; font-weight:bold; text-align:left;">MDI<br><span style="font-size:11px; font-weight:normal; color:#64748b;">(Outline)</span></td>
+                                    <td><i class="mdi mdi-home-outline"></i></td>
+                                    <td><i class="mdi mdi-account-outline"></i></td>
+                                    <td><i class="mdi mdi-magnify"></i></td>
+                                    <td><i class="mdi mdi-cog-outline"></i></td>
+                                    <td><i class="mdi mdi-check"></i></td>
+                                    <td><i class="mdi mdi-arrow-right"></i></td>
+                                    <td><i class="mdi mdi-menu"></i></td>
+                                    <td><i class="mdi mdi-heart-outline"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <script>
+                    if (typeof lucide !== 'undefined') {
+                        lucide.createIcons();
+                    }
+                </script>
                 <?php
                 break;
         }
@@ -1233,29 +1325,30 @@ if (isset($_GET['component_preview'])) {
             <!-- Sidebar Navigation (Desktop) -->
             <aside class="showcase-sidebar">
                 <div class="sidebar-title">
-                    <i class="fa-solid fa-layer-group"></i> Design System
+                    <i data-lucide="layers"></i> Design System
                 </div>
                 <div class="showcase-nav">
-                    <a href="#tokens" class="active"><i class="fa-solid fa-palette"></i> 0. Design Tokens</a>
-                    <a href="#c-button"><i class="fa-solid fa-square-caret-right"></i> 1. Button</a>
-                    <a href="#c-hero"><i class="fa-solid fa-rectangle-ad"></i> 2. Hero (FV)</a>
-                    <a href="#c-title"><i class="fa-solid fa-heading"></i> 3. H2 Title</a>
-                    <a href="#c-tag"><i class="fa-solid fa-tags"></i> 4. Tag</a>
-                    <a href="#c-article"><i class="fa-solid fa-file-lines"></i> 5. Article Elements</a>
-                    <a href="#c-related"><i class="fa-solid fa-grip"></i> 6. Related Posts</a>
-                    <a href="#c-toc"><i class="fa-solid fa-list-ol"></i> 7. TOC</a>
-                    <a href="#c-blogcard"><i class="fa-solid fa-address-card"></i> 8. Blogcard</a>
-                    <a href="#c-checklist"><i class="fa-solid fa-square-check"></i> 9. Checklist</a>
-                    <a href="#c-audience"><i class="fa-solid fa-bullseye"></i> 10. Target Audience</a>
-                    <a href="#c-bento"><i class="fa-solid fa-table-cells-large"></i> 11. Bento Grid</a>
-                    <a href="#c-footer"><i class="fa-solid fa-window-minimize"></i> 12. Footer</a>
-                    <a href="#c-contact"><i class="fa-solid fa-envelope"></i> 13. Contact Form</a>
-                    <a href="#c-header"><i class="fa-solid fa-eye-slash"></i> 14. Header Logo Scroll</a>
-                    <a href="#c-share"><i class="fa-solid fa-share-nodes"></i> 15. Share Buttons</a>
-                    <a href="#c-pickup"><i class="fa-solid fa-grip-vertical"></i> 16. Pickup Articles</a>
-                    <a href="#c-new-list"><i class="fa-solid fa-list"></i> 17. New Articles / Trends</a>
-                    <a href="#c-article-summary"><i class="fa-solid fa-list-check"></i> 18. Article Summary</a>
-                    <a href="#c-trend-word"><i class="fa-solid fa-lightbulb"></i> 19. Trend Word Widget</a>
+                    <a href="#tokens" class="active"><i data-lucide="palette"></i> 0. Design Tokens</a>
+                    <a href="#c-button"><i data-lucide="chevron-right-square"></i> 1. Button</a>
+                    <a href="#c-hero"><i data-lucide="layout-template"></i> 2. Hero (FV)</a>
+                    <a href="#c-title"><i data-lucide="heading"></i> 3. H2 Title</a>
+                    <a href="#c-tag"><i data-lucide="tags"></i> 4. Tag</a>
+                    <a href="#c-article"><i data-lucide="file-text"></i> 5. Article Elements</a>
+                    <a href="#c-related"><i data-lucide="layout-grid"></i> 6. Related Posts</a>
+                    <a href="#c-toc"><i data-lucide="list-ordered"></i> 7. TOC</a>
+                    <a href="#c-blogcard"><i data-lucide="contact"></i> 8. Blogcard</a>
+                    <a href="#c-checklist"><i data-lucide="check-square"></i> 9. Checklist</a>
+                    <a href="#c-audience"><i data-lucide="target"></i> 10. Target Audience</a>
+                    <a href="#c-bento"><i data-lucide="grid"></i> 11. Bento Grid</a>
+                    <a href="#c-footer"><i data-lucide="minus"></i> 12. Footer</a>
+                    <a href="#c-contact"><i data-lucide="mail"></i> 13. Contact Form</a>
+                    <a href="#c-header"><i data-lucide="eye"></i> 14. Header Logo Scroll</a>
+                    <a href="#c-share"><i data-lucide="share-2"></i> 15. Share Buttons</a>
+                    <a href="#c-pickup"><i data-lucide="layout-grid"></i> 16. Pickup Articles</a>
+                    <a href="#c-new-list"><i data-lucide="list"></i> 17. New Articles / Trends</a>
+                    <a href="#c-article-summary"><i data-lucide="list"></i> 18. Article Summary</a>
+                    <a href="#c-trend-word"><i data-lucide="lightbulb"></i> 19. Trend Word Widget</a>
+                    <a href="#c-icons"><i data-lucide="image"></i> 20. Icon Libraries</a>
                 </div>
             </aside>
 
@@ -1282,7 +1375,7 @@ if (isset($_GET['component_preview'])) {
                             <div class="token-color-preview brand"></div>
                             <div class="token-info">
                                 <span class="token-name">ブランドブルー</span>
-                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#2B53EC</code> <i class="fa-regular fa-copy"></i></span>
+                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#2B53EC</code> <i data-lucide="copy"></i></span>
                             </div>
                         </div>
                         <!-- Brand Palette 1 -->
@@ -1290,7 +1383,7 @@ if (isset($_GET['component_preview'])) {
                             <div class="token-color-preview brand-palette-1"></div>
                             <div class="token-info">
                                 <span class="token-name">パレット 1</span>
-                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#180074</code> <i class="fa-regular fa-copy"></i></span>
+                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#180074</code> <i data-lucide="copy"></i></span>
                             </div>
                         </div>
                         <!-- Brand Palette 2 -->
@@ -1298,7 +1391,7 @@ if (isset($_GET['component_preview'])) {
                             <div class="token-color-preview brand-palette-2"></div>
                             <div class="token-info">
                                 <span class="token-name">パレット 2</span>
-                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#0f00a0</code> <i class="fa-regular fa-copy"></i></span>
+                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#0f00a0</code> <i data-lucide="copy"></i></span>
                             </div>
                         </div>
                         <!-- Brand Palette 3 -->
@@ -1306,7 +1399,7 @@ if (isset($_GET['component_preview'])) {
                             <div class="token-color-preview brand-palette-3"></div>
                             <div class="token-info">
                                 <span class="token-name">パレット 3</span>
-                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#325df7</code> <i class="fa-regular fa-copy"></i></span>
+                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#325df7</code> <i data-lucide="copy"></i></span>
                             </div>
                         </div>
                         <!-- Brand Palette 4 -->
@@ -1314,7 +1407,7 @@ if (isset($_GET['component_preview'])) {
                             <div class="token-color-preview brand-palette-4"></div>
                             <div class="token-info">
                                 <span class="token-name">パレット 4</span>
-                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#77b1ff</code> <i class="fa-regular fa-copy"></i></span>
+                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#77b1ff</code> <i data-lucide="copy"></i></span>
                             </div>
                         </div>
                         <!-- Brand Palette 5 -->
@@ -1322,7 +1415,7 @@ if (isset($_GET['component_preview'])) {
                             <div class="token-color-preview brand-palette-5"></div>
                             <div class="token-info">
                                 <span class="token-name">パレット 5</span>
-                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#a0deff</code> <i class="fa-regular fa-copy"></i></span>
+                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#a0deff</code> <i data-lucide="copy"></i></span>
                             </div>
                         </div>
                         <!-- Content BG -->
@@ -1330,7 +1423,7 @@ if (isset($_GET['component_preview'])) {
                             <div class="token-color-preview bg-light"></div>
                             <div class="token-info">
                                 <span class="token-name">背景 (コンテンツ用)</span>
-                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#F5F7FF</code> <i class="fa-regular fa-copy"></i></span>
+                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#F5F7FF</code> <i data-lucide="copy"></i></span>
                             </div>
                         </div>
                         <!-- Dark BG -->
@@ -1338,7 +1431,7 @@ if (isset($_GET['component_preview'])) {
                             <div class="token-color-preview bg-dark"></div>
                             <div class="token-info">
                                 <span class="token-name">背景 (ダーク・フッター)</span>
-                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#1A1A1A</code> <i class="fa-regular fa-copy"></i></span>
+                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#1A1A1A</code> <i data-lucide="copy"></i></span>
                             </div>
                         </div>
                         <!-- Main Text -->
@@ -1346,7 +1439,7 @@ if (isset($_GET['component_preview'])) {
                             <div class="token-color-preview text-main"></div>
                             <div class="token-info">
                                 <span class="token-name">テキスト (メイン)</span>
-                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#333333</code> <i class="fa-regular fa-copy"></i></span>
+                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#333333</code> <i data-lucide="copy"></i></span>
                             </div>
                         </div>
                         <!-- Sub Text -->
@@ -1354,7 +1447,7 @@ if (isset($_GET['component_preview'])) {
                             <div class="token-color-preview text-sub"></div>
                             <div class="token-info">
                                 <span class="token-name">テキスト (サブ)</span>
-                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#666666</code> <i class="fa-regular fa-copy"></i></span>
+                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#666666</code> <i data-lucide="copy"></i></span>
                             </div>
                         </div>
                         <!-- Border Light -->
@@ -1362,7 +1455,7 @@ if (isset($_GET['component_preview'])) {
                             <div class="token-color-preview border-light"></div>
                             <div class="token-info">
                                 <span class="token-name">ボーダー (薄青枠用)</span>
-                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#D6DCFA</code> <i class="fa-regular fa-copy"></i></span>
+                                <span class="token-value" onclick="copyTokenText(this)" title="クリックでコピー"><code>#D6DCFA</code> <i data-lucide="copy"></i></span>
                             </div>
                         </div>
                     </div>
@@ -1423,14 +1516,14 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-button'); ?>" class="showcase-iframe" data-comp="c-button" style="height: 140px;"></iframe>
                         </div>
                         <div class="showcase-code-box">
                             <pre><code class="html-code">&lt;a href="#" class="button"&gt;ボタンラベル&lt;/a&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -1462,7 +1555,7 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-hero'); ?>" class="showcase-iframe" data-comp="c-hero" style="height: 200px;"></iframe>
@@ -1471,7 +1564,7 @@ if (isset($_GET['component_preview'])) {
                             <pre><code class="html-code">&lt;section class="hero-background"&gt;
   &lt;img src="path/to/logo.png" alt="Yuny"&gt;
 &lt;/section&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -1503,18 +1596,18 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-title'); ?>" class="showcase-iframe" data-comp="c-title" style="height: 280px;"></iframe>
                         </div>
                         <div class="showcase-code-box">
-                            <pre><code class="html-code">&lt;h2 class="title-h2__text title-h2__text--pick-up"&gt;ピックアップ&lt;/h2&gt;
-&lt;h2 class="title-h2__text title-h2__text--new"&gt;新着記事&lt;/h2&gt;
-&lt;h2 class="title-h2__text title-h2__text--category"&gt;カテゴリ&lt;/h2&gt;
-&lt;h2 class="title-h2__text title-h2__text--popular-tag"&gt;人気タグ&lt;/h2&gt;
-&lt;h2 class="title-h2__text title-h2__text--sns"&gt;SNS&lt;/h2&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <pre><code class="html-code">&lt;h2 class="title-h2__text title-h2__text--pick-up"&gt;&lt;i data-lucide="pen-tool"&gt;&lt;/i&gt; ピックアップ&lt;/h2&gt;
+&lt;h2 class="title-h2__text title-h2__text--new"&gt;&lt;i data-lucide="file-text"&gt;&lt;/i&gt; 新着記事&lt;/h2&gt;
+&lt;h2 class="title-h2__text title-h2__text--category"&gt;&lt;i data-lucide="shapes"&gt;&lt;/i&gt; カテゴリ&lt;/h2&gt;
+&lt;h2 class="title-h2__text title-h2__text--popular-tag"&gt;&lt;i data-lucide="tag"&gt;&lt;/i&gt; 人気タグ&lt;/h2&gt;
+&lt;h2 class="title-h2__text title-h2__text--sns"&gt;&lt;i data-lucide="share-2"&gt;&lt;/i&gt; SNS&lt;/h2&gt;</code></pre>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -1546,7 +1639,7 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-tag'); ?>" class="showcase-iframe" data-comp="c-tag" style="height: 80px;"></iframe>
@@ -1554,7 +1647,7 @@ if (isset($_GET['component_preview'])) {
                         <div class="showcase-code-box">
                             <pre><code class="html-code">&lt;span class="tag"&gt;タグ名&lt;/span&gt;
 &lt;a href="#" class="tag"&gt;タグ名&lt;/a&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -1586,7 +1679,7 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-article'); ?>" class="showcase-iframe" data-comp="c-article" style="height: 600px;"></iframe>
@@ -1631,7 +1724,7 @@ if (isset($_GET['component_preview'])) {
         &lt;/table&gt;
     &lt;/div&gt;
 &lt;/div&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -1663,7 +1756,7 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-related'); ?>" class="showcase-iframe" data-comp="c-related" style="height: 340px;"></iframe>
@@ -1682,7 +1775,7 @@ if (isset($_GET['component_preview'])) {
     &lt;/a&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -1714,7 +1807,7 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-toc'); ?>" class="showcase-iframe" data-comp="c-toc" style="height: 220px;"></iframe>
@@ -1738,7 +1831,7 @@ if (isset($_GET['component_preview'])) {
     &lt;/ol&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -1770,7 +1863,7 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-blogcard'); ?>" class="showcase-iframe" data-comp="c-blogcard" style="height: 180px;"></iframe>
@@ -1787,7 +1880,7 @@ if (isset($_GET['component_preview'])) {
     &lt;/div&gt;
   &lt;/a&gt;
 &lt;/div&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -1819,7 +1912,7 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-checklist'); ?>" class="showcase-iframe" data-comp="c-checklist" style="height: 180px;"></iframe>
@@ -1833,7 +1926,7 @@ if (isset($_GET['component_preview'])) {
     &lt;li&gt;チェック項目3&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/div&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -1865,7 +1958,7 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-audience'); ?>" class="showcase-iframe" data-comp="c-audience" style="height: 240px;"></iframe>
@@ -1878,7 +1971,7 @@ if (isset($_GET['component_preview'])) {
     &lt;li class="target-audience__item"&gt;項目テキスト2&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/div&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -1910,7 +2003,7 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-bento'); ?>" class="showcase-iframe" data-comp="c-bento" style="height: 380px;"></iframe>
@@ -1934,7 +2027,7 @@ if (isset($_GET['component_preview'])) {
     &lt;a class="bento-card social-card youtube" href="#"&gt;...&lt;/a&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -1966,7 +2059,7 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-footer'); ?>" class="showcase-iframe" data-comp="c-footer" style="height: 320px;"></iframe>
@@ -1994,7 +2087,7 @@ if (isset($_GET['component_preview'])) {
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/footer&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -2026,7 +2119,7 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-contact'); ?>" class="showcase-iframe" data-comp="c-contact" style="height: 600px;"></iframe>
@@ -2060,7 +2153,7 @@ if (isset($_GET['component_preview'])) {
     &lt;/p>
   &lt;/form&gt;
 &lt;/div&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -2092,7 +2185,7 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-header'); ?>" class="showcase-iframe" data-comp="c-header" style="height: 240px;"></iframe>
@@ -2106,7 +2199,7 @@ if (isset($_GET['component_preview'])) {
     &lt;/div&gt;
   &lt;/header&gt;
 &lt;/body&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -2138,7 +2231,7 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-share'); ?>" class="showcase-iframe" data-comp="c-share" style="height: 160px;"></iframe>
@@ -2161,7 +2254,7 @@ if (isset($_GET['component_preview'])) {
         &lt;/li&gt;
     &lt;/ul&gt;
 &lt;/div&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -2193,7 +2286,7 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-pickup'); ?>" class="showcase-iframe" data-comp="c-pickup" style="height: 380px;"></iframe>
@@ -2201,7 +2294,7 @@ if (isset($_GET['component_preview'])) {
                         <div class="showcase-code-box">
                             <pre><code class="html-code">&lt;!-- TOPページのメインコンテンツエリア上部（フル幅）に配置されます --&gt;
 &lt;section class="pickup"&gt;
-    &lt;h2 class="title-h2__text title-h2__text--pick-up"&gt;ピックアップ&lt;/h2&gt;
+    &lt;h2 class="title-h2__text title-h2__text--pick-up"&gt;&lt;i data-lucide="pen-tool"&gt;&lt;/i&gt; ピックアップ&lt;/h2&gt;
     &lt;ul class="pickup-list"&gt;
         &lt;li class="pickup-article"&gt;
             &lt;a href="#" class="pickup-article-link"&gt;
@@ -2219,7 +2312,7 @@ if (isset($_GET['component_preview'])) {
         &lt;/li&gt;
     &lt;/ul&gt;
 &lt;/section&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -2251,7 +2344,7 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-new-list'); ?>" class="showcase-iframe" data-comp="c-new-list" style="height: 380px;"></iframe>
@@ -2278,7 +2371,7 @@ if (isset($_GET['component_preview'])) {
         &lt;/a&gt;
     &lt;/article&gt;
 &lt;/div&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -2308,14 +2401,14 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-article-summary'); ?>" class="showcase-iframe" data-comp="c-article-summary" style="height: 200px;"></iframe>
                         </div>
                         <div class="showcase-code-box">
                             <pre><code class="html-code">[article_summary point1="要約テキスト1：ここに記事の要約のポイントが入ります。" point2="要約テキスト2：重要な要素を箇条書きで分かりやすく伝えます。" point3="要約テキスト3：3つまでフリースペースで記述可能です。"]</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
                 </section>
@@ -2343,7 +2436,7 @@ if (isset($_GET['component_preview'])) {
                                 <button class="showcase-bg-btn" data-bg="gray"></button>
                                 <button class="showcase-bg-btn" data-bg="dark"></button>
                             </div>
-                            <button class="showcase-code-toggle"><i class="fa-solid fa-code"></i> Show Code</button>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
                         </div>
                         <div class="showcase-preview-box">
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-trend-word'); ?>" class="showcase-iframe" data-comp="c-trend-word" style="height: 250px;"></iframe>
@@ -2357,7 +2450,39 @@ if (isset($_GET['component_preview'])) {
         &lt;a href="#" class="trend-word-link"&gt;この記事を読む&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;</code></pre>
-                            <button class="copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> COPY</button>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 20. Icon Libraries -->
+                <section id="c-icons" class="showcase-section">
+                    <h2 class="showcase-section-title">
+                        <span class="title-group"><span class="section-num">20</span> Icon Libraries</span>
+                        <span class="showcase-section-meta">External SVGs</span>
+                    </h2>
+                    <p class="showcase-desc">
+                        トンマナ調整のためのアイコンライブラリ候補です。それぞれ同じ意味のアイコン（Home, User, Search, Settings, Check）を並べてビジュアルを比較できます。
+                    </p>
+
+                    <div class="showcase-preview-wrapper" data-comp="c-icons">
+                        <div class="showcase-control-bar">
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">Width:</span>
+                                <button class="showcase-ctrl-btn active" data-width="100%">PC</button>
+                                <button class="showcase-ctrl-btn" data-width="768px">Tablet</button>
+                                <button class="showcase-ctrl-btn" data-width="375px">Mobile</button>
+                            </div>
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">BG:</span>
+                                <button class="showcase-bg-btn active" data-bg="default"></button>
+                                <button class="showcase-bg-btn" data-bg="white"></button>
+                                <button class="showcase-bg-btn" data-bg="gray"></button>
+                                <button class="showcase-bg-btn" data-bg="dark"></button>
+                            </div>
+                        </div>
+                        <div class="showcase-preview-box">
+                            <iframe src="<?php echo add_query_arg('component_preview', 'c-icons'); ?>" class="showcase-iframe" data-comp="c-icons" style="height: 380px;"></iframe>
                         </div>
                     </div>
                 </section>
@@ -2379,26 +2504,27 @@ if (isset($_GET['component_preview'])) {
             <i class="fa-solid fa-layer-group" style="color:var(--sc-primary)"></i> Showcase Menu
         </h3>
         <div class="showcase-nav">
-            <a href="#tokens" class="active"><i class="fa-solid fa-palette"></i> 0. Design Tokens</a>
-            <a href="#c-button"><i class="fa-solid fa-square-caret-right"></i> 1. Button</a>
-            <a href="#c-hero"><i class="fa-solid fa-rectangle-ad"></i> 2. Hero (FV)</a>
-            <a href="#c-title"><i class="fa-solid fa-heading"></i> 3. H2 Title</a>
-            <a href="#c-tag"><i class="fa-solid fa-tags"></i> 4. Tag</a>
-            <a href="#c-article"><i class="fa-solid fa-file-lines"></i> 5. Article Elements</a>
-            <a href="#c-related"><i class="fa-solid fa-grip"></i> 6. Related Posts</a>
-            <a href="#c-toc"><i class="fa-solid fa-list-ol"></i> 7. TOC</a>
-            <a href="#c-blogcard"><i class="fa-solid fa-address-card"></i> 8. Blogcard</a>
-            <a href="#c-checklist"><i class="fa-solid fa-square-check"></i> 9. Checklist</a>
-            <a href="#c-audience"><i class="fa-solid fa-bullseye"></i> 10. Target Audience</a>
-            <a href="#c-bento"><i class="fa-solid fa-table-cells-large"></i> 11. Bento Grid</a>
-            <a href="#c-footer"><i class="fa-solid fa-window-minimize"></i> 12. Footer</a>
-            <a href="#c-contact"><i class="fa-solid fa-envelope"></i> 13. Contact Form</a>
-            <a href="#c-header"><i class="fa-solid fa-eye-slash"></i> 14. Header Logo Scroll</a>
-            <a href="#c-share"><i class="fa-solid fa-share-nodes"></i> 15. Share Buttons</a>
-            <a href="#c-pickup"><i class="fa-solid fa-grip-vertical"></i> 16. Pickup Articles</a>
-            <a href="#c-new-list"><i class="fa-solid fa-list"></i> 17. New Articles / Trends</a>
-            <a href="#c-article-summary"><i class="fa-solid fa-list-check"></i> 18. Article Summary</a>
-            <a href="#c-trend-word"><i class="fa-solid fa-lightbulb"></i> 19. Trend Word Widget</a>
+            <a href="#tokens" class="active"><i data-lucide="palette"></i> 0. Design Tokens</a>
+            <a href="#c-button"><i data-lucide="chevron-right-square"></i> 1. Button</a>
+            <a href="#c-hero"><i data-lucide="layout-template"></i> 2. Hero (FV)</a>
+            <a href="#c-title"><i data-lucide="heading"></i> 3. H2 Title</a>
+            <a href="#c-tag"><i data-lucide="tags"></i> 4. Tag</a>
+            <a href="#c-article"><i data-lucide="file-text"></i> 5. Article Elements</a>
+            <a href="#c-related"><i data-lucide="layout-grid"></i> 6. Related Posts</a>
+            <a href="#c-toc"><i data-lucide="list-ordered"></i> 7. TOC</a>
+            <a href="#c-blogcard"><i data-lucide="contact"></i> 8. Blogcard</a>
+            <a href="#c-checklist"><i data-lucide="check-square"></i> 9. Checklist</a>
+            <a href="#c-audience"><i data-lucide="target"></i> 10. Target Audience</a>
+            <a href="#c-bento"><i data-lucide="grid"></i> 11. Bento Grid</a>
+            <a href="#c-footer"><i data-lucide="minus"></i> 12. Footer</a>
+            <a href="#c-contact"><i data-lucide="mail"></i> 13. Contact Form</a>
+            <a href="#c-header"><i data-lucide="eye"></i> 14. Header Logo Scroll</a>
+            <a href="#c-share"><i data-lucide="share-2"></i> 15. Share Buttons</a>
+            <a href="#c-pickup"><i data-lucide="layout-grid"></i> 16. Pickup Articles</a>
+            <a href="#c-new-list"><i data-lucide="list"></i> 17. New Articles / Trends</a>
+            <a href="#c-article-summary"><i data-lucide="list"></i> 18. Article Summary</a>
+            <a href="#c-trend-word"><i data-lucide="lightbulb"></i> 19. Trend Word Widget</a>
+            <a href="#c-icons"><i data-lucide="image"></i> 20. Icon Libraries</a>
         </div>
     </div>
 </div>
@@ -2412,7 +2538,7 @@ function copyCode(button) {
     
     navigator.clipboard.writeText(code).then(() => {
         const originalText = button.innerHTML;
-        button.innerHTML = '<i class="fa-solid fa-check"></i> COPIED!';
+        button.innerHTML = '<i data-lucide="check"></i> COPIED!';
         button.style.backgroundColor = 'var(--sc-success)';
         button.style.borderColor = 'var(--sc-success)';
         
@@ -2535,9 +2661,9 @@ document.querySelectorAll('.showcase-code-toggle').forEach(btn => {
         codeBox.classList.toggle('is-open');
         
         if (codeBox.classList.contains('is-open')) {
-            this.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Hide Code';
+            this.innerHTML = '<i data-lucide="eye"></i> Hide Code';
         } else {
-            this.innerHTML = '<i class="fa-solid fa-code"></i> Show Code';
+            this.innerHTML = '<i data-lucide="code"></i> Show Code';
         }
     });
 });

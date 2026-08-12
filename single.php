@@ -70,14 +70,14 @@ get_header(); ?>
                     <div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
                         <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
                         <?php if ( wp_is_mobile() ) : ?>
-                        <div id="im-1eae1085f45c43698d0a456571986d00-bottom">
+                        <div id="im-d42fdd9186c2432aa61cd743ae247b05">
                             <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                            <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00-bottom"})</script>
+                            <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1940493,type:"banner",display:"inline",elementid:"im-d42fdd9186c2432aa61cd743ae247b05"})</script>
                         </div>
                         <?php else : ?>
-                        <div id="im-91b0abf8dd8043e3a85b798346681f1d-bottom">
+                        <div id="im-68a2d4103f124bc8bf3520f0e0742642">
                             <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                            <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d-bottom"})</script>
+                            <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1940487,type:"banner",display:"inline",elementid:"im-68a2d4103f124bc8bf3520f0e0742642"})</script>
                         </div>
                         <?php endif; ?>
                     </div>

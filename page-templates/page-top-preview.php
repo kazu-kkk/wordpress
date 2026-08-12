@@ -353,7 +353,7 @@ get_header(); ?>
 
     <!-- 2. ピックアップ記事（フル幅） -->
     <section class="pickup" style="margin-bottom: 40px;">
-        <h2 class="title-h2__text title-h2__text--pick-up">ピックアップ</h2>
+        <h2 class="title-h2__text title-h2__text--pick-up"><i data-lucide="pen-tool"></i> ピックアップ</h2>
         <ul class="pickup-list">
             <?php
             $pickup_post_ids = array(); // ピックアップ記事のIDを保持する配列
@@ -456,7 +456,7 @@ get_header(); ?>
         <main id="main" class="top-page-content" role="main">
             <!-- 3. 最新の投稿 -->
             <section style="margin-bottom: 40px;">
-                <h2 class="title-h2__text title-h2__text--new">最新の投稿</h2>
+                <h2 class="title-h2__text title-h2__text--new"><i data-lucide="file-text"></i> 最新の投稿</h2>
                 <div class="new-article-list">
                     <?php
                     $latest_post_ids = array(); // 最新の投稿記事のIDを保持する配列
@@ -520,7 +520,7 @@ get_header(); ?>
 
             <!-- 4. トレンドセクション -->
             <section style="margin-bottom: 40px;">
-                <h2 class="title-h2__text title-h2__text--trend">デザイントレンド</h2>
+                <h2 class="title-h2__text title-h2__text--trend"><i data-lucide="trending-up"></i> デザイントレンド</h2>
                 <div class="new-article-list">
                     <?php
                     // 以前取得したピックアップ記事と最新の投稿記事のIDをマージ

@@ -3270,101 +3270,25 @@ img {
   }
   .title-h2__text {
     position: relative;
-    padding-left: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin-bottom: 16px;
     font-size: 20px;
     color: #000;
     text-align: left;
+    font-weight: bold;
   }
-  .title-h2__text--pick-up::before {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    display: block;
-    width: 34px;
-    height: 34px;
-    content: "";
-    background-image: url("images/ico_pin.svg?v=2");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
-    transition: all 0.3s;
-    transform: translateY(-50%);
+  .title-h2__text i {
+    color: #2B53EC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .title-h2__text--new::before {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    display: block;
-    width: 34px;
-    height: 34px;
-    content: "";
-    background-image: url("images/ico_article.svg?v=2");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
-    transition: all 0.3s;
-    transform: translateY(-50%);
-  }
-  .title-h2__text--trend::before {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    display: block;
-    width: 34px;
-    height: 34px;
-    content: "";
-    background-image: url("images/ico_trend.svg?v=4");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
-    transition: all 0.3s;
-    transform: translateY(-50%);
-  }
-  .title-h2__text--category::before {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    display: block;
-    width: 34px;
-    height: 34px;
-    content: "";
-    background-image: url("images/ico_shape.svg?v=2");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
-    transition: all 0.3s;
-    transform: translateY(-50%);
-  }
-  .title-h2__text--popular-tag::before {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    display: block;
-    width: 34px;
-    height: 34px;
-    content: "";
-    background-image: url("images/ico_tag.svg?v=2");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
-    transition: all 0.3s;
-    transform: translateY(-50%);
-  }
-  .title-h2__text--sns::before {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    display: block;
-    width: 34px;
-    height: 34px;
-    content: "";
-    background-image: url("images/ico_connection.svg?v=2");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
-    transition: all 0.3s;
-    transform: translateY(-50%);
+  .title-h2__text i svg {
+    width: 26px;
+    height: 26px;
+    stroke-width: 2.25;
   }
   .button {
     width: 228px;
@@ -3583,29 +3507,38 @@ img {
     width: 859px;
     text-align: center;
   }
-  .new-article {
+  .new-article-list {
+    overflow: hidden; /* マージン相殺を防ぐ */
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* margin-topの代わりにgapで隙間を作る */
+    margin-top: 0; /* デフォルトのulマージンを確実になくす */
+    padding-top: 0;
+  }
+}
+@media screen and (width >= 767px) {
+  /* インラインCSSの body #page .new-article に勝つため詳細度を上げる */
+  html body#page .new-article-list .new-article {
     display: flex;
     width: 703px;
     height: 150px;
-    margin-top: 30px;
+    margin-top: 0;
     overflow: hidden;
     text-align: left;
     border-radius: 8px;
   }
-  .new-article__image {
+  html body#page .new-article-list .new-article__image {
     width: 200px;
     height: 100%;
     overflow: hidden;
   }
-  .new-article__image img {
+  html body#page .new-article-list .new-article__image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
   }
-  .new-article:first-child {
-    margin-top: 0;
-  }
+  /* margin-top: 30px は gap: 30px に移行したため削除 */
   .new-article-link {
     display: flex;
   }
@@ -4112,55 +4045,25 @@ img {
 /* TOP h2 Styles */
 .title-h2__text {
   position: relative;
-  padding-left: 40px;
-  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px; /* ピックアップ等のためにデフォルトは16pxに戻す */
   font-size: 20px;
   color: #000;
   text-align: left;
   font-weight: bold;
 }
-
-.title-h2__text--pick-up::before,
-.title-h2__text--new::before,
-.title-h2__text--trend::before,
-.title-h2__text--category::before,
-.title-h2__text--popular-tag::before,
-.title-h2__text--sns::before {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  display: block;
-  width: 34px;
-  height: 34px;
-  content: "";
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: contain;
-  transform: translateY(-50%);
+.title-h2__text i {
+  color: #2B53EC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
-.title-h2__text--pick-up::before {
-  background-image: url("images/ico_pin.svg?v=2");
-}
-
-.title-h2__text--new::before {
-  background-image: url("images/ico_article.svg?v=2");
-}
-
-.title-h2__text--trend::before {
-  background-image: url("images/ico_trend.svg?v=4");
-}
-
-.title-h2__text--category::before {
-  background-image: url("images/ico_shape.svg?v=2");
-}
-
-.title-h2__text--popular-tag::before {
-  background-image: url("images/ico_tag.svg?v=2");
-}
-
-.title-h2__text--sns::before {
-  background-image: url("images/ico_connection.svg?v=2");
+.title-h2__text i svg {
+  width: 28px;
+  height: 28px;
+  stroke-width: 2.25;
 }
 
 /* =========================================
@@ -4696,19 +4599,25 @@ body .pagination .nav-links .page-numbers.dots {
   html body.home h2.title-h2__text--new,
   html body.home h2.title-h2__text--trend,
   html body.home h2.title-h2__text--category,
+  html body.home h2.title-h2__text--pick-up,
   html body.front-page h2.title-h2__text--new,
   html body.front-page h2.title-h2__text--trend,
   html body.front-page h2.title-h2__text--category,
+  html body.front-page h2.title-h2__text--pick-up,
   html body.page-template-page-top-preview h2.title-h2__text--new,
   html body.page-template-page-top-preview h2.title-h2__text--trend,
   html body.page-template-page-top-preview h2.title-h2__text--category,
+  html body.page-template-page-top-preview h2.title-h2__text--pick-up,
   html body.home h2.title-h2__text--new,
   html body.home h2.title-h2__text--trend,
   html body.home h2.title-h2__text--category,
+  html body.home h2.title-h2__text--pick-up,
   html body h2.title-h2__text--new,
   html body h2.title-h2__text--trend,
-  html body h2.title-h2__text--category {
+  html body h2.title-h2__text--category,
+  html body h2.title-h2__text--pick-up {
     margin-top: 40px;
+    margin-bottom: 0; /* アイコンの高さとカード上部のpaddingがあるため、見出し自体の下マージンは0にする */
   }
   html body.home div#primary main#main.top-page-content .new-article-list,
   html body.home div#primary .new-article-list,
