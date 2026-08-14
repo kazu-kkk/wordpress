@@ -476,28 +476,6 @@ get_header(); ?>
                         </a>
                     </article>
                     <?php
-                            // インフィード広告を挿入（2件目の後）
-                            if ( $new_article_count == 2 ) :
-                    ?>
-                    <!-- インフィード広告 -->
-                    <div class="infeed-ad-container">
-                        <div style="font-size: 10px; color: #999; margin-bottom: 5px; text-align: center;">スポンサーリンク</div>
-                        <div class="ad-widget-content">
-                            <?php if ( wp_is_mobile() ) : ?>
-                            <div id="im-87f8b9da487a4aa7a4ecc361036180bc">
-                                <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                                <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1940482,type:"banner",display:"inline",elementid:"im-87f8b9da487a4aa7a4ecc361036180bc"})</script>
-                            </div>
-                            <?php else : ?>
-                            <div id="im-e206045a1c11488aaa530bd0a19b87a0">
-                                <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                                <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1940497,type:"banner",display:"inline",elementid:"im-e206045a1c11488aaa530bd0a19b87a0"})</script>
-                            </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                    <?php
-                            endif;
                         endwhile;
                         wp_reset_postdata();
                     else :
@@ -506,6 +484,24 @@ get_header(); ?>
                     ?>
                 </div>
             </section>
+
+            <!-- セクション間広告 -->
+            <div class="infeed-ad-container">
+                <div style="font-size: 10px; color: #999; margin-bottom: 5px; text-align: center;">スポンサーリンク</div>
+                <div class="ad-widget-content">
+                    <?php if ( wp_is_mobile() ) : ?>
+                    <div id="im-87f8b9da487a4aa7a4ecc361036180bc">
+                        <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1940482,type:"banner",display:"inline",elementid:"im-87f8b9da487a4aa7a4ecc361036180bc"})</script>
+                    </div>
+                    <?php else : ?>
+                    <div id="im-e206045a1c11488aaa530bd0a19b87a0">
+                        <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+                        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1940497,type:"banner",display:"inline",elementid:"im-e206045a1c11488aaa530bd0a19b87a0"})</script>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
 
             <!-- 4. トレンドセクション -->
             <?php

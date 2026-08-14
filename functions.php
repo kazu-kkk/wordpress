@@ -71,7 +71,7 @@ function show_Linkcard($atts)
     }
 
     // トランジェントキーを生成（URL単位でキャッシュ）
-    $cache_key = 'ogp_v5_' . md5($atts['url']);
+    $cache_key = 'ogp_v6_' . md5($atts['url']);
     $ogp_data  = get_transient($cache_key);
 
     if ($ogp_data === false) {
