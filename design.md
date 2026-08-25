@@ -247,22 +247,29 @@
 
 ```html
 <section class="related-posts">
-  <h2 class="related-posts__title">関連記事</h2>
-  <div class="related-posts__grid">
-    <a class="related-posts__card" href="#">
-      <div class="related-posts__thumb"><img src="…"></div>
-      <div class="related-posts__body">
-        <p class="related-posts__date">2024.01.01</p>
-        <p class="related-posts__name">記事タイトル</p>
-      </div>
-    </a>
+  <h2 class="related-posts__title">この記事も読まれています</h2>
+  <div class="new-article-list">
+    <article class="new-article">
+      <a href="#" class="new-article-link">
+        <div class="new-article__image">
+          <img src="thumb.jpg" alt="画像">
+        </div>
+        <div class="new-article-text">
+          <div class="new-article-text-inner">
+            <p class="new-article-text__title">記事タイトル</p>
+            <p class="new-article-text__date">2026.08.09</p>
+          </div>
+        </div>
+      </a>
+    </article>
   </div>
 </section>
 ```
 
-- PC: 3カラムグリッド / SP: 2カラム / 480px以下: 1カラム
-- ホバー: カードが上に浮き上がる (`translateY(-4px)`)
-- タイトル最大3行クランプ
+- **PC表示 (`≥768px`)**: 3カラムグリッド (`grid-template-columns: repeat(3, 1fr)`)。縦型カード（上部画像 `height: 130px`、下部タイトル＋日付）、白背景 (`#ffffff`)、角丸 (`border-radius: 8px`)、薄い枠線 (`border: 1px solid #e2e8f0`)、影 (`box-shadow: 0 2px 8px rgba(0,0,0,0.04)`)。
+- **SP表示 (`≤767px`)**: 1列リストレイアウト。白背景カード内に左サムネイル (`90×75px`, 角丸 `6px`) ＋ 右タイトル・日付の横並び配置。
+- **ホバー演出**: カードが上に浮き上がる (`translateY(-4px)`)、影が強調 (`box-shadow: 0 6px 16px rgba(0,0,0,0.08)`)、画像がズームイン (`scale(1.05)`)、タイトル色がブランドブルー (`#2B53EC`) に変化。すべて `@media (hover: hover)` で制御。
+- **タイトル表示**: 最大2行クランプ（3行目以降は省略）。
 
 ---
 

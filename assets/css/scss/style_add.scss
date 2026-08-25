@@ -542,85 +542,81 @@ img {
     text-align: center;
   }
 
-  .new-article-list {
-    overflow: hidden; /* マージン相殺を防ぐ */
-    display: flex;
-    flex-direction: column;
-    gap: 30px; /* margin-topの代わりにgapで隙間を作る */
-    margin-top: 0; /* デフォルトのulマージンを確実になくす */
-    padding-top: 0;
-  }
-
-  /* インラインCSSの body #page .new-article に勝つため詳細度を上げる */
-  html body#page .new-article-list .new-article {
-    display: flex;
-    width: 703px;
-    height: 150px;
-    margin-top: 0;
-    overflow: hidden;
-
-    //box-shadow: 0 0 8px gray;
-    text-align: left;
-    border-radius: 8px;
-
-
-
-    &__image {
-      width: 200px;
-      height: 100%;
-      overflow: hidden;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.4s ease;
-      }
-    }
-  }
-
-  /* margin-top: 30px は gap: 30px に移行したため削除 */
-
-  .new-article-link {
-    display: flex;
-  }
-
-  .new-article-text {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 459px;
-    padding: 15px 20px;
-    background-color: #fff;
-
-    &__title {
-      font-size: 20px;
-      font-weight: bold;
-      line-height: 1.5;
-      color: #000;
-    }
-
-    &__date {
-      margin-top: 5px;
-      font-size: 13px;
-      color: #000;
-    }
-
-    &-meta {
+  .top-page-content {
+    .new-article-list {
+      overflow: hidden; /* マージン相殺を防ぐ */
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 15px;
-      align-items: flex-start;
-      overflow: hidden;
-      height: 30px;
-    }
+      flex-direction: column;
+      gap: 30px; /* margin-topの代わりにgapで隙間を作る */
+      margin-top: 0; /* デフォルトのulマージンを確実になくす */
+      padding-top: 0;
 
-    &__category,
-    &__tag {
-      display: block;
-      flex-shrink: 0;
-      line-height: 1.4;
+      .new-article {
+        display: flex;
+        width: 703px;
+        height: 150px;
+        margin-top: 0;
+        overflow: hidden;
+        text-align: left;
+        border-radius: 8px;
+
+        .new-article__image,
+        &__image {
+          width: 200px;
+          height: 150px;
+          overflow: hidden;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+          }
+        }
+
+        .new-article-link {
+          display: flex;
+        }
+
+        .new-article-text {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          width: 459px;
+          padding: 15px 20px;
+          background-color: #fff;
+
+          &__title {
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1.5;
+            color: #000;
+          }
+
+          &__date {
+            margin-top: 5px;
+            font-size: 13px;
+            color: #000;
+          }
+
+          &-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+            align-items: flex-start;
+            overflow: hidden;
+            height: 30px;
+          }
+
+          &__category,
+          &__tag {
+            display: block;
+            flex-shrink: 0;
+            line-height: 1.4;
+          }
+        }
+      }
     }
   }
 
@@ -1146,7 +1142,7 @@ img {
   transition: color 0.4s ease;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   overflow: hidden;
 }
 
@@ -1158,7 +1154,7 @@ img {
   transition: color 0.4s ease;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   overflow: hidden;
 }
 
@@ -1231,12 +1227,12 @@ img {
     }
   }
 
-  /* タイトルテキストのアニメーションと3行制限（4行目以降は省略） */
+  /* タイトルテキストのアニメーションと2行制限（3行目以降は省略） */
   .entry-title a {
     transition: color 0.4s ease;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     overflow: hidden;
 
     @media screen and (max-width: 767px) {
@@ -1482,9 +1478,7 @@ body {
       }
     }
     // 最新の投稿（new-article）の横スクロール化と白背景化
-    div#primary main#main.top-page-content .new-article-list,
-    div#primary .new-article-list,
-    .new-article-list {
+    div#primary main#main.top-page-content .new-article-list {
       display: flex;
       flex-direction: column; /* 縦積みに変更 */
       gap: 16px;
@@ -1542,6 +1536,7 @@ body {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.4s ease;
           }
         }
         
@@ -1695,12 +1690,13 @@ body {
 
 /* --- PC用: 横型カード画像の左角丸がSafariではみ出る問題の修正 --- */
 @media screen and (min-width: 768px) {
-  body #page .new-article__image {
+  body #page .top-page-content .new-article__image {
     border-radius: 8px 0 0 8px;
     transform: translateZ(0); /* Safariのoverflow:hiddenバグ対策 */
   }
-  body #page .new-article__image img {
+  body #page .top-page-content .new-article__image img {
     border-radius: 8px 0 0 8px;
+    transition: transform 0.4s ease;
   }
 }
 

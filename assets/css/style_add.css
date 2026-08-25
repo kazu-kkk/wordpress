@@ -373,11 +373,14 @@ body.single .site-content {
     padding: 12px 8px;
   }
 }
+body #page .related-posts,
 .related-posts {
   margin: 64px auto 48px;
   max-width: 720px;
+  width: 100%;
 }
-.related-posts__title {
+body #page .related-posts .related-posts__title,
+.related-posts .related-posts__title {
   font-size: 22px;
   font-weight: bold;
   color: #000;
@@ -386,7 +389,8 @@ body.single .site-content {
   border-bottom: 3px solid #E8E8E8;
   position: relative;
 }
-.related-posts__title::after {
+body #page .related-posts .related-posts__title::after,
+.related-posts .related-posts__title::after {
   content: "";
   position: absolute;
   bottom: -3px;
@@ -394,10 +398,12 @@ body.single .site-content {
   width: 30%;
   border-bottom: 3px solid #2B53EC;
 }
+body #page .related-posts,
 .related-posts {
-  /* PC向け: 関連記事セクションの3カラムレイアウトオーバーライド */
+  /* PC向け: 関連記事セクションの3カラムグリッドレイアウト */
 }
 @media screen and (min-width: 768px) {
+  body #page .related-posts .new-article-list,
   .related-posts .new-article-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -405,72 +411,225 @@ body.single .site-content {
     margin: 0;
     padding: 0;
     width: 100%;
+    list-style: none;
+    overflow: visible;
   }
+  body #page .related-posts .new-article,
   .related-posts .new-article {
     width: 100%;
-    height: 100%;
+    height: auto;
+    min-height: 100%;
     margin: 0 !important;
     display: flex;
     flex-direction: column;
-    transition: box-shadow 0.3s ease;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
+}
+@media screen and (min-width: 768px) and (hover: hover) {
+  body #page .related-posts .new-article:hover,
   .related-posts .new-article:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
   }
-  .related-posts .new-article-link {
+  body #page .related-posts .new-article:hover .new-article-text__title,
+  .related-posts .new-article:hover .new-article-text__title {
+    color: #2B53EC;
+  }
+  body #page .related-posts .new-article:hover .new-article__image img,
+  .related-posts .new-article:hover .new-article__image img {
+    transform: scale(1.05);
+  }
+}
+@media screen and (min-width: 768px) {
+  body #page .related-posts .new-article .new-article-link,
+  .related-posts .new-article .new-article-link {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
   }
-  .related-posts .new-article__image {
+  body #page .related-posts .new-article .new-article__image,
+  .related-posts .new-article .new-article__image {
     width: 100%;
     height: 130px;
     border-radius: 8px 8px 0 0;
+    overflow: hidden;
+    transform: none;
   }
-  .related-posts .new-article-text {
+  body #page .related-posts .new-article .new-article__image img,
+  .related-posts .new-article .new-article__image img {
     width: 100%;
-    padding: 16px 16px 10px; /* 下余白を狭めてスッキリさせる */
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+    transition: transform 0.4s ease;
+    display: block;
+  }
+  body #page .related-posts .new-article .new-article-text,
+  .related-posts .new-article .new-article-text {
+    width: 100%;
+    height: auto;
+    padding: 14px 14px 12px;
+    background-color: transparent;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     align-items: flex-start;
     justify-content: flex-start;
+    box-sizing: border-box;
   }
-  .related-posts .new-article-text-inner {
+  body #page .related-posts .new-article .new-article-text-inner,
+  .related-posts .new-article .new-article-text-inner {
     display: flex;
     flex-direction: column;
     height: 100%;
     width: 100%;
   }
-  .related-posts .new-article-text__title {
+  body #page .related-posts .new-article .new-article-text__title,
+  .related-posts .new-article .new-article-text__title {
     font-size: 14px;
+    font-weight: bold;
     line-height: 1.5;
-    margin-bottom: 8px; /* 日付との間隔も少し詰める */
-    /* 3行で三点リーダー表示 */
+    color: #000;
+    margin: 0 0 8px 0;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    transition: color 0.3s ease;
   }
-  .related-posts .new-article-text__date {
+  body #page .related-posts .new-article .new-article-text__date,
+  .related-posts .new-article .new-article-text__date {
     margin-top: auto;
     margin-bottom: 0;
     font-size: 11px;
     line-height: 1;
+    color: #666;
   }
-  .related-posts .new-article-text-meta {
-    display: none; /* 狭いのでタグ類は非表示にする */
+  body #page .related-posts .new-article .new-article-text-meta,
+  .related-posts .new-article .new-article-text-meta {
+    display: none;
   }
 }
-
+body #page .related-posts,
+.related-posts {
+  /* SP向け: 関連記事セクション（1列のカードリスト） */
+}
 @media screen and (max-width: 767px) {
+  body #page .related-posts,
   .related-posts {
     margin: 48px 0 32px;
   }
-  .related-posts__title {
+  body #page .related-posts .related-posts__title,
+  .related-posts .related-posts__title {
     font-size: 18px;
+    margin-bottom: 16px;
+  }
+  body #page .related-posts .new-article-list,
+  .related-posts .new-article-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    list-style: none;
+    overflow: visible;
+  }
+  body #page .related-posts .new-article,
+  .related-posts .new-article {
+    width: 100%;
+    height: auto;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+  }
+  body #page .related-posts .new-article .new-article-link,
+  .related-posts .new-article .new-article-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+    box-sizing: border-box;
+  }
+  body #page .related-posts .new-article .new-article__image,
+  .related-posts .new-article .new-article__image {
+    width: 90px;
+    height: 75px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    transform: none;
+  }
+  body #page .related-posts .new-article .new-article__image img,
+  .related-posts .new-article .new-article__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+  }
+  body #page .related-posts .new-article .new-article-text,
+  .related-posts .new-article .new-article-text {
+    width: calc(100% - 102px);
+    height: auto;
+    padding: 0;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: flex-start;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  body #page .related-posts .new-article .new-article-text-inner,
+  .related-posts .new-article .new-article-text-inner {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  body #page .related-posts .new-article .new-article-text__title,
+  .related-posts .new-article .new-article-text__title {
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1.4;
+    color: #000;
+    margin: 0 0 4px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  body #page .related-posts .new-article .new-article-text__date,
+  .related-posts .new-article .new-article-text__date {
+    font-size: 11px;
+    line-height: 1;
+    color: #666;
+    margin: 0;
+  }
+  body #page .related-posts .new-article .new-article-text-meta,
+  .related-posts .new-article .new-article-text-meta {
+    display: none;
   }
 }
+
 /* ==============================================
    Rich Footer Styles
    ============================================== */
@@ -883,24 +1042,44 @@ body.single .site-content {
   .top-page-content-article .category-article {
     width: calc((100% - 20px) / 2);
   }
+  .top-page-content-article .category-article .entry-title {
+    margin: 0 0 6px 0;
+    padding: 0;
+  }
   .top-page-content-article .category-article .entry-title a {
-    font-size: 20px;
-    line-height: 1.3;
+    font-size: 18px;
+    line-height: 1.35;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     overflow: hidden;
   }
   .top-page-article {
     width: calc((100% - 20px) / 2);
   }
+  .top-page-article .entry-title {
+    margin: 0 0 6px 0;
+    padding: 0;
+  }
   .top-page-article .entry-title a {
-    font-size: 20px;
-    line-height: 1.3;
+    font-size: 18px;
+    line-height: 1.35;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     overflow: hidden;
+  }
+  .top-page-article .top-page-article-meta {
+    margin-top: 6px;
+  }
+  .top-page-article .top-page-article-tags {
+    gap: 4px;
+  }
+  .top-page-article .top-page-article-tags span.tag {
+    padding: 3px 8px;
+    font-size: 12px;
+    line-height: 1.3;
+    margin: 0;
   }
   .inner-wrap {
     padding-top: 56px;
@@ -909,7 +1088,7 @@ body.single .site-content {
     padding: 40px 30px 120px;
   }
   .post-thumbnail {
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
 }
 @media screen and (width <= 767px) {
@@ -3511,7 +3690,7 @@ img {
     width: 859px;
     text-align: center;
   }
-  .new-article-list {
+  .top-page-content .new-article-list {
     overflow: hidden; /* マージン相殺を防ぐ */
     display: flex;
     flex-direction: column;
@@ -3519,10 +3698,7 @@ img {
     margin-top: 0; /* デフォルトのulマージンを確実になくす */
     padding-top: 0;
   }
-}
-@media screen and (width >= 767px) {
-  /* インラインCSSの body #page .new-article に勝つため詳細度を上げる */
-  html body#page .new-article-list .new-article {
+  .top-page-content .new-article-list .new-article {
     display: flex;
     width: 703px;
     height: 150px;
@@ -3531,22 +3707,21 @@ img {
     text-align: left;
     border-radius: 8px;
   }
-  html body#page .new-article-list .new-article__image {
+  .top-page-content .new-article-list .new-article .new-article__image, .top-page-content .new-article-list .new-article__image {
     width: 200px;
-    height: 100%;
+    height: 150px;
     overflow: hidden;
   }
-  html body#page .new-article-list .new-article__image img {
+  .top-page-content .new-article-list .new-article .new-article__image img, .top-page-content .new-article-list .new-article__image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
   }
-  /* margin-top: 30px は gap: 30px に移行したため削除 */
-  .new-article-link {
+  .top-page-content .new-article-list .new-article .new-article-link {
     display: flex;
   }
-  .new-article-text {
+  .top-page-content .new-article-list .new-article .new-article-text {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -3554,18 +3729,18 @@ img {
     padding: 15px 20px;
     background-color: #fff;
   }
-  .new-article-text__title {
+  .top-page-content .new-article-list .new-article .new-article-text__title {
     font-size: 20px;
     font-weight: bold;
     line-height: 1.5;
     color: #000;
   }
-  .new-article-text__date {
+  .top-page-content .new-article-list .new-article .new-article-text__date {
     margin-top: 5px;
     font-size: 13px;
     color: #000;
   }
-  .new-article-text-meta {
+  .top-page-content .new-article-list .new-article .new-article-text-meta {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -3574,7 +3749,7 @@ img {
     overflow: hidden;
     height: 30px;
   }
-  .new-article-text__category, .new-article-text__tag {
+  .top-page-content .new-article-list .new-article .new-article-text__category, .top-page-content .new-article-list .new-article .new-article-text__tag {
     display: block;
     flex-shrink: 0;
     line-height: 1.4;
@@ -4015,7 +4190,7 @@ img {
   transition: color 0.4s ease;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   overflow: hidden;
 }
 
@@ -4027,7 +4202,7 @@ img {
   transition: color 0.4s ease;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   overflow: hidden;
 }
 
@@ -4093,13 +4268,13 @@ img {
   object-fit: cover;
 }
 .top-page-article {
-  /* タイトルテキストのアニメーションと3行制限（4行目以降は省略） */
+  /* タイトルテキストのアニメーションと2行制限（3行目以降は省略） */
 }
 .top-page-article .entry-title a {
   transition: color 0.4s ease;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   overflow: hidden;
 }
 @media screen and (max-width: 767px) {
@@ -4636,20 +4811,10 @@ body .pagination .nav-links .page-numbers.dots {
     height: 18px;
   }
   html body.home div#primary main#main.top-page-content .new-article-list,
-  html body.home div#primary .new-article-list,
-  html body.home .new-article-list,
   html body.front-page div#primary main#main.top-page-content .new-article-list,
-  html body.front-page div#primary .new-article-list,
-  html body.front-page .new-article-list,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list,
-  html body.page-template-page-top-preview div#primary .new-article-list,
-  html body.page-template-page-top-preview .new-article-list,
   html body.home div#primary main#main.top-page-content .new-article-list,
-  html body.home div#primary .new-article-list,
-  html body.home .new-article-list,
-  html body div#primary main#main.top-page-content .new-article-list,
-  html body div#primary .new-article-list,
-  html body .new-article-list {
+  html body div#primary main#main.top-page-content .new-article-list {
     display: flex;
     flex-direction: column; /* 縦積みに変更 */
     gap: 16px;
@@ -4665,54 +4830,24 @@ body .pagination .nav-links .page-numbers.dots {
     width: 100%;
   }
   html body.home div#primary main#main.top-page-content .new-article-list::-webkit-scrollbar,
-  html body.home div#primary .new-article-list::-webkit-scrollbar,
-  html body.home .new-article-list::-webkit-scrollbar,
   html body.front-page div#primary main#main.top-page-content .new-article-list::-webkit-scrollbar,
-  html body.front-page div#primary .new-article-list::-webkit-scrollbar,
-  html body.front-page .new-article-list::-webkit-scrollbar,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list::-webkit-scrollbar,
-  html body.page-template-page-top-preview div#primary .new-article-list::-webkit-scrollbar,
-  html body.page-template-page-top-preview .new-article-list::-webkit-scrollbar,
   html body.home div#primary main#main.top-page-content .new-article-list::-webkit-scrollbar,
-  html body.home div#primary .new-article-list::-webkit-scrollbar,
-  html body.home .new-article-list::-webkit-scrollbar,
-  html body div#primary main#main.top-page-content .new-article-list::-webkit-scrollbar,
-  html body div#primary .new-article-list::-webkit-scrollbar,
-  html body .new-article-list::-webkit-scrollbar {
+  html body div#primary main#main.top-page-content .new-article-list::-webkit-scrollbar {
     display: none;
   }
   html body.home div#primary main#main.top-page-content .new-article-list,
-  html body.home div#primary .new-article-list,
-  html body.home .new-article-list,
   html body.front-page div#primary main#main.top-page-content .new-article-list,
-  html body.front-page div#primary .new-article-list,
-  html body.front-page .new-article-list,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list,
-  html body.page-template-page-top-preview div#primary .new-article-list,
-  html body.page-template-page-top-preview .new-article-list,
   html body.home div#primary main#main.top-page-content .new-article-list,
-  html body.home div#primary .new-article-list,
-  html body.home .new-article-list,
-  html body div#primary main#main.top-page-content .new-article-list,
-  html body div#primary .new-article-list,
-  html body .new-article-list {
+  html body div#primary main#main.top-page-content .new-article-list {
     scrollbar-width: none;
   }
   html body.home div#primary main#main.top-page-content .new-article-list .new-article,
-  html body.home div#primary .new-article-list .new-article,
-  html body.home .new-article-list .new-article,
   html body.front-page div#primary main#main.top-page-content .new-article-list .new-article,
-  html body.front-page div#primary .new-article-list .new-article,
-  html body.front-page .new-article-list .new-article,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article,
-  html body.page-template-page-top-preview div#primary .new-article-list .new-article,
-  html body.page-template-page-top-preview .new-article-list .new-article,
   html body.home div#primary main#main.top-page-content .new-article-list .new-article,
-  html body.home div#primary .new-article-list .new-article,
-  html body.home .new-article-list .new-article,
-  html body div#primary main#main.top-page-content .new-article-list .new-article,
-  html body div#primary .new-article-list .new-article,
-  html body .new-article-list .new-article {
+  html body div#primary main#main.top-page-content .new-article-list .new-article {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -4723,54 +4858,24 @@ body .pagination .nav-links .page-numbers.dots {
     border-bottom: 1px solid #e2e8f0;
   }
   html body.home div#primary main#main.top-page-content .new-article-list .new-article:first-child,
-  html body.home div#primary .new-article-list .new-article:first-child,
-  html body.home .new-article-list .new-article:first-child,
   html body.front-page div#primary main#main.top-page-content .new-article-list .new-article:first-child,
-  html body.front-page div#primary .new-article-list .new-article:first-child,
-  html body.front-page .new-article-list .new-article:first-child,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article:first-child,
-  html body.page-template-page-top-preview div#primary .new-article-list .new-article:first-child,
-  html body.page-template-page-top-preview .new-article-list .new-article:first-child,
   html body.home div#primary main#main.top-page-content .new-article-list .new-article:first-child,
-  html body.home div#primary .new-article-list .new-article:first-child,
-  html body.home .new-article-list .new-article:first-child,
-  html body div#primary main#main.top-page-content .new-article-list .new-article:first-child,
-  html body div#primary .new-article-list .new-article:first-child,
-  html body .new-article-list .new-article:first-child {
+  html body div#primary main#main.top-page-content .new-article-list .new-article:first-child {
     margin-left: 0;
   }
   html body.home div#primary main#main.top-page-content .new-article-list .new-article:last-child,
-  html body.home div#primary .new-article-list .new-article:last-child,
-  html body.home .new-article-list .new-article:last-child,
   html body.front-page div#primary main#main.top-page-content .new-article-list .new-article:last-child,
-  html body.front-page div#primary .new-article-list .new-article:last-child,
-  html body.front-page .new-article-list .new-article:last-child,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article:last-child,
-  html body.page-template-page-top-preview div#primary .new-article-list .new-article:last-child,
-  html body.page-template-page-top-preview .new-article-list .new-article:last-child,
   html body.home div#primary main#main.top-page-content .new-article-list .new-article:last-child,
-  html body.home div#primary .new-article-list .new-article:last-child,
-  html body.home .new-article-list .new-article:last-child,
-  html body div#primary main#main.top-page-content .new-article-list .new-article:last-child,
-  html body div#primary .new-article-list .new-article:last-child,
-  html body .new-article-list .new-article:last-child {
+  html body div#primary main#main.top-page-content .new-article-list .new-article:last-child {
     border-bottom: none;
   }
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-link,
-  html body.home div#primary .new-article-list .new-article .new-article-link,
-  html body.home .new-article-list .new-article .new-article-link,
   html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article-link,
-  html body.front-page div#primary .new-article-list .new-article .new-article-link,
-  html body.front-page .new-article-list .new-article .new-article-link,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-link,
-  html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-link,
-  html body.page-template-page-top-preview .new-article-list .new-article .new-article-link,
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-link,
-  html body.home div#primary .new-article-list .new-article .new-article-link,
-  html body.home .new-article-list .new-article .new-article-link,
-  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-link,
-  html body div#primary .new-article-list .new-article .new-article-link,
-  html body .new-article-list .new-article .new-article-link {
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-link {
     display: flex;
     flex-direction: row-reverse; /* 右画像・左テキスト */
     flex-grow: 1;
@@ -4781,20 +4886,10 @@ body .pagination .nav-links .page-numbers.dots {
     padding: 12px 0;
   }
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article__image,
-  html body.home div#primary .new-article-list .new-article .new-article__image,
-  html body.home .new-article-list .new-article .new-article__image,
   html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article__image,
-  html body.front-page div#primary .new-article-list .new-article .new-article__image,
-  html body.front-page .new-article-list .new-article .new-article__image,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article__image,
-  html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article__image,
-  html body.page-template-page-top-preview .new-article-list .new-article .new-article__image,
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article__image,
-  html body.home div#primary .new-article-list .new-article .new-article__image,
-  html body.home .new-article-list .new-article .new-article__image,
-  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article__image,
-  html body div#primary .new-article-list .new-article .new-article__image,
-  html body .new-article-list .new-article .new-article__image {
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article__image {
     width: 90px;
     height: 90px;
     flex-shrink: 0;
@@ -4802,39 +4897,20 @@ body .pagination .nav-links .page-numbers.dots {
     overflow: hidden;
   }
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img,
-  html body.home div#primary .new-article-list .new-article .new-article__image img,
-  html body.home .new-article-list .new-article .new-article__image img,
   html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img,
-  html body.front-page div#primary .new-article-list .new-article .new-article__image img,
-  html body.front-page .new-article-list .new-article .new-article__image img,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img,
-  html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article__image img,
-  html body.page-template-page-top-preview .new-article-list .new-article .new-article__image img,
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img,
-  html body.home div#primary .new-article-list .new-article .new-article__image img,
-  html body.home .new-article-list .new-article .new-article__image img,
-  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img,
-  html body div#primary .new-article-list .new-article .new-article__image img,
-  html body .new-article-list .new-article .new-article__image img {
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.4s ease;
   }
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text,
-  html body.home div#primary .new-article-list .new-article .new-article-text,
-  html body.home .new-article-list .new-article .new-article-text,
   html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article-text,
-  html body.front-page div#primary .new-article-list .new-article .new-article-text,
-  html body.front-page .new-article-list .new-article .new-article-text,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-text,
-  html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-text,
-  html body.page-template-page-top-preview .new-article-list .new-article .new-article-text,
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text,
-  html body.home div#primary .new-article-list .new-article .new-article-text,
-  html body.home .new-article-list .new-article .new-article-text,
-  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-text,
-  html body div#primary .new-article-list .new-article .new-article-text,
-  html body .new-article-list .new-article .new-article-text {
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-text {
     padding: 0;
     background-color: transparent;
     flex-grow: 1;
@@ -4843,39 +4919,19 @@ body .pagination .nav-links .page-numbers.dots {
     width: calc(100% - 102px);
   }
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-inner,
-  html body.home div#primary .new-article-list .new-article .new-article-text-inner,
-  html body.home .new-article-list .new-article .new-article-text-inner,
   html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-inner,
-  html body.front-page div#primary .new-article-list .new-article .new-article-text-inner,
-  html body.front-page .new-article-list .new-article .new-article-text-inner,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-inner,
-  html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-text-inner,
-  html body.page-template-page-top-preview .new-article-list .new-article .new-article-text-inner,
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-inner,
-  html body.home div#primary .new-article-list .new-article .new-article-text-inner,
-  html body.home .new-article-list .new-article .new-article-text-inner,
-  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-inner,
-  html body div#primary .new-article-list .new-article .new-article-text-inner,
-  html body .new-article-list .new-article .new-article-text-inner {
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-inner {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
   }
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__title,
-  html body.home div#primary .new-article-list .new-article .new-article-text__title,
-  html body.home .new-article-list .new-article .new-article-text__title,
   html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__title,
-  html body.front-page div#primary .new-article-list .new-article .new-article-text__title,
-  html body.front-page .new-article-list .new-article .new-article-text__title,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__title,
-  html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-text__title,
-  html body.page-template-page-top-preview .new-article-list .new-article .new-article-text__title,
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__title,
-  html body.home div#primary .new-article-list .new-article .new-article-text__title,
-  html body.home .new-article-list .new-article .new-article-text__title,
-  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__title,
-  html body div#primary .new-article-list .new-article .new-article-text__title,
-  html body .new-article-list .new-article .new-article-text__title {
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__title {
     font-size: 15px;
     color: #333;
     font-weight: bold;
@@ -4887,39 +4943,19 @@ body .pagination .nav-links .page-numbers.dots {
     overflow: hidden;
   }
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__date,
-  html body.home div#primary .new-article-list .new-article .new-article-text__date,
-  html body.home .new-article-list .new-article .new-article-text__date,
   html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__date,
-  html body.front-page div#primary .new-article-list .new-article .new-article-text__date,
-  html body.front-page .new-article-list .new-article .new-article-text__date,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__date,
-  html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-text__date,
-  html body.page-template-page-top-preview .new-article-list .new-article .new-article-text__date,
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__date,
-  html body.home div#primary .new-article-list .new-article .new-article-text__date,
-  html body.home .new-article-list .new-article .new-article-text__date,
-  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__date,
-  html body div#primary .new-article-list .new-article .new-article-text__date,
-  html body .new-article-list .new-article .new-article-text__date {
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-text__date {
     color: #666;
     font-size: 12px;
     margin-bottom: 8px;
   }
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-meta,
-  html body.home div#primary .new-article-list .new-article .new-article-text-meta,
-  html body.home .new-article-list .new-article .new-article-text-meta,
   html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-meta,
-  html body.front-page div#primary .new-article-list .new-article .new-article-text-meta,
-  html body.front-page .new-article-list .new-article .new-article-text-meta,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-meta,
-  html body.page-template-page-top-preview div#primary .new-article-list .new-article .new-article-text-meta,
-  html body.page-template-page-top-preview .new-article-list .new-article .new-article-text-meta,
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-meta,
-  html body.home div#primary .new-article-list .new-article .new-article-text-meta,
-  html body.home .new-article-list .new-article .new-article-text-meta,
-  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-meta,
-  html body div#primary .new-article-list .new-article .new-article-text-meta,
-  html body .new-article-list .new-article .new-article-text-meta {
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-meta {
     margin-top: auto;
     display: flex;
     flex-wrap: wrap;
@@ -5055,12 +5091,13 @@ body .pagination .nav-links .page-numbers.dots {
 }
 /* --- PC用: 横型カード画像の左角丸がSafariではみ出る問題の修正 --- */
 @media screen and (min-width: 768px) {
-  body #page .new-article__image {
+  body #page .top-page-content .new-article__image {
     border-radius: 8px 0 0 8px;
     transform: translateZ(0); /* Safariのoverflow:hiddenバグ対策 */
   }
-  body #page .new-article__image img {
+  body #page .top-page-content .new-article__image img {
     border-radius: 8px 0 0 8px;
+    transition: transform 0.4s ease;
   }
 }
 /* --- インフィード広告の表示制御 --- */

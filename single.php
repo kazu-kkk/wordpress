@@ -98,15 +98,6 @@ get_header(); ?>
                                             <div class="new-article-text-meta">
                                                 <?php
                                                 $displayed_terms = array(); // 表示済みタグ名を記録
-                                                $categories = get_the_category();
-                                                if (!empty($categories)) {
-                                                    foreach ($categories as $cat) {
-                                                        if ($cat->name === '記事') continue;
-                                                        if (in_array($cat->name, $displayed_terms)) continue;
-                                                        echo '<div class="new-article-text__category"><span class="tag">' . esc_html($cat->name) . '</span></div>';
-                                                        $displayed_terms[] = $cat->name;
-                                                    }
-                                                }
                                                 $tags = get_the_tags();
                                                 if (!empty($tags)) {
                                                     foreach ($tags as $tag) {

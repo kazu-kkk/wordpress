@@ -383,15 +383,6 @@ get_header(); ?>
                         <div class="pickup-article-text-meta" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; align-items: flex-start; overflow: hidden; height: 30px;">
                             <?php
                             $displayed_terms = array(); // 表示済みタグ名を記録
-                            $categories = get_the_category();
-                            if (!empty($categories)) {
-                                foreach ($categories as $cat) {
-                                    if ($cat->name === '記事') continue;
-                                    if (in_array($cat->name, $displayed_terms)) continue;
-                                    echo '<div class="pickup-article-text__category" style="margin: 0; display: block; flex-shrink: 0; line-height: 1.4;"><span class="tag">' . esc_html($cat->name) . '</span></div>';
-                                    $displayed_terms[] = $cat->name;
-                                }
-                            }
                             $tags = get_the_tags();
                             if (!empty($tags)) {
                                 foreach ($tags as $tag) {
@@ -451,15 +442,6 @@ get_header(); ?>
                                     <div class="new-article-text-meta">
                                         <?php
                                         $displayed_terms = array(); // 表示済みタグ名を記録
-                                        $categories = get_the_category();
-                                        if (!empty($categories)) {
-                                            foreach ($categories as $cat) {
-                                                if ($cat->name === '記事') continue;
-                                                if (in_array($cat->name, $displayed_terms)) continue;
-                                                echo '<div class="new-article-text__category"><span class="tag">' . esc_html($cat->name) . '</span></div>';
-                                                $displayed_terms[] = $cat->name;
-                                            }
-                                        }
                                         $tags = get_the_tags();
                                         if (!empty($tags)) {
                                             foreach ($tags as $tag) {
@@ -544,15 +526,6 @@ get_header(); ?>
                                     <div class="new-article-text-meta">
                                         <?php
                                         $displayed_terms = array(); // 表示済みタグ名を記録
-                                        $categories = get_the_category();
-                                        if (!empty($categories)) {
-                                            foreach ($categories as $cat) {
-                                                if ($cat->name === '記事') continue;
-                                                if (in_array($cat->name, $displayed_terms)) continue;
-                                                echo '<div class="new-article-text__category"><span class="tag">' . esc_html($cat->name) . '</span></div>';
-                                                $displayed_terms[] = $cat->name;
-                                            }
-                                        }
                                         $tags = get_the_tags();
                                         if (!empty($tags)) {
                                             foreach ($tags as $tag) {
@@ -631,15 +604,6 @@ get_header(); ?>
                                     <div class="new-article-text-meta">
                                         <?php
                                         $displayed_terms = array(); // 表示済みタグ名を記録
-                                        $categories = get_the_category();
-                                        if (!empty($categories)) {
-                                            foreach ($categories as $cat) {
-                                                if ($cat->name === '記事') continue;
-                                                if (in_array($cat->name, $displayed_terms)) continue;
-                                                echo '<div class="new-article-text__category"><span class="tag">' . esc_html($cat->name) . '</span></div>';
-                                                $displayed_terms[] = $cat->name;
-                                            }
-                                        }
                                         $tags = get_the_tags();
                                         if (!empty($tags)) {
                                             foreach ($tags as $tag) {
@@ -718,15 +682,6 @@ get_header(); ?>
                                     <div class="new-article-text-meta">
                                         <?php
                                         $displayed_terms = array();
-                                        $categories = get_the_category();
-                                        if (!empty($categories)) {
-                                            foreach ($categories as $cat) {
-                                                if ($cat->name === '記事') continue;
-                                                if (in_array($cat->name, $displayed_terms)) continue;
-                                                echo '<div class="new-article-text__category"><span class="tag">' . esc_html($cat->name) . '</span></div>';
-                                                $displayed_terms[] = $cat->name;
-                                            }
-                                        }
                                         $tags = get_the_tags();
                                         if (!empty($tags)) {
                                             foreach ($tags as $tag) {
@@ -787,15 +742,6 @@ get_header(); ?>
                                     <div class="new-article-text-meta">
                                         <?php
                                         $displayed_terms = array();
-                                        $categories = get_the_category();
-                                        if (!empty($categories)) {
-                                            foreach ($categories as $cat) {
-                                                if ($cat->name === '記事') continue;
-                                                if (in_array($cat->name, $displayed_terms)) continue;
-                                                echo '<div class="new-article-text__category"><span class="tag">' . esc_html($cat->name) . '</span></div>';
-                                                $displayed_terms[] = $cat->name;
-                                            }
-                                        }
                                         $tags = get_the_tags();
                                         if (!empty($tags)) {
                                             foreach ($tags as $tag) {

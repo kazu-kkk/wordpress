@@ -169,25 +169,47 @@ if (isset($_GET['component_preview'])) {
             case 'c-related':
                 ?>
                 <div class="related-posts" style="margin: 0; width:100%;">
-                    <div class="related-posts__grid">
-                        <a class="related-posts__card" href="#" onclick="return false;">
-                            <div class="related-posts__thumb">
-                                <div class="related-posts__thumb-fallback" style="height: 120px;"></div>
-                            </div>
-                            <div class="related-posts__body">
-                                <p class="related-posts__date">2026.05.30</p>
-                                <p class="related-posts__name">ユーザーを引きつけるUIカラー設計のベストプラクティス</p>
-                            </div>
-                        </a>
-                        <a class="related-posts__card" href="#" onclick="return false;">
-                            <div class="related-posts__thumb">
-                                <div class="related-posts__thumb-fallback" style="height: 120px; background: linear-gradient(135deg, #2b53ec 0%, #aab4d0 100%);"></div>
-                            </div>
-                            <div class="related-posts__body">
-                                <p class="related-posts__date">2026.05.29</p>
-                                <p class="related-posts__name">Sass/SCSSの構成管理とインポート戦略を極める</p>
-                            </div>
-                        </a>
+                    <h2 class="related-posts__title">この記事も読まれています</h2>
+                    <div class="new-article-list">
+                        <article class="new-article">
+                            <a class="new-article-link" href="#" onclick="return false;">
+                                <div class="new-article__image">
+                                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #2b53ec 0%, #77b1ff 100%);"></div>
+                                </div>
+                                <div class="new-article-text">
+                                    <div class="new-article-text-inner">
+                                        <p class="new-article-text__title">ユーザーを引きつけるUIカラー設計のベストプラクティス</p>
+                                        <p class="new-article-text__date">2026.05.30</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
+                        <article class="new-article">
+                            <a class="new-article-link" href="#" onclick="return false;">
+                                <div class="new-article__image">
+                                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #0f00a0 0%, #2b53ec 100%);"></div>
+                                </div>
+                                <div class="new-article-text">
+                                    <div class="new-article-text-inner">
+                                        <p class="new-article-text__title">Sass/SCSSの構成管理とインポート戦略を極める</p>
+                                        <p class="new-article-text__date">2026.05.29</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
+                        <article class="new-article">
+                            <a class="new-article-link" href="#" onclick="return false;">
+                                <div class="new-article__image">
+                                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #325df7 0%, #a0deff 100%);"></div>
+                                </div>
+                                <div class="new-article-text">
+                                    <div class="new-article-text-inner">
+                                        <p class="new-article-text__title">【2026年最新】論理的な設計に自然の質感を。UX/UIアプローチ</p>
+                                        <p class="new-article-text__date">2026.05.28</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
                     </div>
                 </div>
                 <?php
@@ -1762,19 +1784,24 @@ if (isset($_GET['component_preview'])) {
                             <iframe src="<?php echo add_query_arg('component_preview', 'c-related'); ?>" class="showcase-iframe" data-comp="c-related" style="height: 340px;"></iframe>
                         </div>
                         <div class="showcase-code-box">
-                            <pre><code class="html-code">&lt;div class="related-posts"&gt;
-  &lt;div class="related-posts__grid"&gt;
-    &lt;a class="related-posts__card" href="#"&gt;
-      &lt;div class="related-posts__thumb"&gt;
-        &lt;img src="thumb.jpg" alt="画像"&gt;
-      &lt;/div&gt;
-      &lt;div class="related-posts__body"&gt;
-        &lt;p class="related-posts__date"&gt;2026.05.30&lt;/p&gt;
-        &lt;p class="related-posts__name"&gt;記事タイトル&lt;/p&gt;
-      &lt;/div&gt;
-    &lt;/a&gt;
+                            <pre><code class="html-code">&lt;section class="related-posts"&gt;
+  &lt;h2 class="related-posts__title"&gt;この記事も読まれています&lt;/h2&gt;
+  &lt;div class="new-article-list"&gt;
+    &lt;article class="new-article"&gt;
+      &lt;a href="#" class="new-article-link"&gt;
+        &lt;div class="new-article__image"&gt;
+          &lt;img src="thumb.jpg" alt="画像"&gt;
+        &lt;/div&gt;
+        &lt;div class="new-article-text"&gt;
+          &lt;div class="new-article-text-inner"&gt;
+            &lt;p class="new-article-text__title"&gt;記事タイトル&lt;/p&gt;
+            &lt;p class="new-article-text__date"&gt;2026.08.09&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/a&gt;
+    &lt;/article&gt;
   &lt;/div&gt;
-&lt;/div&gt;</code></pre>
+&lt;/section&gt;</code></pre>
                             <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
