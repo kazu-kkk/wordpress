@@ -195,20 +195,43 @@ add_action( 'wp_head', function() { ?>
         }
         
         body #page .new-article__image {
-            width: 200px;
+            position: relative;
+            width: 240px;
             height: 150px;
             flex-shrink: 0;
             overflow: hidden;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body #page .new-article__image::before {
+            content: "";
+            position: absolute;
+            inset: -20px;
+            background-image: var(--thumb);
+            background-size: cover;
+            background-position: center;
+            filter: blur(24px) saturate(1.3);
+            opacity: 0.35;
+            transform: scale(1.35);
+            z-index: 0;
+            pointer-events: none;
         }
         
         body #page .new-article__image img {
+            position: relative;
+            z-index: 1;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            transition: transform 0.4s ease;
+            display: block;
         }
         
         body #page .new-article-text {
-            width: 100%;
+            width: calc(100% - 240px);
             height: 150px;
             box-sizing: border-box;
             padding: 15px 20px;
@@ -432,7 +455,7 @@ get_header(); ?>
                     ?>
                     <article class="new-article">
                         <a href="<?php the_permalink(); ?>" class="new-article-link">
-                            <div class="new-article__image">
+                            <div class="new-article__image" style="--thumb: url('<?php echo esc_url($thumbnail_url); ?>');">
                                 <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
                             </div>
                             <div class="new-article-text">
@@ -516,7 +539,7 @@ get_header(); ?>
                     ?>
                     <article class="new-article">
                         <a href="<?php the_permalink(); ?>" class="new-article-link">
-                            <div class="new-article__image">
+                            <div class="new-article__image" style="--thumb: url('<?php echo esc_url($thumbnail_url); ?>');">
                                 <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
                             </div>
                             <div class="new-article-text">
@@ -594,7 +617,7 @@ get_header(); ?>
                     ?>
                     <article class="new-article">
                         <a href="<?php the_permalink(); ?>" class="new-article-link">
-                            <div class="new-article__image">
+                            <div class="new-article__image" style="--thumb: url('<?php echo esc_url($thumbnail_url); ?>');">
                                 <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
                             </div>
                             <div class="new-article-text">
@@ -672,7 +695,7 @@ get_header(); ?>
                     ?>
                     <article class="new-article">
                         <a href="<?php the_permalink(); ?>" class="new-article-link">
-                            <div class="new-article__image">
+                            <div class="new-article__image" style="--thumb: url('<?php echo esc_url($thumbnail_url); ?>');">
                                 <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
                             </div>
                             <div class="new-article-text">
@@ -732,7 +755,7 @@ get_header(); ?>
                     ?>
                     <article class="new-article">
                         <a href="<?php the_permalink(); ?>" class="new-article-link">
-                            <div class="new-article__image">
+                            <div class="new-article__image" style="--thumb: url('<?php echo esc_url($thumbnail_url); ?>');">
                                 <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
                             </div>
                             <div class="new-article-text">

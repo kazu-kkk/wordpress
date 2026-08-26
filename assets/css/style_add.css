@@ -3708,15 +3708,37 @@ img {
     border-radius: 8px;
   }
   .top-page-content .new-article-list .new-article .new-article__image, .top-page-content .new-article-list .new-article__image {
-    width: 200px;
+    position: relative;
+    width: 240px;
     height: 150px;
+    flex-shrink: 0;
     overflow: hidden;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .top-page-content .new-article-list .new-article .new-article__image::before, .top-page-content .new-article-list .new-article__image::before {
+    content: "";
+    position: absolute;
+    inset: -20px;
+    background-image: var(--thumb);
+    background-size: cover;
+    background-position: center;
+    filter: blur(24px) saturate(1.3);
+    opacity: 0.35;
+    transform: scale(1.35);
+    z-index: 0;
+    pointer-events: none;
   }
   .top-page-content .new-article-list .new-article .new-article__image img, .top-page-content .new-article-list .new-article__image img {
+    position: relative;
+    z-index: 1;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     transition: transform 0.4s ease;
+    display: block;
   }
   .top-page-content .new-article-list .new-article .new-article-link {
     display: flex;
@@ -3725,7 +3747,7 @@ img {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 459px;
+    width: calc(100% - 240px);
     padding: 15px 20px;
     background-color: #fff;
   }
@@ -4890,21 +4912,46 @@ body .pagination .nav-links .page-numbers.dots {
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article__image,
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article__image,
   html body div#primary main#main.top-page-content .new-article-list .new-article .new-article__image {
-    width: 90px;
-    height: 90px;
+    position: relative;
+    width: 105px;
+    height: 75px;
     flex-shrink: 0;
     border-radius: 6px;
     overflow: hidden;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article__image::before,
+  html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article__image::before,
+  html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article__image::before,
+  html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article__image::before,
+  html body div#primary main#main.top-page-content .new-article-list .new-article .new-article__image::before {
+    content: "";
+    position: absolute;
+    inset: -15px;
+    background-image: var(--thumb);
+    background-size: cover;
+    background-position: center;
+    filter: blur(16px) saturate(1.3);
+    opacity: 0.35;
+    transform: scale(1.35);
+    z-index: 0;
+    pointer-events: none;
   }
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img,
   html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img,
   html body.page-template-page-top-preview div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img,
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img,
   html body div#primary main#main.top-page-content .new-article-list .new-article .new-article__image img {
+    position: relative;
+    z-index: 1;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     transition: transform 0.4s ease;
+    display: block;
   }
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text,
   html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article-text,
@@ -4916,7 +4963,7 @@ body .pagination .nav-links .page-numbers.dots {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    width: calc(100% - 102px);
+    width: calc(100% - 117px);
   }
   html body.home div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-inner,
   html body.front-page div#primary main#main.top-page-content .new-article-list .new-article .new-article-text-inner,
@@ -5139,4 +5186,6 @@ body .infeed-ad-container .ad-widget-content {
     margin-top: 0;
     padding-top: 26px;
   }
-}/*# sourceMappingURL=style_add.css.map */
+}
+
+/*# sourceMappingURL=style_add.css.map */
