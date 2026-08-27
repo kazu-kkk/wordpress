@@ -2,10 +2,12 @@
     <!-- 記事検索 -->
     <div class="search-widget">
         <h2 class="widget-title">SEARCH</h2>
-        <div class="search-container">
-            <input type="text" id="article-search-input" placeholder="キーワード検索..." autocomplete="off">
-            <ul id="search-suggestions" class="search-suggestions"></ul>
-        </div>
+        <form role="search" method="get" class="article-search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+            <div class="search-container">
+                <input type="search" id="article-search-input" class="article-search-input" name="s" placeholder="キーワード検索..." autocomplete="off">
+                <ul id="search-suggestions" class="search-suggestions"></ul>
+            </div>
+        </form>
     </div>
 
     <!-- カテゴリ一覧 -->

@@ -1359,12 +1359,19 @@ body #page .related-posts,
   margin-top: 0;
 }
 
+.article-search-form {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
 .search-container {
   position: relative;
   width: 100%;
 }
 
-#article-search-input {
+#article-search-input,
+.article-search-input {
   width: 100%;
   padding: 12px 16px;
   border: 1px solid #ddd;
@@ -1374,8 +1381,18 @@ body #page .related-posts,
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   background-color: #fff;
   box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
 }
-#article-search-input:focus {
+#article-search-input::-webkit-search-decoration, #article-search-input::-webkit-search-cancel-button, #article-search-input::-webkit-search-results-button, #article-search-input::-webkit-search-results-decoration,
+.article-search-input::-webkit-search-decoration,
+.article-search-input::-webkit-search-cancel-button,
+.article-search-input::-webkit-search-results-button,
+.article-search-input::-webkit-search-results-decoration {
+  display: none;
+}
+#article-search-input:focus,
+.article-search-input:focus {
   outline: none;
   border-color: #2B53EC;
   box-shadow: 0 0 0 3px rgba(43, 83, 236, 0.1);
@@ -1817,16 +1834,9 @@ body.side-nav-open .site {
   }
 }
 @media screen and (max-width: 767px) {
-  /* 検索ウィジェットのスタイル (side-navから移植) */
-  /* 検索ウィジェットのスタイル (side-navから移植) */
-  /* 検索ウィジェットのスタイル (side-navから移植) */
-  /* 検索ウィジェットのスタイル (side-navから移植) */
-  .mobile-side-nav-content {
-    display: block;
-    padding: 0 0 20px;
-    margin-top: 10px;
-    /* 見出しスタイル (side-navから移植) */
-  }
+  /* 見出しスタイル (side-navから移植) */
+  #side-nav .widget-title,
+  .search-widget .widget-title,
   .mobile-side-nav-content .widget-title {
     font-size: 1.2rem;
     font-weight: bold;
@@ -1838,6 +1848,9 @@ body.side-nav-open .site {
     letter-spacing: 0.05em;
   }
   .mobile-side-nav-content {
+    display: block;
+    padding: 0 0 20px;
+    margin-top: 10px;
     /* プロフィールカード (side-navのSP用スタイルを移植) */
   }
   .mobile-side-nav-content .profile-card {
@@ -1935,12 +1948,19 @@ body.side-nav-open .site {
   .search-widget {
     margin-bottom: 24px;
     margin-top: 0;
+    padding: 0;
+  }
+  .article-search-form {
+    margin: 0;
+    padding: 0;
+    width: 100%;
   }
   .search-container {
     position: relative;
     width: 100%;
   }
   #article-search-input,
+  .article-search-input,
   .article-search-input-mobile {
     width: 100%;
     padding: 14px 16px; /* 他のカードと高さを合わせるため微調整 */
@@ -1951,8 +1971,22 @@ body.side-nav-open .site {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 他のカードと合わせる */
     background-color: #fff;
     box-sizing: border-box;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  #article-search-input::-webkit-search-decoration, #article-search-input::-webkit-search-cancel-button, #article-search-input::-webkit-search-results-button, #article-search-input::-webkit-search-results-decoration,
+  .article-search-input::-webkit-search-decoration,
+  .article-search-input::-webkit-search-cancel-button,
+  .article-search-input::-webkit-search-results-button,
+  .article-search-input::-webkit-search-results-decoration,
+  .article-search-input-mobile::-webkit-search-decoration,
+  .article-search-input-mobile::-webkit-search-cancel-button,
+  .article-search-input-mobile::-webkit-search-results-button,
+  .article-search-input-mobile::-webkit-search-results-decoration {
+    display: none;
   }
   #article-search-input:focus,
+  .article-search-input:focus,
   .article-search-input-mobile:focus {
     outline: none;
     border: 1px solid #2B53EC;

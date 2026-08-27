@@ -179,8 +179,9 @@ function inspiro_child_enqueue_scripts() {
     );
 
     wp_localize_script('inspiro-search-suggestion', 'inspiroSearch', array(
-        'root' => esc_url_raw(rest_url()),
-        'nonce' => wp_create_nonce('wp_rest')
+        'root'    => esc_url_raw(rest_url()),
+        'nonce'   => wp_create_nonce('wp_rest'),
+        'homeUrl' => esc_url_raw(home_url('/')),
     ));
 
     // トップページでのみヘッダーロゴのスクロール制御JSを読み込む

@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize for desktop/PC
     setupSearchSuggestions('article-search-input', 'search-suggestions');
@@ -11,11 +10,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!searchInput || !suggestionsList) return;
 
+        const form = searchInput.closest('form');
         let timeout = null;
         let currentFocus = -1;
 
+        // Input handler (Incremental search)
         searchInput.addEventListener('input', function(e) {
             const query = e.target.value.trim();
+            currentFocus = -1;
             
             if (timeout) clearTimeout(timeout);
 
@@ -30,34 +32,85 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 300);
         });
 
-        // Keyboard navigation
+        // Re-open suggestions on focus if query exists
+        searchInput.addEventListener('focus', function() {
+            const query = searchInput.value.trim();
+            if (query.length >= 2 && suggestionsList.children.length > 0) {
+                suggestionsList.style.display = 'block';
+            }
+        });
+
+        // Form submit handler (Prevents empty query submission)
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                const query = searchInput.value.trim();
+                if (!query) {
+                    e.preventDefault();
+                }
+            });
+        }
+
+        // Keyboard navigation & Submission handling
         searchInput.addEventListener('keydown', function(e) {
-            const items = suggestionsList.getElementsByTagName('li');
+            // IME変換中のEnterは無視（日本語入力確定を邪魔しない）
+            if (e.isComposing || e.keyCode === 229) {
+                return;
+            }
+
+            const items = suggestionsList.querySelectorAll('li:not(.no-results)');
+
             if (e.key === 'ArrowDown') {
-                currentFocus++;
-                addActive(items);
+                if (items.length > 0 && suggestionsList.style.display !== 'none') {
+                    e.preventDefault();
+                    currentFocus++;
+                    addActive(items);
+                }
             } else if (e.key === 'ArrowUp') {
-                currentFocus--;
-                addActive(items);
+                if (items.length > 0 && suggestionsList.style.display !== 'none') {
+                    e.preventDefault();
+                    currentFocus--;
+                    addActive(items);
+                }
             } else if (e.key === 'Enter') {
-                e.preventDefault();
-                if (currentFocus > -1) {
-                    if (items && items[currentFocus]) {
-                        items[currentFocus].querySelector('a').click();
+                // サジェスト項目が矢印キーで選択されている場合、その記事へ遷移
+                if (currentFocus > -1 && items && items[currentFocus]) {
+                    const link = items[currentFocus].querySelector('a');
+                    if (link) {
+                        e.preventDefault();
+                        link.click();
+                        return;
                     }
                 }
+
+                // サジェストを選択していない場合、検索結果一覧ページへ
+                const query = searchInput.value.trim();
+                if (!query) {
+                    e.preventDefault();
+                    return;
+                }
+
+                // フォームが存在しない場合のフォールバック（formがある場合は自然にsubmitが実行される）
+                if (!form) {
+                    e.preventDefault();
+                    const homeUrl = (typeof inspiroSearch !== 'undefined' && inspiroSearch.homeUrl) ? inspiroSearch.homeUrl : '/';
+                    window.location.href = `${homeUrl}?s=${encodeURIComponent(query)}`;
+                }
+            } else if (e.key === 'Escape') {
+                suggestionsList.innerHTML = '';
+                suggestionsList.style.display = 'none';
+                currentFocus = -1;
             }
         });
 
         function addActive(items) {
-            if (!items) return false;
+            if (!items || items.length === 0) return false;
             removeActive(items);
             if (currentFocus >= items.length) currentFocus = 0;
             if (currentFocus < 0) currentFocus = items.length - 1;
-            items[currentFocus].classList.add('active');
             
             const activeItem = items[currentFocus];
             if (activeItem) {
+                activeItem.classList.add('active');
                 activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         }
@@ -72,13 +125,13 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('click', function(e) {
             if (!searchInput.contains(e.target) && !suggestionsList.contains(e.target)) {
                 suggestionsList.style.display = 'none';
+                currentFocus = -1;
             }
         });
     }
 
     function fetchSuggestions(query, suggestionsList) {
         // Use the global search endpoint to find content across post types
-        // Note: inspiroSearch must be defined globally via wp_localize_script
         if (typeof inspiroSearch === 'undefined') return;
         
         const url = `${inspiroSearch.root}wp/v2/search?search=${encodeURIComponent(query)}&per_page=5`;
@@ -90,14 +143,13 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(results => {
                 suggestionsList.innerHTML = '';
-                // Since this function is async and separate from the input object, we rely on event listeners for focus management
                 
                 if (results.length > 0) {
                     suggestionsList.style.display = 'block';
                     results.forEach(item => {
                         const li = document.createElement('li');
                         const a = document.createElement('a');
-                        a.href = item.url; // Ensure 'url' is the correct property from WP API
+                        a.href = item.url;
                         
                         let title = item.title;
                         // Use regex to highlight query

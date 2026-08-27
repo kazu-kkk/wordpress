@@ -492,9 +492,22 @@
 ### 19. `.side-nav` — サイドナビ（SP向けメニュー）
 **ファイル**: `_side-nav.scss`, `_header.scss`
 
-- SPのハンバーガーメニュー展開時に表示
-- プロフィールカード + カテゴリリンク + 検索ウィジェット
-- `.search-suggestions` — インクリメンタルサーチのサジェストリスト（JS連携）
+- SPのハンバーガーメニュー展開時およびPCサイドバーに表示
+- プロフィールカード + カテゴリリンク + 記事検索ウィジェット
+- 検索フォームは `<form role="search" method="get" class="article-search-form" action="...">` で囲まれ、Enter押下やスマホの検索確定で検索結果一覧ページ（`/?s=xxx`）へ遷移可能
+- `.search-suggestions` — インクリメンタルサーチのサジェストリスト（JS連携。キーボード上下キーで候補選択時は該当記事へ直接遷移）
+
+```html
+<div class="search-widget">
+    <h2 class="widget-title">SEARCH</h2>
+    <form role="search" method="get" class="article-search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+        <div class="search-container">
+            <input type="search" id="article-search-input" class="article-search-input" name="s" placeholder="キーワード検索..." autocomplete="off">
+            <ul id="search-suggestions" class="search-suggestions"></ul>
+        </div>
+    </form>
+</div>
+```
 
 ---
 

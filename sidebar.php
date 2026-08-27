@@ -25,12 +25,14 @@
 		<div class="side-nav__wrap">
 			<?php if ( has_nav_menu( 'primary' ) ) : ?>
                 <!-- 記事検索 (SPでは一番上に配置) -->
-                <div class="search-widget" style="padding: 20px 16px 0; margin-top: 0; margin-bottom: 20px;">
-                    <h2 class="widget-title" style="margin-bottom: 12px; font-size: 1.2rem; font-weight: bold; color: #333; text-align: left; border-bottom: 2px solid #2B53EC; padding-bottom: 8px; letter-spacing: 0.05em;">SEARCH</h2>
-                    <div class="search-container">
-                        <input type="text" id="article-search-input-mobile" class="article-search-input-mobile" placeholder="キーワード検索..." autocomplete="off">
-                        <ul id="search-suggestions-mobile" class="search-suggestions"></ul>
-                    </div>
+                <div class="search-widget">
+                    <h2 class="widget-title">SEARCH</h2>
+                    <form role="search" method="get" class="article-search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+                        <div class="search-container">
+                            <input type="search" id="article-search-input-mobile" class="article-search-input-mobile" name="s" placeholder="キーワード検索..." autocomplete="off">
+                            <ul id="search-suggestions-mobile" class="search-suggestions"></ul>
+                        </div>
+                    </form>
                 </div>
 
 				<nav class="mobile-menu-wrapper" aria-label="<?php echo esc_attr_x( 'Mobile Menu', 'menu', 'inspiro' ); ?>" role="navigation">
