@@ -440,14 +440,11 @@ get_header(); ?>
                         <p class="pickup-article-text__date"><?php the_time('Y.m.d'); ?></p>
                         <div class="pickup-article-text-meta" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; align-items: flex-start; overflow: hidden; height: 30px;">
                             <?php
-                            $displayed_terms = array(); // 表示済みタグ名を記録
-                            $tags = get_the_tags();
+                            $tags = function_exists('inspiro_get_display_tags') ? inspiro_get_display_tags() : get_the_tags();
                             if (!empty($tags)) {
                                 foreach ($tags as $tag) {
                                     if (strtolower($tag->name) === 'pickup') continue;
-                                    if (in_array($tag->name, $displayed_terms)) continue;
                                     echo '<div class="pickup-article-text__tag" style="margin: 0; display: block; flex-shrink: 0; line-height: 1.4;"><span class="tag">' . esc_html($tag->name) . '</span></div>';
-                                    $displayed_terms[] = $tag->name;
                                 }
                             }
                             ?>
@@ -497,14 +494,11 @@ get_header(); ?>
                                     <p class="new-article-text__date"><?php the_time('Y.m.d'); ?></p>
                                     <div class="new-article-text-meta">
                                         <?php
-                                        $displayed_terms = array(); // 表示済みタグ名を記録
-                                        $tags = get_the_tags();
+                                        $tags = function_exists('inspiro_get_display_tags') ? inspiro_get_display_tags() : get_the_tags();
                                         if (!empty($tags)) {
                                             foreach ($tags as $tag) {
                                                 if (strtolower($tag->name) === 'pickup') continue;
-                                                if (in_array($tag->name, $displayed_terms)) continue;
                                                 echo '<div class="new-article-text__tag"><span class="tag">' . esc_html($tag->name) . '</span></div>';
-                                                $displayed_terms[] = $tag->name;
                                             }
                                         }
                                         ?>
@@ -561,14 +555,11 @@ get_header(); ?>
                                     <p class="new-article-text__date"><?php the_time('Y.m.d'); ?></p>
                                     <div class="new-article-text-meta">
                                         <?php
-                                        $displayed_terms = array(); // 表示済みタグ名を記録
-                                        $tags = get_the_tags();
+                                        $tags = function_exists('inspiro_get_display_tags') ? inspiro_get_display_tags() : get_the_tags();
                                         if (!empty($tags)) {
                                             foreach ($tags as $tag) {
                                                 if (strtolower($tag->name) === 'pickup') continue;
-                                                if (in_array($tag->name, $displayed_terms)) continue;
                                                 echo '<div class="new-article-text__tag"><span class="tag">' . esc_html($tag->name) . '</span></div>';
-                                                $displayed_terms[] = $tag->name;
                                             }
                                         }
                                         ?>

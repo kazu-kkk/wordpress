@@ -103,6 +103,11 @@ body.single .site-content {
       line-height: 1.75;
       margin-top: 32px;
     }
+
+    h2 + p,
+    h3 + p {
+      margin-top: 0;
+    }
   
     li:not(.toc__item) {
       font-size: 18px;
@@ -271,8 +276,13 @@ body.single .site-content {
       h3 {
         font-size: 24px;
         line-height: 1.5;
-        margin: 40px 0 20px;
+        margin: 40px 0 12px;
         padding-bottom: 0;
+      }
+
+      h2 + p,
+      h3 + p {
+        margin-top: 0;
       }
   
       img {
@@ -366,10 +376,15 @@ body.single .site-content {
       h3 {
         font-size: 18px;
         line-height: 1.5;
-        margin: 24px 0 16px;
+        margin: 28px 0 8px;
         text-align: left;
         color: #000;
         font-weight: bold;
+      }
+
+      h2 + p,
+      h3 + p {
+        margin-top: 0;
       }
   
       img {

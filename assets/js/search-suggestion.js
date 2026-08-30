@@ -46,7 +46,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const query = searchInput.value.trim();
                 if (!query) {
                     e.preventDefault();
+                    return;
                 }
+                suggestionsList.style.display = 'none';
             });
         }
 
@@ -82,19 +84,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
 
-                // サジェストを選択していない場合、検索結果一覧ページへ
+                // サジェストを選択していない場合、検索結果一覧ページへ遷移
                 const query = searchInput.value.trim();
                 if (!query) {
                     e.preventDefault();
                     return;
                 }
 
-                // フォームが存在しない場合のフォールバック（formがある場合は自然にsubmitが実行される）
-                if (!form) {
-                    e.preventDefault();
-                    const homeUrl = (typeof inspiroSearch !== 'undefined' && inspiroSearch.homeUrl) ? inspiroSearch.homeUrl : '/';
-                    window.location.href = `${homeUrl}?s=${encodeURIComponent(query)}`;
-                }
+                e.preventDefault();
+                suggestionsList.style.display = 'none';
+                const homeUrl = (typeof inspiroSearch !== 'undefined' && inspiroSearch.homeUrl) ? inspiroSearch.homeUrl : (form ? form.getAttribute('action') : '/');
+                const separator = (homeUrl && homeUrl.indexOf('?') !== -1) ? '&' : '?';
+                window.location.href = `${homeUrl}${separator}s=${encodeURIComponent(query)}`;
             } else if (e.key === 'Escape') {
                 suggestionsList.innerHTML = '';
                 suggestionsList.style.display = 'none';

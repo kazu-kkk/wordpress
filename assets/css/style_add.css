@@ -94,6 +94,10 @@ body.single .site-content {
   line-height: 1.75;
   margin-top: 32px;
 }
+.article-text h2 + p,
+.article-text h3 + p {
+  margin-top: 0;
+}
 .article-text li:not(.toc__item) {
   font-size: 18px;
   line-height: 1.75;
@@ -242,8 +246,12 @@ body.single .site-content {
   .article-text h3 {
     font-size: 24px;
     line-height: 1.5;
-    margin: 40px 0 20px;
+    margin: 40px 0 12px;
     padding-bottom: 0;
+  }
+  .article-text h2 + p,
+  .article-text h3 + p {
+    margin-top: 0;
   }
   .article-text img {
     display: block;
@@ -318,10 +326,14 @@ body.single .site-content {
   .article-text h3 {
     font-size: 18px;
     line-height: 1.5;
-    margin: 24px 0 16px;
+    margin: 28px 0 8px;
     text-align: left;
     color: #000;
     font-weight: bold;
+  }
+  .article-text h2 + p,
+  .article-text h3 + p {
+    margin-top: 0;
   }
   .article-text img {
     width: 100%;
@@ -2551,9 +2563,15 @@ body.page-template-default .entry-content h2:after {
 body.page-template-default .entry-content h3 {
   font-size: 24px;
   line-height: 1.5;
-  margin: 40px 0 24px; /* 余裕をもたせる（上40px, 下24px） */
+  margin: 40px 0 12px; /* 上40px, 下12px */
   padding-bottom: 8px;
   font-weight: bold;
+}
+.about-content h2 + p,
+.about-content h3 + p,
+body.page-template-default .entry-content h2 + p,
+body.page-template-default .entry-content h3 + p {
+  margin-top: 0;
 }
 .about-content p,
 body.page-template-default .entry-content p {
@@ -2666,7 +2684,13 @@ body.page-template-default .entry-content a:not(.wp-block-button__link):not(.but
   .about-content h3,
   body.page-template-default .entry-content h3 {
     font-size: 18px;
-    margin: 24px 0 20px;
+    margin: 28px 0 8px;
+  }
+  .about-content h2 + p,
+  .about-content h3 + p,
+  body.page-template-default .entry-content h2 + p,
+  body.page-template-default .entry-content h3 + p {
+    margin-top: 0;
   }
   .about-content p,
   body.page-template-default .entry-content p {
@@ -5220,6 +5244,4 @@ body .infeed-ad-container .ad-widget-content {
     margin-top: 0;
     padding-top: 26px;
   }
-}
-
-/*# sourceMappingURL=style_add.css.map */
+}/*# sourceMappingURL=style_add.css.map */

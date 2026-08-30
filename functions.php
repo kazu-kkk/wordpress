@@ -678,6 +678,55 @@ add_filter('style_loader_src', function($src, $handle) {
     return $src;
 }, 9999, 2);
 
+/**
+ * 記事カード・一覧表示用のタグ配列を取得するヘルパー関数
+ * - 'pickup' タグを除外
+ * - カテゴリー名（「その他」「記事」およびサイト内の全カテゴリー名）と同名のタグを除外
+ * - 重複タグを除外
+ *
+ * @param int|WP_Post|null $post 投稿オブジェクトまたは投稿ID（nullの場合は現在のグローバル投稿）
+ * @return WP_Term[]
+ */
+function inspiro_get_display_tags($post = null) {
+    $post_obj = get_post($post);
+    if (!$post_obj) {
+        return array();
+    }
+
+    $tags = get_the_tags($post_obj->ID);
+    if (empty($tags)) {
+        return array();
+    }
+
+    // サイト内の全カテゴリー名および固定除外名を取得
+    static $excluded_names = null;
+    if ($excluded_names === null) {
+        $cats = get_categories(array('hide_empty' => false));
+        $excluded_names = !empty($cats) ? wp_list_pluck($cats, 'name') : array();
+        $excluded_names[] = 'その他';
+        $excluded_names[] = '記事';
+        $excluded_names[] = 'pickup';
+        $excluded_names = array_map('mb_strtolower', $excluded_names);
+    }
+
+    $filtered_tags = array();
+    $displayed_terms = array();
+
+    foreach ($tags as $tag) {
+        $tag_name_lower = mb_strtolower($tag->name);
+        if (in_array($tag_name_lower, $excluded_names, true)) {
+            continue;
+        }
+        if (in_array($tag_name_lower, $displayed_terms, true)) {
+            continue;
+        }
+        $filtered_tags[] = $tag;
+        $displayed_terms[] = $tag_name_lower;
+    }
+
+    return $filtered_tags;
+}
+
 // オーバーライド: アーカイブページ等でのメタ情報出力 (TOPページと同じスタイル)
 if ( ! function_exists( 'inspiro_entry_meta' ) ) {
 	function inspiro_entry_meta() {
@@ -685,23 +734,10 @@ if ( ! function_exists( 'inspiro_entry_meta' ) ) {
 		<div class="top-page-article-meta" style="display: flex; flex-direction: column; align-items: flex-start; margin-top: auto;">
 			<div class="top-page-article-tags" style="display: flex; flex-wrap: wrap; gap: 4px; align-items: flex-start;">
 				<?php
-				$displayed_terms = array(); // 表示済みタグ名を記録
-				$categories = get_the_category();
-				if (!empty($categories)) {
-					foreach ($categories as $cat) {
-						if ($cat->name === '記事') continue;
-						if (in_array($cat->name, $displayed_terms)) continue;
-						echo '<span class="tag" style="margin:0;">' . esc_html($cat->name) . '</span>';
-						$displayed_terms[] = $cat->name;
-					}
-				}
-				$tags = get_the_tags();
+				$tags = inspiro_get_display_tags();
 				if (!empty($tags)) {
 					foreach ($tags as $tag) {
-						if (strtolower($tag->name) === 'pickup') continue;
-						if (in_array($tag->name, $displayed_terms)) continue;
 						echo '<span class="tag" style="margin:0;">' . esc_html($tag->name) . '</span>';
-						$displayed_terms[] = $tag->name;
 					}
 				}
 				?>

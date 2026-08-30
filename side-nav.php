@@ -51,14 +51,9 @@
             if ($real_posts_query->have_posts()) {
                 while ($real_posts_query->have_posts()) {
                     $real_posts_query->the_post();
-                    $post_tags = get_the_tags();
+                    $post_tags = function_exists('inspiro_get_display_tags') ? inspiro_get_display_tags() : get_the_tags();
                     if (!empty($post_tags)) {
                         foreach ($post_tags as $tag) {
-                            // "pickup"タグは内部ロジック用のため除外
-                            if (strtolower($tag->name) === 'pickup') {
-                                continue;
-                            }
-                            
                             if (!isset($tag_counts[$tag->term_id])) {
                                 $tag_counts[$tag->term_id] = array(
                                     'term_id' => $tag->term_id,

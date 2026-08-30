@@ -225,9 +225,14 @@ body.page-template-default .entry-content {
   h3 {
     font-size: 24px;
     line-height: 1.5;
-    margin: 40px 0 24px; /* 余裕をもたせる（上40px, 下24px） */
+    margin: 40px 0 12px; /* 上40px, 下12px */
     padding-bottom: 8px;
     font-weight: bold;
+  }
+
+  h2 + p,
+  h3 + p {
+    margin-top: 0;
   }
 
   p {
@@ -355,7 +360,12 @@ body.page-template-default .entry-content {
 
     h3 {
       font-size: 18px;
-      margin: 24px 0 20px;
+      margin: 28px 0 8px;
+    }
+
+    h2 + p,
+    h3 + p {
+      margin-top: 0;
     }
 
     p {
