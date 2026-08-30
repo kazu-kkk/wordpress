@@ -918,19 +918,8 @@ function inspiro_child_add_ogp()
     $og_type        = 'website';
     $og_image       = '';
 
-    // デフォルト画像の設定（ロゴなど）
-    if (has_custom_logo()) {
-        $custom_logo_id = get_theme_mod('custom_logo');
-        $logo_img_src = wp_get_attachment_image_src($custom_logo_id, 'full');
-        if ($logo_img_src) {
-            $og_image = $logo_img_src[0];
-        }
-    }
-    
-    // カスタムロゴが取得できない、または設定がない場合はデフォルトのブログロゴ画像を設定
-    if (empty($og_image)) {
-        $og_image = home_url('/wp-content/uploads/2025/01/ブログロゴ.png');
-    }
+    // デフォルト画像の設定（サイト共通OGPバナー画像）
+    $og_image = get_stylesheet_directory_uri() . '/assets/images/ogp.png';
 
     if (is_single() || is_page()) {
         $post_id = get_the_ID();
@@ -986,7 +975,7 @@ function inspiro_child_add_ogp()
                 if (!empty($first_img)) {
                     $og_image = $first_img;
                 } else {
-                    $og_image = get_stylesheet_directory_uri() . '/assets/images/no_image.png';
+                    $og_image = get_stylesheet_directory_uri() . '/assets/images/ogp.png';
                 }
             }
         }
