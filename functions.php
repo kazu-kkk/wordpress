@@ -1087,3 +1087,30 @@ function inspiro_child_add_ogp()
     echo '<!-- /OGP Meta Tags -->' . "\n";
 }
 add_action('wp_head', 'inspiro_child_add_ogp');
+
+/**
+ * 既存のクイックアンサー段落を自動的に .c-quick-answer コンポーネントへ変換
+ */
+function inspiro_child_convert_quick_answer($content) {
+    if (!is_singular('post')) {
+        return $content;
+    }
+
+    // <p><strong>クイックアンサー：...</strong><br>...</p> 形式を検出して .c-quick-answer に置換
+    $pattern = '/<p\b[^>]*>\s*<strong>クイックアンサー[：:]\s*(.*?)<\/strong>(?:<br\s*\/?>|\n)*(.*?)<\/p>/is';
+    
+    $content = preg_replace_callback($pattern, function($m) {
+        $title = trim($m[1]);
+        $text = trim($m[2]);
+        return '<div class="c-quick-answer">' . "\n" .
+               '  <div class="c-quick-answer__header">' . "\n" .
+               '    <span class="c-quick-answer__badge">クイックアンサー</span>' . "\n" .
+               '    <span class="c-quick-answer__title">' . $title . '</span>' . "\n" .
+               '  </div>' . "\n" .
+               '  <p class="c-quick-answer__text">' . $text . '</p>' . "\n" .
+               '</div>';
+    }, $content);
+
+    return $content;
+}
+add_filter('the_content', 'inspiro_child_convert_quick_answer', 15);
