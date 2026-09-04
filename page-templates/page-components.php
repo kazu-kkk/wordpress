@@ -2685,7 +2685,12 @@ if (isset($_GET['component_preview'])) {
     &lt;span class="c-quick-answer__title"&gt;【ここに問い】&lt;/span&gt;
   &lt;/div&gt;
   &lt;p class="c-quick-answer__text"&gt;【ここに要約・結論】&lt;/p&gt;
-&lt;/div&gt;</code></pre>
+&lt;/div&gt;
+
+&lt;!-- 3. WordPressショートコード（推奨・コピペ用） --&gt;
+[quick_answer title="【ここに問い】"]
+【ここに要約・結論。&lt;strong&gt;重要な結論&lt;/strong&gt;にはstrongタグを活用】
+[/quick_answer]</code></pre>
                             <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>

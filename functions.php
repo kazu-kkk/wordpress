@@ -415,6 +415,45 @@ function inspiro_child_target_audience($atts) {
 add_shortcode('target_audience', 'inspiro_child_target_audience');
 
 /**
+ * Quick Answer Component (Shortcode)
+ * 
+ * 使用例:
+ * [quick_answer title="【ここに問い】"]
+ * 【ここに要約・結論】
+ * [/quick_answer]
+ * 
+ * または:
+ * [quick_answer title="【ここに問い】" text="【ここに要約・結論】"]
+ */
+function inspiro_child_quick_answer_shortcode($atts, $content = null) {
+    $atts = shortcode_atts(array(
+        'title' => '',
+        'text'  => '',
+        'badge' => 'クイックアンサー',
+    ), $atts, 'quick_answer');
+
+    $title = !empty($atts['title']) ? esc_html($atts['title']) : '';
+    $badge = !empty($atts['badge']) ? esc_html($atts['badge']) : 'クイックアンサー';
+
+    // 囲みテキスト($content)を優先し、空ならtext属性を使用
+    $body = !empty($content) ? $content : $atts['text'];
+    $body_html = wp_kses_post(trim($body));
+
+    $html = '<div class="c-quick-answer">';
+    $html .= '<div class="c-quick-answer__header">';
+    $html .= '<span class="c-quick-answer__badge">' . $badge . '</span>';
+    if (!empty($title)) {
+        $html .= '<span class="c-quick-answer__title">' . $title . '</span>';
+    }
+    $html .= '</div>';
+    $html .= '<p class="c-quick-answer__text">' . do_shortcode($body_html) . '</p>';
+    $html .= '</div>';
+
+    return $html;
+}
+add_shortcode('quick_answer', 'inspiro_child_quick_answer_shortcode');
+
+/**
  * トップページ（ホーム）の表示件数を最新8記事のみに制限する
  */
 function inspiro_child_limit_home_posts($query) {
