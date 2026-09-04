@@ -1,0 +1,142 @@
+// =====================================================
+// クイックアンサー (AEO要約ブロック)
+// =====================================================
+
+.c-quick-answer {
+  position: relative;
+  background-color: #ffffff;
+  border: 1px solid #d6dcfa;
+  border-left: 4px solid #2b53ec;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(43, 83, 236, 0.06);
+  padding: 24px 28px;
+  margin: 32px 0;
+
+  // H2の直後に配置された場合の余白調整
+  h2 + & {
+    margin-top: 24px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background-color: #2b53ec;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 5px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+
+    // Lucide Icons対応 (動的置換後のsvg/.lucideに直接適用)
+    svg,
+    .lucide {
+      width: 14px;
+      height: 14px;
+      stroke-width: 2.2;
+      vertical-align: middle;
+    }
+  }
+
+  &__title {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.45;
+    color: #180074;
+    word-break: break-word;
+  }
+
+  &__text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+    word-break: break-word;
+
+    strong {
+      font-weight: 700;
+      color: #1a1a1a;
+      background: linear-gradient(transparent 65%, #d8f2ff 65%);
+    }
+  }
+
+  // SPレスポンシブ
+  @media screen and (max-width: 767px) {
+    padding: 18px 18px;
+    margin: 24px 0;
+
+    h2 + & {
+      margin-top: 18px;
+    }
+
+    &__header {
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    &__badge {
+      font-size: 11px;
+      padding: 4px 8px;
+
+      svg,
+      .lucide {
+        width: 13px;
+        height: 13px;
+      }
+    }
+
+    &__title {
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    &__text {
+      font-size: 14px;
+      line-height: 1.7;
+    }
+  }
+}
+
+// 記事本文スタイル(.article-text p)による上書き防止（詳細度強化）
+.article-text .c-quick-answer {
+  margin: 32px 0;
+
+  h2 + & {
+    margin-top: 24px;
+  }
+
+  p.c-quick-answer__text,
+  .c-quick-answer__text {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #333333;
+  }
+
+  @media screen and (max-width: 767px) {
+    margin: 24px 0;
+
+    h2 + & {
+      margin-top: 18px;
+    }
+
+    p.c-quick-answer__text,
+    .c-quick-answer__text {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+  }
+}

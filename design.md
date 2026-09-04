@@ -634,6 +634,33 @@
 
 ---
 
+### 24. `.c-quick-answer` — クイックアンサー（要約ブロック）
+**ファイル**: `_quick-answer.scss`
+
+```html
+<div class="c-quick-answer">
+  <div class="c-quick-answer__header">
+    <span class="c-quick-answer__badge">クイックアンサー</span>
+    <span class="c-quick-answer__title">WordPressでクイックアンサーを設置するメリットは？</span>
+  </div>
+  <p class="c-quick-answer__text">GoogleのAI Overviews（SGE）や強調スニペットに選ばれやすくなり、記事冒頭で読者の検索意図を満たすことで<strong>離脱率の低下とSEO評価の向上</strong>につながります。</p>
+</div>
+```
+
+- **用途**: 記事本文のH2直下などに配置し、AEO（Answer Engine Optimization）やAI Overviews・強調スニペット獲得、読者のファーストビュー離脱防止を担う要約カード。
+- **デザイン仕様**:
+  - 記事背景（`#F5F7FF`）から綺麗に浮かび上がる純白（`#FFFFFF`）のカード背景。
+  - 上質な極細ブルーボーダー（`border: 1px solid #D6DCFA`）に加え、左側にブランドブルー（`border-left: 4px solid #2B53EC`）のアクセントボーダー。
+  - 微細なドロップシャドウ（`box-shadow: 0 4px 16px rgba(43, 83, 236, 0.06)`）と角丸8pxでモダンな浮遊感を演出。
+- **ヘッダー要素**:
+  - `.c-quick-answer__badge`: ブランドブルー（`#2B53EC`）背景に白文字のコンパクトなラベル（12px、角丸4px）。Lucide Icons（例: `<i data-lucide="check-circle-2"></i>`）が内包された場合もアイコンとテキストが美しく垂直中央揃えされます。※絵文字は禁止。
+  - `.c-quick-answer__title`: 問いの見出し（濃紺 `#180074`、17px太字）。
+- **本文（要約・結論）**:
+  - `.c-quick-answer__text`: 15px（SP: 14px）、行高1.8、カラー `#333333`。親の `.article-text p` のデフォルト余白に影響されないよう安全にリセット。`strong` タグで囲んだ重要語句には爽やかなアクセント下線（`#D8F2FF`）が自動適用されます。
+- **レスポンシブ**: SP（≤767px）ではカード余白や文字サイズをモバイルに最適化。
+
+---
+
 ## ユーティリティ・グローバル設定
 
 | クラス / セレクタ | 説明 |

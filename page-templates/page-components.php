@@ -652,6 +652,38 @@ if (isset($_GET['component_preview'])) {
                 </div>
                 <?php
                 break;
+
+            case 'c-quick-answer':
+                ?>
+                <div class="article-text" style="max-width: 760px; margin: 0 auto; padding: 20px;">
+                    <h2 style="font-size: 22px; margin-bottom: 16px;">クイックアンサー（AEO要約）を設置する効果とは？</h2>
+                    <!-- パターン1: 基本マークアップ -->
+                    <div class="c-quick-answer">
+                        <div class="c-quick-answer__header">
+                            <span class="c-quick-answer__badge">クイックアンサー</span>
+                            <span class="c-quick-answer__title">検索エンジンのAI Overviewsに選ばれるには？</span>
+                        </div>
+                        <p class="c-quick-answer__text">見出し直後に<strong>結論ファーストで簡潔な要約（40〜80文字程度）</strong>を提示することが最も効果的です。読者の検索意図を満たすことで離脱率を低減し、AEO・強調スニペットでの露出可能性を高めます。</p>
+                    </div>
+
+                    <!-- パターン2: Lucideアイコン付きバッジ -->
+                    <div class="c-quick-answer">
+                        <div class="c-quick-answer__header">
+                            <span class="c-quick-answer__badge">
+                                <i data-lucide="check-circle-2"></i>クイックアンサー
+                            </span>
+                            <span class="c-quick-answer__title">どのようなマークアップで記述すればよいですか？</span>
+                        </div>
+                        <p class="c-quick-answer__text">専用クラス<code>.c-quick-answer</code>を用いたHTML構造で記述します。絵文字を使用せず、デザインシステムに調和したスタイルとLucide Iconsにより、高い可読性と信頼性を実現します。</p>
+                    </div>
+                </div>
+                <script>
+                    if (typeof lucide !== 'undefined') {
+                        lucide.createIcons();
+                    }
+                </script>
+                <?php
+                break;
         }
         ?>
         <?php wp_footer(); ?>
@@ -1411,6 +1443,7 @@ if (isset($_GET['component_preview'])) {
                     <a href="#c-trend-word"><i data-lucide="lightbulb"></i> 19. Trend Word Widget</a>
                     <a href="#c-icons"><i data-lucide="image"></i> 20. Icon Libraries</a>
                     <a href="#c-reading-list"><i data-lucide="bookmark"></i> 21. Reading List</a>
+                    <a href="#c-quick-answer"><i data-lucide="message-square-check"></i> 22. Quick Answer</a>
                 </div>
             </aside>
 
@@ -2603,6 +2636,61 @@ if (isset($_GET['component_preview'])) {
                     </div>
                 </section>
 
+                <!-- 22. Quick Answer (クイックアンサー) -->
+                <section id="c-quick-answer" class="showcase-section">
+                    <h2 class="showcase-section-title">
+                        <span class="title-group"><span class="section-num">22</span> クイックアンサー (Quick Answer)</span>
+                        <span class="showcase-section-meta">_quick-answer.scss</span>
+                    </h2>
+                    <p class="showcase-desc">
+                        記事本文のH2直下などに配置するAEO（回答エンジン最適化）対策・要約ブロックです。絵文字を使わず、純白背景・ブランドブルーアクセント・高コントラストな文字組みにより、読者の検索意図に結論ファーストで応えます。
+                    </p>
+
+                    <div class="showcase-preview-wrapper" data-comp="c-quick-answer">
+                        <div class="showcase-control-bar">
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">Width:</span>
+                                <button class="showcase-ctrl-btn active" data-width="100%">PC</button>
+                                <button class="showcase-ctrl-btn" data-width="768px">Tablet</button>
+                                <button class="showcase-ctrl-btn" data-width="375px">Mobile</button>
+                            </div>
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">BG:</span>
+                                <button class="showcase-bg-btn active" data-bg="default"></button>
+                                <button class="showcase-bg-btn" data-bg="white"></button>
+                                <button class="showcase-bg-btn" data-bg="gray"></button>
+                                <button class="showcase-bg-btn" data-bg="dark"></button>
+                            </div>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
+                        </div>
+                        <div class="showcase-preview-box">
+                            <iframe src="<?php echo add_query_arg('component_preview', 'c-quick-answer'); ?>" class="showcase-iframe" data-comp="c-quick-answer" style="height: 380px;"></iframe>
+                        </div>
+                        <div class="showcase-code-box">
+                            <pre><code class="html-code">&lt;!-- 1. 基本マークアップ（テキストのみ） --&gt;
+&lt;div class="c-quick-answer"&gt;
+  &lt;div class="c-quick-answer__header"&gt;
+    &lt;span class="c-quick-answer__badge"&gt;クイックアンサー&lt;/span&gt;
+    &lt;span class="c-quick-answer__title"&gt;【ここに問い】&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;p class="c-quick-answer__text"&gt;【ここに要約・結論】&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- 2. アイコン付きマークアップ（Lucide Icons活用） --&gt;
+&lt;div class="c-quick-answer"&gt;
+  &lt;div class="c-quick-answer__header"&gt;
+    &lt;span class="c-quick-answer__badge"&gt;
+      &lt;i data-lucide="check-circle-2"&gt;&lt;/i&gt;クイックアンサー
+    &lt;/span&gt;
+    &lt;span class="c-quick-answer__title"&gt;【ここに問い】&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;p class="c-quick-answer__text"&gt;【ここに要約・結論】&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
+                        </div>
+                    </div>
+                </section>
+
             </main>
         </div>
     </div>
@@ -2642,6 +2730,7 @@ if (isset($_GET['component_preview'])) {
             <a href="#c-trend-word"><i data-lucide="lightbulb"></i> 19. Trend Word Widget</a>
             <a href="#c-icons"><i data-lucide="image"></i> 20. Icon Libraries</a>
             <a href="#c-reading-list"><i data-lucide="bookmark"></i> 21. Reading List</a>
+            <a href="#c-quick-answer"><i data-lucide="message-square-check"></i> 22. Quick Answer</a>
         </div>
     </div>
 </div>
