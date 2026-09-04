@@ -140,3 +140,52 @@
     }
   }
 }
+
+// =====================================================
+// 既存記事の段落型クイックアンサー救済・互換スタイル
+// （Gutenbergの水色背景段落を白背景カードデザインへ上書き）
+// =====================================================
+.article-text p.has-pale-cyan-blue-background-color,
+.article-text p.has-background.has-pale-cyan-blue-background-color {
+  background-color: #ffffff;
+  border: 1px solid #d6dcfa;
+  border-left: 4px solid #2b53ec;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(43, 83, 236, 0.06);
+  padding: 22px 26px;
+  margin: 28px 0;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #333333;
+
+  h2 + & {
+    margin-top: 20px;
+  }
+
+  // 先頭のタイトル部分（strong）を強調
+  strong:first-child {
+    display: block;
+    color: #180074;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.45;
+    margin-bottom: 10px;
+    background: none;
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 16px 18px;
+    margin: 20px 0;
+    font-size: 14px;
+    line-height: 1.7;
+
+    h2 + & {
+      margin-top: 16px;
+    }
+
+    strong:first-child {
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+  }
+}
