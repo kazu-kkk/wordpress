@@ -416,6 +416,7 @@ get_header(); ?>
                         </div>
                     </div>
                 </a>
+                <?php get_template_part('template-parts/bookmark-button', null, array('class' => 'c-bookmark-btn--card', 'location' => 'card_pickup')); ?>
             </li>
             <?php
                 endwhile;
@@ -473,6 +474,7 @@ get_header(); ?>
                                 </div>
                             </div>
                         </a>
+                        <?php get_template_part('template-parts/bookmark-button', null, array('class' => 'c-bookmark-btn--card', 'location' => 'card_latest')); ?>
                     </article>
                     <?php
                         endwhile;
@@ -554,6 +556,7 @@ get_header(); ?>
                                 </div>
                             </div>
                         </a>
+                        <?php get_template_part('template-parts/bookmark-button', null, array('class' => 'c-bookmark-btn--card', 'location' => 'card_trend')); ?>
                     </article>
                     <?php
                         endwhile;
@@ -629,6 +632,7 @@ get_header(); ?>
                                 </div>
                             </div>
                         </a>
+                        <?php get_template_part('template-parts/bookmark-button', null, array('class' => 'c-bookmark-btn--card', 'location' => 'card_knowledge')); ?>
                     </article>
                     <?php
                         endwhile;
@@ -704,6 +708,7 @@ get_header(); ?>
                                 </div>
                             </div>
                         </a>
+                        <?php get_template_part('template-parts/bookmark-button', null, array('class' => 'c-bookmark-btn--card', 'location' => 'card_tools')); ?>
                     </article>
                     <?php
                         endwhile;
@@ -761,6 +766,7 @@ get_header(); ?>
                                 </div>
                             </div>
                         </a>
+                        <?php get_template_part('template-parts/bookmark-button', null, array('class' => 'c-bookmark-btn--card', 'location' => 'card_career')); ?>
                     </article>
                     <?php
                         endwhile;

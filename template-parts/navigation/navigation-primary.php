@@ -57,6 +57,12 @@ $header_menu_style  = inspiro_get_theme_mod('header-menu-style');
 				<?php get_template_part('template-parts/header/search', 'form'); ?>
 			</div>
 
+			<!-- 後で読む（ブックマーク）一覧リンク -->
+			<a href="<?php echo esc_url(home_url('/reading-list/')); ?>" class="header-bookmark-link js-header-bookmark-link" aria-label="後で読む記事一覧" title="後で読む記事一覧">
+				<i data-lucide="bookmark" class="header-bookmark-icon"></i>
+				<span class="header-bookmark-badge js-bookmark-badge" style="display: none;">0</span>
+			</a>
+
 			<?php if (has_nav_menu('primary') || is_active_sidebar('sidebar')) : ?>
 				<button type="button" class="navbar-toggle">
 					<span class="screen-reader-text"><?php esc_html_e('Toggle sidebar &amp; navigation', 'inspiro'); ?></span>

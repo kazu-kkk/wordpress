@@ -613,6 +613,45 @@ if (isset($_GET['component_preview'])) {
                 </script>
                 <?php
                 break;
+
+            case 'c-reading-list':
+                ?>
+                <div style="max-width: 700px; margin: 0 auto; padding: 24px; display: flex; flex-direction: column; gap: 32px;">
+                    <!-- 1. 記事詳細用シェアボタン並び -->
+                    <div>
+                        <p style="font-size: 12px; font-weight: 700; color: #888; margin-bottom: 8px; text-transform: uppercase;">1. 記事詳細ページ（シェアボタン並び）</p>
+                        <?php get_template_part('template-parts/share-buttons'); ?>
+                    </div>
+
+                    <!-- 2. 記事カード右上フロートボタン -->
+                    <div>
+                        <p style="font-size: 12px; font-weight: 700; color: #888; margin-bottom: 8px; text-transform: uppercase;">2. 記事カード右上（フロート配置）</p>
+                        <div style="position: relative; max-width: 340px; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                            <div style="height: 140px; background: #e0e7ff; display: flex; align-items: center; justify-content: center; color: #4338ca; font-size: 13px; font-weight: 600;">
+                                サムネイル画像エリア
+                            </div>
+                            <div style="padding: 14px;">
+                                <span class="tag" style="background: #D8F2FF; color: #333; padding: 2px 6px; border-radius: 4px; font-size: 11px;">デザイン</span>
+                                <h4 style="font-size: 14px; margin: 8px 0 4px; color: #222;">サンプル記事タイトル</h4>
+                                <p style="font-size: 12px; color: #888; margin: 0;">2026.09.04</p>
+                            </div>
+                            <?php get_template_part('template-parts/bookmark-button', null, array('post_id' => 9999, 'class' => 'c-bookmark-btn--card', 'location' => 'preview_card')); ?>
+                        </div>
+                    </div>
+
+                    <!-- 3. ヘッダーアイコンリンク & 件数バッジ -->
+                    <div>
+                        <p style="font-size: 12px; font-weight: 700; color: #888; margin-bottom: 8px; text-transform: uppercase;">3. ヘッダーアイコンリンク & バッジ</p>
+                        <div style="display: inline-flex; align-items: center; padding: 8px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
+                            <a href="#" class="header-bookmark-link js-header-bookmark-link" onclick="return false;" aria-label="後で読む記事一覧">
+                                <i data-lucide="bookmark" class="header-bookmark-icon"></i>
+                                <span class="header-bookmark-badge js-bookmark-badge" style="display: flex;">3</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                break;
         }
         ?>
         <?php wp_footer(); ?>
@@ -1371,6 +1410,7 @@ if (isset($_GET['component_preview'])) {
                     <a href="#c-article-summary"><i data-lucide="list"></i> 18. Article Summary</a>
                     <a href="#c-trend-word"><i data-lucide="lightbulb"></i> 19. Trend Word Widget</a>
                     <a href="#c-icons"><i data-lucide="image"></i> 20. Icon Libraries</a>
+                    <a href="#c-reading-list"><i data-lucide="bookmark"></i> 21. Reading List</a>
                 </div>
             </aside>
 
@@ -2514,6 +2554,55 @@ if (isset($_GET['component_preview'])) {
                     </div>
                 </section>
 
+                <!-- 21. Reading List (後で読む) -->
+                <section id="c-reading-list" class="showcase-section">
+                    <h2 class="showcase-section-title">
+                        <span class="title-group"><span class="section-num">21</span> 後で読む (Reading List)</span>
+                        <span class="showcase-section-meta">_reading-list.scss, reading-list.js</span>
+                    </h2>
+                    <p class="showcase-desc">
+                        localStorageを活用したログイン不要の「後で読む（ブックマーク）」機能です。記事詳細のシェアボタン並び、記事カード右上、ヘッダーの件数バッジ付きアイコンと連携し、専用一覧ページ（/reading-list/）で管理できます。
+                    </p>
+
+                    <div class="showcase-preview-wrapper" data-comp="c-reading-list">
+                        <div class="showcase-control-bar">
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">Width:</span>
+                                <button class="showcase-ctrl-btn active" data-width="100%">PC</button>
+                                <button class="showcase-ctrl-btn" data-width="768px">Tablet</button>
+                                <button class="showcase-ctrl-btn" data-width="375px">Mobile</button>
+                            </div>
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">BG:</span>
+                                <button class="showcase-bg-btn active" data-bg="default"></button>
+                                <button class="showcase-bg-btn" data-bg="white"></button>
+                                <button class="showcase-bg-btn" data-bg="gray"></button>
+                                <button class="showcase-bg-btn" data-bg="dark"></button>
+                            </div>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
+                        </div>
+                        <div class="showcase-preview-box">
+                            <iframe src="<?php echo add_query_arg('component_preview', 'c-reading-list'); ?>" class="showcase-iframe" data-comp="c-reading-list" style="height: 480px;"></iframe>
+                        </div>
+                        <div class="showcase-code-box">
+                            <pre><code class="html-code">&lt;!-- 1. 記事カード右上フロート用ボタン --&gt;
+&lt;button type="button" class="c-bookmark-btn c-bookmark-btn--card js-bookmark-btn" data-post-id="[POST_ID]" data-title="[TITLE]" data-url="[URL]" data-thumb="[THUMB_URL]" data-category="[CATEGORY]" data-date="[DATE]" data-location="card" aria-label="後で読むに追加"&gt;
+    &lt;i data-lucide="bookmark" class="c-bookmark-btn__icon"&gt;&lt;/i&gt;
+&lt;/button&gt;
+
+&lt;!-- 2. ヘッダーアイコンリンク & 件数バッジ --&gt;
+&lt;a href="/reading-list/" class="header-bookmark-link js-header-bookmark-link" aria-label="後で読む記事一覧"&gt;
+    &lt;i data-lucide="bookmark" class="header-bookmark-icon"&gt;&lt;/i&gt;
+    &lt;span class="header-bookmark-badge js-bookmark-badge"&gt;0&lt;/span&gt;
+&lt;/a&gt;
+
+&lt;!-- 3. 共通テンプレートパーツ呼び出し（PHP） --&gt;
+&lt;?php get_template_part('template-parts/bookmark-button', null, array('class' =&gt; 'c-bookmark-btn--card', 'location' =&gt; 'card')); ?&gt;</code></pre>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
+                        </div>
+                    </div>
+                </section>
+
             </main>
         </div>
     </div>
@@ -2552,6 +2641,7 @@ if (isset($_GET['component_preview'])) {
             <a href="#c-article-summary"><i data-lucide="list"></i> 18. Article Summary</a>
             <a href="#c-trend-word"><i data-lucide="lightbulb"></i> 19. Trend Word Widget</a>
             <a href="#c-icons"><i data-lucide="image"></i> 20. Icon Libraries</a>
+            <a href="#c-reading-list"><i data-lucide="bookmark"></i> 21. Reading List</a>
         </div>
     </div>
 </div>

@@ -548,13 +548,22 @@
                 </svg>
             </button>
         </li>
+        <!-- 区切り線 -->
+        <li class="c-share__divider" aria-hidden="true"></li>
+        <!-- 後で読む（ブックマーク） -->
+        <li class="c-share__item c-share__item--bookmark">
+            <button class="c-share__bookmark-btn js-bookmark-btn" data-post-id="123" data-title="記事タイトル" data-url="https://example.com" data-thumb="https://example.com/thumb.jpg" data-category="デザイン" data-date="2026.09.04" data-location="single_share" aria-label="後で読むに追加" title="後で読むに追加">
+                <i data-lucide="bookmark" class="c-share__icon"></i>
+            </button>
+        </li>
     </ul>
 </div>
 ```
 
-- 各種SNS（X、Facebook、LINE）への共有リンクおよびURLコピーボタンのセット。
+- 各種SNS（X、Facebook、LINE）への共有リンク、URLコピーボタン、および「後で読む」ボタンのセット。
 - 通常時はシンプルなグレーの細線枠に白背景、ホバーすると滑らかなアニメーションで各サービスのブランドカラーに変化するインタラクション。
 - URLコピーボタンをクリックした際、吹き出しトーストで「URLをコピーしました」と表示されるUI。
+- 後で読むボタンは保存済みになるとブランドブルーで塗りつぶされ、トースト通知と連動。
 
 ---
 
@@ -597,6 +606,31 @@
 - TOPページ（`front-page.php`）のサイドバー最下部に表示されるウィジェット。
 - 白背景のカード型デザイン (`border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05)`)
 - リンクボタンはブランドブルー (`#2B53EC`) ベース。ホバー時は `@media (hover: hover)` に則り、色を濃くして少し上に浮き上がるアニメーションを付与。
+
+---
+
+### 23. `.c-bookmark-btn` / 後で読む（Reading List）機能
+**ファイル**: `_reading-list.scss`, `reading-list.js`, `bookmark-button.php`, `page-reading-list.php`
+
+```html
+<!-- 1. 記事カード右上フロート用ボタン -->
+<button type="button" class="c-bookmark-btn c-bookmark-btn--card js-bookmark-btn" data-post-id="123" data-title="記事タイトル" data-url="https://example.com" data-thumb="https://example.com/thumb.jpg" data-category="デザインナレッジ" data-date="2026.09.04" data-location="card" aria-label="後で読むに追加" title="後で読むに追加">
+    <i data-lucide="bookmark" class="c-bookmark-btn__icon"></i>
+</button>
+
+<!-- 2. ヘッダーアイコンリンク & 件数バッジ -->
+<a href="/reading-list/" class="header-bookmark-link js-header-bookmark-link" aria-label="後で読む記事一覧" title="後で読む記事一覧">
+    <i data-lucide="bookmark" class="header-bookmark-icon"></i>
+    <span class="header-bookmark-badge js-bookmark-badge">3</span>
+</a>
+```
+
+- **保存方式**: クライアントサイド `localStorage`（ログイン不要・爆速表示）。
+- **記事カード設置**: カード右上にフロート表示される36px円形ボタン。クリックで即座に保存/解除。
+- **ヘッダー導線**: 検索ボタン横にしおりアイコンを配置。1件以上保存があると件数バッジ（青丸バッジ）が浮き上がります。
+- **一覧専用ページ (`/reading-list/`)**: 保存した記事をグリッドカード表示。個別削除、一括全削除（アラート確認付き）、0件時の空状態案内UIを完備。
+- **GA4連携**: `bookmark_add`, `bookmark_remove`, `bookmark_open_item`, `bookmark_clear_all` のイベントトラッキングを自動送信。
+- **ホバー挙動**: `@media (hover: hover)` にてタッチ操作時のホバー残留を完全防止。
 
 ---
 

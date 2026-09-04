@@ -230,8 +230,89 @@ function inspiro_child_enqueue_scripts() {
         $get_file_version('/assets/js/analytics-events.js'),
         true
     );
+
+    // 後で読む（ブックマーク）スクリプト（全ページ共通）
+    wp_enqueue_script(
+        'inspiro-reading-list',
+        get_stylesheet_directory_uri() . '/assets/js/reading-list.js',
+        array(),
+        $get_file_version('/assets/js/reading-list.js'),
+        true
+    );
 }
 add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_scripts', 20);
+
+/**
+ * [reading_list] ショートコード
+ * 任意の固定ページやブロックで後で読む一覧を表示可能にする
+ */
+function inspiro_reading_list_shortcode() {
+    ob_start();
+    ?>
+    <div class="reading-list-main" style="width: 100%;">
+        <header class="reading-list-header">
+            <div class="reading-list-header__content">
+                <h1 class="reading-list-header__title">
+                    <i data-lucide="bookmark" class="reading-list-header__icon"></i>
+                    後で読むリスト
+                </h1>
+                <p class="reading-list-header__desc">ブラウザに一時保存した記事の一覧です。</p>
+            </div>
+            <div class="reading-list-header__actions">
+                <span class="reading-list-header__count">保存中: <strong class="js-reading-list-count">0</strong> 件</span>
+                <button type="button" class="reading-list-clear-btn js-reading-list-clear" style="display: none;" aria-label="保存した記事をすべて削除">
+                    <i data-lucide="trash-2"></i>
+                    <span>すべて削除</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="reading-list-container js-reading-list-container">
+            <div class="reading-list-loading js-reading-list-loading">
+                <p>読み込み中...</p>
+            </div>
+        </div>
+
+        <div class="reading-list-empty js-reading-list-empty" style="display: none;">
+            <div class="reading-list-empty__icon-wrap">
+                <i data-lucide="bookmark"></i>
+            </div>
+            <h2 class="reading-list-empty__title">保存された記事はありません</h2>
+            <p class="reading-list-empty__desc">
+                気になる記事を見つけたら、記事一覧や詳細ページの「しおりアイコン」を押して追加してください。
+            </p>
+            <div class="reading-list-empty__action">
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="reading-list-empty__btn">
+                    トップページへ戻る
+                </a>
+            </div>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('reading_list', 'inspiro_reading_list_shortcode');
+
+/**
+ * 固定ページ未作成でも /reading-list/ で「後で読む一覧」を表示可能にするルーティング
+ */
+add_action('template_redirect', function() {
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+    $path = trim(parse_url($request_uri, PHP_URL_PATH), '/');
+
+    if ($path === 'reading-list') {
+        global $wp_query;
+        status_header(200);
+        $wp_query->is_404  = false;
+        $wp_query->is_page = true;
+        
+        $template = get_stylesheet_directory() . '/page-reading-list.php';
+        if (file_exists($template)) {
+            include $template;
+            exit;
+        }
+    }
+});
 
 /**
  * Initialize Lucide Icons in footer
