@@ -196,7 +196,9 @@ body.single .site-content {
               text-align: center;
               vertical-align: middle;
               font-size: 16px;
-              white-space: nowrap;
+              line-height: 1.5;
+              overflow-wrap: break-word;
+              word-break: break-word;
               border-radius: 4px; /* 角丸で柔らかい印象に */
             }
           }

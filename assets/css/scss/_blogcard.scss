@@ -3,7 +3,6 @@
     .blogcard {
         display: flex;
         width: 100%;
-        min-height: 140px;
         margin: 32px 0;
         background: #ffffff;
         border: 1px solid #e0e0e0;
@@ -21,13 +20,14 @@
     }
     
     .blogcard_thumbnail {
-        flex: 0 0 180px;
-        width: 180px;
-        min-height: 120px;
+        flex: 0 0 240px;
+        width: 240px;
+        aspect-ratio: 16 / 9;
         position: relative;
         overflow: hidden;
         border-right: 1px solid #eee;
         align-self: stretch;
+        flex-shrink: 0;
     }
     
     .blogcard .blogcard_thumbnail img {
@@ -51,7 +51,7 @@
     
     .blogcard_content {
         flex: 1;
-        padding: 20px;
+        padding: 16px 20px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -61,10 +61,10 @@
     }
     
     .blogcard_title {
-        font-size: 1.1rem;
+        font-size: 1.05rem;
         font-weight: 700;
         color: #333;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         line-height: 1.4;
         word-break: break-all;
         display: -webkit-box;
@@ -74,10 +74,10 @@
     }
     
     .blogcard_excerpt {
-        font-size: 0.9rem;
+        font-size: 0.88rem;
         color: #666;
-        margin-bottom: 12px;
-        line-height: 1.6;
+        margin-bottom: 0;
+        line-height: 1.5;
         word-break: break-all;
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -108,7 +108,6 @@
         display: flex;
         width: 100%;
         max-width: 100%;
-        min-height: 110px;
         margin: 24px 0;
         background: #ffffff;
         border: 1px solid #e0e0e0;
@@ -125,13 +124,14 @@
     }
     
     .blogcard_thumbnail {
-        flex: 0 0 110px;
-        width: 110px;
-        min-height: 90px;
+        flex: 0 0 120px;
+        width: 120px;
+        aspect-ratio: 16 / 9;
         position: relative;
         overflow: hidden;
         border-right: 1px solid #f0f0f0;
         align-self: stretch;
+        flex-shrink: 0;
     }
     
     .blogcard .blogcard_thumbnail img {
@@ -148,7 +148,7 @@
     
     .blogcard_content {
         flex: 1;
-        padding: 10px 12px;
+        padding: 8px 12px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -158,11 +158,11 @@
     }
     
     .blogcard_title {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         font-weight: 700;
         color: #333;
         margin-bottom: 4px;
-        line-height: 1.4;
+        line-height: 1.35;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
@@ -170,12 +170,12 @@
     }
     
     .blogcard_excerpt {
-        font-size: 0.8rem;
+        font-size: 0.78rem;
         color: #777;
-        margin-bottom: 4px;
-        line-height: 1.4;
+        margin-bottom: 0;
+        line-height: 1.35;
         display: -webkit-box;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
@@ -194,11 +194,11 @@
     
     @media (max-width: 360px) {
         .blogcard_thumbnail {
-            flex: 0 0 90px;
-            width: 90px;
+            flex: 0 0 100px;
+            width: 100px;
         }
         .blogcard_title {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .blogcard_excerpt {
             display: none;

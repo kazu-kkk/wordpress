@@ -1946,7 +1946,7 @@ if (isset($_GET['component_preview'])) {
                         <span class="showcase-section-meta">_blogcard.scss</span>
                     </div>
                     <div class="showcase-desc">
-                        記事本文内で関連記事などの内部リンクをリッチにアピールするためのブログカードです。サムネイルとタイトル・抜粋・ドメインを一体化してスマートに表現します。記事本文内のリンク下線（underline）の指定を受けないよう、下線が非表示に保護されています。
+                        記事本文内で関連記事などの内部リンクをリッチにアピールするためのブログカードです。サムネイル枠はサイトのアイキャッチ画像（1376×768px）と同じ「16:9」に設定されており、左右が見切れることなく美しく表示されます。記事本文内のリンク下線（underline）の指定を受けないよう、下線が非表示に保護されています。
                     </div>
                     <div class="showcase-preview-wrapper">
                         <div class="showcase-control-bar">
