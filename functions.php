@@ -222,6 +222,17 @@ function inspiro_child_enqueue_scripts() {
         );
     }
 
+    // 記事ページ（single）またはコンポーネント検証ページで画像拡大モーダルJSを読み込む
+    if (is_single() || is_page_template('page-templates/page-components.php')) {
+        wp_enqueue_script(
+            'inspiro-image-lightbox',
+            get_stylesheet_directory_uri() . '/assets/js/image-lightbox.js',
+            array(),
+            $get_file_version('/assets/js/image-lightbox.js'),
+            true
+        );
+    }
+
     // 全ページ共通のアナリティクスイベント計測JS
     wp_enqueue_script(
         'inspiro-analytics-events',

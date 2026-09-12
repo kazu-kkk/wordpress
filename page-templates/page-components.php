@@ -684,6 +684,20 @@ if (isset($_GET['component_preview'])) {
                 </script>
                 <?php
                 break;
+
+            case 'c-image-lightbox':
+                ?>
+                <div class="article-text" style="max-width: 760px; margin: 0 auto; padding: 20px;">
+                    <h2 style="font-size: 22px; margin-bottom: 12px;">画像拡大プレビュー（タップ/クリックで拡大）</h2>
+                    <p style="font-size: 15px; color: #555; margin-bottom: 24px;">下記の画像をタップまたはクリックすると、黒いオーバーレイとともに拡大表示されます。解除時は画像以外の黒い背景エリアをタップ/クリックしてください。</p>
+                    
+                    <figure class="wp-block-image size-large" style="margin: 0 auto; text-align: center;">
+                        <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/images/yuny_logo.png'); ?>" alt="Yuny ロゴプレビュー" style="max-width: 280px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); background: #ffffff; padding: 12px;">
+                        <figcaption style="font-size: 13px; color: #777; margin-top: 8px;">サンプル画像: タップまたはクリックで拡大できます</figcaption>
+                    </figure>
+                </div>
+                <?php
+                break;
         }
         ?>
         <?php wp_footer(); ?>
@@ -1444,6 +1458,7 @@ if (isset($_GET['component_preview'])) {
                     <a href="#c-icons"><i data-lucide="image"></i> 20. Icon Libraries</a>
                     <a href="#c-reading-list"><i data-lucide="bookmark"></i> 21. Reading List</a>
                     <a href="#c-quick-answer"><i data-lucide="message-square-check"></i> 22. Quick Answer</a>
+                    <a href="#c-image-lightbox"><i data-lucide="zoom-in"></i> 23. Image Lightbox</a>
                 </div>
             </aside>
 
@@ -2696,6 +2711,53 @@ if (isset($_GET['component_preview'])) {
                     </div>
                 </section>
 
+                <section id="c-image-lightbox" class="showcase-section">
+                    <h2 class="showcase-section-title">
+                        <span class="title-group"><span class="section-num">23</span> 画像拡大モーダル (Image Lightbox)</span>
+                        <span class="showcase-section-meta">_image-lightbox.scss / image-lightbox.js</span>
+                    </h2>
+                    <p class="showcase-desc">
+                        記事詳細ページで画像をタップ/クリックした際に、画面全体を暗転オーバーレイで覆い拡大表示します。画像以外の黒い背景エリアをタップ/クリックするか、右上の×ボタン、またはESCキーで解除されます。
+                    </p>
+
+                    <div class="showcase-preview-wrapper" data-comp="c-image-lightbox">
+                        <div class="showcase-control-bar">
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">Width:</span>
+                                <button class="showcase-ctrl-btn active" data-width="100%">PC</button>
+                                <button class="showcase-ctrl-btn" data-width="768px">Tablet</button>
+                                <button class="showcase-ctrl-btn" data-width="375px">Mobile</button>
+                            </div>
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">BG:</span>
+                                <button class="showcase-bg-btn active" data-bg="default"></button>
+                                <button class="showcase-bg-btn" data-bg="white"></button>
+                                <button class="showcase-bg-btn" data-bg="gray"></button>
+                                <button class="showcase-bg-btn" data-bg="dark"></button>
+                            </div>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
+                        </div>
+                        <div class="showcase-preview-box">
+                            <iframe src="<?php echo add_query_arg('component_preview', 'c-image-lightbox'); ?>" class="showcase-iframe" data-comp="c-image-lightbox" style="height: 420px;"></iframe>
+                        </div>
+                        <div class="showcase-code-box">
+                            <pre><code class="html-code">&lt;!-- 1. 記事本文内の画像（自動的にタップ/クリックで拡大可能） --&gt;
+&lt;div class="article-text"&gt;
+  &lt;figure class="wp-block-image size-large"&gt;
+    &lt;img src="path/to/image.jpg" alt="画像の説明"&gt;
+    &lt;figcaption&gt;キャプションテキスト&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;!-- 2. 任意の場所で動作させる検証・カスタムトリガー --&gt;
+&lt;div class="js-lightbox-trigger"&gt;
+  &lt;img src="path/to/image.jpg" alt="画像の説明"&gt;
+&lt;/div&gt;</code></pre>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
+                        </div>
+                    </div>
+                </section>
+
             </main>
         </div>
     </div>
@@ -2736,6 +2798,7 @@ if (isset($_GET['component_preview'])) {
             <a href="#c-icons"><i data-lucide="image"></i> 20. Icon Libraries</a>
             <a href="#c-reading-list"><i data-lucide="bookmark"></i> 21. Reading List</a>
             <a href="#c-quick-answer"><i data-lucide="message-square-check"></i> 22. Quick Answer</a>
+            <a href="#c-image-lightbox"><i data-lucide="zoom-in"></i> 23. Image Lightbox</a>
         </div>
     </div>
 </div>
