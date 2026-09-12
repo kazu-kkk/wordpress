@@ -19,6 +19,9 @@
 @use "./pinterest.scss";
 @use "./toc.scss";
 @use "./share.scss";
+@use "./reading-list.scss";
+@use "./quick-answer.scss";
+@use "./image-lightbox.scss";
 
 // =====================================================
 // カラーシステム (Variables)
@@ -251,117 +254,25 @@ img {
 
   .title-h2__text {
     position: relative;
-    padding-left: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin-bottom: 16px;
     font-size: 20px;
     color: #000;
     text-align: left;
+    font-weight: bold;
 
-    &--pick-up {
-      &::before {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        display: block;
-        width: 34px;
-        height: 34px;
-        content: "";
-        background-image: url("images/ico_pin.svg?v=2");
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: contain;
-        transition: all 0.3s;
-        transform: translateY(-50%);
-      }
-    }
-
-    &--new {
-      &::before {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        display: block;
-        width: 34px;
-        height: 34px;
-        content: "";
-        background-image: url("images/ico_article.svg?v=2");
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: contain;
-        transition: all 0.3s;
-        transform: translateY(-50%);
-      }
-    }
-
-    &--trend {
-      &::before {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        display: block;
-        width: 34px;
-        height: 34px;
-        content: "";
-        background-image: url("images/ico_trend.svg?v=4");
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: contain;
-        transition: all 0.3s;
-        transform: translateY(-50%);
-      }
-    }
-
-    &--category {
-      &::before {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        display: block;
-        width: 34px;
-        height: 34px;
-        content: "";
-        background-image: url("images/ico_shape.svg?v=2");
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: contain;
-        transition: all 0.3s;
-        transform: translateY(-50%);
-      }
-    }
-
-    &--popular-tag {
-      &::before {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        display: block;
-        width: 34px;
-        height: 34px;
-        content: "";
-        background-image: url("images/ico_tag.svg?v=2");
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: contain;
-        transition: all 0.3s;
-        transform: translateY(-50%);
-      }
-    }
-
-    &--sns {
-      &::before {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        display: block;
-        width: 34px;
-        height: 34px;
-        content: "";
-        background-image: url("images/ico_connection.svg?v=2");
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: contain;
-        transition: all 0.3s;
-        transform: translateY(-50%);
+    i {
+      color: #2B53EC;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      svg {
+        width: 26px;
+        height: 26px;
+        stroke-width: 2.25;
       }
     }
   }
@@ -634,77 +545,104 @@ img {
     text-align: center;
   }
 
-  .new-article {
-    display: flex;
-    width: 703px;
-    height: 150px;
-    margin-top: 30px;
-    overflow: hidden;
-
-    //box-shadow: 0 0 8px gray;
-    text-align: left;
-    border-radius: 8px;
-
-
-
-    &__image {
-      width: 200px;
-      height: 100%;
-      overflow: hidden;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.4s ease;
-      }
-    }
-
-    &:first-child {
-      margin-top: 0;
-    }
-  }
-
-  .new-article-link {
-    display: flex;
-  }
-
-  .new-article-text {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 459px;
-    padding: 15px 20px;
-    background-color: #fff;
-
-    &__title {
-      font-size: 20px;
-      font-weight: bold;
-      line-height: 1.5;
-      color: #000;
-    }
-
-    &__date {
-      margin-top: 5px;
-      font-size: 13px;
-      color: #000;
-    }
-
-    &-meta {
+  .top-page-content {
+    .new-article-list {
+      overflow: hidden; /* マージン相殺を防ぐ */
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 15px;
-      align-items: flex-start;
-      overflow: hidden;
-      height: 30px;
-    }
+      flex-direction: column;
+      gap: 30px; /* margin-topの代わりにgapで隙間を作る */
+      margin-top: 0; /* デフォルトのulマージンを確実になくす */
+      padding-top: 0;
 
-    &__category,
-    &__tag {
-      display: block;
-      flex-shrink: 0;
-      line-height: 1.4;
+      .new-article {
+        display: flex;
+        width: 703px;
+        height: 150px;
+        margin-top: 0;
+        overflow: hidden;
+        text-align: left;
+        border-radius: 8px;
+
+        .new-article__image,
+        &__image {
+          position: relative;
+          width: 240px;
+          height: 150px;
+          flex-shrink: 0;
+          overflow: hidden;
+          background-color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &::before {
+            content: "";
+            position: absolute;
+            inset: -20px;
+            background-image: var(--thumb);
+            background-size: cover;
+            background-position: center;
+            filter: blur(24px) saturate(1.3);
+            opacity: 0.35;
+            transform: scale(1.35);
+            z-index: 0;
+            pointer-events: none;
+          }
+
+          img {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.4s ease;
+            display: block;
+          }
+        }
+
+        .new-article-link {
+          display: flex;
+        }
+
+        .new-article-text {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          width: calc(100% - 240px);
+          padding: 15px 20px;
+          background-color: #fff;
+
+          &__title {
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1.5;
+            color: #000;
+          }
+
+          &__date {
+            margin-top: 5px;
+            font-size: 13px;
+            color: #000;
+          }
+
+          &-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+            align-items: flex-start;
+            overflow: hidden;
+            height: 30px;
+          }
+
+          &__category,
+          &__tag {
+            display: block;
+            flex-shrink: 0;
+            line-height: 1.4;
+          }
+        }
+      }
     }
   }
 
@@ -1025,6 +963,7 @@ img {
       width: 100%;
       height: 160px;
       overflow: hidden;
+      border-radius: 8px 8px 0 0;
 
       img {
         width: 100%;
@@ -1112,6 +1051,7 @@ img {
       width: 100%;
       height: 160px;
       overflow: hidden;
+      border-radius: 8px 8px 0 0;
 
       img {
         width: 100%;
@@ -1228,7 +1168,7 @@ img {
   transition: color 0.4s ease;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   overflow: hidden;
 }
 
@@ -1240,7 +1180,7 @@ img {
   transition: color 0.4s ease;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   overflow: hidden;
 }
 
@@ -1264,56 +1204,24 @@ img {
 /* TOP h2 Styles */
 .title-h2__text {
   position: relative;
-  padding-left: 40px;
-  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px; /* ピックアップ等のためにデフォルトは16pxに戻す */
   font-size: 20px;
   color: #000;
   text-align: left;
   font-weight: bold;
+
+  /* Lucideによって <i> は <svg> に置換されるため、直接 svg を指定する */
+  svg {
+    color: #2B53EC; /* strokeがcurrentColorなのでcolorで色がつく */
+    width: 28px;
+    height: 28px;
+    stroke-width: 2.25;
+  }
 }
 
-.title-h2__text--pick-up::before,
-.title-h2__text--new::before,
-.title-h2__text--trend::before,
-.title-h2__text--category::before,
-.title-h2__text--popular-tag::before,
-.title-h2__text--sns::before {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  display: block;
-  width: 34px;
-  height: 34px;
-  content: "";
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: contain;
-  transform: translateY(-50%);
-}
-
-.title-h2__text--pick-up::before {
-  background-image: url("images/ico_pin.svg?v=2");
-}
-
-.title-h2__text--new::before {
-  background-image: url("images/ico_article.svg?v=2");
-}
-
-.title-h2__text--trend::before {
-  background-image: url("images/ico_trend.svg?v=4");
-}
-
-.title-h2__text--category::before {
-  background-image: url("images/ico_shape.svg?v=2");
-}
-
-.title-h2__text--popular-tag::before {
-  background-image: url("images/ico_tag.svg?v=2");
-}
-
-.title-h2__text--sns::before {
-  background-image: url("images/ico_connection.svg?v=2");
-}
 
 /* =========================================
    トップページ最新の投稿（top-page-article）
@@ -1345,12 +1253,12 @@ img {
     }
   }
 
-  /* タイトルテキストのアニメーションと3行制限（4行目以降は省略） */
+  /* タイトルテキストのアニメーションと2行制限（3行目以降は省略） */
   .entry-title a {
     transition: color 0.4s ease;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     overflow: hidden;
 
     @media screen and (max-width: 767px) {
@@ -1478,7 +1386,7 @@ body {
     div.inner-wrap section.pickup,
     section.pickup {
       width: 100%;
-      margin: 40px auto 0;
+      margin: 26px auto 0;
 
       ul.pickup-list {
         display: flex;
@@ -1576,16 +1484,27 @@ body {
       }
     }
 
-    // 各セクションの余白感を統一（最新の投稿、トレンド）
+    // 各セクションの見出し下余白を統一
     h2.title-h2__text--new,
     h2.title-h2__text--trend,
-    h2.title-h2__text--category {
-      margin-top: 40px;
+    h2.title-h2__text--category,
+    h2.title-h2__text--pick-up {
+      margin-top: 0;
+      margin-bottom: 0; /* アイコンの高さとカード上部のpaddingがあるため、見出し自体の下マージンは0にする */
+    }
+
+    // SP時の見出し（ピックアップなど）のスタイル調整：フォントサイズ縮小とアイコンとの余白詰め
+    .title-h2__text {
+      font-size: 16px;
+      gap: 6px;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
     }
     // 最新の投稿（new-article）の横スクロール化と白背景化
-    div#primary main#main.top-page-content .new-article-list,
-    div#primary .new-article-list,
-    .new-article-list {
+    div#primary main#main.top-page-content .new-article-list {
       display: flex;
       flex-direction: column; /* 縦積みに変更 */
       gap: 16px;
@@ -1634,15 +1553,39 @@ body {
         }
 
         .new-article__image {
-          width: 90px;
-          height: 90px;
+          position: relative;
+          width: 105px;
+          height: 75px;
           flex-shrink: 0;
           border-radius: 6px;
           overflow: hidden;
+          background-color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &::before {
+            content: "";
+            position: absolute;
+            inset: -15px;
+            background-image: var(--thumb);
+            background-size: cover;
+            background-position: center;
+            filter: blur(16px) saturate(1.3);
+            opacity: 0.35;
+            transform: scale(1.35);
+            z-index: 0;
+            pointer-events: none;
+          }
+
           img {
+            position: relative;
+            z-index: 1;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            transition: transform 0.4s ease;
+            display: block;
           }
         }
         
@@ -1652,7 +1595,7 @@ body {
           flex-grow: 1;
           display: flex;
           flex-direction: column;
-          width: calc(100% - 102px);
+          width: calc(100% - 117px);
 
           &-inner {
             display: flex;
@@ -1738,6 +1681,11 @@ body {
         padding: 0;
         float: none;
         width: auto;
+
+        /* 各セクションの下余白 (PC) */
+        section, .infeed-ad-container {
+            margin-bottom: 40px;
+        }
     }
     
     body #page .inner-wrap--top-page .right-contents {
@@ -1746,6 +1694,7 @@ body {
         margin: 0;
         padding: 0;
         float: none;
+        align-self: stretch; /* メインコンテンツと同じ高さまで伸ばすことでstickyを有効にする */
     }
 }
 
@@ -1773,6 +1722,11 @@ body {
         padding: 0;
         margin: 0;
         float: none;
+
+        /* 各セクションの下余白 (SP) */
+        section, .infeed-ad-container {
+            margin-bottom: 24px;
+        }
     }
 
     body #page .inner-wrap--top-page .right-contents {
@@ -1780,5 +1734,61 @@ body {
         margin-top: 40px;
         padding: 0;
         float: none;
+    }
+}
+
+/* --- PC用: 横型カード画像の左角丸がSafariではみ出る問題の修正 --- */
+@media screen and (min-width: 768px) {
+  body #page .top-page-content .new-article__image {
+    border-radius: 8px 0 0 8px;
+    transform: translateZ(0); /* Safariのoverflow:hiddenバグ対策 */
+  }
+  body #page .top-page-content .new-article__image img {
+    border-radius: 8px 0 0 8px;
+    transition: transform 0.4s ease;
+  }
+}
+
+/* --- インフィード広告の表示制御 --- */
+body .infeed-ad-container {
+    display: block;
+    margin: 30px 0;
+    text-align: center;
+    border-bottom: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+body .infeed-ad-container .ad-widget-content {
+    margin: 0 auto;
+    display: inline-block;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 767px) {
+    /* 広告に面する2件目の記事の下線を消す */
+    body .new-article-list .new-article:nth-child(2) {
+        border-bottom: none !important;
+    }
+    
+    body .infeed-ad-container {
+        margin: 16px 0 30px; /* 上は少し詰めて、下は余白を取る */
+    }
+    body .infeed-ad-container .ad-widget-content {
+        zoom: 0.85; /* はみ出し防止用 */
+    }
+
+    body #page .hero-background-preview img {
+        max-height: 28px;
+        width: auto;
+    }
+
+    body #page .hero-background-preview {
+        padding: 70px 16px 20px;
+        min-height: 180px;
+    }
+
+    body #page .preview-content-wrapper {
+        margin-top: 0;
+        padding-top: 26px;
     }
 }

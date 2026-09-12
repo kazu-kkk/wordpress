@@ -103,6 +103,11 @@ body.single .site-content {
       line-height: 1.75;
       margin-top: 32px;
     }
+
+    h2 + p,
+    h3 + p {
+      margin-top: 0;
+    }
   
     li:not(.toc__item) {
       font-size: 18px;
@@ -191,7 +196,9 @@ body.single .site-content {
               text-align: center;
               vertical-align: middle;
               font-size: 16px;
-              white-space: nowrap;
+              line-height: 1.5;
+              overflow-wrap: break-word;
+              word-break: break-word;
               border-radius: 4px; /* 角丸で柔らかい印象に */
             }
           }
@@ -271,8 +278,13 @@ body.single .site-content {
       h3 {
         font-size: 24px;
         line-height: 1.5;
-        margin: 40px 0 20px;
+        margin: 40px 0 12px;
         padding-bottom: 0;
+      }
+
+      h2 + p,
+      h3 + p {
+        margin-top: 0;
       }
   
       img {
@@ -366,10 +378,15 @@ body.single .site-content {
       h3 {
         font-size: 18px;
         line-height: 1.5;
-        margin: 24px 0 16px;
+        margin: 28px 0 8px;
         text-align: left;
         color: #000;
         font-weight: bold;
+      }
+
+      h2 + p,
+      h3 + p {
+        margin-top: 0;
       }
   
       img {
@@ -426,11 +443,13 @@ body.single .site-content {
   }
   
 // ── 関連記事セクション ────────────────────────────────────
+body #page .related-posts,
 .related-posts {
   margin: 64px auto 48px;
   max-width: 720px;
+  width: 100%;
 
-  &__title {
+  .related-posts__title {
     font-size: 22px;
     font-weight: bold;
     color: #000;
@@ -449,7 +468,7 @@ body.single .site-content {
     }
   }
 
-  /* PC向け: 関連記事セクションの3カラムレイアウトオーバーライド */
+  /* PC向け: 関連記事セクションの3カラムグリッドレイアウト */
   @media screen and (min-width: 768px) {
     .new-article-list {
       display: grid;
@@ -458,40 +477,76 @@ body.single .site-content {
       margin: 0;
       padding: 0;
       width: 100%;
+      list-style: none;
+      overflow: visible;
     }
 
     .new-article {
       width: 100%;
-      height: 100%;
+      height: auto;
+      min-height: 100%;
       margin: 0 !important;
       display: flex;
       flex-direction: column;
-      transition: box-shadow 0.3s ease;
+      background-color: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-      &:hover {
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      @media (hover: hover) {
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+
+          .new-article-text__title {
+            color: #2B53EC;
+          }
+
+          .new-article__image img {
+            transform: scale(1.05);
+          }
+        }
       }
 
-      &-link {
+      .new-article-link {
         display: flex;
         flex-direction: column;
         height: 100%;
+        width: 100%;
+        text-decoration: none;
+        color: inherit;
       }
 
-      &__image {
+      .new-article__image {
         width: 100%;
         height: 130px;
         border-radius: 8px 8px 0 0;
+        overflow: hidden;
+        transform: none;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 8px 8px 0 0;
+          transition: transform 0.4s ease;
+          display: block;
+        }
       }
 
-      &-text {
+      .new-article-text {
         width: 100%;
-        padding: 16px 16px 10px; /* 下余白を狭めてスッキリさせる */
+        height: auto;
+        padding: 14px 14px 12px;
+        background-color: transparent;
         display: flex;
         flex-direction: column;
         flex-grow: 1;
         align-items: flex-start;
         justify-content: flex-start;
+        box-sizing: border-box;
 
         &-inner {
           display: flex;
@@ -502,13 +557,15 @@ body.single .site-content {
 
         &__title {
           font-size: 14px;
+          font-weight: bold;
           line-height: 1.5;
-          margin-bottom: 8px; /* 日付との間隔も少し詰める */
-          /* 3行で三点リーダー表示 */
+          color: #000;
+          margin: 0 0 8px 0;
           display: -webkit-box;
-          -webkit-line-clamp: 3;
+          -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
+          transition: color 0.3s ease;
         }
 
         &__date {
@@ -516,24 +573,119 @@ body.single .site-content {
           margin-bottom: 0;
           font-size: 11px;
           line-height: 1;
+          color: #666;
         }
 
         &-meta {
-          display: none; /* 狭いのでタグ類は非表示にする */
+          display: none;
         }
       }
     }
   }
 
-}
-
-// SP向け：2列 → 1列
-@media screen and (max-width: 767px) {
-  .related-posts {
+  /* SP向け: 関連記事セクション（1列のカードリスト） */
+  @media screen and (max-width: 767px) {
     margin: 48px 0 32px;
 
-    &__title {
+    .related-posts__title {
       font-size: 18px;
+      margin-bottom: 16px;
+    }
+
+    .new-article-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      list-style: none;
+      overflow: visible;
+    }
+
+    .new-article {
+      width: 100%;
+      height: auto;
+      margin: 0 !important;
+      display: flex;
+      flex-direction: column;
+      background-color: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+
+      .new-article-link {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        padding: 10px;
+        gap: 12px;
+        text-decoration: none;
+        color: inherit;
+        box-sizing: border-box;
+      }
+
+      .new-article__image {
+        width: 90px;
+        height: 75px;
+        flex-shrink: 0;
+        border-radius: 6px;
+        overflow: hidden;
+        transform: none;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 6px;
+          display: block;
+        }
+      }
+
+      .new-article-text {
+        width: calc(100% - 102px);
+        height: auto;
+        padding: 0;
+        background-color: transparent;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        align-items: flex-start;
+        justify-content: center;
+        box-sizing: border-box;
+
+        &-inner {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+        }
+
+        &__title {
+          font-size: 13px;
+          font-weight: bold;
+          line-height: 1.4;
+          color: #000;
+          margin: 0 0 4px 0;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        &__date {
+          font-size: 11px;
+          line-height: 1;
+          color: #666;
+          margin: 0;
+        }
+
+        &-meta {
+          display: none;
+        }
+      }
     }
   }
 }

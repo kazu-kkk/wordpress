@@ -71,7 +71,7 @@ function show_Linkcard($atts)
     }
 
     // トランジェントキーを生成（URL単位でキャッシュ）
-    $cache_key = 'ogp_' . md5($atts['url']);
+    $cache_key = 'ogp_v6_' . md5($atts['url']);
     $ogp_data  = get_transient($cache_key);
 
     if ($ogp_data === false) {
@@ -79,15 +79,25 @@ function show_Linkcard($atts)
         require_once get_stylesheet_directory() . '/OpenGraph.php';
         $graph = OpenGraph::fetch($atts['url']);
 
-        $ogp_data = array(
-            'title'       => $graph->title ?? '',
-            'image'       => $graph->image ?? '',
-            'description' => $graph->description ?? '',
-        );
-
-        // 24時間キャッシュ（画像が取れなかった場合は1時間後に再試行）
-        $ttl = !empty($ogp_data['image']) ? DAY_IN_SECONDS : HOUR_IN_SECONDS;
-        set_transient($cache_key, $ogp_data, $ttl);
+        if ($graph !== false) {
+            $ogp_data = array(
+                'title'       => $graph->title ?? '',
+                'image'       => $graph->image ?? '',
+                'description' => $graph->description ?? '',
+            );
+            
+            // 24時間キャッシュ（画像が取れなかった場合は1時間後に再試行）
+            $ttl = !empty($ogp_data['image']) ? DAY_IN_SECONDS : HOUR_IN_SECONDS;
+            set_transient($cache_key, $ogp_data, $ttl);
+        } else {
+            // 取得失敗時はデフォルト値を設定し、短時間（5分）だけキャッシュする
+            $ogp_data = array(
+                'title'       => '',
+                'image'       => '',
+                'description' => '',
+            );
+            set_transient($cache_key, $ogp_data, 5 * MINUTE_IN_SECONDS);
+        }
     }
 
     // タイトル・説明文・画像（ショートコードの引数が指定されていれば優先）
@@ -158,6 +168,8 @@ function inspiro_child_enqueue_scripts() {
         return file_exists($absolute_path) ? filemtime($absolute_path) : $theme_version;
     };
 
+    // Lucide Icons はフッターで確実に出力するため、ここでは enqueue しない
+
     wp_enqueue_script(
         'inspiro-search-suggestion',
         get_stylesheet_directory_uri() . '/assets/js/search-suggestion.js',
@@ -167,8 +179,9 @@ function inspiro_child_enqueue_scripts() {
     );
 
     wp_localize_script('inspiro-search-suggestion', 'inspiroSearch', array(
-        'root' => esc_url_raw(rest_url()),
-        'nonce' => wp_create_nonce('wp_rest')
+        'root'    => esc_url_raw(rest_url()),
+        'nonce'   => wp_create_nonce('wp_rest'),
+        'homeUrl' => esc_url_raw(home_url('/')),
     ));
 
     // トップページでのみヘッダーロゴのスクロール制御JSを読み込む
@@ -209,6 +222,17 @@ function inspiro_child_enqueue_scripts() {
         );
     }
 
+    // 記事ページ（single）またはコンポーネント検証ページで画像拡大モーダルJSを読み込む
+    if (is_single() || is_page_template('page-templates/page-components.php')) {
+        wp_enqueue_script(
+            'inspiro-image-lightbox',
+            get_stylesheet_directory_uri() . '/assets/js/image-lightbox.js',
+            array(),
+            $get_file_version('/assets/js/image-lightbox.js'),
+            true
+        );
+    }
+
     // 全ページ共通のアナリティクスイベント計測JS
     wp_enqueue_script(
         'inspiro-analytics-events',
@@ -217,8 +241,113 @@ function inspiro_child_enqueue_scripts() {
         $get_file_version('/assets/js/analytics-events.js'),
         true
     );
+
+    // 後で読む（ブックマーク）スクリプト（全ページ共通）
+    wp_enqueue_script(
+        'inspiro-reading-list',
+        get_stylesheet_directory_uri() . '/assets/js/reading-list.js',
+        array(),
+        $get_file_version('/assets/js/reading-list.js'),
+        true
+    );
 }
-add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'inspiro_child_enqueue_scripts', 20);
+
+/**
+ * [reading_list] ショートコード
+ * 任意の固定ページやブロックで後で読む一覧を表示可能にする
+ */
+function inspiro_reading_list_shortcode() {
+    ob_start();
+    ?>
+    <div class="reading-list-main" style="width: 100%;">
+        <header class="reading-list-header">
+            <div class="reading-list-header__content">
+                <h1 class="reading-list-header__title">
+                    <i data-lucide="bookmark" class="reading-list-header__icon"></i>
+                    後で読むリスト
+                </h1>
+                <p class="reading-list-header__desc">ブラウザに一時保存した記事の一覧です。</p>
+            </div>
+            <div class="reading-list-header__actions">
+                <span class="reading-list-header__count">保存中: <strong class="js-reading-list-count">0</strong> 件</span>
+                <button type="button" class="reading-list-clear-btn js-reading-list-clear" style="display: none;" aria-label="保存した記事をすべて削除">
+                    <i data-lucide="trash-2"></i>
+                    <span>すべて削除</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="reading-list-container js-reading-list-container">
+            <div class="reading-list-loading js-reading-list-loading">
+                <p>読み込み中...</p>
+            </div>
+        </div>
+
+        <div class="reading-list-empty js-reading-list-empty" style="display: none;">
+            <div class="reading-list-empty__icon-wrap">
+                <i data-lucide="bookmark"></i>
+            </div>
+            <h2 class="reading-list-empty__title">保存された記事はありません</h2>
+            <p class="reading-list-empty__desc">
+                気になる記事を見つけたら、記事一覧や詳細ページの「しおりアイコン」を押して追加してください。
+            </p>
+            <div class="reading-list-empty__action">
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="reading-list-empty__btn">
+                    トップページへ戻る
+                </a>
+            </div>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('reading_list', 'inspiro_reading_list_shortcode');
+
+/**
+ * 固定ページ未作成でも /reading-list/ で「後で読む一覧」を表示可能にするルーティング
+ */
+add_action('template_redirect', function() {
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+    $path = trim(parse_url($request_uri, PHP_URL_PATH), '/');
+
+    if ($path === 'reading-list') {
+        global $wp_query;
+        status_header(200);
+        $wp_query->is_404  = false;
+        $wp_query->is_page = true;
+        
+        $template = get_stylesheet_directory() . '/page-reading-list.php';
+        if (file_exists($template)) {
+            include $template;
+            exit;
+        }
+    }
+});
+
+/**
+ * Initialize Lucide Icons in footer
+ */
+function inspiro_child_init_lucide_icons() {
+    ?>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        // DOMContentLoaded と、遅延した場合のための即時実行の両方で対応
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof lucide !== "undefined") {
+                lucide.createIcons();
+            }
+        });
+        // 既にDOMが構築済みの場合は即実行
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            if (typeof lucide !== "undefined") {
+                lucide.createIcons();
+            }
+        }
+    </script>
+    <?php
+}
+add_action('wp_footer', 'inspiro_child_init_lucide_icons', 100);
 
 
 /**
@@ -295,6 +424,45 @@ function inspiro_child_target_audience($atts) {
     return $html;
 }
 add_shortcode('target_audience', 'inspiro_child_target_audience');
+
+/**
+ * Quick Answer Component (Shortcode)
+ * 
+ * 使用例:
+ * [quick_answer title="【ここに問い】"]
+ * 【ここに要約・結論】
+ * [/quick_answer]
+ * 
+ * または:
+ * [quick_answer title="【ここに問い】" text="【ここに要約・結論】"]
+ */
+function inspiro_child_quick_answer_shortcode($atts, $content = null) {
+    $atts = shortcode_atts(array(
+        'title' => '',
+        'text'  => '',
+        'badge' => 'クイックアンサー',
+    ), $atts, 'quick_answer');
+
+    $title = !empty($atts['title']) ? esc_html($atts['title']) : '';
+    $badge = !empty($atts['badge']) ? esc_html($atts['badge']) : 'クイックアンサー';
+
+    // 囲みテキスト($content)を優先し、空ならtext属性を使用
+    $body = !empty($content) ? $content : $atts['text'];
+    $body_html = wp_kses_post(trim($body));
+
+    $html = '<div class="c-quick-answer">';
+    $html .= '<div class="c-quick-answer__header">';
+    $html .= '<span class="c-quick-answer__badge">' . $badge . '</span>';
+    if (!empty($title)) {
+        $html .= '<span class="c-quick-answer__title">' . $title . '</span>';
+    }
+    $html .= '</div>';
+    $html .= '<p class="c-quick-answer__text">' . do_shortcode($body_html) . '</p>';
+    $html .= '</div>';
+
+    return $html;
+}
+add_shortcode('quick_answer', 'inspiro_child_quick_answer_shortcode');
 
 /**
  * トップページ（ホーム）の表示件数を最新8記事のみに制限する
@@ -594,18 +762,18 @@ function inspiro_child_auto_toc($content) {
         $ad_html = '
 <div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
     <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
-    <div id="im-1eae1085f45c43698d0a456571986d00">
+    <div id="im-b379ae08e658400daf60492490c57be3">
         <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00"})</script>
+        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1940491,type:"banner",display:"inline",elementid:"im-b379ae08e658400daf60492490c57be3"})</script>
     </div>
 </div>';
     } else {
         $ad_html = '
 <div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
     <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
-    <div id="im-91b0abf8dd8043e3a85b798346681f1d">
+    <div id="im-659427e020b640f3b9e1dde8573c061a">
         <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d"})</script>
+        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1940485,type:"banner",display:"inline",elementid:"im-659427e020b640f3b9e1dde8573c061a"})</script>
     </div>
 </div>';
     }
@@ -641,6 +809,55 @@ add_filter('style_loader_src', function($src, $handle) {
     return $src;
 }, 9999, 2);
 
+/**
+ * 記事カード・一覧表示用のタグ配列を取得するヘルパー関数
+ * - 'pickup' タグを除外
+ * - カテゴリー名（「その他」「記事」およびサイト内の全カテゴリー名）と同名のタグを除外
+ * - 重複タグを除外
+ *
+ * @param int|WP_Post|null $post 投稿オブジェクトまたは投稿ID（nullの場合は現在のグローバル投稿）
+ * @return WP_Term[]
+ */
+function inspiro_get_display_tags($post = null) {
+    $post_obj = get_post($post);
+    if (!$post_obj) {
+        return array();
+    }
+
+    $tags = get_the_tags($post_obj->ID);
+    if (empty($tags)) {
+        return array();
+    }
+
+    // サイト内の全カテゴリー名および固定除外名を取得
+    static $excluded_names = null;
+    if ($excluded_names === null) {
+        $cats = get_categories(array('hide_empty' => false));
+        $excluded_names = !empty($cats) ? wp_list_pluck($cats, 'name') : array();
+        $excluded_names[] = 'その他';
+        $excluded_names[] = '記事';
+        $excluded_names[] = 'pickup';
+        $excluded_names = array_map('mb_strtolower', $excluded_names);
+    }
+
+    $filtered_tags = array();
+    $displayed_terms = array();
+
+    foreach ($tags as $tag) {
+        $tag_name_lower = mb_strtolower($tag->name);
+        if (in_array($tag_name_lower, $excluded_names, true)) {
+            continue;
+        }
+        if (in_array($tag_name_lower, $displayed_terms, true)) {
+            continue;
+        }
+        $filtered_tags[] = $tag;
+        $displayed_terms[] = $tag_name_lower;
+    }
+
+    return $filtered_tags;
+}
+
 // オーバーライド: アーカイブページ等でのメタ情報出力 (TOPページと同じスタイル)
 if ( ! function_exists( 'inspiro_entry_meta' ) ) {
 	function inspiro_entry_meta() {
@@ -648,23 +865,10 @@ if ( ! function_exists( 'inspiro_entry_meta' ) ) {
 		<div class="top-page-article-meta" style="display: flex; flex-direction: column; align-items: flex-start; margin-top: auto;">
 			<div class="top-page-article-tags" style="display: flex; flex-wrap: wrap; gap: 4px; align-items: flex-start;">
 				<?php
-				$displayed_terms = array(); // 表示済みタグ名を記録
-				$categories = get_the_category();
-				if (!empty($categories)) {
-					foreach ($categories as $cat) {
-						if ($cat->name === '記事') continue;
-						if (in_array($cat->name, $displayed_terms)) continue;
-						echo '<span class="tag" style="margin:0;">' . esc_html($cat->name) . '</span>';
-						$displayed_terms[] = $cat->name;
-					}
-				}
-				$tags = get_the_tags();
+				$tags = inspiro_get_display_tags();
 				if (!empty($tags)) {
 					foreach ($tags as $tag) {
-						if (strtolower($tag->name) === 'pickup') continue;
-						if (in_array($tag->name, $displayed_terms)) continue;
 						echo '<span class="tag" style="margin:0;">' . esc_html($tag->name) . '</span>';
-						$displayed_terms[] = $tag->name;
 					}
 				}
 				?>
@@ -686,18 +890,18 @@ function inspiro_child_mid_content_ad( $content ) {
         $ad_html = '
 <div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
     <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
-    <div id="im-1eae1085f45c43698d0a456571986d00-mid">
+    <div id="im-3466812c78e74fe0b5e01955bfb6b059">
         <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00-mid"})</script>
+        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1940492,type:"banner",display:"inline",elementid:"im-3466812c78e74fe0b5e01955bfb6b059"})</script>
     </div>
 </div>';
     } else {
         $ad_html = '
 <div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
     <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
-    <div id="im-91b0abf8dd8043e3a85b798346681f1d-mid">
+    <div id="im-85786e2981794fb492a0489b6f3c5181">
         <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d-mid"})</script>
+        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1940486,type:"banner",display:"inline",elementid:"im-85786e2981794fb492a0489b6f3c5181"})</script>
     </div>
 </div>';
     }
@@ -823,3 +1027,140 @@ function inspiro_child_get_critical_related_posts($post_id, $limit = 3) {
 
     return $related_posts;
 }
+
+
+
+/**
+ * Add OGP Meta Tags to Head
+ */
+function inspiro_child_add_ogp()
+{
+    if (is_admin()) {
+        return;
+    }
+
+    if (is_front_page() || is_home()) {
+        $og_title = 'デザペディア - Webデザイン・UX / UI・チュートリアルの情報メディアサイト';
+    } else {
+        $og_title = get_bloginfo('name');
+    }
+    $og_description = 'デザペディアは、Webデザイン、UX / UI、チュートリアルなど、デザイナーやクリエイターのための情報メディアサイトです。最新のデザインニュース、クリエイティブなインスピレーション、業界のトレンド、役立つツールを提供し、あなたのクリエイティブな活動をサポートします。';
+    $og_url         = home_url('/');
+    $og_type        = 'website';
+    $og_image       = '';
+
+    // デフォルト画像の設定（サイト共通OGPバナー画像）
+    $og_image = get_stylesheet_directory_uri() . '/assets/images/ogp.png';
+
+    if (is_single() || is_page()) {
+        $post_id = get_the_ID();
+        $post = get_post($post_id);
+        if ($post) {
+            $og_title       = get_the_title($post_id);
+            $og_url         = get_permalink($post_id);
+            $og_type        = 'article';
+
+            // 抜粋があれば使用し、なければ本文から120文字を自動生成
+            $excerpt = $post->post_excerpt;
+            if (empty($excerpt)) {
+                $plain_content = wp_strip_all_tags(strip_shortcodes($post->post_content));
+                $excerpt       = mb_substr($plain_content, 0, 120, 'UTF-8');
+                if (mb_strlen($plain_content, 'UTF-8') > 120) {
+                    $excerpt .= '…';
+                }
+            }
+            $og_description = esc_attr($excerpt);
+
+            if (has_post_thumbnail($post_id)) {
+                $thumbnail_src = wp_get_attachment_image_src(get_post_thumbnail_id($post_id), 'full');
+                if ($thumbnail_src) {
+                    $og_image = $thumbnail_src[0];
+                }
+            } else if (is_single()) {
+                // OGP/Twitter Card Image Fallback (When Featured Image is missing)
+                $first_img = '';
+                if (preg_match_all('/<img[^>]+>/i', $post->post_content, $matches)) {
+                    foreach ($matches[0] as $img_tag) {
+                        if (preg_match('/src=[\'"]([^\'"]+)[\'"]/i', $img_tag, $src_match)) {
+                            $src = $src_match[1];
+                            if (preg_match('/data-src=[\'"]([^\'"]+)[\'"]/i', $img_tag, $data_src_match)) {
+                                $src = $data_src_match[1];
+                            }
+                            $classes = '';
+                            if (preg_match('/class=[\'"]([^\'"]+)[\'"]/i', $img_tag, $class_match)) {
+                                $classes = $class_match[1];
+                            }
+                            if (
+                                strpos($src, 'data:image') === false &&
+                                strpos($src, 'logo') === false &&
+                                strpos($src, 'header') === false &&
+                                strpos($src, 'icon') === false &&
+                                strpos($classes, 'avatar') === false
+                            ) {
+                                $first_img = preg_replace('/-\d+x\d+(?=\.[a-z]+$)/i', '', $src);
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (!empty($first_img)) {
+                    $og_image = $first_img;
+                } else {
+                    $og_image = get_stylesheet_directory_uri() . '/assets/images/ogp.png';
+                }
+            }
+        }
+    }
+
+    // OGP タグの出力
+    echo "\n" . '<!-- OGP Meta Tags -->' . "\n";
+    echo '<meta name="description" content="' . esc_attr($og_description) . '" />' . "\n";
+    echo '<meta property="og:title" content="' . esc_attr($og_title) . '" />' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr($og_description) . '" />' . "\n";
+    echo '<meta property="og:url" content="' . esc_url($og_url) . '" />' . "\n";
+    echo '<meta property="og:type" content="' . esc_attr($og_type) . '" />' . "\n";
+    echo '<meta property="og:site_name" content="' . esc_attr(get_bloginfo('name')) . '" />' . "\n";
+    if (!empty($og_image)) {
+        if (strpos($og_image, 'http') !== 0 && strpos($og_image, '//') !== 0) {
+            $og_image = home_url($og_image);
+        }
+        echo '<meta property="og:image" content="' . esc_url($og_image) . '" />' . "\n";
+    }
+    
+    // Twitter Card
+    echo '<meta name="twitter:card" content="summary_large_image" />' . "\n";
+    echo '<meta name="twitter:title" content="' . esc_attr($og_title) . '" />' . "\n";
+    echo '<meta name="twitter:description" content="' . esc_attr($og_description) . '" />' . "\n";
+    if (!empty($og_image)) {
+        echo '<meta name="twitter:image" content="' . esc_url($og_image) . '" />' . "\n";
+    }
+    echo '<!-- /OGP Meta Tags -->' . "\n";
+}
+add_action('wp_head', 'inspiro_child_add_ogp');
+
+/**
+ * 既存のクイックアンサー段落を自動的に .c-quick-answer コンポーネントへ変換
+ */
+function inspiro_child_convert_quick_answer($content) {
+    if (!is_singular('post')) {
+        return $content;
+    }
+
+    // <p><strong>クイックアンサー：...</strong><br>...</p> 形式を検出して .c-quick-answer に置換
+    $pattern = '/<p\b[^>]*>\s*<strong>クイックアンサー[：:]\s*(.*?)<\/strong>(?:<br\s*\/?>|\n)*(.*?)<\/p>/is';
+    
+    $content = preg_replace_callback($pattern, function($m) {
+        $title = trim($m[1]);
+        $text = trim($m[2]);
+        return '<div class="c-quick-answer">' . "\n" .
+               '  <div class="c-quick-answer__header">' . "\n" .
+               '    <span class="c-quick-answer__badge">クイックアンサー</span>' . "\n" .
+               '    <span class="c-quick-answer__title">' . $title . '</span>' . "\n" .
+               '  </div>' . "\n" .
+               '  <p class="c-quick-answer__text">' . $text . '</p>' . "\n" .
+               '</div>';
+    }, $content);
+
+    return $content;
+}
+add_filter('the_content', 'inspiro_child_convert_quick_answer', 15);

@@ -218,6 +218,11 @@
     */
     
     .footer-brand {
+        .footer-logo {
+            .footer-main-logo {
+                width: 134px; /* PC(200px)の約2/3 */
+            }
+        }
         .footer-desc {
             font-size: 14px;
         }

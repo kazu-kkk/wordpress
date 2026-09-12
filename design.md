@@ -164,11 +164,8 @@
 </ul>
 ```
 
-- **PC表示**: 横型カード: サムネイル `200×150px` + テキストエリア `459px`、ホバー: タイトル色変化 + 画像ズームイン
-- **SP表示**: トバログ風横スクロール（カルーセル）レイアウト。左右の負のマージン (`margin: 0 -16px`) と親幅拡張 (`width: calc(100% + 32px)`) で画面端までスクロール領域を拡張。
-  - カード幅: `280px` (`flex-shrink: 0`、スナップ配置 `scroll-snap-align: start`)
-  - サムネイル高さ: `160px`
-  - 配色: 白背景 (`#fff`) に枠線 (`border: 1px solid #e2e8f0`)、タイトルは黒文字 (`#000`)、日付はグレー (`#666`) に変更。
+- **PC表示**: 横型カード: サムネイル `240×150px`（アスペクト比維持の全体表示 `object-fit: contain` ＋ 背面に白ベースのソフトアンビエントブラーを敷くことで余白をシームレスに溶かし込み） + テキストエリア `calc(100% - 240px)`、ホバー: タイトル色変化 + 画像ズームイン
+- **SP表示**: 1列縦積みリスト。白背景カード内にサムネイル (`105×75px`、`object-fit: contain` + ソフトブラー背景) ＋ タイトル・日付の配置。
 
 ---
 
@@ -183,6 +180,8 @@
 - ブランドブルー背景、白文字、`border-radius: 5px`
 - `font-size: 13px; padding: 5px 8px`
 - ホバー: 背景がブランドブルー (`#2B53EC`) に反転し、少し浮き上がる (`translateY(-2px)`) とともに影が付与される
+- **タグ出力・除外ルール (`inspiro_get_display_tags()`)**:
+  - 記事一覧（トップ、アーカイブ、カテゴリー、検索結果等）や関連記事にタグを表示する際、`pickup` タグおよびカテゴリー名（「その他」「記事」およびサイト内の全カテゴリー名と同名のタグ）は自動的に除外・非表示化される。
 
 ---
 
@@ -190,11 +189,11 @@
 **ファイル**: `style_add.scss`
 
 ```html
-<h2 class="title-h2__text title-h2__text--pick-up">ピックアップ</h2>
-<h2 class="title-h2__text title-h2__text--new">新着記事</h2>
-<h2 class="title-h2__text title-h2__text--category">カテゴリ</h2>
-<h2 class="title-h2__text title-h2__text--popular-tag">人気タグ</h2>
-<h2 class="title-h2__text title-h2__text--sns">SNS</h2>
+<h2 class="title-h2__text title-h2__text--pick-up"><i data-lucide="pen-tool"></i> ピックアップ</h2>
+<h2 class="title-h2__text title-h2__text--new"><i data-lucide="file-text"></i> 新着記事</h2>
+<h2 class="title-h2__text title-h2__text--category"><i data-lucide="shapes"></i> カテゴリ</h2>
+<h2 class="title-h2__text title-h2__text--popular-tag"><i data-lucide="tag"></i> 人気タグ</h2>
+<h2 class="title-h2__text title-h2__text--sns"><i data-lucide="share-2"></i> SNS</h2>
 ```
 
 - `padding-left: 40px` で左にSVGアイコン (`::before`)
@@ -227,7 +226,7 @@
 | `.article-sub-date` | 日付テキスト |
 | `.article-fv` | FV画像エリア `height: 400px`（SP: `250px`） |
 | `.article-sub-thumbnail` | サムネイル画像 |
-| `.article-text` | 本文エリア。見出し2（`h2`: 28px / SP: 22px）に青いアクセントライン、見出し3（`h3`: 24px / SP: 20px）などの装飾を内包 |
+| `.article-text` | 本文エリア。見出し2（`h2`: 28px / SP: 22px）に青いアクセントライン、見出し3（`h3`: 24px / SP: 18px、上マージン大・下マージン小で直後本文と強くグルーピング）などの装飾を内包 |
 
 **引用ブロック (`blockquote`, `.wp-block-quote`)**:
 - 背景色: `#EFF4FF` (薄いブランドブルー)
@@ -236,9 +235,11 @@
 - レイアウト: 余白たっぷり（PC `padding: 32px 40px`）、角丸 (`border-radius: 8px`)、ボーダーなし
 
 **テーブルスタイル** (`.wp-block-table` 内):
-- ヘッダー行: ブランドブルー背景
-- `.is-vertical-header`: 縦ヘッダー（薄い青 `#EFF4FF`）
+- ヘッダー行 (`th`): ブランドブルー背景 (`#2B53EC`)、白文字、中央揃え、角丸 (`border-radius: 4px`)。固定幅テーブル (`table-layout: fixed`) や長文ヘッダーでも隣のセルとテキストが重複・はみ出しを起こさないよう `overflow-wrap: break-word;` / `word-break: break-word;` / `line-height: 1.5;` を適用。
+- `.is-vertical-header`: 縦ヘッダー（薄い青 `#EFF4FF`、青文字 `#2B53EC`）
 - `u-header-cell`: 任意のセルをヘッダー風にするユーティリティクラス
+- セル (`td`): 白背景 (`#ffffff`)、角丸 (`border-radius: 4px`)
+- テーブル全体: `min-width: 600px`、セル間隙間 `border-spacing: 2px`（背景 `#e2e8f0` が境界線として機能）
 
 ---
 
@@ -247,22 +248,29 @@
 
 ```html
 <section class="related-posts">
-  <h2 class="related-posts__title">関連記事</h2>
-  <div class="related-posts__grid">
-    <a class="related-posts__card" href="#">
-      <div class="related-posts__thumb"><img src="…"></div>
-      <div class="related-posts__body">
-        <p class="related-posts__date">2024.01.01</p>
-        <p class="related-posts__name">記事タイトル</p>
-      </div>
-    </a>
+  <h2 class="related-posts__title">この記事も読まれています</h2>
+  <div class="new-article-list">
+    <article class="new-article">
+      <a href="#" class="new-article-link">
+        <div class="new-article__image">
+          <img src="thumb.jpg" alt="画像">
+        </div>
+        <div class="new-article-text">
+          <div class="new-article-text-inner">
+            <p class="new-article-text__title">記事タイトル</p>
+            <p class="new-article-text__date">2026.08.09</p>
+          </div>
+        </div>
+      </a>
+    </article>
   </div>
 </section>
 ```
 
-- PC: 3カラムグリッド / SP: 2カラム / 480px以下: 1カラム
-- ホバー: カードが上に浮き上がる (`translateY(-4px)`)
-- タイトル最大3行クランプ
+- **PC表示 (`≥768px`)**: 3カラムグリッド (`grid-template-columns: repeat(3, 1fr)`)。縦型カード（上部画像 `height: 130px`、下部タイトル＋日付）、白背景 (`#ffffff`)、角丸 (`border-radius: 8px`)、薄い枠線 (`border: 1px solid #e2e8f0`)、影 (`box-shadow: 0 2px 8px rgba(0,0,0,0.04)`)。
+- **SP表示 (`≤767px`)**: 1列リストレイアウト。白背景カード内に左サムネイル (`90×75px`, 角丸 `6px`) ＋ 右タイトル・日付の横並び配置。
+- **ホバー演出**: カードが上に浮き上がる (`translateY(-4px)`)、影が強調 (`box-shadow: 0 6px 16px rgba(0,0,0,0.08)`)、画像がズームイン (`scale(1.05)`)、タイトル色がブランドブルー (`#2B53EC`) に変化。すべて `@media (hover: hover)` で制御。
+- **タイトル表示**: 最大2行クランプ（3行目以降は省略）。
 
 ---
 
@@ -311,9 +319,10 @@
 </div>
 ```
 
-- PC: サムネイル幅 `180px`固定 + テキスト横並び
-- SP: サムネイル幅 `110px`
-- ホバー: カードが上に浮き上がる
+- PC: サムネイル幅 `240px`固定、アスペクト比 `16:9`（高さ `135px`）+ テキスト横並び、上下余白 `margin: 32px 0`。デザペディアのアイキャッチ画像比率（16:9）と一致させて左右の見切れを防止。
+- SP: サムネイル幅 `120px`、アスペクト比 `16:9`（極小画面は `100px`）、抜粋は1行省略表示、上下余白 `margin: 24px 0`
+- デザイン: シャドウをなくし、クリーンなボーダーのみのスタイル
+- ホバー: 枠線の色が変わり、カードが上に浮き上がる（`@media (hover: hover)` で制御）
 - **リンク下線の打ち消し**: 記事本文（`.article-text`）などのインラインリンク下線（`underline`）指定の影響を受けないよう、非ホバー・ホバー時ともに下線が表示されないようにスタイルを設定。
 
 ---
@@ -349,9 +358,10 @@
 </div>
 ```
 
-- ブランドブルーのボーダー (`border: 2px solid #2B53EC`)
-- 各アイテム: SVGチェックアイコン付き、ボールド
-- SP: `padding: 16px 20px`、タイトル `font-size: 16px`、アイテム `font-size: 16px`に最適化され、周りの本文テキストとサイズを完全に統一して一貫性を保持
+- 白背景 (`background-color: #ffffff`) にブランドブルーのボーダー (`border: 2px solid #2B53EC`) を配置し、内側余白を `32px` 確保
+- 各アイテム: SVGチェックアイコン付き、ノーマルウェイト (`font-weight: normal`)
+- タイトル: `font-size: 18px`、`font-weight: 600`
+- SP: `padding: 20px 16px`、タイトル `font-size: 16px`、アイテム `font-size: 14px`に最適化され、よりコンパクトにまとまるよう調整
 
 ---
 
@@ -486,9 +496,22 @@
 ### 19. `.side-nav` — サイドナビ（SP向けメニュー）
 **ファイル**: `_side-nav.scss`, `_header.scss`
 
-- SPのハンバーガーメニュー展開時に表示
-- プロフィールカード + カテゴリリンク + 検索ウィジェット
-- `.search-suggestions` — インクリメンタルサーチのサジェストリスト（JS連携）
+- SPのハンバーガーメニュー展開時およびPCサイドバーに表示
+- プロフィールカード + カテゴリリンク + 記事検索ウィジェット
+- 検索フォームは `<form role="search" method="get" class="article-search-form" action="...">` で囲まれ、Enter押下やスマホの検索確定で検索結果一覧ページ（`/?s=xxx`）へ遷移可能
+- `.search-suggestions` — インクリメンタルサーチのサジェストリスト（JS連携。キーボード上下キーで候補選択時は該当記事へ直接遷移、サジェスト未選択時は入力クエリで検索結果一覧へ遷移）
+
+```html
+<div class="search-widget">
+    <h2 class="widget-title">SEARCH</h2>
+    <form role="search" method="get" class="article-search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+        <div class="search-container">
+            <input type="search" id="article-search-input" class="article-search-input" name="s" placeholder="キーワード検索..." autocomplete="off">
+            <ul id="search-suggestions" class="search-suggestions"></ul>
+        </div>
+    </form>
+</div>
+```
 
 ---
 
@@ -527,13 +550,22 @@
                 </svg>
             </button>
         </li>
+        <!-- 区切り線 -->
+        <li class="c-share__divider" aria-hidden="true"></li>
+        <!-- 後で読む（ブックマーク） -->
+        <li class="c-share__item c-share__item--bookmark">
+            <button class="c-share__bookmark-btn js-bookmark-btn" data-post-id="123" data-title="記事タイトル" data-url="https://example.com" data-thumb="https://example.com/thumb.jpg" data-category="デザイン" data-date="2026.09.04" data-location="single_share" aria-label="後で読むに追加" title="後で読むに追加">
+                <i data-lucide="bookmark" class="c-share__icon"></i>
+            </button>
+        </li>
     </ul>
 </div>
 ```
 
-- 各種SNS（X、Facebook、LINE）への共有リンクおよびURLコピーボタンのセット。
+- 各種SNS（X、Facebook、LINE）への共有リンク、URLコピーボタン、および「後で読む」ボタンのセット。
 - 通常時はシンプルなグレーの細線枠に白背景、ホバーすると滑らかなアニメーションで各サービスのブランドカラーに変化するインタラクション。
 - URLコピーボタンをクリックした際、吹き出しトーストで「URLをコピーしました」と表示されるUI。
+- 後で読むボタンは保存済みになるとブランドブルーで塗りつぶされ、トースト通知と連動。
 
 ---
 
@@ -576,6 +608,98 @@
 - TOPページ（`front-page.php`）のサイドバー最下部に表示されるウィジェット。
 - 白背景のカード型デザイン (`border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05)`)
 - リンクボタンはブランドブルー (`#2B53EC`) ベース。ホバー時は `@media (hover: hover)` に則り、色を濃くして少し上に浮き上がるアニメーションを付与。
+
+---
+
+### 23. `.c-bookmark-btn` / 後で読む（Reading List）機能
+**ファイル**: `_reading-list.scss`, `reading-list.js`, `bookmark-button.php`, `page-reading-list.php`
+
+```html
+<!-- 1. 記事カード右上フロート用ボタン -->
+<button type="button" class="c-bookmark-btn c-bookmark-btn--card js-bookmark-btn" data-post-id="123" data-title="記事タイトル" data-url="https://example.com" data-thumb="https://example.com/thumb.jpg" data-category="デザインナレッジ" data-date="2026.09.04" data-location="card" aria-label="後で読むに追加" title="後で読むに追加">
+    <i data-lucide="bookmark" class="c-bookmark-btn__icon"></i>
+</button>
+
+<!-- 2. ヘッダーアイコンリンク & 件数バッジ -->
+<a href="/reading-list/" class="header-bookmark-link js-header-bookmark-link" aria-label="後で読む記事一覧" title="後で読む記事一覧">
+    <i data-lucide="bookmark" class="header-bookmark-icon"></i>
+    <span class="header-bookmark-badge js-bookmark-badge">3</span>
+</a>
+```
+
+- **保存方式**: クライアントサイド `localStorage`（ログイン不要・爆速表示）。
+- **記事カード設置**: カード右上にフロート表示される36px円形ボタン。クリックで即座に保存/解除。
+- **ヘッダー導線**: 検索ボタン横にしおりアイコンを配置。1件以上保存があると件数バッジ（青丸バッジ）が浮き上がります。
+- **一覧専用ページ (`/reading-list/`)**: 保存した記事をグリッドカード表示。個別削除、一括全削除（アラート確認付き）、0件時の空状態案内UIを完備。
+- **GA4連携**: `bookmark_add`, `bookmark_remove`, `bookmark_open_item`, `bookmark_clear_all` のイベントトラッキングを自動送信。
+- **ホバー挙動**: `@media (hover: hover)` にてタッチ操作時のホバー残留を完全防止。
+
+---
+
+### 24. `.c-quick-answer` — クイックアンサー（要約ブロック）
+**ファイル**: `_quick-answer.scss`
+
+```html
+<div class="c-quick-answer">
+  <div class="c-quick-answer__header">
+    <span class="c-quick-answer__badge">クイックアンサー</span>
+    <span class="c-quick-answer__title">WordPressでクイックアンサーを設置するメリットは？</span>
+  </div>
+  <p class="c-quick-answer__text">GoogleのAI Overviews（SGE）や強調スニペットに選ばれやすくなり、記事冒頭で読者の検索意図を満たすことで<strong>離脱率の低下とSEO評価の向上</strong>につながります。</p>
+</div>
+```
+
+- **用途**: 記事本文のH2直下などに配置し、AEO（Answer Engine Optimization）やAI Overviews・強調スニペット獲得、読者のファーストビュー離脱防止を担う要約カード。
+- **デザイン仕様**:
+  - 記事背景（`#F5F7FF`）から綺麗に浮かび上がる純白（`#FFFFFF`）のカード背景。
+  - 上質な極細ブルーボーダー（`border: 1px solid #D6DCFA`）に加え、左側にブランドブルー（`border-left: 4px solid #2B53EC`）のアクセントボーダー。
+  - 微細なドロップシャドウ（`box-shadow: 0 4px 16px rgba(43, 83, 236, 0.06)`）と角丸8pxでモダンな浮遊感を演出。
+- **ヘッダー要素**:
+  - `.c-quick-answer__badge`: ブランドブルー（`#2B53EC`）背景に白文字のコンパクトなラベル（12px、角丸4px）。Lucide Icons（例: `<i data-lucide="check-circle-2"></i>`）が内包された場合もアイコンとテキストが美しく垂直中央揃えされます。※絵文字は禁止。
+  - `.c-quick-answer__title`: 問いの見出し（濃紺 `#180074`、17px太字）。
+- **本文（要約・結論）**:
+  - `.c-quick-answer__text`: 15px（SP: 14px）、行高1.8、カラー `#333333`。親の `.article-text p` のデフォルト余白に影響されないよう安全にリセット。`strong` タグで囲んだ重要語句には爽やかなアクセント下線（`#D8F2FF`）が自動適用されます。
+- **レスポンシブ**: SP（≤767px）ではカード余白や文字サイズをモバイルに最適化。
+- **ショートコード**:
+  ```text
+  [quick_answer title="【ここに問い】"]
+  【ここに要約・結論。<strong>重要な結論</strong>にはstrongタグを活用】
+  [/quick_answer]
+  ```
+  ※`[quick_answer title="【問い】" text="【要約・結論】"]` の1行形式でも記述可能です。
+
+---
+
+### 25. `.c-image-lightbox` — 画像拡大モーダル（ライトボックス）
+**ファイル**: `_image-lightbox.scss`, `image-lightbox.js`
+
+```html
+<!-- 記事本文エリア内の画像（自動的にタップ/クリックで拡大表示可能） -->
+<div class="article-text">
+  <figure class="wp-block-image size-large">
+    <img src="example.jpg" alt="サンプル画像">
+    <figcaption>画像のキャプション説明文</figcaption>
+  </figure>
+</div>
+
+<!-- または任意の場所で動作させる検証用トリガー -->
+<div class="js-lightbox-trigger">
+  <img src="example.jpg" alt="サンプル画像">
+</div>
+```
+
+- **用途**: 記事詳細ページおよび検証ページにおいて、本文内の図解やアイキャッチ画像をタップ／クリックした際に、画面全体を暗転させて画像をダイナミックに拡大表示するライトボックスモーダル。
+- **デザイン・UI仕様**:
+  - **黒いオーバーレイ**: `rgba(12, 14, 18, 0.88)` の深みのあるダークカラーと `backdrop-filter: blur(8px)` による上品ですりガラス調の背景暗転。
+  - **拡大画像表示**: アスペクト比を維持し画面サイズ（最大幅 `92vw`、最大高 `80vh`）に最適フィット。深みのあるドロップシャドウ（`box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6)`）と角丸6pxでくっきりと浮遊。
+  - **キャプション表示**: 画像に `figcaption` や `alt` が存在する場合、画像下部に白文字（14px）で自動表示。
+  - **閉じるボタン（×）**: 右上に丸型のガラス調ボタン（`position: fixed`）を配置。
+- **インタラクション・解除仕様**:
+  - **背景タップ／クリックで解除**: 画像以外の黒い背景（オーバーレイエリア）をタップ・クリックすると即座にモーダルが閉じます。※画像自体をクリックしても閉じません。
+  - **×ボタン / ESCキー**: 右上ボタンのタップ、またはキーボードの `Escape` キー押下でも閉じられます。
+  - **スクロールロック**: モーダル表示中は背面ページ（body）のスクロールを自動停止し、誤スクロールを抑止。
+  - **カーソル表示**: マウス操作時（`@media (hover: hover)`）では対象画像に `cursor: zoom-in`、オーバーレイ背景に `cursor: zoom-out` が適用され、直感的な操作を促します。
+- **除外仕様**: ブログカード内のサムネイル（`.blogcard img`）、SNSシェアボタン、広告、および別ページへの通常リンク画像は誤作動防止のため自動除外されます。
 
 ---
 
@@ -630,4 +754,17 @@
 5. **HTMLコードボックスのアコーディオン開閉**
    - プレビュー上部右側の `Show Code` ボタンをクリックすると、HTMLコードのソースボックスが滑らかにスライド展開します。
    - ソースコード内の `COPY` ボタンを押すことで、WordPressへのコピペ用コードを即座に取得できます。初期状態で折りたたまれているため、ページ全体のスクロール量を劇的に削減し、一覧性を高めています。
+
+---
+
+## アイコンライブラリ比較プレビュー
+
+トンマナ調整のためのアイコンライブラリ候補です。VSCode等のMarkdownプレビューで各アイコンのビジュアルを比較できます。
+
+| ライブラリ名 | Home | User | Search | Settings | Check |
+|---|:---:|:---:|:---:|:---:|:---:|
+| **Remix Icon** | <img src="https://raw.githubusercontent.com/Remix-Design/RemixIcon/master/icons/System/home-line.svg" width="32"> | <img src="https://raw.githubusercontent.com/Remix-Design/RemixIcon/master/icons/User/user-line.svg" width="32"> | <img src="https://raw.githubusercontent.com/Remix-Design/RemixIcon/master/icons/System/search-line.svg" width="32"> | <img src="https://raw.githubusercontent.com/Remix-Design/RemixIcon/master/icons/System/settings-3-line.svg" width="32"> | <img src="https://raw.githubusercontent.com/Remix-Design/RemixIcon/master/icons/System/check-line.svg" width="32"> |
+| **Phosphor Icons**<br>(Regular) | <img src="https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/house.svg" width="32"> | <img src="https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/user.svg" width="32"> | <img src="https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/magnifying-glass.svg" width="32"> | <img src="https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/gear.svg" width="32"> | <img src="https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/check.svg" width="32"> |
+| **Lucide Icons** | <img src="https://unpkg.com/lucide-static@0.428.0/icons/home.svg" width="32"> | <img src="https://unpkg.com/lucide-static@0.428.0/icons/user.svg" width="32"> | <img src="https://unpkg.com/lucide-static@0.428.0/icons/search.svg" width="32"> | <img src="https://unpkg.com/lucide-static@0.428.0/icons/settings.svg" width="32"> | <img src="https://unpkg.com/lucide-static@0.428.0/icons/check.svg" width="32"> |
+| **Material Design**<br>(MDI) | <img src="https://raw.githubusercontent.com/Templarian/MaterialDesign/master/svg/home-outline.svg" width="32"> | <img src="https://raw.githubusercontent.com/Templarian/MaterialDesign/master/svg/account-outline.svg" width="32"> | <img src="https://raw.githubusercontent.com/Templarian/MaterialDesign/master/svg/magnify.svg" width="32"> | <img src="https://raw.githubusercontent.com/Templarian/MaterialDesign/master/svg/cog-outline.svg" width="32"> | <img src="https://raw.githubusercontent.com/Templarian/MaterialDesign/master/svg/check.svg" width="32"> |
 

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Blogcard Detailed Test</title>
+<style>
+* { box-sizing: border-box; }
+body {
+    background: #f5f7ff;
+    padding: 30px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+.test-section {
+    max-width: 720px;
+    margin: 0 auto 40px;
+}
+
+/* Pattern A: align-self: center vs stretch */
+.card {
+    display: flex;
+    width: 100%;
+    margin: 20px 0;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.card a {
+    flex: 1;
+    display: flex;
+    text-decoration: none;
+    color: inherit;
+    align-items: stretch;
+}
+.card .thumb {
+    flex: 0 0 240px;
+    width: 240px;
+    aspect-ratio: 16 / 9;
+    position: relative;
+    overflow: hidden;
+    border-right: 1px solid #eee;
+    background: #fafafa;
+}
+.card .thumb img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.card .content {
+    flex: 1;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+.card .title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 8px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.card .excerpt {
+    font-size: 0.88rem;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+</style>
+</head>
+<body>
+<div class="test-section">
+    <h3>Pattern: Standard text (Title 2 lines + Excerpt 2 lines)</h3>
+    <div class="card" id="card1">
+        <a href="#">
+            <div class="thumb" id="thumb1">
+                <img src="https://www.ds-pedia.com/wp-content/uploads/2026/09/image-33.jpg" alt="test">
+            </div>
+            <div class="content" id="content1">
+                <p class="title">Web・UIデザインの厳選フォント集！失敗しない和欧ペアリングのコツ</p>
+                <p class="excerpt">WebサイトやアプリのUX/UIデザインで、フォント選定やタイポグラフィに迷っていませんか？現場で使える定番フォントと和欧混植の基本を解説。</p>
+            </div>
+        </a>
+    </div>
+
+    <h3>Pattern: Short text (Title 1 line + Excerpt 1 line)</h3>
+    <div class="card" id="card2">
+        <a href="#">
+            <div class="thumb" id="thumb2">
+                <img src="https://www.ds-pedia.com/wp-content/uploads/2026/09/image-33.jpg" alt="test">
+            </div>
+            <div class="content" id="content2">
+                <p class="title">Figmaオートレイアウト完全ガイド</p>
+                <p class="excerpt">崩れないネストと余白設計のコツを解説します。</p>
+            </div>
+        </a>
+    </div>
+</div>
+</body>
+</html>

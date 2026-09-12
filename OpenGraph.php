@@ -47,10 +47,39 @@ class OpenGraph implements Iterator
      * false on error.
      *
      * @param $URI    URI to page to parse for Open Graph data
-     * @return OpenGraph
+     * @return OpenGraph|false
      */
     static public function fetch($URI)
     {
+        $user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
+
+        if (function_exists('wp_remote_get')) {
+            $response = wp_remote_get(esc_url_raw($URI), array(
+                'timeout'     => 15,
+                'redirection' => 5,
+                'sslverify'   => false,
+                'user-agent'  => $user_agent,
+                'headers'     => array(
+                    'Accept'          => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                    'Accept-Language' => 'ja,en-US;q=0.9,en;q=0.8',
+                ),
+            ));
+            if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
+                $body = wp_remote_retrieve_body($response);
+                if (!empty($body)) {
+                    $parsed = self::_parse($body, $URI);
+                    if ($parsed !== false) {
+                        return $parsed;
+                    }
+                }
+            }
+            // Amazon URLの場合、スクレイピング制限等があってもASINからフォールバック生成
+            if (self::isAmazonUrl($URI)) {
+                return self::createAmazonFallback($URI);
+            }
+            return false;
+        }
+
         $curl = curl_init($URI);
 
         curl_setopt($curl, CURLOPT_FAILONERROR, true);
@@ -59,27 +88,75 @@ class OpenGraph implements Iterator
         curl_setopt($curl, CURLOPT_TIMEOUT, 15);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+        curl_setopt($curl, CURLOPT_USERAGENT, $user_agent);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept-Language: ja,en-US;q=0.9,en;q=0.8',
+        ));
 
         $response = curl_exec($curl);
-
         curl_close($curl);
 
         if (!empty($response)) {
-            return self::_parse($response);
-        } else {
-            return false;
+            $parsed = self::_parse($response, $URI);
+            if ($parsed !== false) {
+                return $parsed;
+            }
         }
+
+        if (self::isAmazonUrl($URI)) {
+            return self::createAmazonFallback($URI);
+        }
+
+        return false;
+    }
+
+    /**
+     * AmazonのURLかどうかを判定
+     */
+    public static function isAmazonUrl($url)
+    {
+        return (bool) preg_match('/https?:\/\/(?:[a-zA-Z0-9-]+\.)?(?:amazon\.(?:co\.jp|com|co\.uk|de|fr|es|it|ca|in)|amzn\.(?:to|asia))(?:\/|$)/i', $url);
+    }
+
+    /**
+     * AmazonのURLからASIN（10桁の商品識別コード）を抽出
+     */
+    public static function extractAsin($url)
+    {
+        if (preg_match('/(?:dp|gp\/product|exec\/obidos\/ASIN|o\/ASIN|gp\/offer-listing)\/([A-Z0-9]{10})/i', $url, $m)) {
+            return $m[1];
+        }
+        if (preg_match('/\/([A-Z0-9]{10})(?:[\/?#]|$)/i', $url, $m)) {
+            return $m[1];
+        }
+        return null;
+    }
+
+    /**
+     * Amazonのスクレイピング失敗時などのフォールバックOpenGraphオブジェクトを生成
+     */
+    public static function createAmazonFallback($url)
+    {
+        $asin = self::extractAsin($url);
+        $page = new self();
+        $page->_values['title'] = 'Amazon | 商品ページ';
+        $page->_values['description'] = 'Amazon.co.jpで詳細を見る';
+        if ($asin) {
+            $page->_values['image'] = 'https://images-na.ssl-images-amazon.com/images/P/' . $asin . '.01.MAIN._SCRM_.jpg';
+        }
+        return $page;
     }
 
     /**
      * Parses HTML and extracts Open Graph data, this assumes
      * the document is at least well formed.
      *
-     * @param $HTML    HTML to parse
-     * @return OpenGraph
+     * @param string $HTML    HTML to parse
+     * @param string $URI     Source URI
+     * @return OpenGraph|false
      */
-    static private function _parse($HTML)
+    static private function _parse($HTML, $URI = '')
     {
         $old_libxml_error = libxml_use_internal_errors(true);
 
@@ -103,7 +180,12 @@ class OpenGraph implements Iterator
                 strpos($tag->getAttribute('property'), 'og:') === 0
             ) {
                 $key = strtr(substr($tag->getAttribute('property'), 3), '-', '_');
-                $page->_values[$key] = $tag->getAttribute('content');
+                $val = $tag->getAttribute('content');
+                // Amazonなどのスプライトや汎用アセットがog:imageに指定されている場合はスキップ
+                if ($key === 'image' && self::isInvalidImage($val)) {
+                    continue;
+                }
+                $page->_values[$key] = $val;
             }
 
             //Added this if loop to retrieve description values from sites like the New York Times who have malformed it. 
@@ -112,7 +194,11 @@ class OpenGraph implements Iterator
                 strpos($tag->getAttribute('property'), 'og:') === 0
             ) {
                 $key = strtr(substr($tag->getAttribute('property'), 3), '-', '_');
-                $page->_values[$key] = $tag->getAttribute('value');
+                $val = $tag->getAttribute('value');
+                if ($key === 'image' && self::isInvalidImage($val)) {
+                    continue;
+                }
+                $page->_values[$key] = $val;
             }
             //Based on modifications at https://github.com/bashofmann/opengraph/blob/master/src/OpenGraph/OpenGraph.php
             if ($tag->hasAttribute('name') && $tag->getAttribute('name') === 'description') {
@@ -123,23 +209,104 @@ class OpenGraph implements Iterator
         if (!isset($page->_values['title'])) {
             $titles = $doc->getElementsByTagName('title');
             if ($titles->length > 0) {
-                $page->_values['title'] = $titles->item(0)->textContent;
+                $page->_values['title'] = trim($titles->item(0)->textContent);
             }
         }
         if (!isset($page->_values['description']) && $nonOgDescription) {
-            $page->_values['description'] = $nonOgDescription;
+            $page->_values['description'] = trim($nonOgDescription);
         }
 
-        //Fallback to use image_src if ogp::image isn't set.
-        if (!isset($page->values['image'])) {
-            $domxpath = new DOMXPath($doc);
-            $elements = $domxpath->query("//link[@rel='image_src']");
+        $isAmazon = self::isAmazonUrl($URI);
 
-            if ($elements->length > 0) {
-                $domattr = $elements->item(0)->attributes->getNamedItem('href');
-                if ($domattr) {
+        // Amazonの場合の商品画像専用抽出ロジック
+        if ($isAmazon) {
+            $domxpath = new DOMXPath($doc);
+
+            // 1. landingImage の data-old-hires または data-a-dynamic-image
+            $landing_imgs = $domxpath->query("//img[@id='landingImage'] | //img[@id='imgBlkFront'] | //img[contains(@class, 'a-dynamic-image')]");
+            if ($landing_imgs->length > 0) {
+                $img_el = $landing_imgs->item(0);
+                if ($img_el->hasAttribute('data-old-hires') && !empty($img_el->getAttribute('data-old-hires'))) {
+                    $page->_values['image'] = $img_el->getAttribute('data-old-hires');
+                } elseif ($img_el->hasAttribute('data-a-dynamic-image')) {
+                    $dyn_json = @json_decode($img_el->getAttribute('data-a-dynamic-image'), true);
+                    if (is_array($dyn_json) && !empty($dyn_json)) {
+                        $keys = array_keys($dyn_json);
+                        $page->_values['image'] = $keys[0];
+                    }
+                } elseif ($img_el->hasAttribute('src') && !self::isInvalidImage($img_el->getAttribute('src'))) {
+                    $page->_values['image'] = $img_el->getAttribute('src');
+                }
+            }
+
+            // 2. /images/I/（商品画像）を含む img タグを検索
+            if (!isset($page->_values['image'])) {
+                $item_imgs = $domxpath->query("//img[contains(@src, 'media-amazon.com/images/I/') or contains(@data-src, 'media-amazon.com/images/I/')]");
+                if ($item_imgs->length > 0) {
+                    foreach ($item_imgs as $it) {
+                        $src = $it->getAttribute('src') ?: $it->getAttribute('data-src');
+                        if (!empty($src) && !self::isInvalidImage($src)) {
+                            $page->_values['image'] = $src;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // 3. ASIN からの直接画像生成
+            if (!isset($page->_values['image'])) {
+                $asin = self::extractAsin($URI);
+                if ($asin) {
+                    $page->_values['image'] = 'https://images-na.ssl-images-amazon.com/images/P/' . $asin . '.01.MAIN._SCRM_.jpg';
+                }
+            }
+        }
+
+        // 一般サイト用の画像フォールバック
+        if (!isset($page->_values['image'])) {
+            $domxpath = new DOMXPath($doc);
+            
+            // 1. Try twitter:image
+            $twitter_image = $domxpath->query("//meta[@name='twitter:image'] | //meta[@property='twitter:image']");
+            if ($twitter_image->length > 0) {
+                $domattr = $twitter_image->item(0)->attributes->getNamedItem('content');
+                if ($domattr && !self::isInvalidImage($domattr->value)) {
                     $page->_values['image'] = $domattr->value;
-                    $page->_values['image_src'] = $domattr->value;
+                }
+            }
+            
+            // 2. Try link rel='image_src'
+            if (!isset($page->_values['image'])) {
+                $elements = $domxpath->query("//link[@rel='image_src']");
+                if ($elements->length > 0) {
+                    $domattr = $elements->item(0)->attributes->getNamedItem('href');
+                    if ($domattr && !self::isInvalidImage($domattr->value)) {
+                        $page->_values['image'] = $domattr->value;
+                        $page->_values['image_src'] = $domattr->value;
+                    }
+                }
+            }
+
+            // 3. Fallback to first actual <img> tag (exclude sprite, base64, lazyload placeholders, logos, headers, icons)
+            if (!isset($page->_values['image'])) {
+                $imgs = $doc->getElementsByTagName('img');
+                foreach ($imgs as $img) {
+                    $src = $img->getAttribute('src');
+                    // check if it has a real data-src (lazy loaded)
+                    if ($img->hasAttribute('data-src')) {
+                        $data_src = $img->getAttribute('data-src');
+                        if (!empty($data_src) && strpos($data_src, 'data:image') === false) {
+                            $src = $data_src;
+                        }
+                    }
+                    
+                    $classes = $img->getAttribute('class') ?? '';
+                    
+                    if (!empty($src) && !self::isInvalidImage($src) && strpos($classes, 'avatar') === false) {
+                        // Remove WP image size suffixes like -300x168 to get the original full-size image
+                        $page->_values['image'] = preg_replace('/-\d+x\d+(?=\.[a-z]+$)/i', '', $src);
+                        break;
+                    }
                 }
             }
         }
@@ -149,6 +316,45 @@ class OpenGraph implements Iterator
         }
 
         return $page;
+    }
+
+    /**
+     * 無効な画像（スプライト、トラッキングピクセル、ロゴ、アイコン等）かどうかを判定
+     */
+    public static function isInvalidImage($src)
+    {
+        if (empty($src)) {
+            return true;
+        }
+        $src_lower = strtolower($src);
+        $invalid_patterns = array(
+            'data:image',
+            'sprite',
+            'sprites',
+            'nav-sprite',
+            'transparent-pixel',
+            'pixel',
+            'spacer',
+            'blank.gif',
+            '1x1',
+            '/images/g/',       // Amazon汎用UIグラフィック/スプライト
+            'g-ecx.images-amazon.com',
+            'fls-fe.amazon',
+            'logo',
+            'header',
+            'icon',
+            'favicon',
+            'loading',
+            'spinner',
+        );
+
+        foreach ($invalid_patterns as $pattern) {
+            if (strpos($src_lower, $pattern) !== false) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

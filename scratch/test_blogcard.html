@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Blogcard Ratio Test</title>
+<style>
+body {
+    background: #f5f7ff;
+    padding: 40px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+/* Pattern 1: Width 240px, Aspect 16:9 */
+.card-p1 {
+    display: flex;
+    width: 100%;
+    margin: 24px 0;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.card-p1 a {
+    flex: 1;
+    display: flex;
+    text-decoration: none;
+    color: inherit;
+    align-items: stretch;
+}
+.card-p1 .thumb {
+    flex: 0 0 240px;
+    width: 240px;
+    aspect-ratio: 16 / 9;
+    position: relative;
+    overflow: hidden;
+    border-right: 1px solid #eee;
+    background: #000;
+}
+.card-p1 .thumb img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.card-p1 .content {
+    flex: 1;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+.card-p1 .title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 8px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.card-p1 .excerpt {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* SP Pattern: Width 140px, Aspect 16:9 */
+.sp-container {
+    max-width: 375px;
+    margin: 40px auto;
+}
+.card-sp {
+    display: flex;
+    width: 100%;
+    margin: 20px 0;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.card-sp a {
+    flex: 1;
+    display: flex;
+    text-decoration: none;
+    color: inherit;
+    align-items: stretch;
+}
+.card-sp .thumb {
+    flex: 0 0 130px;
+    width: 130px;
+    aspect-ratio: 16 / 9;
+    position: relative;
+    overflow: hidden;
+    border-right: 1px solid #f0f0f0;
+    background: #000;
+}
+.card-sp .thumb img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.card-sp .content {
+    flex: 1;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+.card-sp .title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 4px;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.card-sp .excerpt {
+    font-size: 0.75rem;
+    color: #777;
+    margin: 0;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>PC Preview (Width: 240px, Aspect: 16/9 = 135px height)</h2>
+    <div class="card-p1">
+        <a href="#">
+            <div class="thumb">
+                <img src="https://www.ds-pedia.com/wp-content/uploads/2026/09/image-33.jpg" alt="test">
+            </div>
+            <div class="content">
+                <p class="title">Web・UIデザインの厳選フォント集！失敗しない和欧ペアリングのコツ</p>
+                <p class="excerpt">WebサイトやアプリのUX/UIデザインで、フォント選定やタイポグラフィに迷っていませんか？現場で使える定番フォントと和欧混植の基本を解説。</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="sp-container">
+    <h2>SP Preview (Width: 130px, Aspect: 16/9 = 73px height)</h2>
+    <div class="card-sp">
+        <a href="#">
+            <div class="thumb">
+                <img src="https://www.ds-pedia.com/wp-content/uploads/2026/09/image-33.jpg" alt="test">
+            </div>
+            <div class="content">
+                <p class="title">Web・UIデザインの厳選フォント集！失敗しないペアリングのコツ</p>
+                <p class="excerpt">WebサイトやアプリのUIデザインでフォント選定に迷っていませんか？</p>
+            </div>
+        </a>
+    </div>
+</div>
+</body>
+</html>
