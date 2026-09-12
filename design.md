@@ -699,7 +699,59 @@
   - **×ボタン / ESCキー**: 右上ボタンのタップ、またはキーボードの `Escape` キー押下でも閉じられます。
   - **スクロールロック**: モーダル表示中は背面ページ（body）のスクロールを自動停止し、誤スクロールを抑止。
   - **カーソル表示**: マウス操作時（`@media (hover: hover)`）では対象画像に `cursor: zoom-in`、オーバーレイ背景に `cursor: zoom-out` が適用され、直感的な操作を促します。
-- **除外仕様**: ブログカード内のサムネイル（`.blogcard img`）、SNSシェアボタン、広告、および別ページへの通常リンク画像は誤作動防止のため自動除外されます。
+---
+
+### 26. `.c-affiliate-card` — 文脈連動アフィリエイトカード（おすすめ書籍・ツール）
+**ファイル**: `_affiliate-card.scss`, `functions.php`, `single.php`
+
+```html
+<aside class="c-affiliate-card">
+  <div class="c-affiliate-card__inner">
+    <div class="c-affiliate-card__thumb-wrap">
+      <a href="https://amazon.co.jp/..." class="c-affiliate-card__thumb-link" target="_blank" rel="noopener noreferrer nofollow">
+        <img src="book-thumb.jpg" alt="ノンデザイナーズ・デザインブック" class="c-affiliate-card__thumb" loading="lazy">
+      </a>
+    </div>
+    <div class="c-affiliate-card__content">
+      <div class="c-affiliate-card__badge-row">
+        <span class="c-affiliate-card__badge">
+          <svg class="c-affiliate-card__badge-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+          おすすめ書籍
+        </span>
+      </div>
+      <h4 class="c-affiliate-card__title">
+        <a href="https://amazon.co.jp/..." target="_blank" rel="noopener noreferrer nofollow">
+          ノンデザイナーズ・デザインブック [第4版]
+        </a>
+      </h4>
+      <div class="c-affiliate-card__comment">
+        <p class="c-affiliate-card__comment-text">デザインの4つの基本原則（近接・整列・反復・コントラスト）を直感的に学べる必読の名著。UI設計の基礎固めに最適です。</p>
+      </div>
+      <div class="c-affiliate-card__action">
+        <a href="https://amazon.co.jp/..." class="c-affiliate-card__btn c-affiliate-card__btn--amazon" target="_blank" rel="noopener noreferrer nofollow">
+          <svg class="c-affiliate-card__btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          <span>Amazonで詳細を見る</span>
+          <svg class="c-affiliate-card__external-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</aside>
+```
+
+- **ショートコード利用**:
+  ```text
+  [affiliate_card title="書籍名" url="https://..." image="https://..." comment="おすすめ理由" badge="おすすめ書籍" btn_text="Amazonで詳細を見る"]
+  ```
+- **カスタムフィールド対応**:
+  記事編集画面のカスタムフィールド（`affiliate_title`, `affiliate_url`, `affiliate_image`, `affiliate_comment`, `affiliate_badge`, `affiliate_btn_text`）を設定することで、記事末尾（シェアボタン後）に自動出力されます。
+- **デザイン・UI仕様**:
+  - **背景色・保護色対策**: コンテンツエリアの淡いブルー背景（`#f5f7ff`）と同化しないよう、カード背景は真っ白（`#ffffff`）にし、繊細なボーダー（`#e2e8f0`）と控えめなシャドウ（`box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04)`）で清潔に浮かせています。
+  - **書籍サムネイル**: 縦横比を綺麗に収めるコンテナで、書籍らしい立体感をもたせるドロップシャドウを適用。
+  - **推薦コメント**: 背景色 `#f8fafc` に左側のブランドブルーアクセントライン（`border-left: 3px solid #2B53EC`）をあしらい、信頼感のある引用・エディターコメントUIを構成。
+  - **Amazonボタン**: 高い視認性とクリック率を誇るアンバーオレンジグラデーション（`#FF9900`〜`#E67A00`）。
+  - **ホバー制御**: タップ端末での意図しないホバー残留を防ぐため、すべての `:hover` は `@media (hover: hover)` で制御。
+  - **レスポンシブ最適化**: SP表示（≤767px）では縦積みスタックに切り替わり、押しやすい全幅ボタンに自動フィット。さらにアフィリエイト枠設定記事ではSP時の記事下アドネットワーク広告を非表示にして広告過多・CPM暴落を抑制。
 
 ---
 

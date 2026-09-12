@@ -1,0 +1,277 @@
+@charset "UTF-8";
+
+// =====================================================
+// 文脈連動アフィリエイトカード (Affiliate Card) スタイル
+// =====================================================
+
+.c-affiliate-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    margin: 40px 0;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+
+    @media (hover: hover) {
+        &:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+        }
+    }
+
+    &__inner {
+        display: flex;
+        align-items: flex-start;
+        gap: 24px;
+    }
+
+    // サムネイル画像
+    &__thumb-wrap {
+        flex: 0 0 130px;
+        width: 130px;
+        max-width: 130px;
+        text-align: center;
+    }
+
+    &__thumb-link {
+        display: inline-block;
+        line-height: 0;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        overflow: hidden;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+        @media (hover: hover) {
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+            }
+        }
+    }
+
+    &__thumb {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-height: 180px;
+        object-fit: contain;
+        background-color: #f8fafc;
+        border-radius: 6px;
+    }
+
+    // コンテンツ本体
+    &__content {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    // バッジ
+    &__badge-row {
+        margin-bottom: 8px;
+    }
+
+    &__badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #2B53EC;
+        background-color: #eff4ff;
+        border: 1px solid #d0deff;
+        border-radius: 9999px;
+        padding: 3px 10px;
+        line-height: 1.2;
+
+        svg,
+        .lucide {
+            width: 13px;
+            height: 13px;
+            stroke-width: 2.2;
+        }
+    }
+
+    // タイトル
+    &__title {
+        font-size: 1.12rem;
+        font-weight: 700;
+        line-height: 1.5;
+        color: #1a1a1a;
+        margin-bottom: 12px;
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s ease;
+
+            @media (hover: hover) {
+                &:hover {
+                    color: #2B53EC;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    // 推薦コメント
+    &__comment {
+        background-color: #f8fafc;
+        border: 1px solid #eef2f6;
+        border-left: 3px solid #2B53EC;
+        border-radius: 6px;
+        padding: 12px 16px;
+        margin-bottom: 16px;
+
+        &-text {
+            font-size: 0.9rem;
+            line-height: 1.65;
+            color: #475569;
+            margin: 0;
+        }
+    }
+
+    // アクションボタン
+    &__action {
+        display: flex;
+        align-items: center;
+        margin-top: auto;
+    }
+
+    &__btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 11px 22px;
+        border-radius: 8px;
+        font-size: 0.92rem;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        line-height: 1;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+
+        svg,
+        .lucide {
+            display: block;
+            flex-shrink: 0;
+        }
+
+        &--amazon {
+            background: linear-gradient(135deg, #FF9900 0%, #E67A00 100%);
+            color: #ffffff;
+            box-shadow: 0 3px 10px rgba(230, 122, 0, 0.25);
+
+            @media (hover: hover) {
+                &:hover {
+                    transform: translateY(-2px);
+                    filter: brightness(1.05);
+                    box-shadow: 0 5px 14px rgba(230, 122, 0, 0.35);
+                    color: #ffffff;
+                }
+            }
+
+            &:active {
+                transform: translateY(0);
+                box-shadow: 0 2px 6px rgba(230, 122, 0, 0.3);
+            }
+        }
+    }
+
+    // サムネイルなしの場合
+    &--no-image {
+        .c-affiliate-card__inner {
+            display: block;
+        }
+    }
+}
+
+// 広告ウィジェット共通スタイル
+.ad-widget {
+    margin-top: 32px;
+    margin-bottom: 32px;
+    text-align: center;
+
+    &__label {
+        font-size: 10px;
+        color: #999999;
+        display: block;
+        margin-bottom: 6px;
+        letter-spacing: 0.05em;
+    }
+
+    &--bottom {
+        margin-top: 36px;
+        margin-bottom: 36px;
+    }
+}
+
+// =====================================================
+// スマートフォン向け表示 (≤ 767px)
+// =====================================================
+@media screen and (max-width: 767px) {
+    .c-affiliate-card {
+        padding: 18px 16px;
+        margin: 32px 0;
+
+        &__inner {
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        &__thumb-wrap {
+            flex: 0 0 auto;
+            width: 100px;
+            max-width: 100px;
+            margin: 0 auto;
+        }
+
+        &__thumb {
+            max-height: 140px;
+        }
+
+        &__content {
+            width: 100%;
+        }
+
+        &__badge-row {
+            text-align: left;
+        }
+
+        &__title {
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+        }
+
+        &__comment {
+            padding: 10px 14px;
+            margin-bottom: 14px;
+
+            &-text {
+                font-size: 0.85rem;
+                line-height: 1.6;
+            }
+        }
+
+        &__action {
+            width: 100%;
+        }
+
+        &__btn {
+            width: 100%;
+            padding: 13px 16px;
+            font-size: 0.95rem;
+        }
+    }
+
+    .ad-widget {
+        margin-top: 24px;
+        margin-bottom: 24px;
+    }
+}

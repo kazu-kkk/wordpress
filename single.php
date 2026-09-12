@@ -59,16 +59,24 @@ get_header(); ?>
                     <?php get_template_part('template-parts/share-buttons'); ?>
 
                     <?php
-                    // ── 関連記事セクション ──────────────────────────────────────
-                    $related_posts = [];
+                    // 文脈連動アフィリエイトカード（おすすめ書籍・関連ツール）
+                    $affiliate_data = inspiro_child_get_post_affiliate( get_the_ID() );
+                    if ( $affiliate_data ) :
+                        echo inspiro_child_render_affiliate_card( $affiliate_data );
+                    endif;
 
-                    // クリティカルに刺さる関連記事を取得（手動指定優先 ＋ タグ一致数スコアリング）
-                    $related_posts = inspiro_child_get_critical_related_posts(get_the_ID(), 3);
+                    // 記事下広告エリア
+                    // ※スマホ表示時かつアフィリエイト枠がある場合は、過剰な広告枠によるバナー無視・CPM低下を防ぐためアドネットワークを非表示に最適化
+                    $show_bottom_ad = true;
+                    if ( wp_is_mobile() && $affiliate_data ) {
+                        $show_bottom_ad = false;
+                    }
 
-                    if ($related_posts) : ?>
+                    if ( $show_bottom_ad ) :
+                    ?>
                     <!-- 記事下広告 -->
-                    <div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
-                        <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
+                    <div class="ad-widget ad-widget--bottom">
+                        <span class="ad-widget__label">スポンサーリンク</span>
                         <?php if ( wp_is_mobile() ) : ?>
                         <div id="im-d42fdd9186c2432aa61cd743ae247b05">
                             <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
@@ -81,6 +89,16 @@ get_header(); ?>
                         </div>
                         <?php endif; ?>
                     </div>
+                    <?php endif; ?>
+
+                    <?php
+                    // ── 関連記事セクション ──────────────────────────────────────
+                    $related_posts = [];
+
+                    // クリティカルに刺さる関連記事を取得（手動指定優先 ＋ タグ一致数スコアリング）
+                    $related_posts = inspiro_child_get_critical_related_posts(get_the_ID(), 3);
+
+                    if ($related_posts) : ?>
                     <section class="related-posts">
                         <h2 class="related-posts__title">この記事も読まれています</h2>
                         <div class="new-article-list">

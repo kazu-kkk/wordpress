@@ -698,6 +698,23 @@ if (isset($_GET['component_preview'])) {
                 </div>
                 <?php
                 break;
+
+            case 'c-affiliate':
+                ?>
+                <div style="max-width: 760px; margin: 0 auto; padding: 10px;">
+                    <?php
+                    echo inspiro_child_render_affiliate_card( array(
+                        'title'    => 'ノンデザイナーズ・デザインブック [第4版]',
+                        'url'      => 'https://www.amazon.co.jp/dp/483995555X',
+                        'image'    => get_stylesheet_directory_uri() . '/assets/images/yuny_logo.png',
+                        'comment'  => 'デザインの4大原則（近接・整列・反復・コントラスト）が具体例とともに平易に解説された名著。非デザイナーやエンジニアがUI/Webデザインの基礎を身につけるための必読書です。',
+                        'badge'    => 'おすすめ書籍',
+                        'btn_text' => 'Amazonで詳細を見る',
+                    ) );
+                    ?>
+                </div>
+                <?php
+                break;
         }
         ?>
         <?php wp_footer(); ?>
@@ -1459,6 +1476,7 @@ if (isset($_GET['component_preview'])) {
                     <a href="#c-reading-list"><i data-lucide="bookmark"></i> 21. Reading List</a>
                     <a href="#c-quick-answer"><i data-lucide="message-square-check"></i> 22. Quick Answer</a>
                     <a href="#c-image-lightbox"><i data-lucide="zoom-in"></i> 23. Image Lightbox</a>
+                    <a href="#c-affiliate"><i data-lucide="shopping-bag"></i> 24. Affiliate Card</a>
                 </div>
             </aside>
 
@@ -2758,6 +2776,77 @@ if (isset($_GET['component_preview'])) {
                     </div>
                 </section>
 
+                <section id="c-affiliate" class="showcase-section">
+                    <h2 class="showcase-section-title">
+                        <span class="title-group"><span class="section-num">24</span> 文脈連動アフィリエイトカード (Affiliate Card)</span>
+                        <span class="showcase-section-meta">_affiliate-card.scss / functions.php</span>
+                    </h2>
+                    <p class="showcase-desc">
+                        記事末尾（シェアボタン後）に記事内容と文脈連動したおすすめ書籍や関連ツールを清潔に紹介するカードUIです。カスタムフィールド（<code>affiliate_url</code> 等）による自動出力およびショートコード <code>[affiliate_card]</code> の両方に対応しています。
+                    </p>
+
+                    <div class="showcase-preview-wrapper" data-comp="c-affiliate">
+                        <div class="showcase-control-bar">
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">Width:</span>
+                                <button class="showcase-ctrl-btn active" data-width="100%">PC</button>
+                                <button class="showcase-ctrl-btn" data-width="768px">Tablet</button>
+                                <button class="showcase-ctrl-btn" data-width="375px">Mobile</button>
+                            </div>
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">BG:</span>
+                                <button class="showcase-bg-btn active" data-bg="default"></button>
+                                <button class="showcase-bg-btn" data-bg="white"></button>
+                                <button class="showcase-bg-btn" data-bg="gray"></button>
+                                <button class="showcase-bg-btn" data-bg="dark"></button>
+                            </div>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
+                        </div>
+                        <div class="showcase-preview-box">
+                            <iframe src="<?php echo add_query_arg('component_preview', 'c-affiliate'); ?>" class="showcase-iframe" data-comp="c-affiliate" style="height: 320px;"></iframe>
+                        </div>
+                        <div class="showcase-code-box">
+                            <pre><code class="html-code">&lt;!-- 1. ショートコードによる本文中呼び出し --&gt;
+[affiliate_card
+  title="ノンデザイナーズ・デザインブック [第4版]"
+  url="https://www.amazon.co.jp/dp/..."
+  image="https://example.com/thumb.jpg"
+  comment="デザインの4大原則を平易に解説した名著。UI/Webデザインの基礎固めに最適です。"
+  badge="おすすめ書籍"
+  btn_text="Amazonで詳細を見る"
+]
+
+&lt;!-- 2. HTML構造（カスタムフィールド設定時は single.php から自動出力） --&gt;
+&lt;aside class="c-affiliate-card"&gt;
+  &lt;div class="c-affiliate-card__inner"&gt;
+    &lt;div class="c-affiliate-card__thumb-wrap"&gt;
+      &lt;a href="https://amazon.co.jp/..." class="c-affiliate-card__thumb-link" target="_blank" rel="noopener noreferrer nofollow"&gt;
+        &lt;img src="book-thumb.jpg" alt="タイトル" class="c-affiliate-card__thumb" loading="lazy"&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class="c-affiliate-card__content"&gt;
+      &lt;div class="c-affiliate-card__badge-row"&gt;
+        &lt;span class="c-affiliate-card__badge"&gt;おすすめ書籍&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h4 class="c-affiliate-card__title"&gt;
+        &lt;a href="https://amazon.co.jp/..." target="_blank" rel="noopener noreferrer nofollow"&gt;書籍・ツールタイトル&lt;/a&gt;
+      &lt;/h4&gt;
+      &lt;div class="c-affiliate-card__comment"&gt;
+        &lt;p class="c-affiliate-card__comment-text"&gt;推薦コメントが入ります。&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="c-affiliate-card__action"&gt;
+        &lt;a href="https://amazon.co.jp/..." class="c-affiliate-card__btn c-affiliate-card__btn--amazon" target="_blank" rel="noopener noreferrer nofollow"&gt;
+          &lt;span&gt;Amazonで詳細を見る&lt;/span&gt;
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/aside&gt;</code></pre>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
+                        </div>
+                    </div>
+                </section>
+
             </main>
         </div>
     </div>
@@ -2799,6 +2888,7 @@ if (isset($_GET['component_preview'])) {
             <a href="#c-reading-list"><i data-lucide="bookmark"></i> 21. Reading List</a>
             <a href="#c-quick-answer"><i data-lucide="message-square-check"></i> 22. Quick Answer</a>
             <a href="#c-image-lightbox"><i data-lucide="zoom-in"></i> 23. Image Lightbox</a>
+            <a href="#c-affiliate"><i data-lucide="shopping-bag"></i> 24. Affiliate Card</a>
         </div>
     </div>
 </div>

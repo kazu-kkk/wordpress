@@ -880,52 +880,12 @@ if ( ! function_exists( 'inspiro_entry_meta' ) ) {
 
 /**
  * 記事本文の中段（3段落目の後）に広告を挿入する
+ * ※読書体験の阻害・離脱防止、およびCPM暴落改善のため無効化
  */
 function inspiro_child_mid_content_ad( $content ) {
-    if ( ! is_single() ) {
-        return $content;
-    }
-
-    if ( wp_is_mobile() ) {
-        $ad_html = '
-<div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
-    <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
-    <div id="im-3466812c78e74fe0b5e01955bfb6b059">
-        <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1940492,type:"banner",display:"inline",elementid:"im-3466812c78e74fe0b5e01955bfb6b059"})</script>
-    </div>
-</div>';
-    } else {
-        $ad_html = '
-<div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
-    <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
-    <div id="im-85786e2981794fb492a0489b6f3c5181">
-        <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1940486,type:"banner",display:"inline",elementid:"im-85786e2981794fb492a0489b6f3c5181"})</script>
-    </div>
-</div>';
-    }
-
-    // 文の流れを壊さないよう、2番目の <h2> タグの直前に挿入する
-    $pattern = '/<h2/i';
-    
-    $count_h2 = 0;
-    $new_content = preg_replace_callback( $pattern, function($matches) use (&$count_h2, $ad_html) {
-        $count_h2++;
-        if ( $count_h2 === 2 ) {
-            return $ad_html . $matches[0];
-        }
-        return $matches[0];
-    }, $content, -1, $count );
-    
-    // <h2>が2つ以上存在した場合は挿入したコンテンツを返す。ない場合は無理に挿入しない。
-    if ( $count_h2 >= 2 ) {
-        return $new_content;
-    }
-
     return $content;
 }
-add_filter( 'the_content', 'inspiro_child_mid_content_ad', 25 );
+// add_filter( 'the_content', 'inspiro_child_mid_content_ad', 25 ); // 無効化
 
 
 /**
@@ -1164,3 +1124,162 @@ function inspiro_child_convert_quick_answer($content) {
     return $content;
 }
 add_filter('the_content', 'inspiro_child_convert_quick_answer', 15);
+
+/**
+ * 記事のカスタムフィールドから文脈連動アフィリエイト情報を取得
+ */
+function inspiro_child_get_post_affiliate( $post_id = null ) {
+    if ( ! $post_id ) {
+        $post_id = get_the_ID();
+    }
+    if ( ! $post_id ) {
+        return false;
+    }
+
+    // 対応カスタムフィールド（優先順にフォールバック）
+    $title = get_post_meta( $post_id, 'affiliate_title', true );
+    if ( empty( $title ) ) {
+        $title = get_post_meta( $post_id, 'recommend_title', true );
+    }
+
+    $url = get_post_meta( $post_id, 'affiliate_url', true );
+    if ( empty( $url ) ) {
+        $url = get_post_meta( $post_id, 'recommend_url', true );
+    }
+    if ( empty( $url ) ) {
+        $url = get_post_meta( $post_id, 'amazon_url', true );
+    }
+
+    // URLまたはタイトルがなければ未設定とみなす
+    if ( empty( $url ) && empty( $title ) ) {
+        return false;
+    }
+
+    $image = get_post_meta( $post_id, 'affiliate_image', true );
+    if ( empty( $image ) ) {
+        $image = get_post_meta( $post_id, 'recommend_image', true );
+    }
+
+    $comment = get_post_meta( $post_id, 'affiliate_comment', true );
+    if ( empty( $comment ) ) {
+        $comment = get_post_meta( $post_id, 'recommend_comment', true );
+    }
+
+    $badge = get_post_meta( $post_id, 'affiliate_badge', true );
+    if ( empty( $badge ) ) {
+        $badge = get_post_meta( $post_id, 'recommend_badge', true );
+    }
+    if ( empty( $badge ) ) {
+        $badge = 'おすすめ書籍・ツール';
+    }
+
+    $btn_text = get_post_meta( $post_id, 'affiliate_btn_text', true );
+    if ( empty( $btn_text ) ) {
+        $btn_text = get_post_meta( $post_id, 'recommend_btn_text', true );
+    }
+    if ( empty( $btn_text ) ) {
+        $btn_text = 'Amazonで詳細を見る';
+    }
+
+    return array(
+        'title'    => $title,
+        'url'      => $url,
+        'image'    => $image,
+        'comment'  => $comment,
+        'badge'    => $badge,
+        'btn_text' => $btn_text,
+    );
+}
+
+/**
+ * 文脈連動型アフィリエイトカードのHTMLレンダリング
+ */
+function inspiro_child_render_affiliate_card( $args = array() ) {
+    $defaults = array(
+        'title'    => '',
+        'url'      => '#',
+        'image'    => '',
+        'comment'  => '',
+        'badge'    => 'おすすめ書籍・ツール',
+        'btn_text' => 'Amazonで詳細を見る',
+        'class'    => '',
+    );
+    $data = wp_parse_args( $args, $defaults );
+
+    if ( empty( $data['title'] ) && empty( $data['url'] ) ) {
+        return '';
+    }
+
+    $card_classes = 'c-affiliate-card';
+    if ( ! empty( $data['class'] ) ) {
+        $card_classes .= ' ' . esc_attr( $data['class'] );
+    }
+    if ( empty( $data['image'] ) ) {
+        $card_classes .= ' c-affiliate-card--no-image';
+    }
+
+    ob_start();
+    ?>
+    <aside class="<?php echo esc_attr( $card_classes ); ?>">
+        <div class="c-affiliate-card__inner">
+            <?php if ( ! empty( $data['image'] ) ) : ?>
+            <div class="c-affiliate-card__thumb-wrap">
+                <a href="<?php echo esc_url( $data['url'] ); ?>" class="c-affiliate-card__thumb-link" target="_blank" rel="noopener noreferrer nofollow">
+                    <img src="<?php echo esc_url( $data['image'] ); ?>" alt="<?php echo esc_attr( $data['title'] ); ?>" class="c-affiliate-card__thumb" loading="lazy">
+                </a>
+            </div>
+            <?php endif; ?>
+            <div class="c-affiliate-card__content">
+                <?php if ( ! empty( $data['badge'] ) ) : ?>
+                <div class="c-affiliate-card__badge-row">
+                    <span class="c-affiliate-card__badge">
+                        <svg class="c-affiliate-card__badge-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+                        <?php echo esc_html( $data['badge'] ); ?>
+                    </span>
+                </div>
+                <?php endif; ?>
+
+                <h4 class="c-affiliate-card__title">
+                    <a href="<?php echo esc_url( $data['url'] ); ?>" target="_blank" rel="noopener noreferrer nofollow">
+                        <?php echo esc_html( $data['title'] ); ?>
+                    </a>
+                </h4>
+
+                <?php if ( ! empty( $data['comment'] ) ) : ?>
+                <div class="c-affiliate-card__comment">
+                    <p class="c-affiliate-card__comment-text"><?php echo nl2br( esc_html( $data['comment'] ) ); ?></p>
+                </div>
+                <?php endif; ?>
+
+                <div class="c-affiliate-card__action">
+                    <a href="<?php echo esc_url( $data['url'] ); ?>" class="c-affiliate-card__btn c-affiliate-card__btn--amazon" target="_blank" rel="noopener noreferrer nofollow">
+                        <svg class="c-affiliate-card__btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                        <span><?php echo esc_html( $data['btn_text'] ); ?></span>
+                        <svg class="c-affiliate-card__external-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <?php
+    return ob_get_clean();
+}
+
+/**
+ * [affiliate_card] ショートコード
+ * 例: [affiliate_card title="書籍名" url="https://..." image="https://..." comment="推薦文" badge="おすすめ書籍" btn_text="Amazonで詳細を見る"]
+ */
+function inspiro_child_affiliate_card_shortcode( $atts ) {
+    $atts = shortcode_atts( array(
+        'title'    => '',
+        'url'      => '',
+        'image'    => '',
+        'comment'  => '',
+        'badge'    => 'おすすめ書籍・ツール',
+        'btn_text' => 'Amazonで詳細を見る',
+        'class'    => '',
+    ), $atts, 'affiliate_card' );
+
+    return inspiro_child_render_affiliate_card( $atts );
+}
+add_shortcode( 'affiliate_card', 'inspiro_child_affiliate_card_shortcode' );
