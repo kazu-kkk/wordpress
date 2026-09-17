@@ -4163,162 +4163,438 @@ body.lightbox-open {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
-.c-affiliate-card {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-  margin: 40px 0;
-  padding: 24px;
-  position: relative;
-  overflow: hidden;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
-}
-@media (hover: hover) {
-  .c-affiliate-card:hover {
-    border-color: #cbd5e1;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+@media screen and (width >= 767px) {
+  .blogcard--affiliate,
+  .c-affiliate-card {
+    display: flex;
+    width: 100%;
+    margin: 32px 0;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
-}
-.c-affiliate-card__inner {
-  display: flex;
-  align-items: flex-start;
-  gap: 24px;
-}
-.c-affiliate-card__thumb-wrap {
-  flex: 0 0 130px;
-  width: 130px;
-  max-width: 130px;
-  text-align: center;
-}
-.c-affiliate-card__thumb-link {
-  display: inline-block;
-  line-height: 0;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-@media (hover: hover) {
-  .c-affiliate-card__thumb-link:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  .blogcard--affiliate .blogcard_inner,
+  .c-affiliate-card .blogcard_inner {
+    flex: 1;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: stretch;
+    padding: 16px 20px;
+    gap: 20px;
   }
-}
-.c-affiliate-card__thumb {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 180px;
-  object-fit: contain;
-  background-color: #f8fafc;
-  border-radius: 6px;
-}
-.c-affiliate-card__content {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
-.c-affiliate-card__badge-row {
-  margin-bottom: 8px;
-}
-.c-affiliate-card__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #2B53EC;
-  background-color: #eff4ff;
-  border: 1px solid #d0deff;
-  border-radius: 9999px;
-  padding: 3px 10px;
-  line-height: 1.2;
-}
-.c-affiliate-card__badge svg,
-.c-affiliate-card__badge .lucide {
-  width: 13px;
-  height: 13px;
-  stroke-width: 2.2;
-}
-.c-affiliate-card__title {
-  font-size: 1.12rem;
-  font-weight: 700;
-  line-height: 1.5;
-  color: #1a1a1a;
-  margin-bottom: 12px;
-}
-.c-affiliate-card__title a {
-  color: inherit;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-@media (hover: hover) {
-  .c-affiliate-card__title a:hover {
+  .blogcard--affiliate .blogcard_thumbnail,
+  .c-affiliate-card .blogcard_thumbnail {
+    flex: 0 0 130px;
+    width: 130px;
+    min-height: 140px;
+    position: relative;
+    overflow: visible;
+    border-right: none;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    flex-shrink: 0;
+  }
+  .blogcard--affiliate .blogcard_thumbnail img,
+  .blogcard--affiliate .blogcard_thumbnail .c-affiliate-card__thumb,
+  .c-affiliate-card .blogcard_thumbnail img,
+  .c-affiliate-card .blogcard_thumbnail .c-affiliate-card__thumb {
+    position: relative;
+    width: auto;
+    max-width: 100%;
+    max-height: 140px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    background-color: #ffffff;
+    transform: none;
+    transition: none;
+  }
+  .blogcard--affiliate .blogcard_placeholder,
+  .c-affiliate-card .blogcard_placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background-color: #f2f6ff;
     color: #2B53EC;
-    text-decoration: underline;
+    border-radius: 4px;
+    border: 1px dashed #d0deff;
+    transform: none;
+    transition: none;
   }
-}
-.c-affiliate-card__comment {
-  background-color: #f8fafc;
-  border: 1px solid #eef2f6;
-  border-left: 3px solid #2B53EC;
-  border-radius: 6px;
-  padding: 12px 16px;
-  margin-bottom: 16px;
-}
-.c-affiliate-card__comment-text {
-  font-size: 0.9rem;
-  line-height: 1.65;
-  color: #475569;
-  margin: 0;
-}
-.c-affiliate-card__action {
-  display: flex;
-  align-items: center;
-  margin-top: auto;
-}
-.c-affiliate-card__btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 11px 22px;
-  border-radius: 8px;
-  font-size: 0.92rem;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-  line-height: 1;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-}
-.c-affiliate-card__btn svg,
-.c-affiliate-card__btn .lucide {
-  display: block;
-  flex-shrink: 0;
-}
-.c-affiliate-card__btn--amazon {
-  background: linear-gradient(135deg, #FF9900 0%, #E67A00 100%);
-  color: #ffffff;
-  box-shadow: 0 3px 10px rgba(230, 122, 0, 0.25);
-}
-@media (hover: hover) {
-  .c-affiliate-card__btn--amazon:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.05);
-    box-shadow: 0 5px 14px rgba(230, 122, 0, 0.35);
+  .blogcard--affiliate .blogcard_placeholder-icon,
+  .c-affiliate-card .blogcard_placeholder-icon {
+    width: 30px;
+    height: 30px;
+    stroke-width: 1.8;
+    opacity: 0.9;
+  }
+  .blogcard--affiliate .blogcard_placeholder-label,
+  .c-affiliate-card .blogcard_placeholder-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    opacity: 0.8;
+  }
+  .blogcard--affiliate .blogcard_content,
+  .c-affiliate-card .blogcard_content {
+    flex: 1;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+    overflow: hidden;
+    width: 0;
+  }
+  .blogcard--affiliate .blogcard_meta,
+  .c-affiliate-card .blogcard_meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .blogcard--affiliate .blogcard_badge,
+  .c-affiliate-card .blogcard_badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #2B53EC;
+    background-color: #eff4ff;
+    border: 1px solid #dbeafe;
+    border-radius: 4px;
+    padding: 2px 7px;
+    line-height: 1.2;
+  }
+  .blogcard--affiliate .blogcard_badge svg,
+  .blogcard--affiliate .blogcard_badge .lucide,
+  .c-affiliate-card .blogcard_badge svg,
+  .c-affiliate-card .blogcard_badge .lucide {
+    width: 12px;
+    height: 12px;
+    stroke-width: 2.2;
+  }
+  .blogcard--affiliate .blogcard_source,
+  .c-affiliate-card .blogcard_source {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #9ca3af;
+  }
+  .blogcard--affiliate .blogcard_source svg,
+  .blogcard--affiliate .blogcard_source .lucide,
+  .c-affiliate-card .blogcard_source svg,
+  .c-affiliate-card .blogcard_source .lucide {
+    width: 11px;
+    height: 11px;
+  }
+  .blogcard--affiliate .blogcard_title,
+  .blogcard--affiliate .c-affiliate-card__title,
+  .c-affiliate-card .blogcard_title,
+  .c-affiliate-card .c-affiliate-card__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 10px;
+    line-height: 1.45;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .blogcard--affiliate .blogcard_excerpt,
+  .c-affiliate-card .blogcard_excerpt {
+    font-size: 0.86rem;
+    color: #4b5563;
+    margin-bottom: 12px;
+    line-height: 1.55;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .blogcard--affiliate .blogcard_action,
+  .c-affiliate-card .blogcard_action {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto;
+  }
+  .blogcard--affiliate .blogcard_cta,
+  .c-affiliate-card .blogcard_cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
     color: #ffffff;
+    background-color: #2B53EC;
+    border-radius: 6px;
+    padding: 7px 15px;
+    line-height: 1;
+    transition: background-color 0.2s ease;
+  }
+  .blogcard--affiliate .blogcard_cta svg,
+  .blogcard--affiliate .blogcard_cta .lucide,
+  .c-affiliate-card .blogcard_cta svg,
+  .c-affiliate-card .blogcard_cta .lucide {
+    display: block;
+    flex-shrink: 0;
+  }
+  .blogcard--affiliate .blogcard_cta-cart,
+  .c-affiliate-card .blogcard_cta-cart {
+    width: 13px;
+    height: 13px;
+  }
+  .blogcard--affiliate .blogcard_cta-arrow,
+  .c-affiliate-card .blogcard_cta-arrow {
+    width: 12px;
+    height: 12px;
+    transition: transform 0.2s ease;
   }
 }
-.c-affiliate-card__btn--amazon:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(230, 122, 0, 0.3);
+@media screen and (width >= 767px) and (hover: hover) {
+  .blogcard--affiliate:hover,
+  .c-affiliate-card:hover {
+    transform: translateY(-2px);
+    border-color: #2B53EC;
+    box-shadow: 0 6px 20px rgba(43, 83, 236, 0.08);
+  }
+  .blogcard--affiliate:hover .blogcard_thumbnail img,
+  .blogcard--affiliate:hover .blogcard_thumbnail .c-affiliate-card__thumb, .blogcard--affiliate:hover.blogcard .blogcard_thumbnail img,
+  .c-affiliate-card:hover .blogcard_thumbnail img,
+  .c-affiliate-card:hover .blogcard_thumbnail .c-affiliate-card__thumb,
+  .c-affiliate-card:hover.blogcard .blogcard_thumbnail img {
+    transform: none;
+  }
+  .blogcard--affiliate:hover .blogcard_title,
+  .blogcard--affiliate:hover .c-affiliate-card__title,
+  .c-affiliate-card:hover .blogcard_title,
+  .c-affiliate-card:hover .c-affiliate-card__title {
+    color: #2B53EC;
+  }
+  .blogcard--affiliate:hover .blogcard_cta,
+  .c-affiliate-card:hover .blogcard_cta {
+    background-color: #1b3ec2;
+  }
+  .blogcard--affiliate:hover .blogcard_cta .blogcard_cta-arrow,
+  .c-affiliate-card:hover .blogcard_cta .blogcard_cta-arrow {
+    transform: translateX(2px);
+  }
 }
-.c-affiliate-card--no-image .c-affiliate-card__inner {
-  display: block;
+@media screen and (width <= 767px) {
+  .blogcard--affiliate,
+  .c-affiliate-card {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    margin: 24px 0;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .blogcard--affiliate .blogcard_inner,
+  .c-affiliate-card .blogcard_inner {
+    flex: 1;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: stretch;
+    padding: 12px 14px;
+    gap: 14px;
+  }
+  .blogcard--affiliate .blogcard_thumbnail,
+  .c-affiliate-card .blogcard_thumbnail {
+    flex: 0 0 85px;
+    width: 85px;
+    min-height: 90px;
+    position: relative;
+    overflow: visible;
+    border-right: none;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    flex-shrink: 0;
+  }
+  .blogcard--affiliate .blogcard_thumbnail img,
+  .blogcard--affiliate .blogcard_thumbnail .c-affiliate-card__thumb,
+  .c-affiliate-card .blogcard_thumbnail img,
+  .c-affiliate-card .blogcard_thumbnail .c-affiliate-card__thumb {
+    position: relative;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 85px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    border-radius: 3px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    background-color: #ffffff;
+    transform: none;
+    transition: none;
+  }
+  .blogcard--affiliate .blogcard_placeholder,
+  .c-affiliate-card .blogcard_placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 85px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background-color: #f2f6ff;
+    color: #2B53EC;
+    border-radius: 3px;
+    border: 1px dashed #d0deff;
+    transform: none;
+    transition: none;
+  }
+  .blogcard--affiliate .blogcard_placeholder-icon,
+  .c-affiliate-card .blogcard_placeholder-icon {
+    width: 22px;
+    height: 22px;
+  }
+  .blogcard--affiliate .blogcard_placeholder-label,
+  .c-affiliate-card .blogcard_placeholder-label {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .blogcard--affiliate .blogcard_content,
+  .c-affiliate-card .blogcard_content {
+    flex: 1;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+    overflow: hidden;
+    width: 0;
+  }
+  .blogcard--affiliate .blogcard_meta,
+  .c-affiliate-card .blogcard_meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .blogcard--affiliate .blogcard_badge,
+  .c-affiliate-card .blogcard_badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 9px;
+    font-weight: 700;
+    color: #2B53EC;
+    background-color: #eff4ff;
+    border: 1px solid #dbeafe;
+    border-radius: 3px;
+    padding: 1px 5px;
+    line-height: 1.2;
+  }
+  .blogcard--affiliate .blogcard_badge svg,
+  .blogcard--affiliate .blogcard_badge .lucide,
+  .c-affiliate-card .blogcard_badge svg,
+  .c-affiliate-card .blogcard_badge .lucide {
+    width: 10px;
+    height: 10px;
+  }
+  .blogcard--affiliate .blogcard_source,
+  .c-affiliate-card .blogcard_source {
+    font-size: 9px;
+    color: #9ca3af;
+  }
+  .blogcard--affiliate .blogcard_source svg,
+  .blogcard--affiliate .blogcard_source .lucide,
+  .c-affiliate-card .blogcard_source svg,
+  .c-affiliate-card .blogcard_source .lucide {
+    width: 9px;
+    height: 9px;
+  }
+  .blogcard--affiliate .blogcard_title,
+  .blogcard--affiliate .c-affiliate-card__title,
+  .c-affiliate-card .blogcard_title,
+  .c-affiliate-card .c-affiliate-card__title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 8px;
+    line-height: 1.45;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-decoration: none;
+  }
+  .blogcard--affiliate .blogcard_excerpt,
+  .c-affiliate-card .blogcard_excerpt {
+    font-size: 0.78rem;
+    color: #4b5563;
+    margin-bottom: 6px;
+    line-height: 1.45;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .blogcard--affiliate .blogcard_action,
+  .c-affiliate-card .blogcard_action {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto;
+  }
+  .blogcard--affiliate .blogcard_cta,
+  .c-affiliate-card .blogcard_cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #2B53EC;
+    border-radius: 4px;
+    padding: 5px 10px;
+    line-height: 1;
+  }
+  .blogcard--affiliate .blogcard_cta-cart,
+  .c-affiliate-card .blogcard_cta-cart {
+    width: 11px;
+    height: 11px;
+  }
+  .blogcard--affiliate .blogcard_cta-arrow,
+  .c-affiliate-card .blogcard_cta-arrow {
+    width: 10px;
+    height: 10px;
+  }
 }
-
 .ad-widget {
   margin-top: 32px;
   margin-bottom: 32px;
@@ -4335,55 +4611,167 @@ body.lightbox-open {
   margin-top: 36px;
   margin-bottom: 36px;
 }
-
 @media screen and (max-width: 767px) {
-  .c-affiliate-card {
-    padding: 18px 16px;
-    margin: 32px 0;
-  }
-  .c-affiliate-card__inner {
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-  }
-  .c-affiliate-card__thumb-wrap {
-    flex: 0 0 auto;
-    width: 100px;
-    max-width: 100px;
-    margin: 0 auto;
-  }
-  .c-affiliate-card__thumb {
-    max-height: 140px;
-  }
-  .c-affiliate-card__content {
-    width: 100%;
-  }
-  .c-affiliate-card__badge-row {
-    text-align: left;
-  }
-  .c-affiliate-card__title {
-    font-size: 1.05rem;
-    margin-bottom: 10px;
-  }
-  .c-affiliate-card__comment {
-    padding: 10px 14px;
-    margin-bottom: 14px;
-  }
-  .c-affiliate-card__comment-text {
-    font-size: 0.85rem;
-    line-height: 1.6;
-  }
-  .c-affiliate-card__action {
-    width: 100%;
-  }
-  .c-affiliate-card__btn {
-    width: 100%;
-    padding: 13px 16px;
-    font-size: 0.95rem;
-  }
   .ad-widget {
     margin-top: 24px;
     margin-bottom: 24px;
+  }
+}
+
+.code-block-wrapper {
+  position: relative;
+  margin: 32px 0;
+  border-radius: 10px;
+  background-color: #14171f;
+  border: 1px solid #2d3343;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.code-block-wrapper pre,
+.code-block-wrapper pre.wp-block-code {
+  margin: 0;
+  padding: 20px 90px 20px 20px;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  overflow-x: auto;
+  color: #f1f5f9;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.65;
+  tab-size: 4;
+  -webkit-overflow-scrolling: touch;
+}
+.code-block-wrapper pre code,
+.code-block-wrapper pre.wp-block-code code {
+  background: transparent;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  white-space: pre;
+  word-break: normal;
+  word-wrap: normal;
+}
+.code-block-wrapper pre::-webkit-scrollbar,
+.code-block-wrapper pre.wp-block-code::-webkit-scrollbar {
+  height: 6px;
+}
+.code-block-wrapper pre::-webkit-scrollbar-track,
+.code-block-wrapper pre.wp-block-code::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+}
+.code-block-wrapper pre::-webkit-scrollbar-thumb,
+.code-block-wrapper pre.wp-block-code::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+@media (hover: hover) {
+  .code-block-wrapper pre::-webkit-scrollbar-thumb:hover,
+  .code-block-wrapper pre.wp-block-code::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.35);
+  }
+}
+
+.code-block__copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background-color: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  color: #cbd5e1;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+.code-block__copy-btn .code-block__icon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+@media (hover: hover) {
+  .code-block__copy-btn:hover {
+    background-color: rgba(43, 83, 236, 0.35);
+    border-color: #2b53ec;
+    color: #ffffff;
+  }
+  .code-block__copy-btn:hover .code-block__icon--copy {
+    transform: scale(1.1);
+  }
+}
+.code-block__copy-btn:active {
+  transform: scale(0.96);
+}
+.code-block__copy-btn.is-copied {
+  background-color: rgba(16, 185, 129, 0.25);
+  border-color: #10b981;
+  color: #10b981;
+}
+.code-block__copy-btn.is-copied .code-block__icon--check {
+  animation: codeCheckPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes codeCheckPop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.article-text p code,
+.article-text li code,
+.content p code,
+.content li code {
+  background-color: rgba(0, 0, 0, 0.05);
+  border: none;
+  box-shadow: none;
+  color: #1f2937;
+  padding: 1px 5px;
+  margin: 0 2px;
+  border-radius: 4px;
+  font-size: 0.88em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  vertical-align: baseline;
+}
+
+@media screen and (max-width: 767px) {
+  .code-block-wrapper {
+    margin: 24px 0;
+    border-radius: 8px;
+  }
+  .code-block-wrapper pre,
+  .code-block-wrapper pre.wp-block-code {
+    padding: 16px 75px 16px 14px;
+    font-size: 13px;
+  }
+  .code-block__copy-btn {
+    top: 8px;
+    right: 8px;
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  .code-block__copy-btn .code-block__icon {
+    width: 12px;
+    height: 12px;
   }
 }
 * {

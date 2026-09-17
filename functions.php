@@ -233,6 +233,17 @@ function inspiro_child_enqueue_scripts() {
         );
     }
 
+    // 記事・固定ページ・コンポーネント検証ページでコードブロック（コピペ機能）JSを読み込む
+    if (is_single() || is_page() || is_page_template('page-templates/page-components.php')) {
+        wp_enqueue_script(
+            'inspiro-code-block',
+            get_stylesheet_directory_uri() . '/assets/js/code-block.js',
+            array(),
+            $get_file_version('/assets/js/code-block.js'),
+            true
+        );
+    }
+
     // 全ページ共通のアナリティクスイベント計測JS
     wp_enqueue_script(
         'inspiro-analytics-events',
@@ -1181,6 +1192,11 @@ function inspiro_child_get_post_affiliate( $post_id = null ) {
         $btn_text = 'Amazonで詳細を見る';
     }
 
+    // 画像が空の場合はURLから自動取得を試行
+    if ( empty( $image ) && ! empty( $url ) ) {
+        $image = inspiro_child_fetch_affiliate_image( $url );
+    }
+
     return array(
         'title'    => $title,
         'url'      => $url,
@@ -1189,6 +1205,69 @@ function inspiro_child_get_post_affiliate( $post_id = null ) {
         'badge'    => $badge,
         'btn_text' => $btn_text,
     );
+}
+
+/**
+ * URL（Amazonや外部Webサイト）からサムネイル・商品画像を取得
+ */
+function inspiro_child_fetch_affiliate_image( $url ) {
+    if ( empty( $url ) ) {
+        return '';
+    }
+
+    $cache_key = 'aff_img_v2_' . md5( $url );
+    $cached = get_transient( $cache_key );
+    if ( $cached !== false ) {
+        return $cached;
+    }
+
+    require_once get_stylesheet_directory() . '/OpenGraph.php';
+
+    $target_url = $url;
+    $image_url  = '';
+
+    // amzn.to などの短縮URLの場合、リダイレクト先を追跡して本URLを取得
+    if ( preg_match( '/https?:\/\/(?:amzn\.to|amzn\.asia)\//i', $target_url ) ) {
+        $res = wp_remote_head( $target_url, array(
+            'redirection' => 5,
+            'timeout'     => 10,
+            'user-agent'  => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        ) );
+        if ( ! is_wp_error( $res ) ) {
+            $http_response = $res['http_response'] ?? null;
+            if ( $http_response ) {
+                $final_url = $http_response->get_response_object()->url ?? '';
+                if ( ! empty( $final_url ) ) {
+                    $target_url = $final_url;
+                }
+            }
+        }
+    }
+
+    // Amazon URLの場合、ASINから確実に高解像度商品画像を生成
+    if ( OpenGraph::isAmazonUrl( $target_url ) ) {
+        $asin = OpenGraph::extractAsin( $target_url );
+        if ( $asin ) {
+            $image_url = 'https://images-na.ssl-images-amazon.com/images/P/' . $asin . '.01.MAIN._SL500_.jpg';
+        }
+    }
+
+    // ASINで取れない場合、またはAmazon以外のURLの場合は OpenGraph::fetch を実行
+    if ( empty( $image_url ) ) {
+        $graph = OpenGraph::fetch( $target_url );
+        if ( $graph !== false && ! empty( $graph->image ) ) {
+            $image_url = $graph->image;
+        }
+    }
+
+    // 取得結果をトランジェントにキャッシュ保存
+    if ( ! empty( $image_url ) ) {
+        set_transient( $cache_key, $image_url, 7 * DAY_IN_SECONDS );
+    } else {
+        set_transient( $cache_key, '', 2 * HOUR_IN_SECONDS );
+    }
+
+    return $image_url;
 }
 
 /**
@@ -1210,56 +1289,63 @@ function inspiro_child_render_affiliate_card( $args = array() ) {
         return '';
     }
 
-    $card_classes = 'c-affiliate-card';
+    // 画像が空の場合はURLから自動取得
+    if ( empty( $data['image'] ) && ! empty( $data['url'] ) ) {
+        $data['image'] = inspiro_child_fetch_affiliate_image( $data['url'] );
+    }
+
+    $card_classes = 'blogcard blogcard--affiliate c-affiliate-card';
     if ( ! empty( $data['class'] ) ) {
         $card_classes .= ' ' . esc_attr( $data['class'] );
-    }
-    if ( empty( $data['image'] ) ) {
-        $card_classes .= ' c-affiliate-card--no-image';
     }
 
     ob_start();
     ?>
     <aside class="<?php echo esc_attr( $card_classes ); ?>">
-        <div class="c-affiliate-card__inner">
-            <?php if ( ! empty( $data['image'] ) ) : ?>
-            <div class="c-affiliate-card__thumb-wrap">
-                <a href="<?php echo esc_url( $data['url'] ); ?>" class="c-affiliate-card__thumb-link" target="_blank" rel="noopener noreferrer nofollow">
-                    <img src="<?php echo esc_url( $data['image'] ); ?>" alt="<?php echo esc_attr( $data['title'] ); ?>" class="c-affiliate-card__thumb" loading="lazy">
-                </a>
+        <a href="<?php echo esc_url( $data['url'] ); ?>" class="blogcard_inner" target="_blank" rel="noopener noreferrer nofollow">
+            <div class="blogcard_thumbnail">
+                <?php if ( ! empty( $data['image'] ) ) : ?>
+                    <img src="<?php echo esc_url( $data['image'] ); ?>" alt="<?php echo esc_attr( $data['title'] ); ?>" loading="lazy">
+                <?php else : ?>
+                    <div class="blogcard_placeholder">
+                        <svg class="blogcard_placeholder-icon" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+                        <span class="blogcard_placeholder-label">RECOMMEND</span>
+                    </div>
+                <?php endif; ?>
             </div>
-            <?php endif; ?>
-            <div class="c-affiliate-card__content">
-                <?php if ( ! empty( $data['badge'] ) ) : ?>
-                <div class="c-affiliate-card__badge-row">
-                    <span class="c-affiliate-card__badge">
-                        <svg class="c-affiliate-card__badge-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+            <div class="blogcard_content">
+                <div class="blogcard_meta">
+                    <?php if ( ! empty( $data['badge'] ) ) : ?>
+                    <span class="blogcard_badge">
+                        <svg class="blogcard_badge-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
                         <?php echo esc_html( $data['badge'] ); ?>
                     </span>
+                    <?php endif; ?>
+                    <span class="blogcard_source">
+                        <span>Amazon.co.jp</span>
+                        <svg class="blogcard_source-icon" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                    </span>
                 </div>
-                <?php endif; ?>
 
-                <h4 class="c-affiliate-card__title">
-                    <a href="<?php echo esc_url( $data['url'] ); ?>" target="_blank" rel="noopener noreferrer nofollow">
-                        <?php echo esc_html( $data['title'] ); ?>
-                    </a>
-                </h4>
+                <div class="blogcard_title">
+                    <?php echo esc_html( $data['title'] ); ?>
+                </div>
 
                 <?php if ( ! empty( $data['comment'] ) ) : ?>
-                <div class="c-affiliate-card__comment">
-                    <p class="c-affiliate-card__comment-text"><?php echo nl2br( esc_html( $data['comment'] ) ); ?></p>
+                <div class="blogcard_excerpt">
+                    <?php echo esc_html( $data['comment'] ); ?>
                 </div>
                 <?php endif; ?>
 
-                <div class="c-affiliate-card__action">
-                    <a href="<?php echo esc_url( $data['url'] ); ?>" class="c-affiliate-card__btn c-affiliate-card__btn--amazon" target="_blank" rel="noopener noreferrer nofollow">
-                        <svg class="c-affiliate-card__btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                <div class="blogcard_action">
+                    <span class="blogcard_cta">
+                        <svg class="blogcard_cta-cart" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
                         <span><?php echo esc_html( $data['btn_text'] ); ?></span>
-                        <svg class="c-affiliate-card__external-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-                    </a>
+                        <svg class="blogcard_cta-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </span>
                 </div>
             </div>
-        </div>
+        </a>
     </aside>
     <?php
     return ob_get_clean();

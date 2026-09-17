@@ -1,192 +1,441 @@
 @charset "UTF-8";
 
 // =====================================================
-// 文脈連動アフィリエイトカード (Affiliate Card) スタイル
+// 文脈連動アフィリエイトカード (ブログカード派生版) スタイル
 // =====================================================
 
-.c-affiliate-card {
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-    margin: 40px 0;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
-
-    @media (hover: hover) {
-        &:hover {
-            border-color: #cbd5e1;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
-        }
-    }
-
-    &__inner {
+// PC表示 (≥767px)
+@media screen and (width >= 767px) {
+    .blogcard--affiliate,
+    .c-affiliate-card {
         display: flex;
-        align-items: flex-start;
-        gap: 24px;
-    }
-
-    // サムネイル画像
-    &__thumb-wrap {
-        flex: 0 0 130px;
-        width: 130px;
-        max-width: 130px;
-        text-align: center;
-    }
-
-    &__thumb-link {
-        display: inline-block;
-        line-height: 0;
-        border-radius: 6px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        width: 100%;
+        margin: 32px 0;
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
         overflow: hidden;
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 
+        .blogcard_inner {
+            flex: 1;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: stretch;
+            padding: 16px 20px;
+            gap: 20px; // 仕切り線の代わりに自然な余白で分離
+        }
+
+        // サムネイルエリア (書籍・ツール用比率)
+        .blogcard_thumbnail {
+            flex: 0 0 130px;
+            width: 130px;
+            min-height: 140px;
+            position: relative;
+            overflow: visible;
+            border-right: none; // 縦の仕切り線を撤廃
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: center;
+            flex-shrink: 0;
+
+            img,
+            .c-affiliate-card__thumb {
+                position: relative;
+                width: auto;
+                max-width: 100%;
+                max-height: 140px;
+                object-fit: contain;
+                display: block;
+                margin: 0 auto;
+                border-radius: 4px; // 実物の本のような角丸
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); // 実物の本のような立体感・物性感
+                background-color: #ffffff;
+                transform: none;
+                transition: none;
+            }
+        }
+
+        // プレースホルダー（画像未設定時）
+        .blogcard_placeholder {
+            width: 100%;
+            height: 100%;
+            min-height: 130px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background-color: #f2f6ff;
+            color: #2B53EC;
+            border-radius: 4px;
+            border: 1px dashed #d0deff;
+            transform: none;
+            transition: none;
+
+            &-icon {
+                width: 30px;
+                height: 30px;
+                stroke-width: 1.8;
+                opacity: 0.9;
+            }
+
+            &-label {
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                opacity: 0.8;
+            }
+        }
+
+        // コンテンツエリア
+        .blogcard_content {
+            flex: 1;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 0;
+            overflow: hidden;
+            width: 0; // force flex child to shrink
+        }
+
+        // 上部メタ行 (バッジ & ドメイン)
+        .blogcard_meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .blogcard_badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #2B53EC;
+            background-color: #eff4ff;
+            border: 1px solid #dbeafe;
+            border-radius: 4px;
+            padding: 2px 7px;
+            line-height: 1.2;
+
+            svg,
+            .lucide {
+                width: 12px;
+                height: 12px;
+                stroke-width: 2.2;
+            }
+        }
+
+        .blogcard_source {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 11px;
+            font-weight: 500;
+            color: #9ca3af;
+
+            svg,
+            .lucide {
+                width: 11px;
+                height: 11px;
+            }
+        }
+
+        // タイトル（行間1.45、下余白10pxで文字組み最適化）
+        .blogcard_title,
+        .c-affiliate-card__title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 10px;
+            line-height: 1.45;
+            word-break: break-all;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        // 推薦コメント (抜粋スタイル)
+        .blogcard_excerpt {
+            font-size: 0.86rem;
+            color: #4b5563;
+            margin-bottom: 12px;
+            line-height: 1.55;
+            word-break: break-all;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        // 下部アクション (CTA)
+        .blogcard_action {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: auto;
+        }
+
+        .blogcard_cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #ffffff;
+            background-color: #2B53EC;
+            border-radius: 6px;
+            padding: 7px 15px;
+            line-height: 1;
+            transition: background-color 0.2s ease;
+
+            svg,
+            .lucide {
+                display: block;
+                flex-shrink: 0;
+            }
+
+            &-cart {
+                width: 13px;
+                height: 13px;
+            }
+
+            &-arrow {
+                width: 12px;
+                height: 12px;
+                transition: transform 0.2s ease;
+            }
+        }
+
+        // ホバーインタラクション（マウス環境のみ適用し、モバイルでの残留を防止）
         @media (hover: hover) {
             &:hover {
                 transform: translateY(-2px);
-                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
-            }
-        }
-    }
+                border-color: #2B53EC;
+                box-shadow: 0 6px 20px rgba(43, 83, 236, 0.08);
 
-    &__thumb {
-        display: block;
-        width: 100%;
-        height: auto;
-        max-height: 180px;
-        object-fit: contain;
-        background-color: #f8fafc;
-        border-radius: 6px;
-    }
+                // 通常のブログカードの scale(1.05) を確実に無効化（画像は拡大させない）
+                .blogcard_thumbnail img,
+                .blogcard_thumbnail .c-affiliate-card__thumb,
+                &.blogcard .blogcard_thumbnail img {
+                    transform: none;
+                }
 
-    // コンテンツ本体
-    &__content {
-        flex: 1;
-        min-width: 0;
-        display: flex;
-        flex-direction: column;
-    }
-
-    // バッジ
-    &__badge-row {
-        margin-bottom: 8px;
-    }
-
-    &__badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: #2B53EC;
-        background-color: #eff4ff;
-        border: 1px solid #d0deff;
-        border-radius: 9999px;
-        padding: 3px 10px;
-        line-height: 1.2;
-
-        svg,
-        .lucide {
-            width: 13px;
-            height: 13px;
-            stroke-width: 2.2;
-        }
-    }
-
-    // タイトル
-    &__title {
-        font-size: 1.12rem;
-        font-weight: 700;
-        line-height: 1.5;
-        color: #1a1a1a;
-        margin-bottom: 12px;
-
-        a {
-            color: inherit;
-            text-decoration: none;
-            transition: color 0.2s ease;
-
-            @media (hover: hover) {
-                &:hover {
+                .blogcard_title,
+                .c-affiliate-card__title {
                     color: #2B53EC;
-                    text-decoration: underline;
+                }
+
+                .blogcard_cta {
+                    background-color: #1b3ec2;
+
+                    .blogcard_cta-arrow {
+                        transform: translateX(2px);
+                    }
                 }
             }
         }
     }
+}
 
-    // 推薦コメント
-    &__comment {
-        background-color: #f8fafc;
-        border: 1px solid #eef2f6;
-        border-left: 3px solid #2B53EC;
-        border-radius: 6px;
-        padding: 12px 16px;
-        margin-bottom: 16px;
-
-        &-text {
-            font-size: 0.9rem;
-            line-height: 1.65;
-            color: #475569;
-            margin: 0;
-        }
-    }
-
-    // アクションボタン
-    &__action {
+// SP表示 (≤767px)
+@media screen and (width <= 767px) {
+    .blogcard--affiliate,
+    .c-affiliate-card {
         display: flex;
-        align-items: center;
-        margin-top: auto;
-    }
-
-    &__btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        padding: 11px 22px;
+        width: 100%;
+        max-width: 100%;
+        margin: 24px 0;
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
         border-radius: 8px;
-        font-size: 0.92rem;
-        font-weight: 600;
-        text-decoration: none;
-        cursor: pointer;
-        line-height: 1;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        overflow: hidden;
 
-        svg,
-        .lucide {
-            display: block;
+        .blogcard_inner {
+            flex: 1;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: stretch;
+            padding: 12px 14px;
+            gap: 14px; // SPでも仕切り線の代わりに余白で自然に分離
+        }
+
+        // サムネイル (SPでも横並びを維持)
+        .blogcard_thumbnail {
+            flex: 0 0 85px;
+            width: 85px;
+            min-height: 90px;
+            position: relative;
+            overflow: visible;
+            border-right: none; // 縦の仕切り線を撤廃
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: center;
             flex-shrink: 0;
+
+            img,
+            .c-affiliate-card__thumb {
+                position: relative;
+                width: auto;
+                height: auto;
+                max-width: 100%;
+                max-height: 85px;
+                object-fit: contain;
+                display: block;
+                margin: 0 auto;
+                border-radius: 3px;
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08); // SPでも立体感をキープ
+                background-color: #ffffff;
+                transform: none;
+                transition: none;
+            }
         }
 
-        &--amazon {
-            background: linear-gradient(135deg, #FF9900 0%, #E67A00 100%);
+        .blogcard_placeholder {
+            width: 100%;
+            height: 100%;
+            min-height: 85px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            background-color: #f2f6ff;
+            color: #2B53EC;
+            border-radius: 3px;
+            border: 1px dashed #d0deff;
+            transform: none;
+            transition: none;
+
+            &-icon {
+                width: 22px;
+                height: 22px;
+            }
+
+            &-label {
+                font-size: 8px;
+                font-weight: 700;
+                letter-spacing: 0.05em;
+            }
+        }
+
+        // コンテンツエリア
+        .blogcard_content {
+            flex: 1;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 0;
+            overflow: hidden;
+            width: 0; // force flex child to shrink
+        }
+
+        .blogcard_meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .blogcard_badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 9px;
+            font-weight: 700;
+            color: #2B53EC;
+            background-color: #eff4ff;
+            border: 1px solid #dbeafe;
+            border-radius: 3px;
+            padding: 1px 5px;
+            line-height: 1.2;
+
+            svg,
+            .lucide {
+                width: 10px;
+                height: 10px;
+            }
+        }
+
+        .blogcard_source {
+            font-size: 9px;
+            color: #9ca3af;
+
+            svg,
+            .lucide {
+                width: 9px;
+                height: 9px;
+            }
+        }
+
+        .blogcard_title,
+        .c-affiliate-card__title {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+            line-height: 1.45;
+            word-break: break-all;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .blogcard_excerpt {
+            font-size: 0.78rem;
+            color: #4b5563;
+            margin-bottom: 6px;
+            line-height: 1.45;
+            word-break: break-all;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blogcard_action {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: auto;
+        }
+
+        .blogcard_cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            font-weight: 600;
             color: #ffffff;
-            box-shadow: 0 3px 10px rgba(230, 122, 0, 0.25);
+            background-color: #2B53EC;
+            border-radius: 4px;
+            padding: 5px 10px;
+            line-height: 1;
 
-            @media (hover: hover) {
-                &:hover {
-                    transform: translateY(-2px);
-                    filter: brightness(1.05);
-                    box-shadow: 0 5px 14px rgba(230, 122, 0, 0.35);
-                    color: #ffffff;
-                }
+            &-cart {
+                width: 11px;
+                height: 11px;
             }
 
-            &:active {
-                transform: translateY(0);
-                box-shadow: 0 2px 6px rgba(230, 122, 0, 0.3);
+            &-arrow {
+                width: 10px;
+                height: 10px;
             }
-        }
-    }
-
-    // サムネイルなしの場合
-    &--no-image {
-        .c-affiliate-card__inner {
-            display: block;
         }
     }
 }
@@ -209,68 +458,8 @@
         margin-top: 36px;
         margin-bottom: 36px;
     }
-}
 
-// =====================================================
-// スマートフォン向け表示 (≤ 767px)
-// =====================================================
-@media screen and (max-width: 767px) {
-    .c-affiliate-card {
-        padding: 18px 16px;
-        margin: 32px 0;
-
-        &__inner {
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-        }
-
-        &__thumb-wrap {
-            flex: 0 0 auto;
-            width: 100px;
-            max-width: 100px;
-            margin: 0 auto;
-        }
-
-        &__thumb {
-            max-height: 140px;
-        }
-
-        &__content {
-            width: 100%;
-        }
-
-        &__badge-row {
-            text-align: left;
-        }
-
-        &__title {
-            font-size: 1.05rem;
-            margin-bottom: 10px;
-        }
-
-        &__comment {
-            padding: 10px 14px;
-            margin-bottom: 14px;
-
-            &-text {
-                font-size: 0.85rem;
-                line-height: 1.6;
-            }
-        }
-
-        &__action {
-            width: 100%;
-        }
-
-        &__btn {
-            width: 100%;
-            padding: 13px 16px;
-            font-size: 0.95rem;
-        }
-    }
-
-    .ad-widget {
+    @media screen and (max-width: 767px) {
         margin-top: 24px;
         margin-bottom: 24px;
     }

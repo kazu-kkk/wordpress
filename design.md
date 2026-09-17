@@ -705,37 +705,33 @@
 **ファイル**: `_affiliate-card.scss`, `functions.php`, `single.php`
 
 ```html
-<aside class="c-affiliate-card">
-  <div class="c-affiliate-card__inner">
-    <div class="c-affiliate-card__thumb-wrap">
-      <a href="https://amazon.co.jp/..." class="c-affiliate-card__thumb-link" target="_blank" rel="noopener noreferrer nofollow">
-        <img src="book-thumb.jpg" alt="ノンデザイナーズ・デザインブック" class="c-affiliate-card__thumb" loading="lazy">
-      </a>
+<aside class="blogcard blogcard--affiliate">
+  <a href="https://amazon.co.jp/..." class="blogcard_inner" target="_blank" rel="noopener noreferrer nofollow">
+    <div class="blogcard_thumbnail">
+      <img src="book-thumb.jpg" alt="UIデザインの教科書" loading="lazy">
     </div>
-    <div class="c-affiliate-card__content">
-      <div class="c-affiliate-card__badge-row">
-        <span class="c-affiliate-card__badge">
-          <svg class="c-affiliate-card__badge-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+    <div class="blogcard_content">
+      <div class="blogcard_meta">
+        <span class="blogcard_badge">
+          <svg class="blogcard_badge-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
           おすすめ書籍
         </span>
+        <span class="blogcard_source">
+          <span>Amazon.co.jp</span>
+          <svg class="blogcard_source-icon" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+        </span>
       </div>
-      <h4 class="c-affiliate-card__title">
-        <a href="https://amazon.co.jp/..." target="_blank" rel="noopener noreferrer nofollow">
-          ノンデザイナーズ・デザインブック [第4版]
-        </a>
-      </h4>
-      <div class="c-affiliate-card__comment">
-        <p class="c-affiliate-card__comment-text">デザインの4つの基本原則（近接・整列・反復・コントラスト）を直感的に学べる必読の名著。UI設計の基礎固めに最適です。</p>
-      </div>
-      <div class="c-affiliate-card__action">
-        <a href="https://amazon.co.jp/..." class="c-affiliate-card__btn c-affiliate-card__btn--amazon" target="_blank" rel="noopener noreferrer nofollow">
-          <svg class="c-affiliate-card__btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+      <div class="blogcard_title">UIデザインの教科書 [新版] マルチデバイス時代のインターフェース設計</div>
+      <div class="blogcard_excerpt">HIGの44ptルールをはじめ、スマホ・Web実務の必須基準を完全網羅した決定版。</div>
+      <div class="blogcard_action">
+        <span class="blogcard_cta">
+          <svg class="blogcard_cta-cart" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
           <span>Amazonで詳細を見る</span>
-          <svg class="c-affiliate-card__external-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-        </a>
+          <svg class="blogcard_cta-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </span>
       </div>
     </div>
-  </div>
+  </a>
 </aside>
 ```
 
@@ -745,13 +741,52 @@
   ```
 - **カスタムフィールド対応**:
   記事編集画面のカスタムフィールド（`affiliate_title`, `affiliate_url`, `affiliate_image`, `affiliate_comment`, `affiliate_badge`, `affiliate_btn_text`）を設定することで、記事末尾（シェアボタン後）に自動出力されます。
+- **デザイン・UI仕様（リンクカード派生版）**:
+  - **リンクカード構造の完全踏襲**: サイト標準のブログカード（`.blogcard`）と同様に、カード全体が1つのクリッカブルなリンク（`<a>`）でラップされており、直感的にクリック・タップ可能です。
+  - **仕切り線の撤廃と自然な余白分離**: 書影画像とテキストエリアの間の縦境界線（`border-right`）を廃止し、フレックスの `gap: 20px`（SPは `gap: 14px`）で自然に分離。
+  - **書影の物性感・立体感**: 書影画像に対して、実物の書籍のような上品なドロップシャドウ（`box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08)`）と角丸（`border-radius: 4px`）を付与。
+  - **タイトルの文字組み・余白**: `line-height: 1.45`、下の解説文との間隔 `margin-bottom: 10px`（SPは `8px`）を確保し、可読性を最大化。
+  - **CTAピル**: デザペディアの世界観に調和するブランドブルー（`#2B53EC`）のソリッドボタン。
+  - **ホバー制御**: タップ端末での意図しないホバー残留を防ぐため、すべての `:hover` は `@media (hover: hover)` で制御。ホバー時はカード全体のリフトアップ、タイトル色変化、矢印スライドが連動します（書影画像自体の個別変形・浮き上がり・拡大は行わず、画像サイズは維持したままカード全体が一体となって落ち着いてリフトアップする仕様）。
+  - **レスポンシブ最適化**: SP表示（≤767px）でもブログカード同様に**横並びレイアウトを維持**し、スマホ画面でもコンパクトで崩れない一体感のあるUIを実現。
+
+---
+
+### 27. `.code-block-wrapper` / `.wp-block-code` — コードブロック（ワンクリックコピー機能付き）
+**ファイル**: `_code-block.scss`, `code-block.js`, `functions.php`
+
+WordPress標準の「コード」ブロック（`<pre class="wp-block-code"><code>`）または `<pre><code>` を自動検出し、余分なヘッダーバーを排除して右上にすっきりとワンクリックコピーボタンを配置した、洗練されたモダンなダークエディタ風UIを自動生成します。
+
+```html
+<div class="code-block-wrapper">
+  <button type="button" class="code-block__copy-btn" aria-label="コードをクリップボードにコピー">
+    <svg class="code-block__icon code-block__icon--copy" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+    </svg>
+    <svg class="code-block__icon code-block__icon--check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+    <span class="code-block__copy-text">コピー</span>
+  </button>
+  <pre class="wp-block-code"><code class="language-css">.example {
+  display: flex;
+  justify-content: center;
+}</code></pre>
+</div>
+```
+
+- **WordPressブロックエディタ入力**:
+  通常のコードブロックにコードを入力するだけで、JavaScript（`code-block.js`）が自動的にラッパーと右上コピーボタンを付与します。
+- **高精度クリップボードコピー**:
+  コピーボタンを押すと、`code` タグ内の純粋なコード（改行・インデント完全保持）がクリップボードにコピーされます（コピーボタンテキスト等は混入しません）。
+- **マイクロインタラクション**:
+  コピー成功時にボタンがグリーンに発色し、アイコンがチェックマーク、テキストが「コピー完了！」に一時切り替わります（2秒後に自動復帰）。
 - **デザイン・UI仕様**:
-  - **背景色・保護色対策**: コンテンツエリアの淡いブルー背景（`#f5f7ff`）と同化しないよう、カード背景は真っ白（`#ffffff`）にし、繊細なボーダー（`#e2e8f0`）と控えめなシャドウ（`box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04)`）で清潔に浮かせています。
-  - **書籍サムネイル**: 縦横比を綺麗に収めるコンテナで、書籍らしい立体感をもたせるドロップシャドウを適用。
-  - **推薦コメント**: 背景色 `#f8fafc` に左側のブランドブルーアクセントライン（`border-left: 3px solid #2B53EC`）をあしらい、信頼感のある引用・エディターコメントUIを構成。
-  - **Amazonボタン**: 高い視認性とクリック率を誇るアンバーオレンジグラデーション（`#FF9900`〜`#E67A00`）。
-  - **ホバー制御**: タップ端末での意図しないホバー残留を防ぐため、すべての `:hover` は `@media (hover: hover)` で制御。
-  - **レスポンシブ最適化**: SP表示（≤767px）では縦積みスタックに切り替わり、押しやすい全幅ボタンに自動フィット。さらにアフィリエイト枠設定記事ではSP時の記事下アドネットワーク広告を非表示にして広告過多・CPM暴落を抑制。
+  - **右上フローティング配置**: コードブロックの右上に控えめな半透明ダークボタンスタイル（`backdrop-filter: blur(8px)`）で配置。コード1行目と重ならないよう、右パディング（PC: `90px` / SP: `75px`）を確保。
+  - **背景とコントラスト**: 記事本文背景（`#F5F7FF`）に映えるリッチなダークエディタ背景（コード部: `#14171F`、枠線: `#2D3343`、角丸: `10px`）。
+  - **ホバー制御**: タッチ端末での意図しないホバー残留を防ぐため、すべての `:hover` は `@media (hover: hover)` で制御。
+  - **インラインコード**: 記事中の `p code`, `li code` には、文章中に多用されても視覚的ノイズにならないよう、ボーダーやシャドウを排した極めて控えめな薄グレー背景（`rgba(0, 0, 0, 0.05)`）＋本文調和文字色（`#1F2937`）が適用されます。
 
 ---
 

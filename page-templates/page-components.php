@@ -704,14 +704,49 @@ if (isset($_GET['component_preview'])) {
                 <div style="max-width: 760px; margin: 0 auto; padding: 10px;">
                     <?php
                     echo inspiro_child_render_affiliate_card( array(
-                        'title'    => 'ノンデザイナーズ・デザインブック [第4版]',
-                        'url'      => 'https://www.amazon.co.jp/dp/483995555X',
-                        'image'    => get_stylesheet_directory_uri() . '/assets/images/yuny_logo.png',
-                        'comment'  => 'デザインの4大原則（近接・整列・反復・コントラスト）が具体例とともに平易に解説された名著。非デザイナーやエンジニアがUI/Webデザインの基礎を身につけるための必読書です。',
+                        'title'    => 'UIデザインの教科書 [新版] マルチデバイス時代のインターフェース設計',
+                        'url'      => 'https://www.amazon.co.jp/dp/4798158784',
+                        'image'    => 'https://images-na.ssl-images-amazon.com/images/P/4798158784.01.MAIN._SL500_.jpg',
+                        'comment'  => 'HIGの44ptルールをはじめ、ボタンサイズ・情報階層・フォント設計など、スマホ・Web実務の必須基準を完全網羅したUI設計の決定版。',
                         'badge'    => 'おすすめ書籍',
                         'btn_text' => 'Amazonで詳細を見る',
                     ) );
                     ?>
+                </div>
+                <?php
+                break;
+
+            case 'c-code-block':
+                ?>
+                <div style="max-width: 760px; margin: 0 auto; padding: 10px;">
+                    <p style="margin-bottom: 8px; font-size: 14px; font-weight: bold; color: #475569;">1. CSS コードブロック (language-css)</p>
+                    <pre class="wp-block-code"><code class="language-css">/* サンプルCSSスタイル */
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}</code></pre>
+
+                    <p style="margin: 24px 0 8px; font-size: 14px; font-weight: bold; color: #475569;">2. JavaScript コードブロック (language-javascript)</p>
+                    <pre class="wp-block-code"><code class="language-javascript">// クリップボードへコピーする関数
+async function copyCode(text) {
+    try {
+        await navigator.clipboard.writeText(text);
+        console.log('コードのコピーに成功しました');
+    } catch (err) {
+        console.error('コピー失敗:', err);
+    }
+}</code></pre>
+
+                    <p style="margin: 24px 0 8px; font-size: 14px; font-weight: bold; color: #475569;">3. 本文インラインコードの表示例</p>
+                    <div class="article-text" style="background:#ffffff; padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                        <p style="margin:0; font-size: 15px; line-height: 1.7; color: #333;">
+                            スタイルを適用するには <code>npm run compile:sass</code> を実行し、生成された <code>style_add.css</code> を確認してください。
+                        </p>
+                    </div>
                 </div>
                 <?php
                 break;
@@ -1477,6 +1512,7 @@ if (isset($_GET['component_preview'])) {
                     <a href="#c-quick-answer"><i data-lucide="message-square-check"></i> 22. Quick Answer</a>
                     <a href="#c-image-lightbox"><i data-lucide="zoom-in"></i> 23. Image Lightbox</a>
                     <a href="#c-affiliate"><i data-lucide="shopping-bag"></i> 24. Affiliate Card</a>
+                    <a href="#c-code-block"><i data-lucide="code"></i> 25. Code Block</a>
                 </div>
             </aside>
 
@@ -2808,40 +2844,83 @@ if (isset($_GET['component_preview'])) {
                         <div class="showcase-code-box">
                             <pre><code class="html-code">&lt;!-- 1. ショートコードによる本文中呼び出し --&gt;
 [affiliate_card
-  title="ノンデザイナーズ・デザインブック [第4版]"
+  title="UIデザインの教科書 [新版] マルチデバイス時代のインターフェース設計"
   url="https://www.amazon.co.jp/dp/..."
   image="https://example.com/thumb.jpg"
-  comment="デザインの4大原則を平易に解説した名著。UI/Webデザインの基礎固めに最適です。"
+  comment="HIGの44ptルールをはじめ、スマホ・Web実務の必須基準を完全網羅した決定版。"
   badge="おすすめ書籍"
   btn_text="Amazonで詳細を見る"
 ]
 
-&lt;!-- 2. HTML構造（カスタムフィールド設定時は single.php から自動出力） --&gt;
-&lt;aside class="c-affiliate-card"&gt;
-  &lt;div class="c-affiliate-card__inner"&gt;
-    &lt;div class="c-affiliate-card__thumb-wrap"&gt;
-      &lt;a href="https://amazon.co.jp/..." class="c-affiliate-card__thumb-link" target="_blank" rel="noopener noreferrer nofollow"&gt;
-        &lt;img src="book-thumb.jpg" alt="タイトル" class="c-affiliate-card__thumb" loading="lazy"&gt;
-      &lt;/a&gt;
+&lt;!-- 2. HTML構造（リンクカード派生版：single.php または ショートコード出力） --&gt;
+&lt;aside class="blogcard blogcard--affiliate"&gt;
+  &lt;a href="https://amazon.co.jp/..." class="blogcard_inner" target="_blank" rel="noopener noreferrer nofollow"&gt;
+    &lt;div class="blogcard_thumbnail"&gt;
+      &lt;img src="book-thumb.jpg" alt="タイトル" loading="lazy"&gt;
     &lt;/div&gt;
-    &lt;div class="c-affiliate-card__content"&gt;
-      &lt;div class="c-affiliate-card__badge-row"&gt;
-        &lt;span class="c-affiliate-card__badge"&gt;おすすめ書籍&lt;/span&gt;
+    &lt;div class="blogcard_content"&gt;
+      &lt;div class="blogcard_meta"&gt;
+        &lt;span class="blogcard_badge"&gt;おすすめ書籍&lt;/span&gt;
+        &lt;span class="blogcard_source"&gt;Amazon.co.jp ↗&lt;/span&gt;
       &lt;/div&gt;
-      &lt;h4 class="c-affiliate-card__title"&gt;
-        &lt;a href="https://amazon.co.jp/..." target="_blank" rel="noopener noreferrer nofollow"&gt;書籍・ツールタイトル&lt;/a&gt;
-      &lt;/h4&gt;
-      &lt;div class="c-affiliate-card__comment"&gt;
-        &lt;p class="c-affiliate-card__comment-text"&gt;推薦コメントが入ります。&lt;/p&gt;
-      &lt;/div&gt;
-      &lt;div class="c-affiliate-card__action"&gt;
-        &lt;a href="https://amazon.co.jp/..." class="c-affiliate-card__btn c-affiliate-card__btn--amazon" target="_blank" rel="noopener noreferrer nofollow"&gt;
+      &lt;div class="blogcard_title"&gt;書籍・ツールタイトル&lt;/div&gt;
+      &lt;div class="blogcard_excerpt"&gt;推薦コメント（抜粋文）が入ります。&lt;/div&gt;
+      &lt;div class="blogcard_action"&gt;
+        &lt;span class="blogcard_cta"&gt;
           &lt;span&gt;Amazonで詳細を見る&lt;/span&gt;
-        &lt;/a&gt;
+        &lt;/span&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-  &lt;/div&gt;
+  &lt;/a&gt;
 &lt;/aside&gt;</code></pre>
+                            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="c-code-block" class="showcase-section">
+                    <h2 class="showcase-section-title">
+                        <span class="title-group"><span class="section-num">25</span> コードブロック（ワンクリックコピー機能付き）</span>
+                        <span class="showcase-section-meta">_code-block.scss / code-block.js</span>
+                    </h2>
+                    <p class="showcase-desc">
+                        記事内のコードブロック（<code>&lt;pre class="wp-block-code"&gt;&lt;code&gt;</code> 等）を自動検出し、余計なヘッダーバーを排して右上にすっきりとワンクリックコピーボタンを配置したモダンなダークエディタ風UIを自動生成します。
+                    </p>
+
+                    <div class="showcase-preview-wrapper" data-comp="c-code-block">
+                        <div class="showcase-control-bar">
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">Width:</span>
+                                <button class="showcase-ctrl-btn active" data-width="100%">PC</button>
+                                <button class="showcase-ctrl-btn" data-width="768px">Tablet</button>
+                                <button class="showcase-ctrl-btn" data-width="375px">Mobile</button>
+                            </div>
+                            <div class="showcase-control-group">
+                                <span class="showcase-control-label">BG:</span>
+                                <button class="showcase-bg-btn active" data-bg="default"></button>
+                                <button class="showcase-bg-btn" data-bg="white"></button>
+                                <button class="showcase-bg-btn" data-bg="gray"></button>
+                                <button class="showcase-bg-btn" data-bg="dark"></button>
+                            </div>
+                            <button class="showcase-code-toggle"><i data-lucide="code"></i> Show Code</button>
+                        </div>
+                        <div class="showcase-preview-box">
+                            <iframe src="<?php echo add_query_arg('component_preview', 'c-code-block'); ?>" class="showcase-iframe" data-comp="c-code-block" style="height: 480px;"></iframe>
+                        </div>
+                        <div class="showcase-code-box">
+                            <pre><code class="html-code">&lt;!-- 1. WordPressブロックエディタ標準のコードブロック入力 --&gt;
+&lt;pre class="wp-block-code"&gt;&lt;code class="language-css"&gt;.example {
+  display: flex;
+  justify-content: center;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;!-- 2. 生成されるDOM構造（JavaScriptにより右上コピーボタンを自動付与） --&gt;
+&lt;div class="code-block-wrapper"&gt;
+  &lt;button type="button" class="code-block__copy-btn" aria-label="コードをクリップボードにコピー"&gt;
+    &lt;span class="code-block__copy-text"&gt;コピー&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;pre class="wp-block-code"&gt;&lt;code class="language-css"&gt;...&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</code></pre>
                             <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy"></i> COPY</button>
                         </div>
                     </div>
@@ -2889,6 +2968,7 @@ if (isset($_GET['component_preview'])) {
             <a href="#c-quick-answer"><i data-lucide="message-square-check"></i> 22. Quick Answer</a>
             <a href="#c-image-lightbox"><i data-lucide="zoom-in"></i> 23. Image Lightbox</a>
             <a href="#c-affiliate"><i data-lucide="shopping-bag"></i> 24. Affiliate Card</a>
+            <a href="#c-code-block"><i data-lucide="code"></i> 25. Code Block</a>
         </div>
     </div>
 </div>
