@@ -105,10 +105,11 @@
     function updateHeaderBadge(count) {
         const badges = document.querySelectorAll('.js-bookmark-badge');
         badges.forEach(badge => {
-            badge.textContent = count;
             if (count > 0) {
+                badge.textContent = count;
                 badge.style.display = 'flex';
             } else {
+                badge.textContent = '';
                 badge.style.display = 'none';
             }
         });

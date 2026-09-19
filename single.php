@@ -67,10 +67,8 @@ get_header(); ?>
 
                     // 記事下広告エリア
                     // ※スマホ表示時かつアフィリエイト枠がある場合は、過剰な広告枠によるバナー無視・CPM低下を防ぐためアドネットワークを非表示に最適化
-                    $show_bottom_ad = true;
-                    if ( wp_is_mobile() && $affiliate_data ) {
-                        $show_bottom_ad = false;
-                    }
+                    // 審査中一時非表示: i-mobile広告
+                    $show_bottom_ad = false;
 
                     if ( $show_bottom_ad ) :
                     ?>

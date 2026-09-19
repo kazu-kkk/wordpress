@@ -457,6 +457,7 @@
         </div>
         <?php endif; ?>
 
+        <?php if ( false ) : // 審査中一時非表示: i-mobile広告 ?>
         <!-- 広告エリア -->
         <div class="ad-widget" style="margin-top: 30px; text-align: center;">
             <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
@@ -472,5 +473,6 @@
             </div>
             <?php endif; ?>
         </div>
+        <?php endif; // 審査中一時非表示ここまで ?>
     </div>
 </aside>

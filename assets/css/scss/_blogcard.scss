@@ -7,7 +7,7 @@
         background: #ffffff;
         border: 1px solid #e0e0e0;
         border-radius: 8px;
-        transition: transform 0.2s ease, border-color 0.2s ease;
+        transition: border-color 0.2s ease;
         overflow: hidden;
     }
     
@@ -95,7 +95,6 @@
     
     @media (hover: hover) {
         .blogcard:hover {
-            transform: translateY(-2px);
             border-color: #c4d2f6;
         }
     }

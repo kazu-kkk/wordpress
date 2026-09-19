@@ -70,40 +70,101 @@ function show_Linkcard($atts)
         return '';
     }
 
-    // トランジェントキーを生成（URL単位でキャッシュ）
-    $cache_key = 'ogp_v6_' . md5($atts['url']);
-    $ogp_data  = get_transient($cache_key);
+    $url = $atts['url'];
+    $post_id = 0;
 
-    if ($ogp_data === false) {
-        // Fetch OpenGraph data
-        require_once get_stylesheet_directory() . '/OpenGraph.php';
-        $graph = OpenGraph::fetch($atts['url']);
+    // 自サイトのURL判定（内部リンク判定）
+    $home_url = home_url();
+    $parsed_home = parse_url($home_url);
+    $parsed_target = parse_url($url);
 
-        if ($graph !== false) {
-            $ogp_data = array(
-                'title'       => $graph->title ?? '',
-                'image'       => $graph->image ?? '',
-                'description' => $graph->description ?? '',
-            );
-            
-            // 24時間キャッシュ（画像が取れなかった場合は1時間後に再試行）
-            $ttl = !empty($ogp_data['image']) ? DAY_IN_SECONDS : HOUR_IN_SECONDS;
-            set_transient($cache_key, $ogp_data, $ttl);
-        } else {
-            // 取得失敗時はデフォルト値を設定し、短時間（5分）だけキャッシュする
-            $ogp_data = array(
-                'title'       => '',
-                'image'       => '',
-                'description' => '',
-            );
-            set_transient($cache_key, $ogp_data, 5 * MINUTE_IN_SECONDS);
+    $is_internal = false;
+    if (!empty($parsed_target['host']) && !empty($parsed_home['host'])) {
+        $clean_home_host = preg_replace('/^www\./', '', $parsed_home['host']);
+        $clean_target_host = preg_replace('/^www\./', '', $parsed_target['host']);
+        if ($clean_home_host === $clean_target_host) {
+            $is_internal = true;
+        }
+    } elseif (strpos($url, '/') === 0) {
+        $is_internal = true;
+    }
+
+    if ($is_internal) {
+        $post_id = url_to_postid($url);
+        if (!$post_id) {
+            // 末尾スラッシュ有無でのフォールバック再試行
+            $alt_url = (substr($url, -1) === '/') ? rtrim($url, '/') : $url . '/';
+            $post_id = url_to_postid($alt_url);
         }
     }
 
-    // タイトル・説明文・画像（ショートコードの引数が指定されていれば優先）
-    $Link_title       = !empty($atts['title']) ? $atts['title'] : ($ogp_data['title'] ?? '');
-    $src              = !empty($atts['image']) ? $atts['image'] : ($ogp_data['image'] ?? '');
-    $Link_description = !empty($atts['excerpt']) ? $atts['excerpt'] : wp_trim_words($ogp_data['description'] ?? '', 60, '…');
+    $Link_title       = '';
+    $src              = '';
+    $Link_description = '';
+
+    if ($post_id) {
+        // 自サイト記事の場合：アイキャッチ画像を最優先で取得（記事中画像の誤指定を自動差し替え）
+        if (has_post_thumbnail($post_id)) {
+            $src = get_the_post_thumbnail_url($post_id, 'large');
+        } elseif (!empty($atts['image'])) {
+            $src = $atts['image'];
+        }
+
+        // タイトル
+        $Link_title = !empty($atts['title']) ? $atts['title'] : get_the_title($post_id);
+
+        // 抜粋
+        if (!empty($atts['excerpt'])) {
+            $Link_description = $atts['excerpt'];
+        } else {
+            $post_obj = get_post($post_id);
+            if ($post_obj) {
+                if (!empty($post_obj->post_excerpt)) {
+                    $Link_description = $post_obj->post_excerpt;
+                } else {
+                    $clean_content = strip_shortcodes($post_obj->post_content);
+                    $clean_content = wp_strip_all_tags($clean_content);
+                    $Link_description = wp_trim_words($clean_content, 60, '…');
+                }
+            }
+        }
+    } else {
+        // 外部サイトまたは自サイトでも投稿IDが特定できない場合
+        // トランジェントキーを生成（URL単位でキャッシュ）
+        $cache_key = 'ogp_v6_' . md5($url);
+        $ogp_data  = get_transient($cache_key);
+
+        if ($ogp_data === false) {
+            // Fetch OpenGraph data
+            require_once get_stylesheet_directory() . '/OpenGraph.php';
+            $graph = OpenGraph::fetch($url);
+
+            if ($graph !== false) {
+                $ogp_data = array(
+                    'title'       => $graph->title ?? '',
+                    'image'       => $graph->image ?? '',
+                    'description' => $graph->description ?? '',
+                );
+                
+                // 24時間キャッシュ（画像が取れなかった場合は1時間後に再試行）
+                $ttl = !empty($ogp_data['image']) ? DAY_IN_SECONDS : HOUR_IN_SECONDS;
+                set_transient($cache_key, $ogp_data, $ttl);
+            } else {
+                // 取得失敗時はデフォルト値を設定し、短時間（5分）だけキャッシュする
+                $ogp_data = array(
+                    'title'       => '',
+                    'image'       => '',
+                    'description' => '',
+                );
+                set_transient($cache_key, $ogp_data, 5 * MINUTE_IN_SECONDS);
+            }
+        }
+
+        // タイトル・説明文・画像（ショートコードの引数が指定されていれば優先）
+        $Link_title       = !empty($atts['title']) ? $atts['title'] : ($ogp_data['title'] ?? '');
+        $src              = !empty($atts['image']) ? $atts['image'] : ($ogp_data['image'] ?? '');
+        $Link_description = !empty($atts['excerpt']) ? $atts['excerpt'] : wp_trim_words($ogp_data['description'] ?? '', 60, '…');
+    }
 
     // 画像が取得できない場合や指定がない場合はデフォルトのNO IMAGE画像を設定
     if (empty($src)) {
@@ -1369,3 +1430,26 @@ function inspiro_child_affiliate_card_shortcode( $atts ) {
     return inspiro_child_render_affiliate_card( $atts );
 }
 add_shortcode( 'affiliate_card', 'inspiro_child_affiliate_card_shortcode' );
+
+/**
+ * タグアーカイブページおよび後で読む一覧を noindex に設定（AdSense/SEOのThin Content防止）
+ */
+function inspiro_child_noindex_tag_archives( $attributes ) {
+    if ( is_tag() || is_page( 'reading-list' ) ) {
+        if ( is_array( $attributes ) ) {
+            $attributes['noindex']  = 'noindex';
+            $attributes['nofollow'] = 'follow';
+        }
+    }
+    return $attributes;
+}
+add_filter( 'aioseo_robots_meta', 'inspiro_child_noindex_tag_archives' );
+
+function inspiro_child_wp_robots_tag( $robots ) {
+    if ( is_tag() || is_page( 'reading-list' ) ) {
+        $robots['noindex'] = true;
+        $robots['follow']  = true;
+    }
+    return $robots;
+}
+add_filter( 'wp_robots', 'inspiro_child_wp_robots_tag' );

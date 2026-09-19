@@ -25,37 +25,8 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-	<!-- Google AdSense のインタラクション遅延読み込みによるLCP改善 -->
-	<script>
-	(function() {
-		var adsenseLoaded = false;
-		var triggerEvents = ['scroll', 'mousemove', 'touchstart', 'mousedown', 'keydown'];
-
-		function loadAdsense() {
-			if (adsenseLoaded) return;
-			adsenseLoaded = true;
-			
-			// すべてのイベントリスナーを解除
-			triggerEvents.forEach(function(event) {
-				window.removeEventListener(event, loadAdsense);
-			});
-			
-			// スクリプトの動的挿入
-			var script = document.createElement('script');
-			script.async = true;
-			script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2216753629127219';
-			script.crossOrigin = 'anonymous';
-			document.head.appendChild(script);
-		}
-		
-		// 測定ロボットの初期エミュレート操作による暴発を防ぐため、最初の3秒間はロードを完全にブロック
-		setTimeout(function() {
-			triggerEvents.forEach(function(event) {
-				window.addEventListener(event, loadAdsense, { passive: true });
-			});
-		}, 3000); // 3秒のディレイ
-	})();
-	</script>
+	<!-- Google AdSense 審査用正規コード -->
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2216753629127219" crossorigin="anonymous"></script>
 
 	<!-- LCP改善のためのロゴ画像プリロード -->
 	<?php

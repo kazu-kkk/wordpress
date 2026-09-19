@@ -486,6 +486,7 @@ get_header(); ?>
                 </div>
             </section>
 
+            <?php if ( false ) : // 審査中一時非表示: i-mobile広告 ?>
             <!-- セクション間広告 -->
             <div class="infeed-ad-container">
                 <div style="font-size: 10px; color: #999; margin-bottom: 5px; text-align: center;">スポンサーリンク</div>
@@ -503,6 +504,7 @@ get_header(); ?>
                     <?php endif; ?>
                 </div>
             </div>
+            <?php endif; // 審査中一時非表示ここまで ?>
 
             <!-- 4. トレンドセクション -->
             <?php
@@ -566,7 +568,8 @@ get_header(); ?>
             </section>
             <?php endif; ?>
 
-                        <!-- セクション間広告 -->
+            <?php if ( false ) : // 審査中一時非表示: i-mobile広告 ?>
+            <!-- セクション間広告 -->
             <div class="infeed-ad-container">
                 <div style="font-size: 10px; color: #999; margin-bottom: 5px; text-align: center;">スポンサーリンク</div>
                 <div class="ad-widget-content">
@@ -583,6 +586,7 @@ get_header(); ?>
                     <?php endif; ?>
                 </div>
             </div>
+            <?php endif; // 審査中一時非表示ここまで ?>
 
             <!-- 5. デザインナレッジセクション -->
             <?php
@@ -642,7 +646,8 @@ get_header(); ?>
             </section>
             <?php endif; ?>
 
-                        <!-- セクション間広告 -->
+            <?php if ( false ) : // 審査中一時非表示: i-mobile広告 ?>
+            <!-- セクション間広告 -->
             <div class="infeed-ad-container">
                 <div style="font-size: 10px; color: #999; margin-bottom: 5px; text-align: center;">スポンサーリンク</div>
                 <div class="ad-widget-content">
@@ -659,6 +664,7 @@ get_header(); ?>
                     <?php endif; ?>
                 </div>
             </div>
+            <?php endif; // 審査中一時非表示ここまで ?>
 
             <!-- 6. ツール・開発環境セクション -->
             <?php
