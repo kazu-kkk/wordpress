@@ -1453,3 +1453,92 @@ function inspiro_child_wp_robots_tag( $robots ) {
     return $robots;
 }
 add_filter( 'wp_robots', 'inspiro_child_wp_robots_tag' );
+
+/**
+ * AIOSEOのサイトマップインデックスからタグ一覧（post_tag-sitemap.xml）を除外
+ * noindexのタグアーカイブがサイトマップに混入するのを防ぎ、AdSense/SEOの品質スコアを保護する
+ */
+function inspiro_child_exclude_tag_sitemap( $indexes ) {
+    if ( ! is_array( $indexes ) ) {
+        return $indexes;
+    }
+    foreach ( $indexes as $key => $index ) {
+        if ( isset( $index['loc'] ) && strpos( $index['loc'], 'post_tag-sitemap.xml' ) !== false ) {
+            unset( $indexes[ $key ] );
+        }
+    }
+    return array_values( $indexes );
+}
+add_filter( 'aioseo_sitemap_indexes', 'inspiro_child_exclude_tag_sitemap' );
+
+/**
+ * 非公開（draft）にした記事へのアクセスを301リダイレクトし、Googleクローラーによる404エラー検知を防止
+ */
+function inspiro_child_redirect_draft_archives() {
+    if ( ! is_404() ) {
+        return;
+    }
+
+    $uri = $_SERVER['REQUEST_URI'] ?? '';
+    if ( empty( $uri ) ) {
+        return;
+    }
+
+    $draft_slugs = array(
+        'web-ui-font-pairing-guide',
+        'ui-designer-tools-comparison-2026',
+        'y2k-design-trend-guide',
+        'web-design-reference-system-notion',
+        'monochromatic-design-guide',
+        'hackathon-for-ui-designers',
+        'user-centric-web-design-thinking',
+        'ui-ux-designer-portfolio-guide-2026',
+        'graphical-first-ui-design-trend-2026',
+        'biophilic-ux-ui-design-trend-2026',
+        'mcp-model-context-protocol-for-designers',
+        'neo-skeuomorphism-ui-trend-2026',
+        'bento-grid-2-0-guide-2026',
+        'quantitative-research-for-ui-designers',
+        'mobile-app-ux-trends-2026',
+        'web-ui-typography-rules',
+        'anti-minimalism-ui-trend-2026',
+        'freelance-ui-designer-strategy-2026',
+        'business-model-basics-for-ux-designers',
+        'design-critique-and-logical-explanation',
+        'ui-state-design-and-engineer-collaboration',
+        'design-review-mindset-and-presentation',
+        'cursor-led-design-guide',
+        'designer-engineer-collaboration-ai-era',
+        'ux-designer-vs-pdm-career-path',
+        'situated-ui-design-trend-2026',
+        'designer-internship-guide',
+        'apple-hig-tactile-ui-depth',
+        'dial-up-delight-retro-ui-trend',
+        'trinket-design-trend-2026',
+        'bad-ux-pattern-detection-skills',
+        'world-standard-effective-design-basics',
+        'pasona-lp-design-guide',
+        'ux-design-basics-simple-explanation',
+        'liminal-space-ui-trend-2026',
+        'ui-design-fundamentals-for-non-designers',
+        'digital-tactility-haptics-ui-design',
+        'ui-ux-design-standards-ai-future',
+        'illustrator-vs-photoshop-ui-designer-guide',
+        'designer-career-change-and-job-selection',
+        'data-driven-design-metrics-and-evidence',
+        'japanese-traditional-patterns-in-ui-design',
+        'ui-ux-designer-career-guide-by-experience',
+        'illustrator-useful-features-for-web-designers',
+        'ai-tools-for-designers-productivity-2026',
+        'web-accessibility-beginner-guide'
+    );
+
+    foreach ( $draft_slugs as $slug ) {
+        if ( strpos( $uri, $slug ) !== false ) {
+            wp_redirect( home_url( '/' ), 301 );
+            exit;
+        }
+    }
+}
+add_action( 'template_redirect', 'inspiro_child_redirect_draft_archives' );
+
