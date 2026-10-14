@@ -1542,3 +1542,17 @@ function inspiro_child_redirect_draft_archives() {
 }
 add_action( 'template_redirect', 'inspiro_child_redirect_draft_archives' );
 
+/**
+ * ads.txt を動的に配信（AdSenseクローラー・所有権の完全認証）
+ */
+function inspiro_child_serve_ads_txt() {
+    $uri = $_SERVER['REQUEST_URI'] ?? '';
+    if ( preg_match( '#^/ads\.txt(\?.*)?$#', $uri ) ) {
+        header( 'Content-Type: text/plain; charset=utf-8' );
+        echo "google.com, pub-2216753629127219, DIRECT, f08c47fec0942fa0\n";
+        exit;
+    }
+}
+add_action( 'init', 'inspiro_child_serve_ads_txt' );
+
+
