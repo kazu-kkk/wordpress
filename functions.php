@@ -188,6 +188,7 @@ function show_Linkcard($atts)
     </div>';
 }
 add_shortcode('sc_Linkcard', 'show_Linkcard');
+add_shortcode('blogcard', 'show_Linkcard');
 
 
 // Googleフォントとカスタムフォントを追加
