@@ -1505,7 +1505,6 @@ function inspiro_child_redirect_draft_archives() {
         'freelance-ui-designer-strategy-2026',
         'business-model-basics-for-ux-designers',
         'design-critique-and-logical-explanation',
-        'ui-state-design-and-engineer-collaboration',
         'design-review-mindset-and-presentation',
         'cursor-led-design-guide',
         'designer-engineer-collaboration-ai-era',
