@@ -62,23 +62,11 @@ if ((is_single() || (is_page() && ! inspiro_is_frontpage())) && has_post_thumbna
 			<div class="top-page-article-meta" style="display: flex; flex-direction: column; align-items: flex-start; margin-top: auto;">
 				<div class="top-page-article-tags" style="display: flex; flex-wrap: wrap; gap: 4px; align-items: flex-start;">
 					<?php
-					$displayed_terms = array(); // 表示済みタグ名を記録
-					$categories = get_the_category();
-					if (!empty($categories)) {
-						foreach ($categories as $cat) {
-							if ($cat->name === '記事') continue;
-							if (in_array($cat->name, $displayed_terms)) continue;
-							echo '<span class="tag" style="margin:0;">' . esc_html($cat->name) . '</span>';
-							$displayed_terms[] = $cat->name;
-						}
-					}
-					$tags = get_the_tags();
+					$tags = function_exists('inspiro_get_display_tags') ? inspiro_get_display_tags() : get_the_tags();
 					if (!empty($tags)) {
 						foreach ($tags as $tag) {
 							if (strtolower($tag->name) === 'pickup') continue;
-							if (in_array($tag->name, $displayed_terms)) continue;
 							echo '<span class="tag" style="margin:0;">' . esc_html($tag->name) . '</span>';
-							$displayed_terms[] = $tag->name;
 						}
 					}
 					?>

@@ -24,6 +24,17 @@
 	<div class="side-nav__scrollable-container">
 		<div class="side-nav__wrap">
 			<?php if ( has_nav_menu( 'primary' ) ) : ?>
+                <!-- 記事検索 (SPでは一番上に配置) -->
+                <div class="search-widget">
+                    <h2 class="widget-title">SEARCH</h2>
+                    <form role="search" method="get" class="article-search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+                        <div class="search-container">
+                            <input type="search" id="article-search-input-mobile" class="article-search-input-mobile" name="s" placeholder="キーワード検索..." autocomplete="off">
+                            <ul id="search-suggestions-mobile" class="search-suggestions"></ul>
+                        </div>
+                    </form>
+                </div>
+
 				<nav class="mobile-menu-wrapper" aria-label="<?php echo esc_attr_x( 'Mobile Menu', 'menu', 'inspiro' ); ?>" role="navigation">
 					<?php
 						wp_nav_menu(
@@ -40,24 +51,6 @@
                 <div class="mobile-side-nav-content">
                     <div id="custom-side-nav-mobile" style="padding-top: 20px; border-top: 1px solid #eee; margin-top: 20px;">
                         
-                        <!-- プロフィールカード -->
-                        <div class="profile-card">
-                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/yuny_logo.png"
-                                alt="プロフィール画像" class="profile-avatar">
-
-                            <h2 class="profile-name">Yuny</h2>
-                            <p class="profile-bio">UX / UI/グラフィックデザイナー<br>モーションや写真、映像や3Dも時々触ります</p>
-                        </div>
-
-                        <!-- 記事検索 -->
-                        <div class="search-widget">
-                            <h2 class="widget-title">SEARCH</h2>
-                            <div class="search-container">
-                                <input type="text" id="article-search-input-mobile" class="article-search-input-mobile" placeholder="キーワード検索..." autocomplete="off">
-                                <ul id="search-suggestions-mobile" class="search-suggestions"></ul>
-                            </div>
-                        </div>
-
                         <!-- カテゴリ一覧 -->
                         <h2 class="widget-title">カテゴリ</h2>
                         <ul class="side-nav-category-list">
@@ -77,6 +70,16 @@
                             ?>
                         </ul>
 
+                        <!-- プロフィールカード -->
+                        <div class="profile-card">
+                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/yuny_logo.png"
+                                alt="プロフィール画像" class="profile-avatar">
+
+                            <h2 class="profile-name">Yuny</h2>
+                            <p class="profile-bio">UX / UI/グラフィックデザイナー<br>モーションや写真、映像や3Dも時々触ります</p>
+                        </div>
+
+                        <?php if ( false ) : // 審査中一時非表示: i-mobile広告 ?>
                         <!-- 広告エリア -->
                         <div class="ad-widget" style="margin-top: 30px; text-align: center;">
                             <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
@@ -85,6 +88,7 @@
                                 <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00"})</script>
                             </div>
                         </div>
+                        <?php endif; // 審査中一時非表示ここまで ?>
                     </div>
                 </div>
 

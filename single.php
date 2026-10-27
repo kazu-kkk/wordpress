@@ -59,6 +59,37 @@ get_header(); ?>
                     <?php get_template_part('template-parts/share-buttons'); ?>
 
                     <?php
+                    // 文脈連動アフィリエイトカード（おすすめ書籍・関連ツール）
+                    $affiliate_data = inspiro_child_get_post_affiliate( get_the_ID() );
+                    if ( $affiliate_data ) :
+                        echo inspiro_child_render_affiliate_card( $affiliate_data );
+                    endif;
+
+                    // 記事下広告エリア
+                    // ※スマホ表示時かつアフィリエイト枠がある場合は、過剰な広告枠によるバナー無視・CPM低下を防ぐためアドネットワークを非表示に最適化
+                    // 審査中一時非表示: i-mobile広告
+                    $show_bottom_ad = false;
+
+                    if ( $show_bottom_ad ) :
+                    ?>
+                    <!-- 記事下広告 -->
+                    <div class="ad-widget ad-widget--bottom">
+                        <span class="ad-widget__label">スポンサーリンク</span>
+                        <?php if ( wp_is_mobile() ) : ?>
+                        <div id="im-d42fdd9186c2432aa61cd743ae247b05">
+                            <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+                            <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1940493,type:"banner",display:"inline",elementid:"im-d42fdd9186c2432aa61cd743ae247b05"})</script>
+                        </div>
+                        <?php else : ?>
+                        <div id="im-68a2d4103f124bc8bf3520f0e0742642">
+                            <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+                            <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1940487,type:"banner",display:"inline",elementid:"im-68a2d4103f124bc8bf3520f0e0742642"})</script>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php
                     // ── 関連記事セクション ──────────────────────────────────────
                     $related_posts = [];
 
@@ -66,21 +97,6 @@ get_header(); ?>
                     $related_posts = inspiro_child_get_critical_related_posts(get_the_ID(), 3);
 
                     if ($related_posts) : ?>
-                    <!-- 記事下広告 -->
-                    <div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
-                        <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
-                        <?php if ( wp_is_mobile() ) : ?>
-                        <div id="im-1eae1085f45c43698d0a456571986d00-bottom">
-                            <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                            <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1937823,type:"banner",display:"inline",elementid:"im-1eae1085f45c43698d0a456571986d00-bottom"})</script>
-                        </div>
-                        <?php else : ?>
-                        <div id="im-91b0abf8dd8043e3a85b798346681f1d-bottom">
-                            <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-                            <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1937816,type:"banner",display:"inline",elementid:"im-91b0abf8dd8043e3a85b798346681f1d-bottom"})</script>
-                        </div>
-                        <?php endif; ?>
-                    </div>
                     <section class="related-posts">
                         <h2 class="related-posts__title">この記事も読まれています</h2>
                         <div class="new-article-list">
@@ -97,23 +113,11 @@ get_header(); ?>
                                             <p class="new-article-text__date"><?php the_time('Y.m.d'); ?></p>
                                             <div class="new-article-text-meta">
                                                 <?php
-                                                $displayed_terms = array(); // 表示済みタグ名を記録
-                                                $categories = get_the_category();
-                                                if (!empty($categories)) {
-                                                    foreach ($categories as $cat) {
-                                                        if ($cat->name === '記事') continue;
-                                                        if (in_array($cat->name, $displayed_terms)) continue;
-                                                        echo '<div class="new-article-text__category"><span class="tag">' . esc_html($cat->name) . '</span></div>';
-                                                        $displayed_terms[] = $cat->name;
-                                                    }
-                                                }
-                                                $tags = get_the_tags();
+                                                $tags = function_exists('inspiro_get_display_tags') ? inspiro_get_display_tags() : get_the_tags();
                                                 if (!empty($tags)) {
                                                     foreach ($tags as $tag) {
                                                         if (strtolower($tag->name) === 'pickup') continue;
-                                                        if (in_array($tag->name, $displayed_terms)) continue;
                                                         echo '<div class="new-article-text__tag"><span class="tag">' . esc_html($tag->name) . '</span></div>';
-                                                        $displayed_terms[] = $tag->name;
                                                     }
                                                 }
                                                 ?>

@@ -1,0 +1,184 @@
+// ==========================================================================
+// Code Block Component Styles
+// 記事内コードブロック（右上コピーボタン配置）およびインラインコードの装飾スタイル
+// ==========================================================================
+
+// 外枠ラッパー
+.code-block-wrapper {
+  position: relative;
+  margin: 32px 0;
+  border-radius: 10px;
+  background-color: #14171f;
+  border: 1px solid #2d3343;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+
+  // Gutenbergの標準preの余白と背景をリセットして親ラッパーに統合
+  pre,
+  pre.wp-block-code {
+    margin: 0;
+    // 右上に配置されたコピーボタンと文字が重ならないよう右余白を確保
+    padding: 20px 90px 20px 20px;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    overflow-x: auto;
+    color: #f1f5f9;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 14px;
+    line-height: 1.65;
+    tab-size: 4;
+    -webkit-overflow-scrolling: touch;
+
+    code {
+      background: transparent;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      color: inherit;
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      white-space: pre;
+      word-break: normal;
+      word-wrap: normal;
+    }
+
+    // スクロールバーのカスタマイズ
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+
+      @media (hover: hover) {
+        &:hover {
+          background: rgba(255, 255, 255, 0.35);
+        }
+      }
+    }
+  }
+}
+
+// 右上配置のコピーボタン
+.code-block__copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background-color: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  color: #cbd5e1;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+
+  .code-block__icon {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  // タッチデバイスでのホバー残留を防止
+  @media (hover: hover) {
+    &:hover {
+      background-color: rgba(43, 83, 236, 0.35);
+      border-color: #2b53ec;
+      color: #ffffff;
+
+      .code-block__icon--copy {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  // コピー完了状態
+  &.is-copied {
+    background-color: rgba(16, 185, 129, 0.25);
+    border-color: #10b981;
+    color: #10b981;
+
+    .code-block__icon--check {
+      animation: codeCheckPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+  }
+}
+
+// コピー完了アイコンのアニメーション
+@keyframes codeCheckPop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+// インラインコード（文章中の <code>）
+// 多用された場合でも視覚的ノイズにならず本文の可読性を保つ極めて控えめなフラットスタイル
+.article-text,
+.content {
+  p code,
+  li code {
+    background-color: rgba(0, 0, 0, 0.05);
+    border: none;
+    box-shadow: none;
+    color: #1f2937;
+    padding: 1px 5px;
+    margin: 0 2px;
+    border-radius: 4px;
+    font-size: 0.88em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    vertical-align: baseline;
+  }
+}
+
+// モバイル（SP）対応
+@media screen and (max-width: 767px) {
+  .code-block-wrapper {
+    margin: 24px 0;
+    border-radius: 8px;
+
+    pre,
+    pre.wp-block-code {
+      padding: 16px 75px 16px 14px;
+      font-size: 13px;
+    }
+  }
+
+  .code-block__copy-btn {
+    top: 8px;
+    right: 8px;
+    padding: 4px 8px;
+    font-size: 11px;
+
+    .code-block__icon {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}

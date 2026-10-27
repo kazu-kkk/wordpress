@@ -26,7 +26,7 @@
 				</div>
 				<p class="footer-desc">
 					デザイナーやクリエイターのための情報メディア。<br>
-					UX / UIデザインからキャリアまで、役立つ情報を発信中。
+					UX/UIデザインからキャリアまで、役立つ情報を発信中。
 				</p>
 				<div class="footer-sns">
 					<a href="https://x.com/dspediabyyuny" target="_blank" aria-label="X (Twitter)">
@@ -90,8 +90,8 @@
 				<nav>
 					<ul>
 						<li><a href="/about/">About</a></li>
-						<li><a href="/privacy">Privacy Policy</a></li>
-						<li><a href="/contact">Contact</a></li>
+						<li><a href="/privacy-policy/">Privacy Policy</a></li>
+						<li><a href="/contact/">Contact</a></li>
 					</ul>
 				</nav>
 			</div>

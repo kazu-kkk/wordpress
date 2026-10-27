@@ -1,0 +1,165 @@
+// =====================================================
+// Image Lightbox (画像拡大モーダル)
+// =====================================================
+
+// モーダル表示時のbodyスクロールロック
+body.lightbox-open {
+  overflow: hidden;
+  touch-action: none;
+}
+
+// 拡大対象画像（本文画像・アイキャッチ・検証用トリガー）のカーソル
+.article-text img:not(.no-lightbox),
+.article-sub-thumbnail img,
+.js-lightbox-trigger img,
+img.js-lightbox-trigger {
+  @media (hover: hover) {
+    cursor: zoom-in;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.92;
+    }
+  }
+}
+
+// 除外対象のカーソルリセット
+.article-text {
+  .blogcard img,
+  .c-share img,
+  .ad-widget img,
+  .no-lightbox,
+  [data-no-lightbox] {
+    cursor: default;
+    @media (hover: hover) {
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+// ライトボックス本体
+.c-image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: zoom-out; // 背景オーバーレイはタップ/クリックで解除するためズームアウトカーソル
+
+  &.is-active {
+    opacity: 1;
+    visibility: visible;
+
+    .c-image-lightbox__content {
+      transform: scale(1);
+    }
+  }
+
+  // 黒い半透明背景オーバーレイ
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(12, 14, 18, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  // 閉じる（×）ボタン
+  &__close {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    top: max(24px, env(safe-area-inset-top));
+    right: max(24px, env(safe-area-inset-right));
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+        transform: scale(1.05);
+      }
+    }
+
+    svg {
+      display: block;
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  // コンテナ
+  &__container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 32px;
+    box-sizing: border-box;
+
+    @media screen and (max-width: 767px) {
+      padding: 16px;
+    }
+  }
+
+  // 画像＆キャプション保持エリア
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 92vw;
+    max-height: 88vh;
+    transform: scale(0.94);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: default; // 画像およびキャプション自体は通常カーソル
+  }
+
+  // 拡大画像
+  &__img {
+    display: block;
+    max-width: 92vw;
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6),
+                0 4px 12px rgba(0, 0, 0, 0.3);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  // キャプション
+  &__caption {
+    margin-top: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+    max-width: 90vw;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  }
+}

@@ -176,7 +176,13 @@
    ========================================= */
 .search-widget {
     margin-bottom: 24px;
-    margin-top: 40px;
+    margin-top: 0;
+}
+
+.article-search-form {
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }
 
 .search-container {
@@ -184,7 +190,8 @@
     width: 100%;
 }
 
-#article-search-input {
+#article-search-input,
+.article-search-input {
     width: 100%;
     padding: 12px 16px;
     border: 1px solid #ddd;
@@ -194,6 +201,15 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     background-color: #fff;
     box-sizing: border-box;
+    -webkit-appearance: none;
+    appearance: none;
+    
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
+        display: none;
+    }
     
     &:focus {
         outline: none;
@@ -529,5 +545,23 @@ body.side-nav-open .site {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(43, 83, 236, 0.3);
         }
+    }
+}
+
+/* =========================================
+   PC版サイドバー広告の追従（スティッキー）化
+   ========================================= */
+@media screen and (min-width: 768px) {
+    #custom-side-nav {
+        /* 子要素のstickyを有効にするため、親要素に高さ100%を持たせる */
+        height: 100%;
+    }
+    
+    #custom-side-nav .sticky-sidebar-wrapper {
+        position: sticky;
+        top: 130px; /* ヘッダーの高さ＋見出し上部の余白を考慮して調整 */
+        z-index: 10;
+        /* 余白を整える */
+        padding-bottom: 20px;
     }
 }

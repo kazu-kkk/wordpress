@@ -123,6 +123,80 @@
                 }
             }
         }
+
+        // Bookmark (後で読む)
+        &--bookmark {
+            .c-share__bookmark-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 46px;
+                height: 46px;
+                padding: 0;
+                border: 1px solid #e8e8e8;
+                border-radius: 50%;
+                background-color: #ffffff;
+                color: #666666;
+                cursor: pointer;
+                transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+                svg,
+                .lucide {
+                    display: block;
+                    width: 20px;
+                    height: 20px;
+                    transition: transform 0.3s ease, fill 0.3s ease;
+                }
+
+                @media (hover: hover) {
+                    &:hover {
+                        border-color: #2b53ec;
+                        color: #2b53ec;
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 12px rgba(43, 83, 236, 0.15);
+
+                        svg,
+                        .lucide {
+                            transform: scale(1.08);
+                        }
+                    }
+                }
+
+                &:active {
+                    transform: translateY(0);
+                }
+
+                // 保存済み（アクティブ）
+                &.is-active {
+                    border-color: #2b53ec;
+                    background-color: #2b53ec;
+                    color: #ffffff;
+
+                    svg,
+                    .lucide {
+                        fill: currentColor;
+                    }
+
+                    @media (hover: hover) {
+                        &:hover {
+                            border-color: #1a3cb8;
+                            background-color: #1a3cb8;
+                            color: #ffffff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // 縦罫線
+    &__divider {
+        display: block;
+        width: 1px;
+        height: 28px;
+        margin: auto 4px;
+        background-color: #e0e6f0;
     }
 }
 
@@ -162,10 +236,16 @@
 
         &__item {
             a,
-            .c-share__copy-btn {
+            .c-share__copy-btn,
+            .c-share__bookmark-btn {
                 width: 44px;
                 height: 44px;
             }
+        }
+
+        &__divider {
+            height: 24px;
+            margin: auto 2px;
         }
     }
 }

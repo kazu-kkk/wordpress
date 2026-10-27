@@ -229,20 +229,43 @@ add_action( 'wp_head', function() { ?>
         }
         
         body.page-template-page-top-preview .new-article__image {
-            width: 200px;
+            position: relative;
+            width: 240px;
             height: 150px;
             flex-shrink: 0;
             overflow: hidden;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.page-template-page-top-preview .new-article__image::before {
+            content: "";
+            position: absolute;
+            inset: -20px;
+            background-image: var(--thumb);
+            background-size: cover;
+            background-position: center;
+            filter: blur(24px) saturate(1.3);
+            opacity: 0.35;
+            transform: scale(1.35);
+            z-index: 0;
+            pointer-events: none;
         }
         
         body.page-template-page-top-preview .new-article__image img {
+            position: relative;
+            z-index: 1;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            transition: transform 0.4s ease;
+            display: block;
         }
         
         body.page-template-page-top-preview .new-article-text {
-            width: 100%;
+            width: calc(100% - 240px);
             height: 150px;
             box-sizing: border-box;
             padding: 15px 20px;
@@ -353,7 +376,7 @@ get_header(); ?>
 
     <!-- 2. ピックアップ記事（フル幅） -->
     <section class="pickup" style="margin-bottom: 40px;">
-        <h2 class="title-h2__text title-h2__text--pick-up">ピックアップ</h2>
+        <h2 class="title-h2__text title-h2__text--pick-up"><i data-lucide="pen-tool"></i> ピックアップ</h2>
         <ul class="pickup-list">
             <?php
             $pickup_post_ids = array(); // ピックアップ記事のIDを保持する配列
@@ -417,23 +440,11 @@ get_header(); ?>
                         <p class="pickup-article-text__date"><?php the_time('Y.m.d'); ?></p>
                         <div class="pickup-article-text-meta" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; align-items: flex-start; overflow: hidden; height: 30px;">
                             <?php
-                            $displayed_terms = array(); // 表示済みタグ名を記録
-                            $categories = get_the_category();
-                            if (!empty($categories)) {
-                                foreach ($categories as $cat) {
-                                    if ($cat->name === '記事') continue;
-                                    if (in_array($cat->name, $displayed_terms)) continue;
-                                    echo '<div class="pickup-article-text__category" style="margin: 0; display: block; flex-shrink: 0; line-height: 1.4;"><span class="tag">' . esc_html($cat->name) . '</span></div>';
-                                    $displayed_terms[] = $cat->name;
-                                }
-                            }
-                            $tags = get_the_tags();
+                            $tags = function_exists('inspiro_get_display_tags') ? inspiro_get_display_tags() : get_the_tags();
                             if (!empty($tags)) {
                                 foreach ($tags as $tag) {
                                     if (strtolower($tag->name) === 'pickup') continue;
-                                    if (in_array($tag->name, $displayed_terms)) continue;
                                     echo '<div class="pickup-article-text__tag" style="margin: 0; display: block; flex-shrink: 0; line-height: 1.4;"><span class="tag">' . esc_html($tag->name) . '</span></div>';
-                                    $displayed_terms[] = $tag->name;
                                 }
                             }
                             ?>
@@ -456,7 +467,7 @@ get_header(); ?>
         <main id="main" class="top-page-content" role="main">
             <!-- 3. 最新の投稿 -->
             <section style="margin-bottom: 40px;">
-                <h2 class="title-h2__text title-h2__text--new">最新の投稿</h2>
+                <h2 class="title-h2__text title-h2__text--new"><i data-lucide="file-text"></i> 最新の投稿</h2>
                 <div class="new-article-list">
                     <?php
                     $latest_post_ids = array(); // 最新の投稿記事のIDを保持する配列
@@ -474,7 +485,7 @@ get_header(); ?>
                     ?>
                     <article class="new-article">
                         <a href="<?php the_permalink(); ?>" class="new-article-link">
-                            <div class="new-article__image">
+                            <div class="new-article__image" style="--thumb: url('<?php echo esc_url($thumbnail_url); ?>');">
                                 <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
                             </div>
                             <div class="new-article-text">
@@ -483,23 +494,11 @@ get_header(); ?>
                                     <p class="new-article-text__date"><?php the_time('Y.m.d'); ?></p>
                                     <div class="new-article-text-meta">
                                         <?php
-                                        $displayed_terms = array(); // 表示済みタグ名を記録
-                                        $categories = get_the_category();
-                                        if (!empty($categories)) {
-                                            foreach ($categories as $cat) {
-                                                if ($cat->name === '記事') continue;
-                                                if (in_array($cat->name, $displayed_terms)) continue;
-                                                echo '<div class="new-article-text__category"><span class="tag">' . esc_html($cat->name) . '</span></div>';
-                                                $displayed_terms[] = $cat->name;
-                                            }
-                                        }
-                                        $tags = get_the_tags();
+                                        $tags = function_exists('inspiro_get_display_tags') ? inspiro_get_display_tags() : get_the_tags();
                                         if (!empty($tags)) {
                                             foreach ($tags as $tag) {
                                                 if (strtolower($tag->name) === 'pickup') continue;
-                                                if (in_array($tag->name, $displayed_terms)) continue;
                                                 echo '<div class="new-article-text__tag"><span class="tag">' . esc_html($tag->name) . '</span></div>';
-                                                $displayed_terms[] = $tag->name;
                                             }
                                         }
                                         ?>
@@ -520,7 +519,7 @@ get_header(); ?>
 
             <!-- 4. トレンドセクション -->
             <section style="margin-bottom: 40px;">
-                <h2 class="title-h2__text title-h2__text--trend">デザイントレンド</h2>
+                <h2 class="title-h2__text title-h2__text--trend"><i data-lucide="trending-up"></i> デザイントレンド</h2>
                 <div class="new-article-list">
                     <?php
                     // 以前取得したピックアップ記事と最新の投稿記事のIDをマージ
@@ -547,7 +546,7 @@ get_header(); ?>
                     ?>
                     <article class="new-article">
                         <a href="<?php the_permalink(); ?>" class="new-article-link">
-                            <div class="new-article__image">
+                            <div class="new-article__image" style="--thumb: url('<?php echo esc_url($thumbnail_url); ?>');">
                                 <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
                             </div>
                             <div class="new-article-text">
@@ -556,23 +555,11 @@ get_header(); ?>
                                     <p class="new-article-text__date"><?php the_time('Y.m.d'); ?></p>
                                     <div class="new-article-text-meta">
                                         <?php
-                                        $displayed_terms = array(); // 表示済みタグ名を記録
-                                        $categories = get_the_category();
-                                        if (!empty($categories)) {
-                                            foreach ($categories as $cat) {
-                                                if ($cat->name === '記事') continue;
-                                                if (in_array($cat->name, $displayed_terms)) continue;
-                                                echo '<div class="new-article-text__category"><span class="tag">' . esc_html($cat->name) . '</span></div>';
-                                                $displayed_terms[] = $cat->name;
-                                            }
-                                        }
-                                        $tags = get_the_tags();
+                                        $tags = function_exists('inspiro_get_display_tags') ? inspiro_get_display_tags() : get_the_tags();
                                         if (!empty($tags)) {
                                             foreach ($tags as $tag) {
                                                 if (strtolower($tag->name) === 'pickup') continue;
-                                                if (in_array($tag->name, $displayed_terms)) continue;
                                                 echo '<div class="new-article-text__tag"><span class="tag">' . esc_html($tag->name) . '</span></div>';
-                                                $displayed_terms[] = $tag->name;
                                             }
                                         }
                                         ?>
