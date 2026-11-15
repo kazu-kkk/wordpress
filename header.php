@@ -25,9 +25,6 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-	<!-- Google AdSense 審査用正規コード -->
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2216753629127219" crossorigin="anonymous"></script>
-
 	<!-- LCP改善のためのロゴ画像プリロード -->
 	<?php
 	if (is_front_page()) {

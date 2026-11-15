@@ -777,6 +777,10 @@ add_shortcode('pinterest_image', 'inspiro_child_pinterest_image_shortcode');
  * - デフォルトは閉じた状態（JS側で開閉を制御）
  */
 function inspiro_child_auto_toc($content) {
+    // 記事本文中に残存した undefined 表示を自動除去
+    $content = preg_replace('/<p>\s*undefined\s*<\/p>/i', '', $content);
+    $content = preg_replace('/^\s*undefined\s*$/im', '', $content);
+
     if (!is_single()) {
         return $content;
     }
@@ -831,8 +835,11 @@ function inspiro_child_auto_toc($content) {
     </div>
 </div>';
 
-    if ( wp_is_mobile() ) {
-        $ad_html = '
+    // AdSense審査中につき目次下のi-mobile広告を一時非表示
+    $ad_html = '';
+    if ( false ) {
+        if ( wp_is_mobile() ) {
+            $ad_html = '
 <div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
     <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
     <div id="im-b379ae08e658400daf60492490c57be3">
@@ -840,8 +847,8 @@ function inspiro_child_auto_toc($content) {
         <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594669,asid:1940491,type:"banner",display:"inline",elementid:"im-b379ae08e658400daf60492490c57be3"})</script>
     </div>
 </div>';
-    } else {
-        $ad_html = '
+        } else {
+            $ad_html = '
 <div class="ad-widget" style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
     <span style="font-size: 10px; color: #999; display: block; margin-bottom: 5px;">スポンサーリンク</span>
     <div id="im-659427e020b640f3b9e1dde8573c061a">
@@ -849,6 +856,7 @@ function inspiro_child_auto_toc($content) {
         <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:85175,mid:594668,asid:1940485,type:"banner",display:"inline",elementid:"im-659427e020b640f3b9e1dde8573c061a"})</script>
     </div>
 </div>';
+        }
     }
 
     // 最初の h2 の直前に目次と広告を挿入
@@ -1554,5 +1562,49 @@ function inspiro_child_serve_ads_txt() {
     }
 }
 add_action( 'init', 'inspiro_child_serve_ads_txt' );
+
+/**
+ * コンテンツが存在しない機能ページ（reading-list・404・検索結果・タグ一覧）でのAdSenseスクリプト出力を抑止
+ * （空ページへのAdSenseコード設置による「有用性の低いコンテンツ」判定を防止）
+ */
+function inspiro_child_is_non_content_page() {
+    $uri  = $_SERVER['REQUEST_URI'] ?? '';
+    $path = trim( parse_url( $uri, PHP_URL_PATH ), '/' );
+    if ( $path === 'reading-list' || is_404() || is_search() || is_tag() || is_page( 'reading-list' ) ) {
+        return true;
+    }
+    return false;
+}
+
+add_filter( 'googlesitekit_adsense_tag_blocked', function( $blocked ) {
+    if ( inspiro_child_is_non_content_page() ) {
+        return true;
+    }
+    return $blocked;
+} );
+
+/**
+ * Post 1011 の undefined ショートコード残存をDB上で1回限り自動修復
+ */
+add_action( 'init', function() {
+    if ( get_option( 'inspiro_fixed_post_1011_v2' ) ) {
+        return;
+    }
+    $post = get_post( 1011 );
+    if ( $post && strpos( $post->post_content, 'undefined' ) !== false ) {
+        $new_content = str_replace( '`', '', $post->post_content );
+        $new_content = preg_replace(
+            '/<!-- wp:shortcode -->\s*undefined\s*<!-- \/wp:shortcode -->\s*<!-- wp:shortcode -->\s*undefined\s*<!-- \/wp:shortcode -->/s',
+            "<!-- wp:shortcode -->\n[sc_Linkcard url=\"https://www.ds-pedia.com/2026/09/18/neobrutalism-ui-design-guide/\"]\n<!-- /wp:shortcode -->\n\n<!-- wp:shortcode -->\n[sc_Linkcard url=\"https://www.ds-pedia.com/2026/07/09/blueprint-design-trend-2026/\"]\n<!-- /wp:shortcode -->",
+            $new_content
+        );
+        wp_update_post( array(
+            'ID'           => 1011,
+            'post_content' => $new_content,
+        ) );
+    }
+    update_option( 'inspiro_fixed_post_1011_v2', 1 );
+} );
+
 
 
