@@ -1595,7 +1595,7 @@ add_action( 'init', function() {
         $new_content = str_replace( '`', '', $post->post_content );
         $new_content = preg_replace(
             '/<!-- wp:shortcode -->\s*undefined\s*<!-- \/wp:shortcode -->\s*<!-- wp:shortcode -->\s*undefined\s*<!-- \/wp:shortcode -->/s',
-            "<!-- wp:shortcode -->\n[sc_Linkcard url=\"https://www.ds-pedia.com/2026/09/18/neobrutalism-ui-design-guide/\"]\n<!-- /wp:shortcode -->\n\n<!-- wp:shortcode -->\n[sc_Linkcard url=\"https://www.ds-pedia.com/2026/07/09/blueprint-design-trend-2026/\"]\n<!-- /wp:shortcode -->",
+            "<!-- wp:shortcode -->\n[sc_Linkcard url=\"https://www.ds-pedia.com/2026/06/07/y3k-design-trend-futuristic-ui/\"]\n<!-- /wp:shortcode -->\n\n<!-- wp:shortcode -->\n[sc_Linkcard url=\"https://www.ds-pedia.com/2026/07/09/blueprint-design-trend-2026/\"]\n<!-- /wp:shortcode -->",
             $new_content
         );
         wp_update_post( array(
