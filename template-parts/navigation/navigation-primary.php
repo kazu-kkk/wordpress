@@ -58,7 +58,7 @@ $header_menu_style  = inspiro_get_theme_mod('header-menu-style');
 			</div>
 
 			<!-- 後で読む（ブックマーク）一覧リンク -->
-			<a href="<?php echo esc_url(home_url('/reading-list/')); ?>" class="header-bookmark-link js-header-bookmark-link" aria-label="後で読む記事一覧" title="後で読む記事一覧">
+			<a href="<?php echo esc_url(home_url('/reading-list/')); ?>" class="header-bookmark-link js-header-bookmark-link" rel="nofollow" aria-label="後で読む記事一覧" title="後で読む記事一覧">
 				<i data-lucide="bookmark" class="header-bookmark-icon"></i>
 				<span class="header-bookmark-badge js-bookmark-badge" style="display: none;"></span>
 			</a>

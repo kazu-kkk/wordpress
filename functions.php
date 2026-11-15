@@ -679,94 +679,10 @@ add_shortcode('pinterest_embed', 'inspiro_child_pinterest_embed_shortcode');
 
 /**
  * Pinterest Image Fetch Shortcode (OGP Scraping)
- * [pinterest_image url="https://www.pinterest.jp/pin/xxxxxx/"]
+ * ※AdSense審査・著作権保護のため外部画像直貼り出力を無効化
  */
 function inspiro_child_pinterest_image_shortcode($atts) {
-    $atts = shortcode_atts(array(
-        'url'    => '',
-        'width'  => 'auto',
-        'height' => '300px',
-        'alt'    => 'Pinterest Image', // デフォルトのaltテキスト
-    ), $atts);
-
-    if (empty($atts['url'])) {
-        return '';
-    }
-
-    $final_url = inspiro_child_resolve_pinterest_url($atts['url']);
-
-    $cache_key = 'pinterest_ogp_' . md5($final_url);
-    $image_url = get_transient($cache_key);
-
-    if ($image_url === false) {
-        if (!class_exists('OpenGraph')) {
-            require_once get_stylesheet_directory() . '/OpenGraph.php';
-        }
-        $graph = OpenGraph::fetch($final_url);
-        $image_url = $graph->image ?? '';
-
-        $ttl = !empty($image_url) ? DAY_IN_SECONDS : HOUR_IN_SECONDS;
-        set_transient($cache_key, $image_url, $ttl);
-    }
-
-    if (empty($image_url)) {
-        return '<p>Pinterest画像の取得に失敗しました。</p>';
-    }
-
-    $width_val = $atts['width'];
-    $height_val = $atts['height'];
-    
-    // pxなどの単位がない場合はpxを補完（autoなどの文字列はそのまま）
-    $width_css = is_numeric($width_val) ? $width_val . 'px' : $width_val;
-    $height_css = is_numeric($height_val) ? $height_val . 'px' : $height_val;
-
-    // imgタグ用の属性値（autoなどの場合は出力しない）
-    $img_width_attr = is_numeric($width_val) ? ' width="' . esc_attr($width_val) . '"' : '';
-    $img_height_attr = is_numeric($height_val) ? ' height="' . esc_attr($height_val) . '"' : '';
-
-    // 画像自体にサイズを指定し、親要素で中央寄せする構成に変更（余白ができなくなる）
-    $unique_id = 'pin_' . md5($final_url . $width_css . $height_css . uniqid());
-    
-    $custom_css = "<style>
-        .{$unique_id} {
-            margin: 2rem auto;
-            text-align: center;
-        }
-        .{$unique_id} a.pin-link {
-            display: inline-block;
-            max-width: 100%;
-        }
-        .{$unique_id} img {
-            width: {$width_css} !important;
-            height: {$height_css} !important;
-            max-width: 100% !important;
-            object-fit: contain !important;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        .{$unique_id} .pin-source {
-            margin-top: 8px;
-            font-size: 12px;
-            color: #666;
-        }
-        .{$unique_id} .pin-source a {
-            color: #666;
-            text-decoration: underline;
-        }
-        .{$unique_id} .pin-source a:hover {
-            color: #2b53ec;
-        }
-    </style>";
-
-    // alt属性の値を取得
-    $alt_text = isset($atts['alt']) ? $atts['alt'] : 'Pinterest Image';
-
-    return $custom_css . '<div class="' . esc_attr($unique_id) . ' pinterest-image-wrapper">
-        <a href="' . esc_url($final_url) . '" target="_blank" rel="noopener noreferrer" class="pin-link">
-            <img src="' . esc_url($image_url) . '" alt="' . esc_attr($alt_text) . '" class="pinterest-image" loading="lazy" ' . $img_width_attr . $img_height_attr . ' />
-        </a>
-        <div class="pin-source">出典：<a href="' . esc_url($final_url) . '" target="_blank" rel="noopener noreferrer">Pinterest</a></div>
-    </div>';
+    return '';
 }
 add_shortcode('pinterest_image', 'inspiro_child_pinterest_image_shortcode');
 
@@ -872,9 +788,26 @@ add_filter('the_content', 'inspiro_child_auto_toc', 20);
  * Optimize Title Tag for SEO
  */
 add_filter('document_title_parts', function($title) {
+    $uri  = $_SERVER['REQUEST_URI'] ?? '';
+    $path = trim(parse_url($uri, PHP_URL_PATH), '/');
+    if ($path === 'reading-list') {
+        $title['title'] = '後で読むリスト - デザペディア';
+        unset($title['tagline']);
+        unset($title['site']);
+        return $title;
+    }
     if (is_front_page() || is_home()) {
         $title['title'] = 'デザペディア - Webデザイン・UX / UI・チュートリアルの情報メディアサイト';
         unset($title['tagline']); // サイトのキャッチフレーズ部分を削除してスッキリさせる
+    }
+    return $title;
+});
+
+add_filter('aioseo_title', function($title) {
+    $uri  = $_SERVER['REQUEST_URI'] ?? '';
+    $path = trim(parse_url($uri, PHP_URL_PATH), '/');
+    if ($path === 'reading-list') {
+        return '後で読むリスト - デザペディア';
     }
     return $title;
 });
@@ -1441,27 +1374,61 @@ function inspiro_child_affiliate_card_shortcode( $atts ) {
 add_shortcode( 'affiliate_card', 'inspiro_child_affiliate_card_shortcode' );
 
 /**
- * タグアーカイブページおよび後で読む一覧を noindex に設定（AdSense/SEOのThin Content防止）
+ * タグアーカイブ・著者アーカイブ・後で読む一覧を noindex に設定し、ページネーションの nofollow を防止
  */
 function inspiro_child_noindex_tag_archives( $attributes ) {
-    if ( is_tag() || is_page( 'reading-list' ) ) {
+    $uri  = $_SERVER['REQUEST_URI'] ?? '';
+    $path = trim( parse_url( $uri, PHP_URL_PATH ), '/' );
+
+    if ( $path === 'reading-list' || is_page( 'reading-list' ) ) {
+        if ( is_array( $attributes ) ) {
+            $attributes['noindex']  = 'noindex';
+            $attributes['nofollow'] = 'nofollow';
+        }
+        return $attributes;
+    }
+
+    if ( is_tag() || is_author() || is_search() || is_404() ) {
         if ( is_array( $attributes ) ) {
             $attributes['noindex']  = 'noindex';
             $attributes['nofollow'] = 'follow';
         }
+        return $attributes;
     }
+
+    // ページネーション（2ページ目以降）でAIOSEOが nofollow を出力するのを防止し、過去記事へのクローラー回遊を確保
+    if ( is_paged() && is_array( $attributes ) ) {
+        $attributes['nofollow'] = 'follow';
+    }
+
     return $attributes;
 }
-add_filter( 'aioseo_robots_meta', 'inspiro_child_noindex_tag_archives' );
+add_filter( 'aioseo_robots_meta', 'inspiro_child_noindex_tag_archives', 999 );
 
 function inspiro_child_wp_robots_tag( $robots ) {
-    if ( is_tag() || is_page( 'reading-list' ) ) {
+    $uri  = $_SERVER['REQUEST_URI'] ?? '';
+    $path = trim( parse_url( $uri, PHP_URL_PATH ), '/' );
+
+    if ( $path === 'reading-list' || is_page( 'reading-list' ) ) {
+        $robots['noindex']  = true;
+        $robots['nofollow'] = true;
+        unset( $robots['follow'] );
+        return $robots;
+    }
+
+    if ( is_tag() || is_author() || is_search() || is_404() ) {
         $robots['noindex'] = true;
         $robots['follow']  = true;
     }
+
+    if ( is_paged() ) {
+        unset( $robots['nofollow'] );
+        $robots['follow'] = true;
+    }
+
     return $robots;
 }
-add_filter( 'wp_robots', 'inspiro_child_wp_robots_tag' );
+add_filter( 'wp_robots', 'inspiro_child_wp_robots_tag', 999 );
 
 /**
  * AIOSEOのサイトマップインデックスからタグ一覧（post_tag-sitemap.xml）を除外
@@ -1481,74 +1448,152 @@ function inspiro_child_exclude_tag_sitemap( $indexes ) {
 add_filter( 'aioseo_sitemap_indexes', 'inspiro_child_exclude_tag_sitemap' );
 
 /**
- * 非公開（draft）にした記事へのアクセスを301リダイレクトし、Googleクローラーによる404エラー検知を防止
+ * 動的ドラフトリダイレクト＆空カテゴリ・旧スラッグ正規化システム
+ * - 空カテゴリ（記事0件）へのアクセスを /category/article/ へ301リダイレクト
+ * - 公開中（publish）の記事に対する旧日本語スラッグ・日付違いアクセスを正規URLへ1ホップで301リダイレクト
+ * - 現在下書き中（draft）の記事へのアクセスを、ハードコード配列ではなくDBステータス連動で所属カテゴリへ302リダイレクト
+ *   （週2回の自動復元で記事が publish に変わった瞬間、functions.php の更新なしで自動的に200 OKで公開表示される）
  */
-function inspiro_child_redirect_draft_archives() {
-    if ( ! is_404() ) {
-        return;
+function inspiro_child_get_draft_fallback_category_url( $post_id = 0 ) {
+    if ( $post_id > 0 ) {
+        $cats = get_the_category( $post_id );
+        if ( ! empty( $cats ) && ! is_wp_error( $cats ) ) {
+            // 親カテゴリ(5:article)や空・廃止カテゴリ(1:uncategorized, 3:other, 16:other-article)を除いた専門カテゴリを優先
+            foreach ( $cats as $cat ) {
+                if ( ! in_array( (int) $cat->term_id, array( 1, 3, 5, 16 ), true ) && (int) $cat->count > 0 ) {
+                    $link = get_category_link( $cat->term_id );
+                    if ( ! empty( $link ) && ! is_wp_error( $link ) ) {
+                        return $link;
+                    }
+                }
+            }
+        }
     }
+    return home_url( '/category/article/' );
+}
+
+function inspiro_child_redirect_draft_archives() {
+    global $wpdb;
 
     $uri = $_SERVER['REQUEST_URI'] ?? '';
     if ( empty( $uri ) ) {
         return;
     }
 
-    $draft_slugs = array(
-        'web-ui-font-pairing-guide',
-        'ui-designer-tools-comparison-2026',
-        'y2k-design-trend-guide',
-        'web-design-reference-system-notion',
-        'monochromatic-design-guide',
-        'hackathon-for-ui-designers',
-        'user-centric-web-design-thinking',
-        'ui-ux-designer-portfolio-guide-2026',
-        'graphical-first-ui-design-trend-2026',
-        'biophilic-ux-ui-design-trend-2026',
-        'mcp-model-context-protocol-for-designers',
-        'neo-skeuomorphism-ui-trend-2026',
-        'bento-grid-2-0-guide-2026',
-        'quantitative-research-for-ui-designers',
-        'mobile-app-ux-trends-2026',
-        'web-ui-typography-rules',
-        'anti-minimalism-ui-trend-2026',
-        'freelance-ui-designer-strategy-2026',
-        'business-model-basics-for-ux-designers',
-        'design-critique-and-logical-explanation',
-        'design-review-mindset-and-presentation',
-        'cursor-led-design-guide',
-        'designer-engineer-collaboration-ai-era',
-        'ux-designer-vs-pdm-career-path',
-        'situated-ui-design-trend-2026',
-        'designer-internship-guide',
-        'apple-hig-tactile-ui-depth',
-        'dial-up-delight-retro-ui-trend',
-        'trinket-design-trend-2026',
-        'bad-ux-pattern-detection-skills',
-        'world-standard-effective-design-basics',
-        'pasona-lp-design-guide',
-        'ux-design-basics-simple-explanation',
-        'liminal-space-ui-trend-2026',
-        'ui-design-fundamentals-for-non-designers',
-        'digital-tactility-haptics-ui-design',
-        'ui-ux-design-standards-ai-future',
-        'illustrator-vs-photoshop-ui-designer-guide',
-        'designer-career-change-and-job-selection',
-        'data-driven-design-metrics-and-evidence',
-        'japanese-traditional-patterns-in-ui-design',
-        'ui-ux-designer-career-guide-by-experience',
-        'illustrator-useful-features-for-web-designers',
-        'ai-tools-for-designers-productivity-2026',
-        'web-accessibility-beginner-guide'
-    );
+    $raw_path = trim( parse_url( $uri, PHP_URL_PATH ), '/' );
+    $decoded_path = trim( rawurldecode( $raw_path ), '/' );
 
-    foreach ( $draft_slugs as $slug ) {
-        if ( strpos( $uri, $slug ) !== false ) {
-            wp_redirect( home_url( '/' ), 301 );
+    if ( $raw_path === 'reading-list' ) {
+        return;
+    }
+
+    // 1. 廃止・空カテゴリ（other-article, other, uncategorized, 旧日本語カテゴリスラッグ）または記事0件カテゴリを /category/article/ へ301リダイレクト
+    $deprecated_cat_paths = array(
+        'category/article/other-article',
+        'category/other-article',
+        'category/other',
+        'category/uncategorized',
+        'category/article/ux・心理学',
+    );
+    foreach ( $deprecated_cat_paths as $dep_path ) {
+        if ( $decoded_path === $dep_path || strpos( $decoded_path, $dep_path . '/' ) === 0 ) {
+            wp_redirect( home_url( '/category/article/' ), 301 );
+            exit;
+        }
+    }
+
+    if ( is_category() ) {
+        $term = get_queried_object();
+        if ( $term && isset( $term->count ) && (int) $term->count === 0 ) {
+            wp_redirect( home_url( '/category/article/' ), 301 );
+            exit;
+        }
+    }
+
+    // 2. 404時の動的記事解決（下書き記事 または 旧日本語URL・日付変更URL）
+    if ( ! is_404() ) {
+        return;
+    }
+
+    $segments = array_values( array_filter( explode( '/', $decoded_path ) ) );
+    if ( empty( $segments ) ) {
+        return;
+    }
+    $last_slug = end( $segments );
+    $sanitized_slug = sanitize_title( $last_slug );
+
+    $target_post = null;
+
+    // (A) post_name 完全一致検索（publish / draft / future）
+    $candidates = array_unique( array_filter( array( $last_slug, $sanitized_slug, strtolower( rawurlencode( $last_slug ) ) ) ) );
+    foreach ( $candidates as $cand ) {
+        $row = $wpdb->get_row( $wpdb->prepare(
+            "SELECT ID, post_status FROM {$wpdb->posts} WHERE post_type = 'post' AND post_status IN ('publish', 'draft', 'future') AND post_name = %s ORDER BY FIELD(post_status, 'publish', 'future', 'draft') LIMIT 1",
+            $cand
+        ) );
+        if ( $row ) {
+            $target_post = $row;
+            break;
+        }
+    }
+
+    // (B) _wp_old_slug メタ検索（スラッグ変更履歴からの特定）
+    if ( ! $target_post ) {
+        foreach ( $candidates as $cand ) {
+            $post_id = $wpdb->get_var( $wpdb->prepare(
+                "SELECT pm.post_id FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID WHERE pm.meta_key = '_wp_old_slug' AND pm.meta_value = %s AND p.post_type = 'post' AND p.post_status IN ('publish', 'draft', 'future') ORDER BY FIELD(p.post_status, 'publish', 'future', 'draft') LIMIT 1",
+                $cand
+            ) );
+            if ( $post_id ) {
+                $target_post = $wpdb->get_row( $wpdb->prepare( "SELECT ID, post_status FROM {$wpdb->posts} WHERE ID = %d", (int) $post_id ) );
+                break;
+            }
+        }
+    }
+
+    // (C) /YYYY/MM/DD/... 形式の旧日本語URLに対する日付＋タイトル照合フォールバック
+    if ( ! $target_post && preg_match( '#^(\d{4})/(\d{2})/(\d{2})/([^/]+)#u', $decoded_path, $m ) ) {
+        $date_str = sprintf( '%04d-%02d-%02d', (int) $m[1], (int) $m[2], (int) $m[3] );
+        $date_posts = $wpdb->get_results( $wpdb->prepare(
+            "SELECT ID, post_status, post_title, post_name FROM {$wpdb->posts} WHERE post_type = 'post' AND post_status IN ('publish', 'draft', 'future') AND DATE(post_date) = %s ORDER BY FIELD(post_status, 'publish', 'future', 'draft')",
+            $date_str
+        ) );
+        if ( count( $date_posts ) === 1 ) {
+            $target_post = $date_posts[0];
+        } elseif ( count( $date_posts ) > 1 ) {
+            $clean_query = mb_strtolower( preg_replace( '/[\s\-_「」【】『』（）()！!？?・：:]/u', '', $m[4] ) );
+            $snippet = mb_substr( $clean_query, 0, 8 );
+            foreach ( $date_posts as $dp ) {
+                $clean_title = mb_strtolower( preg_replace( '/[\s\-_「」【】『』（）()！!？?・：:\/]/u', '', $dp->post_title ) );
+                if ( ! empty( $snippet ) && mb_strpos( $clean_title, $snippet ) !== false ) {
+                    $target_post = $dp;
+                    break;
+                }
+            }
+            if ( ! $target_post ) {
+                $target_post = $date_posts[0];
+            }
+        }
+    }
+
+    // 対象記事が特定できた場合のステータス別ルーティング
+    if ( $target_post ) {
+        if ( $target_post->post_status === 'publish' ) {
+            $permalink = get_permalink( (int) $target_post->ID );
+            if ( $permalink && rtrim( parse_url( $permalink, PHP_URL_PATH ), '/' ) !== $raw_path ) {
+                wp_redirect( $permalink, 301 );
+                exit;
+            }
+        } else {
+            // 下書き（draft / future）の間は、該当記事の専門カテゴリ一覧へ 302（一時リダイレクト）
+            // ※将来 publish に復元した際、Googleキャッシュの301固定化を防ぎ即座に記事URLを200 OKとして復帰させる
+            $dest_url = inspiro_child_get_draft_fallback_category_url( (int) $target_post->ID );
+            wp_redirect( $dest_url, 302 );
             exit;
         }
     }
 }
-add_action( 'template_redirect', 'inspiro_child_redirect_draft_archives' );
+add_action( 'template_redirect', 'inspiro_child_redirect_draft_archives', 1 );
 
 /**
  * ads.txt を動的に配信（AdSenseクローラー・所有権の完全認証）
@@ -1564,13 +1609,24 @@ function inspiro_child_serve_ads_txt() {
 add_action( 'init', 'inspiro_child_serve_ads_txt' );
 
 /**
- * コンテンツが存在しない機能ページ（reading-list・404・検索結果・タグ一覧）でのAdSenseスクリプト出力を抑止
- * （空ページへのAdSenseコード設置による「有用性の低いコンテンツ」判定を防止）
+ * コンテンツが存在しない機能ページ・フォームページ・ページネーションでのAdSenseスクリプト出力を抑止
+ * （空ページやユーティリティページへのAdSenseコード設置による「有用性の低いコンテンツ」判定を防止）
  */
 function inspiro_child_is_non_content_page() {
     $uri  = $_SERVER['REQUEST_URI'] ?? '';
     $path = trim( parse_url( $uri, PHP_URL_PATH ), '/' );
-    if ( $path === 'reading-list' || is_404() || is_search() || is_tag() || is_page( 'reading-list' ) ) {
+    if (
+        $path === 'reading-list' ||
+        $path === 'contact' ||
+        is_404() ||
+        is_search() ||
+        is_tag() ||
+        is_author() ||
+        is_paged() ||
+        is_page( 'reading-list' ) ||
+        is_page( 'contact' ) ||
+        ( is_archive() && ! have_posts() )
+    ) {
         return true;
     }
     return false;
@@ -1583,28 +1639,6 @@ add_filter( 'googlesitekit_adsense_tag_blocked', function( $blocked ) {
     return $blocked;
 } );
 
-/**
- * Post 1011 の undefined ショートコード残存をDB上で1回限り自動修復
- */
-add_action( 'init', function() {
-    if ( get_option( 'inspiro_fixed_post_1011_v2' ) ) {
-        return;
-    }
-    $post = get_post( 1011 );
-    if ( $post && strpos( $post->post_content, 'undefined' ) !== false ) {
-        $new_content = str_replace( '`', '', $post->post_content );
-        $new_content = preg_replace(
-            '/<!-- wp:shortcode -->\s*undefined\s*<!-- \/wp:shortcode -->\s*<!-- wp:shortcode -->\s*undefined\s*<!-- \/wp:shortcode -->/s',
-            "<!-- wp:shortcode -->\n[sc_Linkcard url=\"https://www.ds-pedia.com/2026/06/07/y3k-design-trend-futuristic-ui/\"]\n<!-- /wp:shortcode -->\n\n<!-- wp:shortcode -->\n[sc_Linkcard url=\"https://www.ds-pedia.com/2026/07/09/blueprint-design-trend-2026/\"]\n<!-- /wp:shortcode -->",
-            $new_content
-        );
-        wp_update_post( array(
-            'ID'           => 1011,
-            'post_content' => $new_content,
-        ) );
-    }
-    update_option( 'inspiro_fixed_post_1011_v2', 1 );
-} );
 
 
 
