@@ -387,6 +387,7 @@ add_action('template_redirect', function() {
     if ($path === 'reading-list') {
         global $wp_query;
         status_header(200);
+        header('X-Robots-Tag: noindex, nofollow', true);
         $wp_query->is_404  = false;
         $wp_query->is_page = true;
         
@@ -1013,6 +1014,19 @@ function inspiro_child_add_ogp()
         return;
     }
 
+    $uri  = $_SERVER['REQUEST_URI'] ?? '';
+    $path = trim(parse_url($uri, PHP_URL_PATH), '/');
+
+    // /reading-list/ は固定ページ未公開でも確実に noindex, nofollow を出力する
+    if ($path === 'reading-list') {
+        echo "\n" . '<meta name="robots" content="noindex, nofollow" />' . "\n";
+    }
+
+    // AIOSEOが有効な通常ページでは、descriptionおよびOGPの二重出力を防ぐためAIOSEO側に一本化する
+    if (function_exists('aioseo') && $path !== 'reading-list') {
+        return;
+    }
+
     if (is_front_page() || is_home()) {
         $og_title = 'デザペディア - Webデザイン・UX / UI・チュートリアルの情報メディアサイト';
     } else {
@@ -1218,7 +1232,7 @@ function inspiro_child_fetch_affiliate_image( $url ) {
         return '';
     }
 
-    $cache_key = 'aff_img_v2_' . md5( $url );
+    $cache_key = 'aff_img_v3_' . md5( $url );
     $cached = get_transient( $cache_key );
     if ( $cached !== false ) {
         return $cached;
@@ -1247,16 +1261,9 @@ function inspiro_child_fetch_affiliate_image( $url ) {
         }
     }
 
-    // Amazon URLの場合、ASINから確実に高解像度商品画像を生成
-    if ( OpenGraph::isAmazonUrl( $target_url ) ) {
-        $asin = OpenGraph::extractAsin( $target_url );
-        if ( $asin ) {
-            $image_url = 'https://images-na.ssl-images-amazon.com/images/P/' . $asin . '.01.MAIN._SL500_.jpg';
-        }
-    }
-
-    // ASINで取れない場合、またはAmazon以外のURLの場合は OpenGraph::fetch を実行
-    if ( empty( $image_url ) ) {
+    // Amazon以外の外部Webサイトの場合のみ OpenGraph::fetch を実行
+    // （Amazonの images-na.ssl-images-amazon.com/images/P/ エンドポイントは403エラーとなり画像リンク切れを起こすため使用せず、SVGプレースホルダーへフォールバックさせる）
+    if ( ! OpenGraph::isAmazonUrl( $target_url ) ) {
         $graph = OpenGraph::fetch( $target_url );
         if ( $graph !== false && ! empty( $graph->image ) ) {
             $image_url = $graph->image;
@@ -1267,7 +1274,7 @@ function inspiro_child_fetch_affiliate_image( $url ) {
     if ( ! empty( $image_url ) ) {
         set_transient( $cache_key, $image_url, 7 * DAY_IN_SECONDS );
     } else {
-        set_transient( $cache_key, '', 2 * HOUR_IN_SECONDS );
+        set_transient( $cache_key, '', 7 * DAY_IN_SECONDS );
     }
 
     return $image_url;
@@ -1297,6 +1304,11 @@ function inspiro_child_render_affiliate_card( $args = array() ) {
         $data['image'] = inspiro_child_fetch_affiliate_image( $data['url'] );
     }
 
+    // Amazon旧画像エンドポイント（403 Forbidden）が指定されている場合はSVGプレースホルダーへフォールバック
+    if ( ! empty( $data['image'] ) && strpos( $data['image'], 'images-na.ssl-images-amazon.com' ) !== false ) {
+        $data['image'] = '';
+    }
+
     $card_classes = 'blogcard blogcard--affiliate c-affiliate-card';
     if ( ! empty( $data['class'] ) ) {
         $card_classes .= ' ' . esc_attr( $data['class'] );
@@ -1308,7 +1320,11 @@ function inspiro_child_render_affiliate_card( $args = array() ) {
         <a href="<?php echo esc_url( $data['url'] ); ?>" class="blogcard_inner" target="_blank" rel="noopener noreferrer nofollow">
             <div class="blogcard_thumbnail">
                 <?php if ( ! empty( $data['image'] ) ) : ?>
-                    <img src="<?php echo esc_url( $data['image'] ); ?>" alt="<?php echo esc_attr( $data['title'] ); ?>" loading="lazy">
+                    <img src="<?php echo esc_url( $data['image'] ); ?>" alt="<?php echo esc_attr( $data['title'] ); ?>" loading="lazy" onerror="this.style.display='none';if(this.nextElementSibling){this.nextElementSibling.style.display='flex';}">
+                    <div class="blogcard_placeholder" style="display:none;">
+                        <svg class="blogcard_placeholder-icon" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+                        <span class="blogcard_placeholder-label">RECOMMEND</span>
+                    </div>
                 <?php else : ?>
                     <div class="blogcard_placeholder">
                         <svg class="blogcard_placeholder-icon" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
@@ -1487,13 +1503,12 @@ function inspiro_child_redirect_draft_archives() {
         return;
     }
 
-    // 1. 廃止・空カテゴリ（other-article, other, uncategorized, 旧日本語カテゴリスラッグ）または記事0件カテゴリを /category/article/ へ301リダイレクト
+    // 1. 廃止・空カテゴリ（other-article, other, uncategorized）または記事0件カテゴリを /category/article/ へ301リダイレクト
     $deprecated_cat_paths = array(
         'category/article/other-article',
         'category/other-article',
         'category/other',
         'category/uncategorized',
-        'category/article/ux・心理学',
     );
     foreach ( $deprecated_cat_paths as $dep_path ) {
         if ( $decoded_path === $dep_path || strpos( $decoded_path, $dep_path . '/' ) === 0 ) {
@@ -1551,27 +1566,31 @@ function inspiro_child_redirect_draft_archives() {
         }
     }
 
-    // (C) /YYYY/MM/DD/... 形式の旧日本語URLに対する日付＋タイトル照合フォールバック
+    // (C) /YYYY/MM/DD/... 形式の旧日本語URLに対する日付＋タイトル照合フォールバック（日本語マルチバイトを含む旧スラッグ限定）
     if ( ! $target_post && preg_match( '#^(\d{4})/(\d{2})/(\d{2})/([^/]+)#u', $decoded_path, $m ) ) {
-        $date_str = sprintf( '%04d-%02d-%02d', (int) $m[1], (int) $m[2], (int) $m[3] );
-        $date_posts = $wpdb->get_results( $wpdb->prepare(
-            "SELECT ID, post_status, post_title, post_name FROM {$wpdb->posts} WHERE post_type = 'post' AND post_status IN ('publish', 'draft', 'future') AND DATE(post_date) = %s ORDER BY FIELD(post_status, 'publish', 'future', 'draft')",
-            $date_str
-        ) );
-        if ( count( $date_posts ) === 1 ) {
-            $target_post = $date_posts[0];
-        } elseif ( count( $date_posts ) > 1 ) {
-            $clean_query = mb_strtolower( preg_replace( '/[\s\-_「」【】『』（）()！!？?・：:]/u', '', $m[4] ) );
-            $snippet = mb_substr( $clean_query, 0, 8 );
-            foreach ( $date_posts as $dp ) {
-                $clean_title = mb_strtolower( preg_replace( '/[\s\-_「」【】『』（）()！!？?・：:\/]/u', '', $dp->post_title ) );
-                if ( ! empty( $snippet ) && mb_strpos( $clean_title, $snippet ) !== false ) {
-                    $target_post = $dp;
-                    break;
-                }
-            }
-            if ( ! $target_post ) {
+        $slug_part = $m[4];
+        $has_multibyte = ( strlen( $slug_part ) !== mb_strlen( $slug_part, 'UTF-8' ) );
+        if ( $has_multibyte ) {
+            $date_str = sprintf( '%04d-%02d-%02d', (int) $m[1], (int) $m[2], (int) $m[3] );
+            $date_posts = $wpdb->get_results( $wpdb->prepare(
+                "SELECT ID, post_status, post_title, post_name FROM {$wpdb->posts} WHERE post_type = 'post' AND post_status IN ('publish', 'draft', 'future') AND DATE(post_date) = %s ORDER BY FIELD(post_status, 'publish', 'future', 'draft')",
+                $date_str
+            ) );
+            if ( count( $date_posts ) === 1 ) {
                 $target_post = $date_posts[0];
+            } elseif ( count( $date_posts ) > 1 ) {
+                $clean_query = mb_strtolower( preg_replace( '/[\s\-_「」【】『』（）()！!？?・：:]/u', '', $slug_part ) );
+                $snippet = mb_substr( $clean_query, 0, 8 );
+                foreach ( $date_posts as $dp ) {
+                    $clean_title = mb_strtolower( preg_replace( '/[\s\-_「」【】『』（）()！!？?・：:\/]/u', '', $dp->post_title ) );
+                    if ( ! empty( $snippet ) && mb_strpos( $clean_title, $snippet ) !== false ) {
+                        $target_post = $dp;
+                        break;
+                    }
+                }
+                if ( ! $target_post ) {
+                    $target_post = $date_posts[0];
+                }
             }
         }
     }
